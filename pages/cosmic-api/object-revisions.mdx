@@ -1,0 +1,110 @@
+import Callout from "nextra-theme-docs/callout";
+
+# Object Revisions
+
+The following endpoints allow you to get Revision of your Object in your Bucket.
+
+<Callout emoji="✅">
+  <strong>Quick Tip</strong>
+  Your `read` and `write` keys will be required to perform the following requests.
+  These can be found in <i>Your Bucket {">"} Basic Settings</i> in your [Bucket Dashboard
+  ](https://app.cosmicjs.com/login).
+</Callout>
+
+## Get Object Revisions
+
+Get Object Revisions of Object with `id` in your Bucket.
+
+| Parameter       | Required |  Type  | Default | Description                                                                                                                                                  |
+| :-------------- | :------: | :----: | :------ | :----------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| read_key        | required | String |         | Restrict read access to your Bucket                                                                                                                          |
+| query           |          |  JSON  |         | A JSON string to perform advanced queries to filter out objects. Please see Examples for more detail.                                                        |
+| show_metafields |          |  Enum  | false   | true, Shows metafields                                                                                                                                       |
+| props           |          | String |         | Declare which properties to return in comma-separated string. Reference full Object for all available properties. Example: `?props=id,title,metadata.author` |
+| sort            |          |  Enum  | order   | created_at, -created_at, modified_at, -modified_at, random, order                                                                                            |
+| limit           |          | Number | 1000    | The number of Objects to return                                                                                                                              |
+| skip            |          | Number | 0       | The number of Objects to skip                                                                                                                                |
+| pretty          |          |  Enum  | false   | true, Makes the response more reader-friendly                                                                                                                |
+
+**Definition**
+
+```bash
+GET $BASE_URL/buckets/${bucket_slug}/objects/${object_id}/revisions
+```
+
+**Example Response**
+
+```json
+{
+  "revisions": [
+    {
+      "id": "5ff75368c2dfa81a91695cec",
+      "slug": "title-of-the-post",
+      "title": "Title of the Post",
+      "content": "",
+      "bucket": "5f7357124b331d76c08de989",
+      "created_at": "2021-01-07T18:31:04.005Z",
+      "modified_at": "2021-01-07T18:31:04.005Z",
+      "status": "published",
+      "published_at": "2021-01-07T18:31:04.005Z",
+      "object_id": "5ff75368c2dfa81a91695cec",
+      "type": "posts",
+      "metadata": null
+    },
+    {
+      "id": "5ff754491a90d61b34aacdbe",
+      "slug": "title-of-the-post",
+      "title": "This is updated Title",
+      "content": "",
+      "bucket": "5f7357124b331d76c08de989",
+      "created_at": "2021-01-07T18:34:49.828Z",
+      "modified_at": "2021-01-07T18:34:49.828Z",
+      "status": "published",
+      "published_at": "2021-01-07T18:31:04.005Z",
+      "object_id": "5ff75368c2dfa81a91695cec",
+      "type": "posts",
+      "metadata": null
+    }
+  ],
+  "total": 4,
+  "limit": 2
+}
+```
+
+## Get Object Revision
+
+Returns a single Revision by `id` from your Object.
+
+| Parameter       | Required |  Type  | Default | Description                                                                                                                                                  |
+| :-------------- | :------: | :----: | :------ | :----------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| read_key        | required | String |         | Restrict read access to your Bucket                                                                                                                          |
+| show_metafields |          |  Enum  | false   | true, Shows metafields                                                                                                                                       |
+| props           |          | String |         | Declare which properties to return in comma-separated string. Reference full Object for all available properties. Example: `?props=id,title,metadata.author` |
+| pretty          |          |  Enum  | false   | true, Makes the response more reader-friendly                                                                                                                |
+
+**Definition**
+
+```bash
+GET $BASE_URL/buckets/${bucket_slug}/objects/${object_id}/revisions/${revision_id}
+```
+
+**Example Response (status: `200 OK`)**
+
+```json
+{
+  "revision": {
+    "id": "5ff75368c2dfa81a91695cec",
+    "slug": "title-of-the-post",
+    "title": "Title of the Post",
+    "content": "",
+    "bucket": "5f7357124b331d76c08de989",
+    "created_at": "2021-01-07T18:31:04.005Z",
+    "modified_at": "2021-01-07T18:31:04.005Z",
+    "status": "published",
+    "published_at": "2021-01-07T18:31:04.005Z",
+    "object_id": "5ff75368c2dfa81a91695cec",
+    "type": "posts",
+    "metadata": null
+  }
+}
+```

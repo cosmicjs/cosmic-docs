@@ -1,0 +1,339 @@
+import Callout from "nextra-theme-docs/callout";
+
+# Objects
+
+The following endpoints allow you to get, add, edit and delete Objects in your Bucket.
+
+<Callout emoji="✅">
+  <strong>Quick Tip</strong>
+  Your `read` and `write` keys will be required to perform the following requests.
+  These can be found in <i>Your Bucket {">"} Basic Settings</i> in your [Bucket Dashboard
+  ](https://app.cosmicjs.com/login).
+</Callout>
+
+## Get Objects
+
+Get Objects in your Bucket.
+
+| Parameter       | Required |  Type  | Default   | Description                                                                                                                                                  |
+| :-------------- | :------: | :----: | :-------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| read_key        | required | String |           | Restrict read access to your Bucket                                                                                                                          |
+| status          |          |  Enum  | published | published, any                                                                                                                                               |
+| query           |          |  JSON  |           | A JSON string to perform advanced queries to filter out objects. Please see [Examples](/cosmic-api/advanced-query#example-queries) for more detail.          |
+| show_metafields |          |  Enum  | false     | true, Shows metafields                                                                                                                                       |
+| props           |          | String |           | Declare which properties to return in comma-separated string. Reference full Object for all available properties. Example: `?props=id,title,metadata.author` |
+| sort            |          |  Enum  | order     | created_at, -created_at, modified_at, -modified_at, random, order                                                                                            |
+| limit           |          | Number | 1000      | The number of Objects to return                                                                                                                              |
+| skip            |          | Number | 0         | The number of Objects to skip                                                                                                                                |
+| after           |          | String |           | Objects after specified Object Id (can only use one of `skip` or `after`)                                                                                    |
+| pretty          |          |  Enum  | false     | true, Makes the response more reader-friendly                                                                                                                |
+
+**Definition**
+
+```bash
+GET $BASE_URL/buckets/${bucket_slug}/objects
+```
+
+**Example Response**
+
+```json
+{
+  "objects": [
+    {
+      "id": "5f7357967286d7773adc551e",
+      "slug": "learning",
+      "title": "Learning",
+      "content": "<p>Learning is fun!!</p>",
+      "bucket": "5f7357124b331d76c08de989",
+      "created": "2020-09-29T15:49:42.005Z",
+      "created_at": "2020-09-29T15:49:42.005Z",
+      "modified_at": "2020-11-16T18:50:48.750Z",
+      "status": "published",
+      "locale": null,
+      "published_at": "2020-11-16T18:50:48.750Z",
+      "modified_by": "5e4d7eb92850c717ea93dba4",
+      "publish_at": null,
+      "unpublish_at": null,
+      "type": "categories",
+      "metadata": {
+        "description": "This is the example description",
+        "parent": {
+          "id": "5f7357b27286d7773adc551f",
+          "slug": "example-post",
+          "title": "Example Post",
+          "content": "<p>This is the post Edited!! Draft Latest</p>",
+          "bucket": "5f7357124b331d76c08de989",
+          "created_at": "2020-09-29T15:50:10.193Z",
+          "created_by": "5e4d7eb92850c717ea93dba4",
+          "modified_at": "2020-12-11T17:08:52.463Z",
+          "created": "2020-09-29T15:50:10.193Z",
+          "status": "published",
+          "thumbnail": "",
+          "published_at": "2020-12-11T16:07:10.451Z",
+          "modified_by": "5e4d7eb92850c717ea93dba4",
+          "publish_at": null,
+          "unpublish_at": null,
+          "type": "posts",
+          "metadata": {
+            "category": {
+              "id": "5f7357967286d7773adc551e",
+              "slug": "learning",
+              "title": "Learning",
+              "content": "<p>Learning is fun!!</p>",
+              "bucket": "5f7357124b331d76c08de989",
+              "created": "2020-09-29T15:49:42.005Z",
+              "created_at": "2020-09-29T15:49:42.005Z",
+              "modified_at": "2020-11-16T18:50:48.750Z",
+              "status": "published",
+              "locale": null,
+              "published_at": "2020-11-16T18:50:48.750Z",
+              "modified_by": "5e4d7eb92850c717ea93dba4",
+              "publish_at": null,
+              "unpublish_at": null,
+              "type": "categories",
+              "metadata": {
+                "description": "This is the example description",
+                "parent": "5f7357b27286d7773adc551f"
+              }
+            }
+          }
+        }
+      }
+    }
+  ],
+  "total": 6,
+  "limit": 1
+}
+```
+
+## Get Object
+
+Returns a single Object by `id` from your Bucket.
+
+| Parameter       | Required |  Type  | Default   | Description                                                                                                                                                  |
+| :-------------- | :------: | :----: | :-------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| read_key        | required | String |           | Restrict read access to your Bucket                                                                                                                          |
+| status          |          |  Enum  | published | published, any                                                                                                                                               |
+| show_metafields |          |  Enum  | false     | true, Shows metafields                                                                                                                                       |
+| props           |          | String |           | Declare which properties to return in comma-separated string. Reference full Object for all available properties. Example: `?props=id,title,metadata.author` |
+| pretty          |          |  Enum  | false     | true, Makes the response more reader-friendly                                                                                                                |
+
+**Definition**
+
+```bash
+GET $BASE_URL/buckets/${bucket_slug}/objects/${object_id}
+```
+
+**Example Response (status: `200 OK`)**
+
+```json
+{
+  "object": {
+    "id": "5f7357967286d7773adc551e",
+    "slug": "learning",
+    "title": "Learning",
+    "content": "<p>Learning is fun!!</p>",
+    "bucket": "5f7357124b331d76c08de989",
+    "created": "2020-09-29T15:49:42.005Z",
+    "created_at": "2020-09-29T15:49:42.005Z",
+    "modified_at": "2020-11-16T18:50:48.750Z",
+    "status": "published",
+    "locale": null,
+    "published_at": "2020-11-16T18:50:48.750Z",
+    "modified_by": "5e4d7eb92850c717ea93dba4",
+    "publish_at": null,
+    "unpublish_at": null,
+    "type": "categories",
+    "metadata": {
+      "description": "This is the example description",
+      "parent": {
+        "id": "5f7357b27286d7773adc551f",
+        "slug": "example-post",
+        "title": "Example Post",
+        "content": "<p>This is the post Edited!! Draft Latest</p>",
+        "bucket": "5f7357124b331d76c08de989",
+        "created_at": "2020-09-29T15:50:10.193Z",
+        "created_by": "5e4d7eb92850c717ea93dba4",
+        "modified_at": "2020-12-11T17:08:52.463Z",
+        "created": "2020-09-29T15:50:10.193Z",
+        "status": "published",
+        "thumbnail": "",
+        "published_at": "2020-12-11T16:07:10.451Z",
+        "modified_by": "5e4d7eb92850c717ea93dba4",
+        "publish_at": null,
+        "unpublish_at": null,
+        "type": "posts",
+        "metadata": {
+          "category": {
+            "id": "5f7357967286d7773adc551e",
+            "slug": "learning",
+            "title": "Learning",
+            "content": "<p>Learning is fun!!</p>",
+            "bucket": "5f7357124b331d76c08de989",
+            "created": "2020-09-29T15:49:42.005Z",
+            "created_at": "2020-09-29T15:49:42.005Z",
+            "modified_at": "2020-11-16T18:50:48.750Z",
+            "status": "published",
+            "locale": null,
+            "published_at": "2020-11-16T18:50:48.750Z",
+            "modified_by": "5e4d7eb92850c717ea93dba4",
+            "publish_at": null,
+            "unpublish_at": null,
+            "type": "categories",
+            "metadata": {
+              "description": "This is the example description",
+              "parent": "5f7357b27286d7773adc551f"
+            }
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+## Add Object
+
+Add a new Object to your Bucket.
+
+<Callout emoji="⚠">
+  **Required**
+  <br />
+  `write_key` must be passed as `Authorization Bearer` in the header of the
+  request.
+</Callout>
+
+| Parameter              | Required |      Type       | Description                                                                                    |
+| :--------------------- | :------: | :-------------: | :--------------------------------------------------------------------------------------------- |
+| type                   | required |     String      | Add Object to Object Type                                                                      |
+| title                  | required |     String      | Your Object title                                                                              |
+| slug                   |          |     String      | Unique identifier for your Object                                                              |
+| content                |          |     String      | Add Content to your Object                                                                     |
+| status                 |          |      Enum       | draft, published, defaults to published                                                        |
+| metafields             |          | Array of Object | Add Metafields to your Object. See [Metafields Model](/cosmic-api/getting-started/metafields). |
+| created_by             |          |     String      | Author User Id                                                                                 |
+| publish_at             |          |     Number      | UNIX millisecond timestamp. Publish automatically at a later time.                             |
+| options.slug_field     |          |     Boolean     | Set to false to hide the slug field                                                            |
+| options.content_editor |          |     Boolean     | Set to false to hide the content editor                                                        |
+| locale                 |          |     String      | Add localization to the Object                                                                 |
+| pretty                 |          |      Enum       | true, Makes the response more reader-friendly                                                  |
+
+**Definition**
+
+```bash
+POST $BASE_URL/buckets/${bucket_slug}/objects/
+```
+
+**Example Body (JSON)**
+
+```json
+{
+  "title": "Title of the Post",
+  "type": "posts"
+}
+```
+
+**Example Response (status: `200 OK`)**
+
+```json
+{
+  "object": {
+    "id": "5ff75368c2dfa81a91695cec",
+    "slug": "title-of-the-post",
+    "title": "Title of the Post",
+    "content": "",
+    "metafields": [],
+    "bucket": "5f7357124b331d76c08de989",
+    "created_at": "2021-01-07T18:31:04.005Z",
+    "modified_at": "2021-01-07T18:31:04.005Z",
+    "status": "published",
+    "published_at": "2021-01-07T18:31:04.005Z",
+    "type": "posts"
+  }
+}
+```
+
+## Edit Object
+
+Edit an existing Object by `id` in your Bucket.
+
+<Callout emoji="⚠">
+  **Required**
+  <br />
+  `write_key` must be passed as `Authorization Bearer` in the header of the
+  request.
+</Callout>
+
+| Parameter              |      Type       | Description                                                                                    |
+| :--------------------- | :-------------: | :--------------------------------------------------------------------------------------------- |
+| title                  |     String      | Your Object title                                                                              |
+| slug                   |     String      | Unique identifier for your Object                                                              |
+| content                |     String      | Add Content to your Object                                                                     |
+| status                 |      Enum       | draft, published, defaults to published                                                        |
+| metafields             | Array of Object | Add Metafields to your Object. See [Metafields Model](/cosmic-api/getting-started/metafields). |
+| publish_at             |     Number      | UNIX millisecond timestamp. Publish automatically at a later time.                             |
+| options.slug_field     |     Boolean     | Set to false to hide the slug field                                                            |
+| options.content_editor |     Boolean     | Set to false to hide the content editor                                                        |
+| locale                 |     String      | Add localization to the Object                                                                 |
+| pretty                 |      Enum       | true, Makes the response more reader-friendly                                                  |
+
+_**Note:** At least one of the Parameters is required to process the request._
+
+**Definition**
+
+```bash
+PATCH $BASE_URL/buckets/${bucket_slug}/objects/${object_id}
+```
+
+**Example Body (JSON)**
+
+```json
+{
+  "title": "This is updated Title"
+}
+```
+
+**Example Response (status: `200 OK`)**
+
+```json
+{
+  "object": {
+    "id": "5ff75368c2dfa81a91695cec",
+    "slug": "title-of-the-post",
+    "title": "This is updated Title",
+    "content": "",
+    "metafields": [],
+    "bucket": "5f7357124b331d76c08de989",
+    "created_at": "2021-01-07T18:31:04.005Z",
+    "modified_at": "2021-01-07T18:38:12.124Z",
+    "status": "published",
+    "published_at": "2021-01-07T18:31:04.005Z",
+    "type": "posts"
+  }
+}
+```
+
+## Delete Object
+
+Delete an existing Object by `id` from your Bucket.
+
+<Callout emoji="⚠">
+  **Required**
+  <br />
+  `write_key` must be passed as `Authorization Bearer` in the header of the
+  request.
+</Callout>
+
+**Definition**
+
+```bash
+DELETE $BASE_URL/buckets/${bucket_slug}/objects/${object_id}
+```
+
+**Example Response (status: `200 OK`)**
+
+```json
+{
+  "message": "Object with id '${object_id}' deleted successfully from bucket."
+}
+```

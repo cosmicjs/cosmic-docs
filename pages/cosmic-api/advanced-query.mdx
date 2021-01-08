@@ -1,0 +1,185 @@
+import Callout from "nextra-theme-docs/callout";
+
+# Advanced Queries
+
+Advanced queries give you powerful NoSQL database-like functionality for content fetching. Use the query parameter to send a valid JSON (stringified) query on the [Get Objects Endpoint](/cosmic-api/objects#get-objects). See [example requests below](/cosmic-api/advanced-query/#example-queries).
+
+<Callout emoji="✅">
+  <strong>Note</strong>
+  If accessing the endpoint via browser address bar, open and closed curly braces
+  will need to be encoded: `%7B` and `%7D` respectively. [This encoder tool may help](https://meyerweb.com/eric/tools/dencoder/).
+</Callout>
+
+**Definition**
+
+```bash
+GET $BASE_URL/buckets/${bucket_slug}/objects?read_key=${read_key}&query=${JSON_query}
+```
+
+### Available Keys to Query
+
+| Parameter     | Description                |
+| :------------ | :------------------------- |
+| id            | Object Id                  |
+| title         | Object Title               |
+| slug          | Object Slug                |
+| content       | Object Content             |
+| type          | Object Type Slug           |
+| status        | Object Status              |
+| locale        | Object Locale              |
+| created_at    | Object Created at Date     |
+| published_at  | Object Published at Date   |
+| modified_at   | Object Modified at Date    |
+| created_by    | Object Created by user id  |
+| modified_by   | Object Modified by user id |
+| metadata.$key | Metadata value(s)          |
+
+### Query Selectors
+
+| Parameter        | Description                                                                               |
+| ---------------- | ----------------------------------------------------------------------------------------- |
+| $eq              | Matches values that are equal to a specified value. Equivalent to direct key/value query. |
+| $gt              | Matches values that are greater than a specified value.                                   |
+| $gte             | Matches values that are greater than or equal to a specified value.                       |
+| $lt              | Matches values that are less than a specified value.                                      |
+| $lte             | Matches values that are less than or equal to a specified value.                          |
+| $in              | Matches any of the values specified in an array.                                          |
+| $ne              | Matches all values that are not equal to a specified value.                               |
+| $nin             | Matches none of the values specified in an array.                                         |
+| $regex, $options | Search for string, use `$options: "i"` for case insensitive matches                       |
+
+### Logic Operators
+
+| Parameter | Description                               |
+| --------- | ----------------------------------------- |
+| $and      | Returns Objects that match all conditions |
+| $all      | Equivalent to $and                        |
+| $or       | Returns Objects that match any conditions |
+
+## Example Queries
+
+**To keep examples concise, the following variables are used:**
+
+```bash
+endpoint = "$BASE_URL/buckets/${bucket_slug}/objects?read_key=${read_key}&props=title,slug,metadata"
+```
+
+**Matches Objects with exact Object Type**
+
+```bash
+curl '$endpoint&query={"type":"posts"}'
+```
+
+**Matches Objects with exact title**
+
+```bash
+curl '$endpoint&query={"title":"Post 1"}'
+```
+
+**Matches Objects with exact id**
+
+```bash
+curl '$endpoint&query={"id":"valid-object-id"}'
+```
+
+**Matches Objects with any ids**
+
+```bash
+curl '$endpoint&query={"id":["valid-object-id-1","valid-object-id-2"]}'
+```
+
+**Match Objects with any ids not equal to value**
+
+```bash
+curl '$endpoint&query={"_id":{"$ne":"valid-object-id"}}'
+```
+
+**Match Objects except with ids in the array of values**
+
+```bash
+curl '$endpoint&query={"_id":{"$nin":["valid-object-id-1","valid-object-id-2"]}}'
+```
+
+**Match Objects with exact slug**
+
+```bash
+curl '$endpoint&query={"slug":"post-1"}'
+```
+
+**Match Objects with string in content. Case insensive with $options.**
+
+```bash
+curl '$endpoint&query={"content":{"$regex":"jamstack","$options":"i"}}'
+```
+
+**Match metadata value (Number Metafield)**
+
+```bash
+curl '$endpoint&query={"metadata.price":9.99}'
+```
+
+**Match any slug values**
+
+```bash
+curl '$endpoint&query={"$or":[{"slug":"post-1"},{"slug":"post-2"}]}'
+```
+
+**Match any metadata values**
+
+```bash
+curl '$endpoint&query={"$or":[{"metadata.grade":"A"},{"metadata.grade":"B"}]}'
+```
+
+**Match all metadata values**
+
+```bash
+curl '$endpoint&query={"$and":[{"metadata.grade":"A"},{"metadata.price":{"$lt":10}}]}'
+```
+
+**Match greater than or equal to metadata value**
+
+```bash
+curl '$endpoint&query={"metadata.price":{"$gte":9.99}}'
+```
+
+**Match exact metadata value (Switch Metafield)**
+
+```bash
+curl '$endpoint&query={"metadata.is_featured":true}'
+```
+
+**Match nested JSON metadata value (JSON Metafield)**
+
+```bash
+curl '$endpoint&query={"metadata.json_data":{"is_awesome":true,"other_data":{"nested":"yep"}}}'
+```
+
+**Match Single Object Metafield value**
+
+```bash
+curl '$endpoint&query={"metadata.category":"category_id-1"}'
+```
+
+**Match not equal to Single Object Metafield value**
+
+```bash
+curl '$endpoint&query={"metadata.category":{"$ne": "category_id-1"}}'
+```
+
+**Match all Multiple Object Metafield values**
+
+```bash
+curl '$endpoint&query={"metadata.categories":["category_id-1","category_id-2"]}'
+```
+
+**Match any Multiple Object Metafield values**
+
+```bash
+curl '$endpoint&query={"metadata.categories":{"$in":["category_id-1","category_id-2"]}}'
+```
+
+**Match doesn't have any Multiple Object Metafield values**
+
+```bash
+curl '$endpoint&query={"metadata.categories":{"$nin":["category_id-1","category_id-2"]}}'
+```
