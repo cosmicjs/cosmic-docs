@@ -1,0 +1,174 @@
+import Callout from "nextra-theme-docs/callout";
+
+# Media
+
+The following endpoints allow you to manage media in your Bucket.
+
+<Callout emoji="✅">
+  <strong>Quick Tip</strong>
+  Your `read` and `write` keys will be required to perform the following requests.
+  These can be found in <i>Your Bucket {">"} Basic Settings</i> in your [Bucket Dashboard
+  ](https://app.cosmicjs.com/login).
+</Callout>
+
+## Get Media List
+
+Get Media List in your Bucket.
+
+| Parameter | Required |  Type  | Default  | Description                                                                                                                                                    |
+| :-------- | :------: | :----: | :------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| read_key  | required | String |          | Restrict read access to your Bucket                                                                                                                            |
+| props     |          | String |          | Declare which properties to return in comma-separated string. Reference full Media for all available properties. Example: `?props=name,url,imgix_url,metadata` |
+| sort      |          |  Enum  | -created | created, -created, size, -size, random                                                                                                                         |
+| limit     |          | Number | 1000     | The number of Media to return                                                                                                                                  |
+| skip      |          | Number | 0        | The number of Media to skip                                                                                                                                    |
+| pretty    |          |  Enum  | false    | true, Makes the response more reader-friendly                                                                                                                  |
+
+**Definition**
+
+```bash
+GET $BASE_URL/buckets/${bucket_slug}/media
+```
+
+**Example Response**
+
+```json
+{
+  "media": [
+    {
+      "id": "5feb42f3601e2b3a6151289a",
+      "name": "9c4d6b70-49e5-11eb-98a2-810fade44566-logo-layout-1.jpg",
+      "original_name": "logo-layout-1.jpg",
+      "size": 256652,
+      "type": "image/jpeg",
+      "bucket": "5e6818d8e11cffafef7a6230",
+      "created": "2020-12-29T14:53:39.847Z",
+      "location": "https://cdn.cosmicjs.com",
+      "folder": "product-images",
+      "url": "https://cdn.cosmicjs.com/9c4d6b70-49e5-11eb-98a2-810fade44566-logo-layout-1.jpg",
+      "imgix_url": "https://cosmic-s3.imgix.net/9c4d6b70-49e5-11eb-98a2-810fade44566-logo-layout-1.jpg"
+    },
+    {
+      "id": "5feb42f2601e2b3a61512899",
+      "name": "9c5a3cb0-49e5-11eb-98a2-810fade44566-logo-layout-2.jpg",
+      "original_name": "logo-layout-2.jpg",
+      "size": 170482,
+      "type": "image/jpeg",
+      "bucket": "5e6818d8e11cffafef7a6230",
+      "created": "2020-12-29T14:53:38.494Z",
+      "location": "https://cdn.cosmicjs.com",
+      "folder": "product-images",
+      "url": "https://cdn.cosmicjs.com/9c5a3cb0-49e5-11eb-98a2-810fade44566-logo-layout-2.jpg",
+      "imgix_url": "https://cosmic-s3.imgix.net/9c5a3cb0-49e5-11eb-98a2-810fade44566-logo-layout-2.jpg"
+    }
+  ],
+  "total": 10,
+  "limit": 2
+}
+```
+
+## Get Media
+
+Returns a single Media by `id` from your Bucket.
+
+| Parameter | Required |  Type  | Default | Description                                                                                                                                                    |
+| :-------- | :------: | :----: | :------ | :------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| read_key  | required | String |         | Restrict read access to your Bucket                                                                                                                            |
+| props     |          | String |         | Declare which properties to return in comma-separated string. Reference full Media for all available properties. Example: `?props=name,url,imgix_url,metadata` |
+| pretty    |          |  Enum  | false   | true, Makes the response more reader-friendly                                                                                                                  |
+
+**Definition**
+
+```bash
+GET $BASE_URL/buckets/${bucket_slug}/media/${media_id}
+```
+
+**Example Response (status: `200 OK`)**
+
+```json
+{
+  "media": {
+    "id": "5f331eac9d52b17aee21d1b4",
+    "name": "d319ff30-13b7-11e9-acee-bd778576f320-default_profile.png",
+    "original_name": "default_profile.png",
+    "size": 4889,
+    "type": "image/png",
+    "bucket": "5e6818d8e11cffafef7a6230",
+    "created": "2020-08-11T22:41:48.651Z",
+    "location": "https://cdn.cosmicjs.com",
+    "folder": null,
+    "metadata": {
+      "ok": true
+    },
+    "url": "https://cdn.cosmicjs.com/d319ff30-13b7-11e9-acee-bd778576f320-default_profile.png",
+    "imgix_url": "https://cosmic-s3.imgix.net/d319ff30-13b7-11e9-acee-bd778576f320-default_profile.png"
+  }
+}
+```
+
+## Edit Media
+
+Edit an existing Media by `id` in your Bucket.
+
+<Callout emoji="⚠">
+  **Required**
+  <br />
+  `write_key` must be passed as `Authorization Bearer` in the header of the
+  request.
+</Callout>
+
+| Parameter |  Type  | Description                                           |
+| :-------- | :----: | :---------------------------------------------------- |
+| folder    | String | Slug of the `folder` where you want to move the media |
+| Metadata  | Object | Metadata object                                       |
+
+_**Note:** At least one of the Parameters is required to process the request._
+
+**Definition**
+
+```bash
+PATCH $BASE_URL/buckets/${bucket_slug}/media/${media_id}
+```
+
+**Example Body (JSON)**
+
+```json
+{
+  "metadata": {
+    "avatar": true
+  }
+}
+```
+
+**Example Response (status: `200 OK`)**
+
+```json
+{
+  "message": "Media with id '${media_id}' edited successfully in bucket."
+}
+```
+
+## Delete Media
+
+Delete an existing Media by `id` from your Bucket.
+
+<Callout emoji="⚠">
+  **Required**
+  <br />
+  `write_key` must be passed as `Authorization Bearer` in the header of the
+  request.
+</Callout>
+
+**Definition**
+
+```bash
+DELETE $BASE_URL/buckets/${bucket_slug}/media/${media_id}
+```
+
+**Example Response (status: `200 OK`)**
+
+```json
+{
+  "message": "Media with id '${media_id}' deleted successfully from bucket."
+}
+```
