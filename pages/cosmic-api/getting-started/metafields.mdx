@@ -321,16 +321,16 @@ POST $BASE_URL/buckets/${bucket_slug}/objects/
 
 ### Single Objects
 
-For a Single Object Metafield, add the Object ID (`_id`) to the value to connect the Object. The full Object will be returned on the Metadata response in the `object` property.
+For a Single Object Metafield, add the Object ID (`id`) to the value to connect the Object. The full Object will be returned on the Metadata response in the `object` property.
 
 ### Multiple Objects
 
 For Multiple Object type Metafields, you can add the Object IDs as comma-separated values. The full Objects will be returned on the Metadata response in the `objects` property.
 
-| Parameter   | Required |  Type  | Description                                                                                    |
-| :---------- | :------: | :----: | :--------------------------------------------------------------------------------------------- |
-| type        | required |  Enum  | object, objects                                                                                |
-| title       | required | String | Your Metafield title                                                                           |
-| key         | required | String | Unique identifier for your Metafield                                                           |
-| object_type | required | String | Object Type slug                                                                               |
-| value       |          | String | For single Object this is the \_id property. For multiple Objects it is comma-separated \_ids. |
+| Parameter   | Required |  Type  | Description                                                                                   |
+| :---------- | :------: | :----: | :-------------------------------------------------------------------------------------------- |
+| type        | required |  Enum  | object, objects                                                                               |
+| title       | required | String | Your Metafield title                                                                          |
+| key         | required | String | Unique identifier for your Metafield                                                          |
+| object_type | required | String | Object Type slug                                                                              |
+| value       |          | String | For single Object this is the \id property. For multiple Objects it is comma-separated \_ids. |
