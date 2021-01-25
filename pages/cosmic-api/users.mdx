@@ -1,0 +1,210 @@
+import Callout from "nextra-theme-docs/callout";
+
+# Users
+
+The following endpoints allow you to get, add, edit and delete users in your bucket.
+
+<Callout emoji="✅">
+  <strong>Quick Tip</strong>
+  Your authentication `token` will be required to perform the following requests.
+  <br />
+  You can get your authentication token in your user account settings located in
+  <i>
+    [Account Settings {">"}
+    Authentication](https://cosmicjs.com/account/authentication)
+  </i>
+  .
+  <br />
+  You can also make requests to the [API](/cosmic-api/authentication#get-your-token)
+  with your `email` and `password`.
+</Callout>
+
+## Get Users
+
+Gets all users in your bucket.
+
+<Callout emoji="⚠">
+  **Required**
+  <br />
+  `token` must be passed as `Authorization Bearer` in the header of the request
+  and you must have `admin` access to perform this operation.
+</Callout>
+
+**Definition**
+
+```bash
+GET $BASE_URL/buckets/${bucket_slug}/users
+```
+
+**Example Response**
+
+```json
+{
+  "users": [
+    {
+      "id": "5e4d7eb92850c717ea93dba4",
+      "first_name": "Starman",
+      "last_name": "Jones",
+      "email": "starman@milkyway.com",
+      "username": "starman",
+      "bio": "",
+      "website": "",
+      "twitter": "",
+      "linkedin": "",
+      "github": "",
+      "company": "",
+      "location": ""
+    },
+    {
+      "id": "5f46a1c25711926847cd6b5c",
+      "first_name": "Quasar",
+      "last_name": "Jones",
+      "email": "quasar@milkyway.com",
+      "username": "quasar"
+    }
+  ],
+  "total": 2
+}
+```
+
+## Get User
+
+Gets user by `id` in your bucket.
+
+<Callout emoji="⚠">
+  **Required**
+  <br />
+  `token` must be passed as `Authorization Bearer` in the header of the request
+  and you must have `admin` access to perform this operation.
+</Callout>
+
+**Definition**
+
+```bash
+GET $BASE_URL/buckets/${bucket_slug}/users/${user_id}
+```
+
+**Example Response**
+
+```json
+{
+  "user": {
+    "id": "5f46a1c25711926847cd6b5c",
+    "first_name": "Quasar",
+    "last_name": "Jones",
+    "email": "quasar@milkyway.com",
+    "username": "quasar"
+  }
+}
+```
+
+## Add User
+
+Add user to your bucket.
+
+<Callout emoji="⚠">
+  **Required**
+  <br />
+  `token` must be passed as `Authorization Bearer` in the header of the request
+  and you must have `admin` access to perform this operation.
+</Callout>
+
+| Parameter               |             Required              |          Type          | Description                                     |
+| :---------------------- | :-------------------------------: | :--------------------: | :---------------------------------------------- |
+| first_name              |             required              |         String         | The new user's first name                       |
+| last_name               |             required              |         String         | The new user's last name                        |
+| email                   |             required              |         String         | The new user's email                            |
+| role                    |             required              |          Enum          | `admin`, `developer`, `editor` or `contributor` |
+| publishing_restrictions |                                   |          Enum          | `draft_only`                                    |
+| additional_permissions  |                                   | String / Array[String] | `users`, `settings`, `sort_metafields`          |
+| object_types            | required if role is `contributor` | String / Array[String] | Your Cosmic login password                      |
+
+**Definition**
+
+```bash
+POST $BASE_URL/buckets/${bucket_slug}/users
+```
+
+**Example Body (JSON)**
+
+```json
+{
+  "first_name": "ABC",
+  "last_name": "XYZ",
+  "email": "abc@xyz.com",
+  "role": "admin"
+}
+```
+
+**Example Response (status: `200 OK`)**
+
+```json
+{
+  "message": "User added successfully."
+}
+```
+
+## Edit User
+
+Edit user by `id` in your bucket.
+
+<Callout emoji="⚠">
+  **Required**
+  <br />
+  `token` must be passed as `Authorization Bearer` in the header of the request
+  and you must have `admin` access to perform this operation.
+</Callout>
+
+| Parameter               |             Required              |          Type          | Description                                     |
+| :---------------------- | :-------------------------------: | :--------------------: | :---------------------------------------------- |
+| role                    |             required              |          Enum          | `admin`, `developer`, `editor` or `contributor` |
+| publishing_restrictions |                                   |          Enum          | `draft_only`                                    |
+| additional_permissions  |                                   | String / Array[String] | `users`, `settings`, `sort_metafields`          |
+| object_types            | required if role is `contributor` | String / Array[String] | Your Cosmic login password                      |
+
+**Definition**
+
+```bash
+PATCH $BASE_URL/buckets/${bucket_slug}/users/${user_id}
+```
+
+**Example Body (JSON)**
+
+```json
+{
+  "role": "editor"
+}
+```
+
+**Example Response (status: `200 OK`)**
+
+```json
+{
+  "message": "User role edited successfully from bucket."
+}
+```
+
+## Delete User
+
+Delete user by `id` from your bucket.
+
+<Callout emoji="⚠">
+  **Required**
+  <br />
+  `token` must be passed as `Authorization Bearer` in the header of the request
+  and you must have `admin` access to perform this operation.
+</Callout>
+
+**Definition**
+
+```bash
+DELETE $BASE_URL/buckets/${bucket_slug}/users/${user_id}
+```
+
+**Example Response (status: `200 OK`)**
+
+```json
+{
+  "message": "User delete successfully from bucket."
+}
+```

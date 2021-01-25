@@ -1,0 +1,57 @@
+import Callout from "nextra-theme-docs/callout";
+
+# Authentication
+
+## Get your token
+
+You can get your authentication token in your user account settings located in <i><a href="https://cosmicjs.com/account/authentication">Account Settings > Authentication</a></i>. You can also make requests to the API with your `email` and `password`.
+
+Send your `email` and `password` to receive your access token. Your access token will be used to add Buckets to your account as well as other account-related access.
+
+**NOTE: You do not need to use the token to access your Bucket. Your Bucket has its own read and write keys for restricted access.**
+
+| Parameter | Required |  Type  | Description                |
+| :-------- | :------: | :----: | :------------------------- |
+| email     | required | String | Your Cosmic login email    |
+| password  | required | String | Your Cosmic login password |
+
+**Definition**
+
+```bash
+POST $BASE_URL/authenticate
+```
+
+**Example Body (JSON)**
+
+```json
+{
+  "email": "you@youremail.com",
+  "password": "yourpassword"
+}
+```
+
+**Example Response (status: `200 OK`)**
+
+```json
+{
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXV.eyJlbWFpbCI6InNwaXJvbnl..."
+}
+```
+
+## Use your token
+
+You can use the Authentication token using REST requests to the API
+
+**Example -> Get Buckets**
+
+<Callout emoji="⚠">
+  **Required**
+  <br />
+  `token` must be passed as `Authorization Bearer` in the header of the request.
+</Callout>
+
+**Definition**
+
+```bash
+GET $BASE_URL/buckets
+```
