@@ -5,10 +5,11 @@ import Callout from "nextra-theme-docs/callout";
 The following endpoints allow you to get, add, edit and delete Objects in your Bucket.
 
 <Callout emoji="✅">
-  <strong>Quick Tip</strong>
-  Your `read` and `write` keys will be required to perform the following requests.
-  These can be found in <i>Your Bucket {">"} Basic Settings</i> in your [Bucket Dashboard
-  ](https://app.cosmicjs.com/login).
+  **Quick Tip**
+  <br />
+  Your `read` and `write` keys will be required to perform the following
+  requests. These can be found in <i>Your Bucket {">"} Basic Settings</i> in
+  your [Bucket Dashboard ](https://app.cosmicjs.com/login).
 </Callout>
 
 ## Get Objects
@@ -112,6 +113,12 @@ GET $BASE_URL/buckets/${bucket_slug}/objects?query=${query}
   "limit": 1
 }
 ```
+
+<Callout emoji="💡">
+  **Quick Tip**
+  <br />
+  Use `props` to limit the response size and get only the data you need.
+</Callout>
 
 **Example Request with Props**
 

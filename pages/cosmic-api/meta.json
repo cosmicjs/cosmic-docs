@@ -10,5 +10,6 @@
   "authentication": "Authentication",
   "buckets": "Buckets",
   "users": "Users",
-  "locales": "Localization"
+  "locales": "Localization",
+  "changelog": "Changelog"
 }
