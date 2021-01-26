@@ -1,8 +1,8 @@
 const Logo = ({ height = 20 }) => (
   <svg height={height} viewBox="0 0 681 189" version="1.1">
     <defs></defs>
-    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <g id="cosmic" fill-rule="nonzero">
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none">
+        <g id="cosmic">
             <g id="logo" fill="#29ABE2">
                 <path d="M76.3262984,64.2494459 C81.1542915,60.164221 85.6109004,56.0789961 90.4388935,52.3651553 C86.7250527,49.7654668 83.3825959,47.5371623 80.0401392,45.3088578 C75.9549143,48.6513145 71.8696894,52.3651553 67.7844646,56.0789961 C71.8696894,57.5645325 74.8407621,60.5356051 76.3262984,64.2494459 Z" id="Shape"></path>
                 <ellipse id="Oval" transform="translate(64.441789, 67.591755) rotate(0.151110) translate(-64.441789, -67.591755) " cx="64.4417887" cy="67.5917554" rx="15.969571" ry="15.2268003"></ellipse>

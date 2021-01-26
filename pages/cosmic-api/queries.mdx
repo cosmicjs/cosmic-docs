@@ -58,11 +58,15 @@ GET $BASE_URL/buckets/${bucket_slug}/objects?read_key=${read_key}&query=${query}
 
 ## Example Queries
 
+### Starting Endpoint
+
 **To keep examples concise, the following variables are used:**
 
 ```bash
 endpoint = "$BASE_URL/buckets/${bucket_slug}/objects?read_key=${read_key}&props=title,slug,metadata"
 ```
+
+### Queries
 
 **Matches Objects with exact Object Type**
 
@@ -182,4 +186,12 @@ curl '$endpoint&query={"metadata.categories":{"$in":["category_id-1","category_i
 
 ```bash
 curl '$endpoint&query={"metadata.categories":{"$nin":["category_id-1","category_id-2"]}}'
+```
+
+### Localization
+
+**Match with slug and locale**
+
+```bash
+curl '$endpoint&query={"slug":"home","locale":"en-US"}}'
 ```
