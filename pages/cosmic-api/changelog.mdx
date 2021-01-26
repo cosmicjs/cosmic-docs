@@ -1,3 +1,22 @@
 # Changelog
 
-Add changelog notes from v1 to v2 here.
+### <font color="#28ACE2">2.0.0-alpha</font>
+
+Published on Tue Jan 26 2021.
+
+### Changes
+
+- Change from `_id` to `id`
+- Change from `type_slug` to `type`
+- `write_key` will now be required in request header as `Authorization Bearer`
+- `metafields` are hidden by default
+- filtering of objects is only possible using `query`
+
+### Improvements
+
+- Better REST API endpoint structure
+- Better error handling with proper messages
+- Nested `metadata` props are possible now
+- no additional fields are possible in the body (`POST`, `PATCH`)
+- Endpoints for `Metafields`
+- Endpoints for `Media Folders`

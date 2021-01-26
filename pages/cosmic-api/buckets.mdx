@@ -160,11 +160,12 @@ Edit an existing bucket by `slug` in your account.
   and you must have `admin` access to perform this operation.
 </Callout>
 
-| Parameter             |  Type  | Default | Description                                   |
-| :-------------------- | :----: | :------ | :-------------------------------------------- |
-| title                 | String |         | Title of the bucket.                          |
-| reset_api_access_keys |  Enum  | false   | true, reset the `read_key` & `write_key`      |
-| pretty                |  Enum  | false   | true, Makes the response more reader-friendly |
+| Parameter             |  Type  | Default | Description                                                                      |
+| :-------------------- | :----: | :------ | :------------------------------------------------------------------------------- |
+| title                 | String |         | Title of the bucket.                                                             |
+| thumbnail             | String |         | Media `name`. Media must be available in Bucket. See [Media](/cosmic-api/media). |
+| reset_api_access_keys |  Enum  | false   | true, reset the `read_key` & `write_key`                                         |
+| pretty                |  Enum  | false   | true, Makes the response more reader-friendly                                    |
 
 _**Note:** At least one of the Parameters is required to process the request._
 

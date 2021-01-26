@@ -312,6 +312,7 @@ Add a new Object to your Bucket.
 | options.slug_field     |          |     Boolean     | Set to false to hide the slug field                                                            |
 | options.content_editor |          |     Boolean     | Set to false to hide the content editor                                                        |
 | locale                 |          |     String      | Add localization to the Object                                                                 |
+| thumbnail              |          |     String      | Media `name`. Media must be available in Bucket. See [Media](/cosmic-api/media).               |
 | pretty                 |          |      Enum       | true, Makes the response more reader-friendly                                                  |
 
 **Definition**
@@ -371,6 +372,7 @@ Edit an existing Object by `id` in your Bucket.
 | options.slug_field     |     Boolean     | Set to false to hide the slug field                                                            |
 | options.content_editor |     Boolean     | Set to false to hide the content editor                                                        |
 | locale                 |     String      | Add localization to the Object                                                                 |
+| thumbnail              |     String      | Media `name`. Media must be available in Bucket. See [Media](/cosmic-api/media).               |
 | pretty                 |      Enum       | true, Makes the response more reader-friendly                                                  |
 
 _**Note:** At least one of the Parameters is required to process the request._
