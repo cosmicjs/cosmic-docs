@@ -6,5 +6,8 @@
   "object-revisions": "Object Revisions",
   "advanced-query": "Advanced Queries",
   "media": "Media",
-  "media-folders": "Media Folders"
+  "media-folders": "Media Folders",
+  "authentication": "Authentication",
+  "buckets": "Buckets",
+  "users": "Users"
 }
