@@ -19,7 +19,7 @@ Get Objects in your Bucket.
 | :-------------- | :------: | :----: | :-------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | read_key        | required | String |           | Restrict read access to your Bucket                                                                                                                                                                          |
 | status          |          |  Enum  | published | published, any                                                                                                                                                                                               |
-| query           |          |  JSON  |           | A JSON string to perform advanced queries to filter out objects. Please see [Examples](/cosmic-api/advanced-query#example-queries) for more detail.                                                          |
+| query           |          |  JSON  |           | A JSON string to perform advanced queries to filter out objects. Please see [Examples](/cosmic-api/advanced-queries#example-queries) for more detail.                                                        |
 | show_metafields |          |  Enum  | false     | true, Shows metafields                                                                                                                                                                                       |
 | props           |          | String |           | Declare which properties to return in comma-separated string. Reference full Object for all available properties. Can include nested metadata. Example: `?props=id,title,metadata.author.metadata.image.url` |
 | sort            |          |  Enum  | order     | created_at, -created_at, modified_at, -modified_at, random, order                                                                                                                                            |
@@ -30,8 +30,15 @@ Get Objects in your Bucket.
 
 **Definition**
 
+```javascript
+const query = {
+  type: "posts",
+  limit: 1,
+};
+```
+
 ```bash
-GET $BASE_URL/buckets/${bucket_slug}/objects?limit=1
+GET $BASE_URL/buckets/${bucket_slug}/objects?query=${query}
 ```
 
 **Example Full Response**
@@ -109,6 +116,10 @@ GET $BASE_URL/buckets/${bucket_slug}/objects?limit=1
 **Example Request with Props**
 
 ```javascript
+const query = {
+  type: "posts",
+  limit: 1,
+};
 const props = `
   title,
   content,
@@ -118,7 +129,7 @@ const props = `
 ```
 
 ```bash
-GET $BASE_URL/buckets/${bucket_slug}/objects?limit=1&props=${props}
+GET $BASE_URL/buckets/${bucket_slug}/objects?query=${query}&props=${props}
 ```
 
 **Example Response with Props**

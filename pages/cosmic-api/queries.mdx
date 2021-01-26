@@ -1,8 +1,8 @@
 import Callout from "nextra-theme-docs/callout";
 
-# Advanced Queries
+# Queries
 
-Advanced queries give you powerful NoSQL database-like functionality for content fetching. Use the query parameter to send a valid JSON (stringified) query on the [Get Objects Endpoint](/cosmic-api/objects#get-objects). See [example requests below](/cosmic-api/advanced-query/#example-queries).
+Queries give you powerful NoSQL database-like functionality for content fetching. Use the query parameter to send a valid JSON (stringified) query on the [Get Objects Endpoint](/cosmic-api/objects#get-objects). See [example requests below](/cosmic-api/advanced-queries/#example-queries).
 
 <Callout emoji="✅">
   <strong>Note</strong>
@@ -13,7 +13,7 @@ Advanced queries give you powerful NoSQL database-like functionality for content
 **Definition**
 
 ```bash
-GET $BASE_URL/buckets/${bucket_slug}/objects?read_key=${read_key}&query=${JSON_query}
+GET $BASE_URL/buckets/${bucket_slug}/objects?read_key=${read_key}&query=${query}
 ```
 
 ### Available Keys to Query
