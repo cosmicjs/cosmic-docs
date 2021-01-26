@@ -1,6 +1,6 @@
 {
   "introduction": "Introduction",
-  "locales": "Available Locales",
-  "metafields": "Metafields",
-  "request-limits": "Request Limits"
+  "request-limits": "Request Limits",
+  "error-handling": "Error Handling",
+  "metafields": "Metafields"
 }

@@ -9,5 +9,6 @@
   "media-folders": "Media Folders",
   "authentication": "Authentication",
   "buckets": "Buckets",
-  "users": "Users"
+  "users": "Users",
+  "locales": "Localization"
 }

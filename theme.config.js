@@ -26,7 +26,7 @@ const Logo = ({ height = 20 }) => (
 export default {
   repository: "https://github.com/cosmicjs/cosmic-docs",
   docsRepository: "https://github.com/cosmicjs/cosmic-docs",
-  titleSuffix: " – Docs",
+  titleSuffix: " – Cosmic Docs",
   branch: "main", // branch of docs
   path: "/", // path of docs,
   nextLinks: false,

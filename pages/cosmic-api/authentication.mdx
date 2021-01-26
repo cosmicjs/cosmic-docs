@@ -8,7 +8,12 @@ You can get your authentication token in your user account settings located in <
 
 Send your `email` and `password` to receive your access token. Your access token will be used to add Buckets to your account as well as other account-related access.
 
-**NOTE: You do not need to use the token to access your Bucket. Your Bucket has its own read and write keys for restricted access.**
+<Callout emoji="⚠">
+  **Note**
+  <br />
+  You do not need to use the token to access your Bucket. Your Bucket has its
+  own read and write keys for restricted access.
+</Callout>
 
 | Parameter | Required |  Type  | Description                |
 | :-------- | :------: | :----: | :------------------------- |
@@ -54,4 +59,12 @@ You can use the Authentication token using REST requests to the API
 
 ```bash
 GET $BASE_URL/buckets
+```
+
+**Header**
+
+```json
+{
+  "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXV.eyJlbWFpbCI6InNwaXJvbnl..."
+}
 ```
