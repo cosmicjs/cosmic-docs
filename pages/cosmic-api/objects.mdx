@@ -15,26 +15,26 @@ The following endpoints allow you to get, add, edit and delete Objects in your B
 
 Get Objects in your Bucket.
 
-| Parameter       | Required |  Type  | Default   | Description                                                                                                                                                  |
-| :-------------- | :------: | :----: | :-------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| read_key        | required | String |           | Restrict read access to your Bucket                                                                                                                          |
-| status          |          |  Enum  | published | published, any                                                                                                                                               |
-| query           |          |  JSON  |           | A JSON string to perform advanced queries to filter out objects. Please see [Examples](/cosmic-api/advanced-query#example-queries) for more detail.          |
-| show_metafields |          |  Enum  | false     | true, Shows metafields                                                                                                                                       |
-| props           |          | String |           | Declare which properties to return in comma-separated string. Reference full Object for all available properties. Example: `?props=id,title,metadata.author` |
-| sort            |          |  Enum  | order     | created_at, -created_at, modified_at, -modified_at, random, order                                                                                            |
-| limit           |          | Number | 1000      | The number of Objects to return                                                                                                                              |
-| skip            |          | Number | 0         | The number of Objects to skip                                                                                                                                |
-| after           |          | String |           | Objects after specified Object Id (can only use one of `skip` or `after`)                                                                                    |
-| pretty          |          |  Enum  | false     | true, Makes the response more reader-friendly                                                                                                                |
+| Parameter       | Required |  Type  | Default   | Description                                                                                                                                                                                                  |
+| :-------------- | :------: | :----: | :-------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| read_key        | required | String |           | Restrict read access to your Bucket                                                                                                                                                                          |
+| status          |          |  Enum  | published | published, any                                                                                                                                                                                               |
+| query           |          |  JSON  |           | A JSON string to perform advanced queries to filter out objects. Please see [Examples](/cosmic-api/advanced-query#example-queries) for more detail.                                                          |
+| show_metafields |          |  Enum  | false     | true, Shows metafields                                                                                                                                                                                       |
+| props           |          | String |           | Declare which properties to return in comma-separated string. Reference full Object for all available properties. Can include nested metadata. Example: `?props=id,title,metadata.author.metadata.image.url` |
+| sort            |          |  Enum  | order     | created_at, -created_at, modified_at, -modified_at, random, order                                                                                                                                            |
+| limit           |          | Number | 1000      | The number of Objects to return                                                                                                                                                                              |
+| skip            |          | Number | 0         | The number of Objects to skip                                                                                                                                                                                |
+| after           |          | String |           | Objects after specified Object Id (can only use one of `skip` or `after`)                                                                                                                                    |
+| pretty          |          |  Enum  | false     | true, Makes the response more reader-friendly                                                                                                                                                                |
 
 **Definition**
 
 ```bash
-GET $BASE_URL/buckets/${bucket_slug}/objects
+GET $BASE_URL/buckets/${bucket_slug}/objects?limit=1
 ```
 
-**Example Response**
+**Example Full Response**
 
 ```json
 {
@@ -106,6 +106,48 @@ GET $BASE_URL/buckets/${bucket_slug}/objects
 }
 ```
 
+**Example Request with Props**
+
+```javascript
+const props = `
+  title,
+  content,
+  metadata.parent.title,
+  metadata.parent.metadata.category.metadata.description
+`;
+```
+
+```bash
+GET $BASE_URL/buckets/${bucket_slug}/objects?limit=1&props=${props}
+```
+
+**Example Response with Props**
+
+```json
+{
+  "objects": [
+    {
+      "title": "Learning",
+      "content": "<p>Learning is fun!!</p>",
+      "metadata": {
+        "parent": {
+          "title": "Example Post",
+          "metadata": {
+            "category": {
+              "metadata": {
+                "description": "This is the example description"
+              }
+            }
+          }
+        }
+      }
+    }
+  ],
+  "total": 6,
+  "limit": 1
+}
+```
+
 ## Get Object
 
 Returns a single Object by `id` from your Bucket.
@@ -124,7 +166,7 @@ Returns a single Object by `id` from your Bucket.
 GET $BASE_URL/buckets/${bucket_slug}/objects/${object_id}
 ```
 
-**Example Response (status: `200 OK`)**
+**Example Full Response (status: `200 OK`)**
 
 ```json
 {
@@ -184,6 +226,42 @@ GET $BASE_URL/buckets/${bucket_slug}/objects/${object_id}
               "description": "This is the example description",
               "parent": "5f7357b27286d7773adc551f"
             }
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+**Example Request with Props**
+
+```javascript
+const props = `
+  title,
+  metadata.description,
+  metadata.parent.title,
+  metadata.parent.metadata.category.title
+`;
+```
+
+```bash
+GET $BASE_URL/buckets/${bucket_slug}/objects/${object_id}?props=${props}
+```
+
+**Example Full Response (status: `200 OK`)**
+
+```json
+{
+  "object": {
+    "title": "Learning",
+    "metadata": {
+      "description": "This is the example description",
+      "parent": {
+        "title": "Example Post",
+        "metadata": {
+          "category": {
+            "title": "Learning"
           }
         }
       }

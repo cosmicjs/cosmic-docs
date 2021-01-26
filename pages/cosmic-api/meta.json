@@ -1,10 +1,10 @@
 {
   "getting-started": "Getting Started",
-  "object-types": "Object Types",
   "objects": "Objects",
+  "object-metafields": "Object Metafields",
+  "object-types": "Object Types",
   "object-revisions": "Object Revisions",
   "advanced-query": "Advanced Queries",
-  "object-metafields": "Object Metafields",
   "media": "Media",
   "media-folders": "Media Folders"
 }
