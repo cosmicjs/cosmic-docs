@@ -41,6 +41,7 @@ export default {
   head: (
     <>
       {/* Favicons, meta */}
+      <meta name="robots" content="noindex" />
       <link
         rel="shortcut icon"
         type="image/x-icon"
@@ -58,7 +59,7 @@ export default {
       <meta name="description" content="Cosmic documentation" />
       <meta name="og:description" content="Cosmic documentation" />
       <meta name="twitter:card" content="summary_large_image" />
-      <meta name="twitter:site" content="@cosmic" />
+      <meta name="twitter:site" content="@cosmicjs" />
       <meta name="og:title" content="Cosmic Docs" />
       <meta name="og:url" content="https://cosmicjs.com/docs" />
       <meta name="apple-mobile-web-app-title" content="Cosmic Docs" />
