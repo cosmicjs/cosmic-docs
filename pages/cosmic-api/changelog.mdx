@@ -8,17 +8,17 @@ Published on Tue Jan 26 2021.
 
 - Change from `_id` to `id`
 - Change from `type_slug` to `type`
-- single Objects are now returned using `id` only. To return by `slug`, you will need to use `query`.
+- Single Objects are now returned using `id` only. To return by `slug`, you will need to use `query`.
 - `write_key` will now be required in request header as `Authorization Bearer`
 - `metafields` are hidden by default
-- `Select Dropdown` metadata will be `{ key: '', value: '' }`
-- filtering of objects is only possible using `query`
+- Select Dropdown Metafield metadata response from the API now includes `key` and `value`
+- Filtering of objects is only possible using `query`
 
 ### Improvements
 
 - Better REST API endpoint structure
 - Better error handling with proper messages
 - Nested `metadata` props are possible now
-- no additional fields are possible in the body (`POST`, `PATCH`)
+- No additional fields are possible in the body (`POST`, `PATCH`)
 - Endpoints for `Metafields`
 - Endpoints for `Media Folders`
