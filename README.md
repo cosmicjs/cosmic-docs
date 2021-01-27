@@ -1,6 +1,6 @@
 # Cosmic Docs
 
-Cosmic documentation docs
+Cosmic docs
 
 ## How to run
 

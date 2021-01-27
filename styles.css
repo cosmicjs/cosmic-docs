@@ -24,3 +24,7 @@
 code {
   @apply text-sm;
 }
+.dark .cosmic-logo-icon,
+.dark .cosmic-logo-text {
+  fill: #fff;
+}
