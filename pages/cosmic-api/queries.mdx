@@ -10,7 +10,7 @@ Queries give you powerful NoSQL database-like functionality for content fetching
   will need to be encoded: `%7B` and `%7D` respectively. [This encoder tool may help](https://meyerweb.com/eric/tools/dencoder/).
 </Callout>
 
-**Definition**
+Definition
 
 ```bash
 GET $BASE_URL/buckets/${bucket_slug}/objects?read_key=${read_key}&query=${query}
@@ -60,7 +60,7 @@ GET $BASE_URL/buckets/${bucket_slug}/objects?read_key=${read_key}&query=${query}
 
 ### Starting Endpoint
 
-**To keep examples concise, the following variables are used:**
+To keep examples concise, the following variables are used:
 
 ```bash
 endpoint = "$BASE_URL/buckets/${bucket_slug}/objects?read_key=${read_key}&props=title,slug,metadata"
@@ -68,121 +68,121 @@ endpoint = "$BASE_URL/buckets/${bucket_slug}/objects?read_key=${read_key}&props=
 
 ### Queries
 
-**Matches Objects with exact Object Type**
+Matches Objects with exact Object Type
 
 ```bash
 curl '$endpoint&query={"type":"posts"}'
 ```
 
-**Matches Objects with exact title**
+Matches Objects with exact title
 
 ```bash
 curl '$endpoint&query={"title":"Post 1"}'
 ```
 
-**Matches Objects with exact id**
+Matches Objects with exact id
 
 ```bash
 curl '$endpoint&query={"id":"valid-object-id"}'
 ```
 
-**Matches Objects with any ids**
+Matches Objects with any ids
 
 ```bash
 curl '$endpoint&query={"id":["valid-object-id-1","valid-object-id-2"]}'
 ```
 
-**Match Objects with any ids not equal to value**
+Match Objects with any ids not equal to value
 
 ```bash
 curl '$endpoint&query={"id":{"$ne":"valid-object-id"}}'
 ```
 
-**Match Objects except with ids in the array of values**
+Match Objects except with ids in the array of values
 
 ```bash
 curl '$endpoint&query={"id":{"$nin":["valid-object-id-1","valid-object-id-2"]}}'
 ```
 
-**Match Objects with exact slug**
+Match Objects with exact slug
 
 ```bash
 curl '$endpoint&query={"slug":"post-1"}'
 ```
 
-**Match Objects with string in content. Case insensive with $options.**
+Match Objects with string in content. Case insensive with $options.
 
 ```bash
 curl '$endpoint&query={"content":{"$regex":"jamstack","$options":"i"}}'
 ```
 
-**Match metadata value (Number Metafield)**
+Match metadata value (Number Metafield)
 
 ```bash
 curl '$endpoint&query={"metadata.price":9.99}'
 ```
 
-**Match any slug values**
+Match any slug values
 
 ```bash
 curl '$endpoint&query={"$or":[{"slug":"post-1"},{"slug":"post-2"}]}'
 ```
 
-**Match any metadata values**
+Match any metadata values
 
 ```bash
 curl '$endpoint&query={"$or":[{"metadata.grade":"A"},{"metadata.grade":"B"}]}'
 ```
 
-**Match all metadata values**
+Match all metadata values
 
 ```bash
 curl '$endpoint&query={"$and":[{"metadata.grade":"A"},{"metadata.price":{"$lt":10}}]}'
 ```
 
-**Match greater than or equal to metadata value**
+Match greater than or equal to metadata value
 
 ```bash
 curl '$endpoint&query={"metadata.price":{"$gte":9.99}}'
 ```
 
-**Match exact metadata value (Switch Metafield)**
+Match exact metadata value (Switch Metafield)
 
 ```bash
 curl '$endpoint&query={"metadata.is_featured":true}'
 ```
 
-**Match nested JSON metadata value (JSON Metafield)**
+Match nested JSON metadata value (JSON Metafield)
 
 ```bash
 curl '$endpoint&query={"metadata.json_data":{"is_awesome":true,"other_data":{"nested":"yep"}}}'
 ```
 
-**Match Single Object Metafield value**
+Match Single Object Metafield value
 
 ```bash
 curl '$endpoint&query={"metadata.category":"category_id-1"}'
 ```
 
-**Match not equal to Single Object Metafield value**
+Match not equal to Single Object Metafield value
 
 ```bash
 curl '$endpoint&query={"metadata.category":{"$ne": "category_id-1"}}'
 ```
 
-**Match all Multiple Object Metafield values**
+Match all Multiple Object Metafield values
 
 ```bash
 curl '$endpoint&query={"metadata.categories":["category_id-1","category_id-2"]}'
 ```
 
-**Match any Multiple Object Metafield values**
+Match any Multiple Object Metafield values
 
 ```bash
 curl '$endpoint&query={"metadata.categories":{"$in":["category_id-1","category_id-2"]}}'
 ```
 
-**Match doesn't have any Multiple Object Metafield values**
+Match doesn't have any Multiple Object Metafield values
 
 ```bash
 curl '$endpoint&query={"metadata.categories":{"$nin":["category_id-1","category_id-2"]}}'
@@ -190,7 +190,7 @@ curl '$endpoint&query={"metadata.categories":{"$nin":["category_id-1","category_
 
 ### Localization
 
-**Match with slug and locale**
+Match with slug and locale
 
 ```bash
 curl '$endpoint&query={"slug":"home","locale":"en-US"}}'
