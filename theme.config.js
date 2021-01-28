@@ -36,6 +36,7 @@ export default {
     <>
       <Logo height={32} />
       <span className="mx-2 ml-5 font-extrabold hidden md:inline">API v2 Docs</span>
+      <span className="text-gray-600 font-normal hidden md:inline whitespace-no-wrap">Content API for websites and apps</span>
     </>
   ),
   head: (
