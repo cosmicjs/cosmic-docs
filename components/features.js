@@ -1,7 +1,7 @@
 
 import styles from './features.module.css'
 
-export default features = () => (
+export default () => (
   <div>
     <p className="text-lg mb-2 text-gray-600 md:text-xl">Content API and developer toolkit</p>
     <div className={styles.features}>
