@@ -1,5 +1,5 @@
-const Logo = ({ height = 20 }) => (
-  <svg height={height} viewBox="0 0 681 189" version="1.1">
+const Logo = ({ height = 20, classes = '' }) => (
+  <svg height={height} className={classes} viewBox="0 0 681 189" version="1.1">
     <defs></defs>
     <g id="Page-1" stroke="none" strokeWidth="1" fill="none">
         <g id="cosmic">
@@ -34,9 +34,9 @@ export default {
   search: false,
   logo: (
     <>
-      <Logo height={32} />
-      <span className="mx-2 ml-5 font-extrabold hidden md:inline">Docs v2</span>
-      <span className="text-gray-600 font-normal hidden md:inline whitespace-no-wrap">Content API and developer toolkit</span>
+      <Logo height={32} classes="mt-1" />
+      <span className="mx-2 mt-1 ml-5 font-extrabold hidden md:inline">Docs v2</span>
+      <span className="text-gray-600 mt-1 font-normal hidden md:inline whitespace-no-wrap">Content API and developer toolkit</span>
     </>
   ),
   head: (
