@@ -18,7 +18,8 @@ Published on Tue Jan 26 2021.
 
 - Better REST API endpoint structure `GET /resources/:resource_id`, `POST /resources`, etc.
 - Better error handling with proper messages.
-- Nested `metadata` props are possible nowv
+- Nested `metadata` props are now possible. See [Get Objects examples](/cosmic-api/objects#get-objects) with nested props.
+- No depth limit for Object relationships. The only limit is a prevention of infinite recursion.
 - No additional fields are possible in the body (`POST`, `PATCH`).
 - Endpoints for `Metafields`.
 - Endpoints for `Media Folders`.
