@@ -29,8 +29,8 @@ export default {
   titleSuffix: " – Cosmic Docs",
   branch: "main", // branch of docs
   path: "/", // path of docs,
-  nextLinks: false,
-  prevLinks: false,
+  nextLinks: true,
+  prevLinks: true,
   search: false,
   logo: (
     <>
