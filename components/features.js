@@ -22,7 +22,7 @@ export default () => (
         <h4>Jamstack ready</h4>
       </div>
       <div className={styles.feature}>
-        <img className={styles.img} src="https://cdn.cosmicjs.com/8d4f0b40-33e0-11ea-ad16-3d7209450571-security.svg"/>&nbsp;&nbsp;
+        <img className={styles.img} src="https://cdn.cosmicjs.com/548985c0-61f6-11eb-99a3-376f095ca0cf-secure.svg"/>&nbsp;&nbsp;
         <h4>Secure</h4>
       </div>
       <div className={styles.feature}>
