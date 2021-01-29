@@ -1,7 +1,7 @@
 
-import styles from './features.module.css'
+import styles from './features.module.css';
 
-export default () => (
+const features = () => (
   <div>
     <p className="text-lg mb-2 text-gray-600 md:text-xl">Content API and developer toolkit</p>
     <div className={styles.features}>
@@ -31,4 +31,6 @@ export default () => (
       </div>
     </div>
   </div>
-)
+);
+
+export default features;
