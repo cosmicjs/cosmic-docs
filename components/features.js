@@ -10,12 +10,12 @@ export default () => (
         <h4>Composable</h4>
       </div>
       <div className={styles.feature}>
-        <img className="w-12 h-12" src="https://cdn.cosmicjs.com/9a0e1560-3007-11ea-a774-fd983bfe489d-071-screwdriver.svg"/>&nbsp;&nbsp;
-        <h4>Extensive toolkit</h4>
+        <img className="w-12 h-12" src="https://cdn.cosmicjs.com/50f3c410-25c1-11ea-a865-1b8d71835f52-009-stem-cells.svg"/>&nbsp;&nbsp;
+        <h4>Powerful modeling</h4>
       </div>
       <div className={styles.feature}>
-        <img className="w-12 h-12" src="https://cdn.cosmicjs.com/50f3c410-25c1-11ea-a865-1b8d71835f52-009-stem-cells.svg"/>&nbsp;&nbsp;
-        <h4>Powerful relations</h4>
+        <img className="w-12 h-12" src="https://cdn.cosmicjs.com/9a0e1560-3007-11ea-a774-fd983bfe489d-071-screwdriver.svg"/>&nbsp;&nbsp;
+        <h4>Extensive toolkit</h4>
       </div>
       <div className={styles.feature}>
         <img className="w-12 h-12" src="https://cdn.cosmicjs.com/fa4b67e0-33e3-11ea-9530-5d76cd173054-112-layers.svg"/>&nbsp;&nbsp;
