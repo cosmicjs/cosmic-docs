@@ -19,7 +19,7 @@ Get Object Revisions of Object with `id` in your Bucket.
 | Parameter       | Required |  Type  | Default | Description                                                                                                                                                  |
 | :-------------- | :------: | :----: | :------ | :----------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | read_key        | required | String |         | Restrict read access to your Bucket                                                                                                                          |
-| query           |          |  JSON  |         | A JSON string to perform advanced queries to filter out objects. Please see [Examples](/api-reference/queries#example-queries) for more detail.              |
+| query           |          |  JSON  |         | A JSON string to perform Object search and filtering. Please see [Queries section](/api-reference/queries) for more detail.                                  |
 | show_metafields |          |  Enum  | false   | true, Shows metafields                                                                                                                                       |
 | props           |          | String |         | Declare which properties to return in comma-separated string. Reference full Object for all available properties. Example: `?props=id,title,metadata.author` |
 | sort            |          |  Enum  | order   | created_at, -created_at, modified_at, -modified_at, random, order                                                                                            |
