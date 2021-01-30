@@ -4,19 +4,21 @@ Metafields are powerful components that can be added to Objects and Object Types
 
 ## Model
 
-| Parameter     |                         Required                         |       Type       | Description                                                                                                                                                                                      |
-| :------------ | :------------------------------------------------------: | :--------------: | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| type          |                         required                         |       Enum       | text, textarea, html-textarea, select-dropdown, object, objects, file, date, radio-buttons, check-boxes, repeater, parent, markdown, json, switch, number                                        |
-| title         |                         required                         |      String      | Your Metafield title                                                                                                                                                                             |
-| key           |                         required                         |      String      | Unique identifier for your Metafield                                                                                                                                                             |
-| value         |                          varies                          | Varies by `type` | Metafield value. Property required to be present (empty string ok) except for `repeater` and `parent` (should not be present). See example model below for various value types and requirements. |
-| required      |                                                          |       Bool       | A value is required                                                                                                                                                                              |
-| regex         |                                                          |      String      | Restrict the value to match a regular expresssion                                                                                                                                                |
-| regex_message |                                                          |      String      | The message displayed when the value fails the regex                                                                                                                                             |
-| minlength     |                                                          |      Number      | Add minlength to text or textarea Metafields                                                                                                                                                     |
-| maxlength     |                                                          |      Number      | Add maxlength to text or textarea Metafields                                                                                                                                                     |
-| options       | Required for `options`, `radio`, `checkbox` and `switch` | Varies by `type` | Array of options for select, radio, and checkbox Metafields and string for switch Metafield with possible values `true,false` and `yes,no`                                                       |
-| children      |                                                          |      Array       | Add nested Metafields                                                                                                                                                                            |
+| Parameter       |                         Required                         |       Type       | Description                                                                                                                                                                                      |
+| :-------------- | :------------------------------------------------------: | :--------------: | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| type            |                         required                         |       Enum       | text, textarea, html-textarea, select-dropdown, object, objects, file, date, radio-buttons, check-boxes, repeater, parent, markdown, json, switch, number                                        |
+| title           |                         required                         |      String      | Your Metafield title                                                                                                                                                                             |
+| key             |                         required                         |      String      | Unique identifier for your Metafield                                                                                                                                                             |
+| value           |                          varies                          | Varies by `type` | Metafield value. Property required to be present (empty string ok) except for `repeater` and `parent` (should not be present). See example model below for various value types and requirements. |
+| required        |                                                          |       Bool       | A value is required                                                                                                                                                                              |
+| regex           |                                                          |      String      | Restrict the value to match a regular expresssion                                                                                                                                                |
+| regex_message   |                                                          |      String      | The message displayed when the value fails the regex                                                                                                                                             |
+| minlength       |                                                          |      Number      | Add minlength to text or textarea Metafields                                                                                                                                                     |
+| maxlength       |                                                          |      Number      | Add maxlength to text or textarea Metafields                                                                                                                                                     |
+| options         | Required for `options`, `radio`, `checkbox` and `switch` | Varies by `type` | Array of options for select, radio, and checkbox Metafields and string for switch Metafield with possible values `true,false` and `yes,no`                                                       |
+| children        |                                                          |      Array       | Array of nested Metafields                                                                                                                                                                       |
+| object_type     |                                                          |      String      | Valid Object Type slug. Applies only to `object` and `objects` Metafield                                                                                                                         |
+| repeater_fields |                                                          |      Array       | Array of nested Metafields. Applies only to `repeater` Metafield                                                                                                                                 |
 
 **Example Metafields**
 
@@ -146,7 +148,7 @@ Metafields are powerful components that can be added to Objects and Object Types
       "options": "true,false"
     },
     {
-      "type": "parent", // ! No value !
+      "type": "parent", // ! Value is not allowed for parent Metafield !
       "title": "Call Out Section",
       "key": "call_out_section",
       "children": [
@@ -171,9 +173,10 @@ Metafields are powerful components that can be added to Objects and Object Types
       ]
     },
     {
-      "type": "repeater", // ! No value !
+      "type": "repeater", // ! Value is not allowed for repeater Metafield !
       "title": "Testimonials",
       "key": "testimonials",
+      // Available repeaters
       "repeater_fields": [
         {
           "title": "Name",
@@ -190,6 +193,7 @@ Metafields are powerful components that can be added to Objects and Object Types
           "required": false
         }
       ],
+      //  Repeating items and values
       "children": [
         {
           "type": "repeating_item",
