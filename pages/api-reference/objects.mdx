@@ -20,7 +20,7 @@ Get Objects in your Bucket.
 | :-------------- | :------: | :----: | :-------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | read_key        | required | String |           | Restrict read access to your Bucket                                                                                                                                                                          |
 | status          |          |  Enum  | published | published, any (returns latest draft or published Object)                                                                                                                                                    |
-| query           |          |  JSON  |           | A JSON string to perform advanced queries to filter out objects. Please see [Examples](/cosmic-api/queries#example-queries) for more detail.                                                                 |
+| query           |          |  JSON  |           | A JSON string to perform advanced queries to filter out objects. Please see [Examples](/api-reference/queries#example-queries) for more detail.                                                              |
 | show_metafields |          |  Enum  | false     | true, Shows metafields                                                                                                                                                                                       |
 | props           |          | String |           | Declare which properties to return in comma-separated string. Reference full Object for all available properties. Can include nested metadata. Example: `?props=id,title,metadata.author.metadata.image.url` |
 | sort            |          |  Enum  | order     | created_at, -created_at, modified_at, -modified_at, random, order                                                                                                                                            |
@@ -299,21 +299,21 @@ Add a new Object to your Bucket.
   request.
 </Callout>
 
-| Parameter              | Required |      Type       | Description                                                                                    |
-| :--------------------- | :------: | :-------------: | :--------------------------------------------------------------------------------------------- |
-| type                   | required |     String      | Add Object to Object Type                                                                      |
-| title                  | required |     String      | Your Object title                                                                              |
-| slug                   |          |     String      | Unique identifier for your Object                                                              |
-| content                |          |     String      | Add Content to your Object                                                                     |
-| status                 |          |      Enum       | draft, published, defaults to published                                                        |
-| metafields             |          | Array of Object | Add Metafields to your Object. See [Metafields Model](/cosmic-api/getting-started/metafields). |
-| created_by             |          |     String      | Author User Id                                                                                 |
-| publish_at             |          |     Number      | UNIX millisecond timestamp. Publish automatically at a later time.                             |
-| options.slug_field     |          |     Boolean     | Set to false to hide the slug field                                                            |
-| options.content_editor |          |     Boolean     | Set to false to hide the content editor                                                        |
-| locale                 |          |     String      | Add localization to the Object                                                                 |
-| thumbnail              |          |     String      | Media `name`. Media must be available in Bucket. See [Media](/cosmic-api/media).               |
-| pretty                 |          |      Enum       | true, Makes the response more reader-friendly                                                  |
+| Parameter              | Required |      Type       | Description                                                                                       |
+| :--------------------- | :------: | :-------------: | :------------------------------------------------------------------------------------------------ |
+| type                   | required |     String      | Add Object to Object Type                                                                         |
+| title                  | required |     String      | Your Object title                                                                                 |
+| slug                   |          |     String      | Unique identifier for your Object                                                                 |
+| content                |          |     String      | Add Content to your Object                                                                        |
+| status                 |          |      Enum       | draft, published, defaults to published                                                           |
+| metafields             |          | Array of Object | Add Metafields to your Object. See [Metafields Model](/api-reference/getting-started/metafields). |
+| created_by             |          |     String      | Author User Id                                                                                    |
+| publish_at             |          |     Number      | UNIX millisecond timestamp. Publish automatically at a later time.                                |
+| options.slug_field     |          |     Boolean     | Set to false to hide the slug field                                                               |
+| options.content_editor |          |     Boolean     | Set to false to hide the content editor                                                           |
+| locale                 |          |     String      | Add localization to the Object                                                                    |
+| thumbnail              |          |     String      | Media `name`. Media must be available in Bucket. See [Media](/api-reference/media).               |
+| pretty                 |          |      Enum       | true, Makes the response more reader-friendly                                                     |
 
 **Definition**
 
@@ -361,19 +361,19 @@ Edit an existing Object by `id` in your Bucket.
   request.
 </Callout>
 
-| Parameter              |      Type       | Description                                                                                    |
-| :--------------------- | :-------------: | :--------------------------------------------------------------------------------------------- |
-| title                  |     String      | Your Object title                                                                              |
-| slug                   |     String      | Unique identifier for your Object                                                              |
-| content                |     String      | Add Content to your Object                                                                     |
-| status                 |      Enum       | draft, published, defaults to published                                                        |
-| metafields             | Array of Object | Add Metafields to your Object. See [Metafields Model](/cosmic-api/getting-started/metafields). |
-| publish_at             |     Number      | UNIX millisecond timestamp. Publish automatically at a later time.                             |
-| options.slug_field     |     Boolean     | Set to false to hide the slug field                                                            |
-| options.content_editor |     Boolean     | Set to false to hide the content editor                                                        |
-| locale                 |     String      | Add localization to the Object                                                                 |
-| thumbnail              |     String      | Media `name`. Media must be available in Bucket. See [Media](/cosmic-api/media).               |
-| pretty                 |      Enum       | true, Makes the response more reader-friendly                                                  |
+| Parameter              |      Type       | Description                                                                                       |
+| :--------------------- | :-------------: | :------------------------------------------------------------------------------------------------ |
+| title                  |     String      | Your Object title                                                                                 |
+| slug                   |     String      | Unique identifier for your Object                                                                 |
+| content                |     String      | Add Content to your Object                                                                        |
+| status                 |      Enum       | draft, published, defaults to published                                                           |
+| metafields             | Array of Object | Add Metafields to your Object. See [Metafields Model](/api-reference/getting-started/metafields). |
+| publish_at             |     Number      | UNIX millisecond timestamp. Publish automatically at a later time.                                |
+| options.slug_field     |     Boolean     | Set to false to hide the slug field                                                               |
+| options.content_editor |     Boolean     | Set to false to hide the content editor                                                           |
+| locale                 |     String      | Add localization to the Object                                                                    |
+| thumbnail              |     String      | Media `name`. Media must be available in Bucket. See [Media](/api-reference/media).               |
+| pretty                 |      Enum       | true, Makes the response more reader-friendly                                                     |
 
 _**Note:** At least one of the Parameters is required to process the request._
 

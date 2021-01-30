@@ -14,7 +14,7 @@ The following endpoints allow you to get, add, edit and delete buckets in your a
   <i>
     [Account Settings {">"}
     Authentication](https://app.cosmicjs.com/account/authentication)
-  </i>. You can also get your token using the [API](/cosmic-api/authentication#get-your-token)
+  </i>. You can also get your token using the [API](/api-reference/authentication#get-your-token)
   with your `email` and `password`.
 </Callout>
 
@@ -159,12 +159,12 @@ Edit an existing bucket by `slug` in your account.
   and you must have `admin` access to perform this operation.
 </Callout>
 
-| Parameter             |  Type  | Default | Description                                                                      |
-| :-------------------- | :----: | :------ | :------------------------------------------------------------------------------- |
-| title                 | String |         | Title of the bucket.                                                             |
-| thumbnail             | String |         | Media `name`. Media must be available in Bucket. See [Media](/cosmic-api/media). |
-| reset_api_access_keys |  Enum  | false   | true, reset the `read_key` & `write_key`                                         |
-| pretty                |  Enum  | false   | true, Makes the response more reader-friendly                                    |
+| Parameter             |  Type  | Default | Description                                                                         |
+| :-------------------- | :----: | :------ | :---------------------------------------------------------------------------------- |
+| title                 | String |         | Title of the bucket.                                                                |
+| thumbnail             | String |         | Media `name`. Media must be available in Bucket. See [Media](/api-reference/media). |
+| reset_api_access_keys |  Enum  | false   | true, reset the `read_key` & `write_key`                                            |
+| pretty                |  Enum  | false   | true, Makes the response more reader-friendly                                       |
 
 _**Note:** At least one of the Parameters is required to process the request._
 

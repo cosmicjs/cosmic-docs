@@ -12,13 +12,13 @@ Published on Tue Jan 26 2021.
 - `write_key` will now be required in the request header as `Authorization Bearer`.
 - `metafields` are hidden by default.
 - The Select Dropdown Metafield API response now includes `key` and `value`.
-- Objects are now only able to be searched and filtered using the `query` param (Advanced Queries in v1). See [Queries and Logic](/cosmic-api/queries) for examples.
+- Objects are now only able to be searched and filtered using the `query` param (Advanced Queries in v1). See [Queries and Logic](/api-reference/queries) for examples.
 
 ### Improvements
 
 - Better REST API endpoint structure `GET /resources/:resource_id`, `POST /resources`, etc.
 - Better error handling with proper messages.
-- Nested `metadata` props are now possible without limit. See [examples of nested props](/cosmic-api/objects#get-objects).
+- Nested `metadata` props are now possible without limit. See [examples of nested props](/api-reference/objects#get-objects).
 - No depth limit for Object relationships. The only limit is a prevention of infinite recursion.
 - No additional fields are possible in the body (`POST`, `PATCH`).
 - Endpoints have been added for `Metafields`.
