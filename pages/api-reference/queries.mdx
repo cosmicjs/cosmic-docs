@@ -19,7 +19,7 @@ Definition
 GET $BASE_URL/buckets/${bucket_slug}/objects?read_key=${read_key}&query=${query}
 ```
 
-### Available Keys to Query
+## Query Keys
 
 | Parameter     | Description                |
 | :------------ | :------------------------- |
@@ -37,7 +37,7 @@ GET $BASE_URL/buckets/${bucket_slug}/objects?read_key=${read_key}&query=${query}
 | modified_by   | Object Modified by user id |
 | metadata.$key | Metadata value(s)          |
 
-### Query Selectors
+## Query Selectors
 
 | Parameter        | Description                                                                               |
 | ---------------- | ----------------------------------------------------------------------------------------- |
@@ -51,7 +51,7 @@ GET $BASE_URL/buckets/${bucket_slug}/objects?read_key=${read_key}&query=${query}
 | $nin             | Matches none of the values specified in an array.                                         |
 | $regex, $options | Search for string, use `$options: "i"` for case insensitive matches                       |
 
-### Logic Operators
+## Logic Operators
 
 | Parameter | Description                               |
 | --------- | ----------------------------------------- |
@@ -61,15 +61,13 @@ GET $BASE_URL/buckets/${bucket_slug}/objects?read_key=${read_key}&query=${query}
 
 ## Example Queries
 
-### Starting Endpoint
+**Endpoint base path**
 
-To keep examples concise, the following variables are used:
+To keep examples concise, the following base path is used:
 
 ```bash
 endpoint = "$BASE_URL/buckets/${bucket_slug}/objects?read_key=${read_key}&props=title,slug,metadata"
 ```
-
-### Queries
 
 Matches Objects with exact Object Type
 
