@@ -11,6 +11,9 @@
   padding: 0 0.5rem 1.5rem;
   margin: 0 auto;
 }
+.feature svg {
+  height: 30px;
+}
 .feature h4 {
   margin: 0 0 0 0.5rem;
   font-weight: 700;
