@@ -34,12 +34,11 @@ Get Objects in your Bucket.
 ```javascript
 const query = {
   type: "posts",
-  limit: 1,
 };
 ```
 
 ```bash
-GET $BASE_URL/buckets/${bucket_slug}/objects?query=${query}
+GET $BASE_URL/buckets/${bucket_slug}/objects?query=${query}&limit=1
 ```
 
 **Example Full Response**
@@ -125,7 +124,6 @@ GET $BASE_URL/buckets/${bucket_slug}/objects?query=${query}
 ```javascript
 const query = {
   type: "posts",
-  limit: 1,
 };
 const props = `
   title,
@@ -136,7 +134,7 @@ const props = `
 ```
 
 ```bash
-GET $BASE_URL/buckets/${bucket_slug}/objects?query=${query}&props=${props}
+GET $BASE_URL/buckets/${bucket_slug}/objects?query=${query}&props=${props}&limit=1
 ```
 
 **Example Response with Props**
