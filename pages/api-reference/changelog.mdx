@@ -8,22 +8,23 @@ Published on Tue Jan 26 2021.
 
 - Nested `metadata` props are now possible without limit. See [examples of nested props](/api-reference/objects#get-objects).
 - No depth limit for Object relationships. The only limit is the prevention of infinite recursion.
-- [Postman collection](/api-reference/getting-started/introduction#postman) to review and demo all REST API methods.
+- We now offer a [Postman collection](/api-reference/getting-started/introduction#postman) to review and demo all REST API methods.
 - Endpoints have been added for `Metafields`.
 - Endpoints have been added for `Media Folders`.
 
 ### Improvements
 
-- Better REST API endpoint structure `GET /resources/:resource_id`, `POST /resources`, etc.
-- Better error handling with verbose messages.
-- The Select Dropdown Metafield API response now includes `key` and `value`.
+- Lighter codebase, faster endpoints. In some cases, endpoint response times are up to 50% faster (non-cached)
+- Better endpoint structures that follow standard REST conventions such as `POST /resources`, `GET /resources/:resource_id`, etc.
+- Consistent error responses with verbose messages.
+- The Select Dropdown Metafield API response now includes both `key` and `value`.
 
 ### Changes
 
 - `_id` has been changed to `id`.
 - `type_slug` has been changed to `type`.
-- Single Objects are now returned using `id` only. To return by `slug`, you will need to use `query`.
-- Queries is now a first-class method for searching and filtering Objects (Advanced Queries in v1). See [Queries and Logic](/api-reference/queries) for examples.
+- `query` is now the primary method for fetching and filtering Objects (Advanced Queries from v1). See [Queries and Logic](/api-reference/queries) for examples.
+- Single Objects must now be fetched using `id`. To fetch by `slug`, you will need to use `query`.
 - `write_key` will now be required in the request header as `Authorization Bearer`.
 - `metafields` are hidden by default.
-- No additional fields are possible in the body (`POST`, `PATCH`).
+- More strict user input requirements. No additional fields are possible in the body for `POST` and `PATCH` requests.
