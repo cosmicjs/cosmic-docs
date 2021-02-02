@@ -42,6 +42,20 @@ const query = {
 GET $BASE_URL/buckets/${bucket_slug}/objects?query=${query}
 ```
 
+**NPM Example**
+
+```js
+const Cosmic = require("cosmicjs");
+const api = Cosmic();
+const bucket = api.bucket({
+  slug: "your-bucket-slug",
+  read_key: "your-read-key-found-in-bucket-settings",
+});
+bucket.getObjects({
+  query: query,
+});
+```
+
 **Example Full Response**
 
 ```json
