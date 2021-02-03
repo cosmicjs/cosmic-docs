@@ -1,0 +1,75 @@
+# React
+
+[React](https://reactjs.org/) is a component-based JavaScript library for building user interfaces.
+
+Cosmic makes a great [React CMS](https://www.cosmicjs.com/knowledge-base/react-cms) for your React websites and apps.
+
+Before adding any code, make sure to follow the [Initial Setup](/guides/initial-setup) at the top of this page to set up your content in Cosmic. Then take the following steps to add Cosmic-powered content to your React apps:
+
+### 1. Install a new React app
+
+You can use [Create React App](https://github.com/facebook/create-react-app) to install a new React app that includes tooling and configurations.
+
+```bash
+npm i -g create-react-app
+create-react-app cosmic-react-app
+```
+
+### 2. Install the Cosmic NPM module
+
+```bash
+cd cosmic-react-app
+npm i cosmicjs
+```
+
+### 3. Add the following code into your `src/App.js` file
+
+Find your Bucket slug and API read key in <i>Your Bucket > Basic Settings > API Access</i> after [logging in](https://app.cosmicjs.com).
+
+```javascript
+// src/App.js
+import React from "react";
+import useSWR from "swr";
+import Cosmic from "cosmicjs";
+const api = Cosmic();
+// Set these values, found in Bucket > Settings after logging in at https://app.cosmicjs.com/login
+const bucket = api.bucket({
+  slug: "YOUR_BUCKET_SLUG",
+  read_key: "YOUR_BUCKET_READ_KEY",
+});
+const fetchPosts = async () => {
+  const data = await bucket.getObjects({
+    type: "posts",
+    props: "slug,title,metadata", // Limit the API response data by props
+  });
+  return data;
+};
+function App() {
+  const { data, error } = useSWR("fetch-posts", fetchPosts); // Use SWR hook
+  if (!data) return <div>Loading...</div>;
+  const posts = data.objects;
+  return (
+    <div>
+      {posts.map((post) => (
+        <div key={post.slug} style={{ marginBottom: 20 }}>
+          {post.metadata.hero && (
+            <div>
+              <img alt="" src={`${post.metadata.hero.imgix_url}?w=400`} />
+            </div>
+          )}
+          <div>{post.title}</div>
+        </div>
+      ))}
+    </div>
+  );
+}
+export default App;
+```
+
+### 4. Start your app
+
+Start your app, and go to http://localhost:3000. Dance 🎉
+
+```
+npm start
+```

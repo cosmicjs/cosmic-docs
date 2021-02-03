@@ -1,0 +1,15 @@
+{
+  "initial-setup": "Initial Setup",
+  "react": "React",
+  "nodejs": "Node.js",
+  "vuejs": "Vue.js",
+  "nextjs": "Next.js",
+  "nuxtjs": "Nuxt.js",
+  "gatsby": "Gatsby",
+  "angular": "Angular",
+  "go": "Go",
+  "ruby-on-rails": "Ruby On Rails",
+  "java": "Java",
+  "net": ".Net",
+  "python": "Python"
+}

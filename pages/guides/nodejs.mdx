@@ -1,0 +1,62 @@
+# Node.js
+
+[Node.js](https://nodejs.org/en/) is a JavaScript runtime built on Chrome's V8 engine that allows you to run JavaScript server-side.
+
+Cosmic makes a great [Node.js CMS](https://www.cosmicjs.com/knowledge-base/nodejs-cms) for your Node.js websites and apps.
+
+Before adding any code, make sure to follow the [Initial Setup](/guides/initial-setup) at the top of this page to set up your content in Cosmic. Then take the following steps to add Cosmic-powered content to your Node.js apps:
+
+### 1. Install Express
+
+You can use the popular [Express](https://expressjs.com) website framework to get a Node.js Cosmic website up and running quickly. Start by creating a project folder and installing Express and Cosmic.
+
+```bash
+mkdir cosmic-node-app
+cd cosmic-node-app
+npm i express cosmicjs
+```
+
+### 4. Create an `index.js` file
+
+Find your Bucket slug and API read key in <i>Your Bucket > Basic Settings > API Access</i> after [logging in](https://app.cosmicjs.com).
+
+```javascript
+// index.js
+const express = require("express");
+const app = express();
+const Cosmic = require("cosmicjs");
+const api = Cosmic();
+const PORT = process.env.PORT || 3000;
+// Set these values, found in Bucket > Settings after logging in at https://app.cosmicjs.com/login
+const bucket = api.bucket({
+  slug: "YOUR_BUCKET_SLUG",
+  read_key: "YOUR_BUCKET_READ_KEY",
+});
+app.get("*", async (req, res) => {
+  const data = await bucket.getObjects({
+    type: "posts",
+    props: "slug,title,content,metadata", // Limit the API response data by props
+  });
+  const posts = data.objects;
+  let markup = ``;
+  posts.map((post) => {
+    markup += `<div style="margin-bottom: 20px">
+    <div><img alt="" src="${post.metadata.hero.imgix_url}?w=400"/></div>
+    <div>${post.title}</div>
+    </div>`;
+  });
+  res.set("Content-Type", "text/html");
+  res.send(markup);
+});
+app.listen(PORT, () => {
+  console.log("Your Cosmic app is running at http://localhost:" + PORT);
+});
+```
+
+### 4. Start your app
+
+Start your app, and go to http://localhost:3000. Dance 🎉
+
+```
+node index.js
+```

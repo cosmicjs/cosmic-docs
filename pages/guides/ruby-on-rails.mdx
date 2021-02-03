@@ -1,0 +1,188 @@
+# Ruby on Rails
+
+[Ruby on Rails](https://rubyonrails.org/) is a server-sided framework written in Ruby, widely used by startups to iterate quickly.
+
+Cosmic makes a great [Ruby on Rails CMS](https://www.cosmicjs.com/knowledge-base/ruby-on-rails-cms) for your Ruby on Rails websites and apps.
+
+Before adding any code, make sure to follow the [Initial Setup](/guides/initial-setup) at the top of this page to set up your content in Cosmic. Then take the following steps to add Cosmic-powered content to your Ruby on Rails apps:
+
+### 1. Create a new Ruby on Rails app
+
+If you don't have Ruby on Rails installed on your machine, you may need to start with:
+
+```
+gem install rails
+```
+
+and
+
+```
+gem install bundler
+```
+
+Create a new Ruby on Rails application by using the following commands in the terminal:
+
+```bash
+rails new cosmic-app --skip-active-record
+cd cosmic-app
+```
+
+### 2. Install HTTParty Gem to make HTTP Requests
+
+In the `Gemfile`, add the following line of code to the bottom of the file:
+
+```ruby
+# Gemfile
+gem 'httparty'
+```
+
+and to install the `HTTParty` gem run:
+
+```
+bundle install
+```
+
+### 3. Adding Cosmic Credentials to Rails app
+
+To use your Read/Write Key and Slug of your Cosmic Bucket in a secure way in Rails, please run the following command on terminal:
+
+```bash
+EDITOR="vim" rails credentials:edit
+```
+
+Paste the following yml configuration in the text editor and save the file:
+
+```yml
+cosmic:
+  slug: <add cosmic bucket slug here>
+  read_key: <add cosmic bucket read key here>
+```
+
+### 4. Configure Autoloading for API Library
+
+In `config/application.rb`, please add the following line in the class `Application < Rails::Application` to autoload API Wrapper when server starts. Add this line of code under `config.load_defaults`.
+
+```ruby
+# config/application.rb
+config.autoload_paths << Rails.root.join('lib')
+```
+
+### 5. Add the code for the API Wrapper
+
+Add a new file structure in the `lib` folder.
+
+```terminal
+cd lib && mkdir api_wrappers && cd api_wrappers && mkdir cosmic && cd cosmic && touch objects_wrapper.rb
+
+cd ../../..
+```
+
+In the newly created `lib/api_wrappers/cosmic/objects_wrapper.rb` file, paste the following code:
+
+```ruby
+# lib/api_wrappers/cosmic/objects_wrapper.rb
+module ApiWrappers
+  module Cosmic
+    class ObjectsWrapper
+      BASE_URI = 'https://api.cosmicjs.com/v1/'
+      COSMIC_CREDENTIALS = Rails.application.credentials.cosmic
+
+      def initialize
+        @slug = COSMIC_CREDENTIALS[:slug]
+        @read_key = COSMIC_CREDENTIALS[:read_key]
+      end
+
+      def fetch_posts
+        fetch_objects('posts')
+      end
+
+      private
+
+      def fetch_objects(type)
+        resource = "#{@slug}/objects"
+        params = {
+          props: 'slug,title,type_slug,metadata',
+          read_key: @read_key,
+          type: type
+        }
+
+        response = get(resource, params)
+        return [] unless response.success?
+
+        response.parsed_response['objects']
+      end
+
+      def get(resource, params)
+        make_request('get', resource, query: params)
+      end
+
+      def make_request(method, resource, params)
+        uri = "#{BASE_URI}#{resource}"
+        HTTParty.send(method, uri, params)
+      end
+    end
+  end
+end
+```
+
+### 6. Add Controller
+
+Run the following command in the terminal to generate a controller with an index method and view for index.
+
+```bash
+rails g controller posts index
+```
+
+Go to `config/routes.rb` and set the newly created index method of `PostsController` as the root path. The code in the `routes.rb` would look like the one given below.
+
+```ruby
+Rails.application.routes.draw do
+  get 'posts/index'
+  root to: 'posts#index'
+end
+```
+
+Update the `app/controllers/posts_controller.rb` with the following code:
+
+```ruby
+class PostsController < ApplicationController
+  before_action :set_cosmic_objects_wrapper
+
+  def index
+    @posts = @cosmic_objects_wrapper.fetch_posts
+    puts @posts
+  end
+
+  private
+
+  def set_cosmic_objects_wrapper
+    @cosmic_objects_wrapper = ApiWrappers::Cosmic::ObjectsWrapper.new
+  end
+end
+```
+
+### 6. Update Views
+
+Render your posts in the `app/views/posts/index.html.erb` with the following code:
+
+```erb
+<% @posts.each do |post| %>
+  <div key=<%= post['slug']%> style='margin-bottom:20px;'>
+    <% if post['metadata'] && post['metadata']['hero'] %>
+      <div>
+        <img alt='' src='<%= post['metadata']['hero']['imgix_url'] %>?w=800&auto=format' width='400px' />
+      </div>
+    <% end %>
+
+    <div><%= post['title'] %></div>
+  </div>
+<% end %>
+```
+
+### 7. Start your app
+
+Start your app, and go to http://localhost:3000. Dance 🎉
+
+```
+rails s
+```
