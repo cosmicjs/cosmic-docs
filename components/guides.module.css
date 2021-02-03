@@ -17,6 +17,8 @@
   width: 200px;
   height: 150px;
   padding-top: 27px;
+  text-decoration: none;
+  background: #fff;
 }
 .guide svg {
   width: 60px;
@@ -31,9 +33,6 @@
   white-space: nowrap;
   text-align: center;
   display: block;
-}
-.guide a {
-  text-decoration: none;
 }
 @media (max-width: 860px) {
   .guide {
