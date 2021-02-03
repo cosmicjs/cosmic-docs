@@ -19,15 +19,15 @@ Get Objects in your Bucket.
 | Parameter       | Required |  Type  | Default   | Description                                                                                                                                                                                                  |
 | :-------------- | :------: | :----: | :-------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | read_key        | required | String |           | Restrict read access to your Bucket                                                                                                                                                                          |
-| status          |          |  Enum  | published | published, any (returns latest draft or published Object)                                                                                                                                                    |
 | query           |          |  JSON  |           | A JSON string to perform Object search and filtering. See [Queries section](/api-reference/queries) for more detail.                                                                                         |
-| show_metafields |          |  Enum  | false     | true, Shows metafields                                                                                                                                                                                       |
 | props           |          | String |           | Declare which properties to return in comma-separated string. Reference full Object for all available properties. Can include nested metadata. Example: `?props=id,title,metadata.author.metadata.image.url` |
+| status          |          |  Enum  | published | published, any (returns latest draft or published Object)                                                                                                                                                    |
 | sort            |          |  Enum  | order     | created_at, -created_at, modified_at, -modified_at, random, order                                                                                                                                            |
 | limit           |          | Number | 1000      | The number of Objects to return                                                                                                                                                                              |
 | skip            |          | Number | 0         | The number of Objects to skip                                                                                                                                                                                |
 | after           |          | String |           | Objects after specified Object Id (can only use one of `skip` or `after`)                                                                                                                                    |
 | pretty          |          |  Enum  | false     | true, Makes the response more reader-friendly                                                                                                                                                                |
+| show_metafields |          |  Enum  | false     | true, Shows metafields                                                                                                                                                                                       |
 
 **Definition**
 
@@ -171,10 +171,10 @@ Returns a single Object by `id` from your Bucket.
 | Parameter       | Required |  Type  | Default   | Description                                                                                                                                                  |
 | :-------------- | :------: | :----: | :-------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | read_key        | required | String |           | Restrict read access to your Bucket                                                                                                                          |
-| status          |          |  Enum  | published | published, any (returns latest draft or published Object)                                                                                                    |
-| show_metafields |          |  Enum  | false     | true, Shows metafields                                                                                                                                       |
 | props           |          | String |           | Declare which properties to return in comma-separated string. Reference full Object for all available properties. Example: `?props=id,title,metadata.author` |
+| status          |          |  Enum  | published | published, any (returns latest draft or published Object)                                                                                                    |
 | pretty          |          |  Enum  | false     | true, Makes the response more reader-friendly                                                                                                                |
+| show_metafields |          |  Enum  | false     | true, Shows metafields                                                                                                                                       |
 
 **Definition**
 
@@ -297,21 +297,21 @@ Add a new Object to your Bucket.
   request.
 </Callout>
 
-| Parameter              | Required |      Type       | Description                                                                                       |
-| :--------------------- | :------: | :-------------: | :------------------------------------------------------------------------------------------------ |
-| type                   | required |     String      | Add Object to Object Type                                                                         |
-| title                  | required |     String      | Your Object title                                                                                 |
-| slug                   |          |     String      | Unique identifier for your Object                                                                 |
-| content                |          |     String      | Add Content to your Object                                                                        |
-| status                 |          |      Enum       | draft, published, defaults to published                                                           |
-| metafields             |          | Array of Object | Add Metafields to your Object. See [Metafields Model](/api-reference/getting-started/metafields). |
-| created_by             |          |     String      | Author User Id                                                                                    |
-| publish_at             |          |     Number      | UNIX millisecond timestamp. Publish automatically at a later time.                                |
-| options.slug_field     |          |     Boolean     | Set to false to hide the slug field                                                               |
-| options.content_editor |          |     Boolean     | Set to false to hide the content editor                                                           |
-| locale                 |          |     String      | Add localization to the Object                                                                    |
-| thumbnail              |          |     String      | Media `name`. Media must be available in Bucket. See [Media](/api-reference/media).               |
-| pretty                 |          |      Enum       | true, Makes the response more reader-friendly                                                     |
+| Parameter              | Required |       Type       | Description                                                                                       |
+| :--------------------- | :------: | :--------------: | :------------------------------------------------------------------------------------------------ |
+| type                   | required |      String      | Add Object to Object Type                                                                         |
+| title                  | required |      String      | Your Object title                                                                                 |
+| slug                   |          |      String      | Unique identifier for your Object                                                                 |
+| content                |          |      String      | Add Content to your Object                                                                        |
+| status                 |          |       Enum       | draft, published, defaults to published                                                           |
+| metafields             |          | Array of Objects | Add Metafields to your Object. See [Metafields Model](/api-reference/getting-started/metafields). |
+| created_by             |          |      String      | Author User Id                                                                                    |
+| publish_at             |          |      Number      | UNIX millisecond timestamp. Publish automatically at a later time.                                |
+| options.slug_field     |          |     Boolean      | Set to false to hide the slug field                                                               |
+| options.content_editor |          |     Boolean      | Set to false to hide the content editor                                                           |
+| locale                 |          |      String      | Add localization to the Object                                                                    |
+| thumbnail              |          |      String      | Media `name`. Media must be available in Bucket. See [Media](/api-reference/media).               |
+| pretty                 |          |       Enum       | true, Makes the response more reader-friendly                                                     |
 
 **Definition**
 
@@ -359,19 +359,19 @@ Edit an existing Object by `id` in your Bucket.
   request.
 </Callout>
 
-| Parameter              |      Type       | Description                                                                                       |
-| :--------------------- | :-------------: | :------------------------------------------------------------------------------------------------ |
-| title                  |     String      | Your Object title                                                                                 |
-| slug                   |     String      | Unique identifier for your Object                                                                 |
-| content                |     String      | Add Content to your Object                                                                        |
-| status                 |      Enum       | draft, published, defaults to published                                                           |
-| metafields             | Array of Object | Add Metafields to your Object. See [Metafields Model](/api-reference/getting-started/metafields). |
-| publish_at             |     Number      | UNIX millisecond timestamp. Publish automatically at a later time.                                |
-| options.slug_field     |     Boolean     | Set to false to hide the slug field                                                               |
-| options.content_editor |     Boolean     | Set to false to hide the content editor                                                           |
-| locale                 |     String      | Add localization to the Object                                                                    |
-| thumbnail              |     String      | Media `name`. Media must be available in Bucket. See [Media](/api-reference/media).               |
-| pretty                 |      Enum       | true, Makes the response more reader-friendly                                                     |
+| Parameter              |       Type       | Description                                                                                       |
+| :--------------------- | :--------------: | :------------------------------------------------------------------------------------------------ |
+| title                  |      String      | Your Object title                                                                                 |
+| slug                   |      String      | Unique identifier for your Object                                                                 |
+| content                |      String      | Add Content to your Object                                                                        |
+| status                 |       Enum       | draft, published, defaults to published                                                           |
+| metafields             | Array of Objects | Add Metafields to your Object. See [Metafields Model](/api-reference/getting-started/metafields). |
+| publish_at             |      Number      | UNIX millisecond timestamp. Publish automatically at a later time.                                |
+| options.slug_field     |     Boolean      | Set to false to hide the slug field                                                               |
+| options.content_editor |     Boolean      | Set to false to hide the content editor                                                           |
+| locale                 |      String      | Add localization to the Object                                                                    |
+| thumbnail              |      String      | Media `name`. Media must be available in Bucket. See [Media](/api-reference/media).               |
+| pretty                 |       Enum       | true, Makes the response more reader-friendly                                                     |
 
 _**Note:** At least one of the Parameters is required to process the request._
 
