@@ -10,18 +10,27 @@
   display: inline-flex;
   padding: 0 0.5rem 1.5rem;
   margin: 0 auto;
+  text-align: center;
+}
+.guide a {
+  box-shadow: 0 1px 10px rgb(0 0 0 / 15%);
+  width: 200px;
+  height: 150px;
+  padding-top: 30px;
 }
 .guide svg {
   width: 60px;
   height: 60px;
-  display: inline;
+  display: block;
+  margin: 0 auto;
 }
 .guide h4 {
-  margin: 0 0 0 0.5rem;
+  margin: 10px auto;
   font-weight: 700;
   font-size: 0.95rem;
   white-space: nowrap;
-  display: inline;
+  text-align: center;
+  display: block;
 }
 .guide a {
   text-decoration: none;
