@@ -39,6 +39,7 @@
   .guide {
     padding-left: 0;
     margin-left: 0;
+    width: 50%;
   }
   .guide h4 {
     font-size: 0.75rem;
