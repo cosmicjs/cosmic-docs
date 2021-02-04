@@ -2,11 +2,11 @@
 
 ### Rate Limits
 
-All Cosmic Buckets have a rate limit of `500` API requests per second per IP address. This only applies to non-cached API requests. Non-cached API requests include any initial `GET` request, all `POST`, `PUT`, `PATCH`, and `DELETE` requests to the API. This does not apply to any files or images served via the Cosmic CDN or imgix CDN.
+All Cosmic Buckets have a rate limit of `500` API requests per second per IP address. This only applies to non-cached API requests. Non-cached requests include any initial `GET` request and all `POST`, `PUT`, `PATCH`, and `DELETE` requests to the API. This does not apply to any files or images served via the Cosmic CDN or imgix CDN.
 
 ### Response Time Limits
 
-Endpoints will timout at 10 seconds. If you find yourself hitting this limit, you may want to use `limit` and `props` to minimize your payload.
+Endpoints have a timeout limit of 10 seconds. If you find yourself hitting this limit, you can reduce your payload size with `limit` and `props` options. See [API Reference](/api-reference/objects#get-objects) for more info.
 
 ### Size Limits
 
