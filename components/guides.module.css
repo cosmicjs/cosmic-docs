@@ -24,8 +24,8 @@
   transition-timing-function: ease-out;
 }
 .guide a:hover{
-  transform: translateY(-1px);
-  box-shadow: 0 1px 20px rgb(0 0 0 / 15%);
+  transform: translateY(-2px);
+  box-shadow: 0 1px 30px rgb(0 0 0 / 15%);
 }
 .guide svg {
   width: 60px;
