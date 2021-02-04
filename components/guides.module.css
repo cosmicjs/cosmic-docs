@@ -19,6 +19,13 @@
   padding-top: 27px;
   text-decoration: none;
   background: #fff;
+  transition-property: transform,box-shadow,border-color;
+  transition-duration: .15s;
+  transition-timing-function: ease-out;
+}
+.guide a:hover{
+  transform: translateY(-1px);
+  box-shadow: 0 1px 20px rgb(0 0 0 / 15%);
 }
 .guide svg {
   width: 60px;
