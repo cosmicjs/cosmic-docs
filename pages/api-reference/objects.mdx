@@ -113,10 +113,13 @@ GET $BASE_URL/buckets/${bucket_slug}/objects?query=${query}&limit=1
 }
 ```
 
+### Using Props
+
 <Callout emoji="💡">
   **Quick Tip**
   <br />
-  Use `props` to limit the response size and get only the data you need.
+  Use `props` to limit the payload size and get only the data you need. Metadata
+  can be nested as far as you need. There is no depth limit.
 </Callout>
 
 **Example Request with Props**
@@ -249,6 +252,15 @@ GET $BASE_URL/buckets/${bucket_slug}/objects/${object_id}
   }
 }
 ```
+
+### Using Props
+
+<Callout emoji="💡">
+  **Quick Tip**
+  <br />
+  Use `props` to limit the payload size and get only the data you need. Metadata
+  can be nested as far as you need. There is no depth limit.
+</Callout>
 
 **Example Request with Props**
 
