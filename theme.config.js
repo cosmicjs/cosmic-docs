@@ -87,7 +87,7 @@ export default {
       </a>
       <br />
       <br />
-      Looking for the <a href="https://docs.cosmicjs.com">v1 docs</a>?
+      <span className="text-sm">Looking for the <a href="https://docs.cosmicjs.com">v1 docs</a>?</span>
     </span>
   ),
 };
