@@ -73,16 +73,21 @@ export default {
     </>
   ),
   footerText: (
-    <a
-      href="https://cosmicjs.com/?utm_source=docs"
-      target="_blank"
-      rel="noopener"
-      className="inline-flex items-center no-underline text-current font-semibold"
-    >
-      <span className="mr-3">Powered by</span>
-      <span>
-        <Logo />
-      </span>
-    </a>
+    <span>
+      <a
+        href="https://cosmicjs.com/?utm_source=docs"
+        target="_blank"
+        rel="noopener"
+        className="inline-flex items-center no-underline text-current font-semibold"
+      >
+        <span className="mr-3">Powered by</span>
+        <span>
+          <Logo />
+        </span>
+      </a>
+      <br />
+      <br />
+      Looking for the <a href="https://docs.cosmicjs.com">v1 docs</a>?
+    </span>
   ),
 };
