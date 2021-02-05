@@ -1,22 +1,22 @@
 .guides {
   display: flex;
   flex-wrap: wrap;
-  margin: 2.5rem -.5rem 2rem;
+  margin: 1.5rem -.5rem 3rem;
 }
 
 .guide {
   flex: 0 0 33%;
   align-items: center;
   display: inline-flex;
-  padding: 0 0.5rem 1.5rem;
+  padding: 1rem;
   margin: 0 auto;
   text-align: center;
 }
 .guide a {
   box-shadow: 0 1px 10px rgb(0 0 0 / 15%);
-  width: 200px;
-  height: 150px;
-  padding-top: 27px;
+  width: 100%;
+  height: 175px;
+  padding-top: 40px;
   text-decoration: none;
   background: #fff;
   transition-property: transform,box-shadow,border-color;
@@ -43,9 +43,12 @@
 }
 @media (max-width: 860px) {
   .guide {
-    padding-left: 0;
     margin-left: 0;
-    width: 50%;
+    flex: 0 0 50%;
+  }
+  .guide a {
+    padding-top: 20px;
+    height: 130px;
   }
   .guide h4 {
     font-size: 0.75rem;
