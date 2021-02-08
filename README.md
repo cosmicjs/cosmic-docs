@@ -1,13 +1,12 @@
 # Cosmic Docs
 
-Cosmic docs
+This is the codebase for the [Cosmic docs](https://docs-v2.cosmicjs.com/).
 
-## How to run
+## Install and run locally
 
 ```bash
+git clone https://github.com/cosmicjs/cosmic-docs
+cd cosmic-docs
 yarn
-```
-
-```bash
 yarn dev
 ```
