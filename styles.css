@@ -28,3 +28,10 @@ code {
 .dark .cosmic-logo-text {
   fill: #fff;
 }
+@media (max-width: 860px) {
+  table {
+    display: block;
+    margin: 0 auto;
+    overflow-x: auto;
+  }
+}
