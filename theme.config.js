@@ -31,7 +31,7 @@ export default {
   path: "/", // path of docs,
   nextLinks: true,
   prevLinks: true,
-  search: false,
+  search: true,
   logo: (
     <>
       <Logo height={32} classes="mt-1" />
