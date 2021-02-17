@@ -28,6 +28,9 @@ export default function () {
         apiKey: '2cdadd5ab16751ea3a49a13854e5b052',
         indexName: 'cosmicjs',
         inputSelector: 'input#algolia-doc-search',
+        algoliaOptions: {
+          facetFilters: ['tags:v2']
+        }
       })
     }
   }, [])
