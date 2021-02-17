@@ -1,4 +1,5 @@
 import Callout from "nextra-theme-docs/callout";
+import Tabs from "components/tabs";
 
 # Object Types
 
@@ -23,9 +24,22 @@ Get all Object Types in your Bucket.
 
 **Definition**
 
+<Tabs>
+<div label="REST">
 ```bash
 GET $BASE_URL/buckets/${bucket_slug}/object-types
 ```
+
+</div>
+
+<div label="GraphQL">
+```javascript
+getObjectTypes(bucket_slug, input)
+```
+<a href="https://cosmic-graphql-playground.netlify.app/?endpoint=https://graphql.cosmicjs.com/v2&query=%7B%0A%20%20getObjectTypes(bucket_slug%3A%20%22simple-vue-blog%22)%20%7B%0A%20%20%20%20title%0A%20%20%7D%0A%7D">Full screen</a>
+<iframe src="https://cosmic-graphql-playground.netlify.app/?endpoint=https://graphql.cosmicjs.com/v2&query=%7B%0A%20%20getObjectTypes(bucket_slug%3A%20%22simple-vue-blog%22)%20%7B%0A%20%20%20%20title%0A%20%20%7D%0A%7D" frameBorder="0" style={{ width: '100%', height: '470px'}}></iframe>
+</div>
+</Tabs>
 
 **Example Response**
 
@@ -150,9 +164,22 @@ Add a new Object Type to your Bucket.
 
 **Definition**
 
+<Tabs>
+<div label="REST">
 ```bash
 POST $BASE_URL/buckets/${bucket_slug}/object-types/
 ```
+
+</div>
+
+<div label="GraphQL">
+```javascript
+addObjectType(bucket_slug, input)
+```
+<a href="https://cosmic-graphql-playground.netlify.app/?endpoint=https://graphql.cosmicjs.com/v2&query=mutation%20%7B%0A%20%20addObjectType(%0A%20%20%20%20bucket_slug%3A%20%22graphql-bucket%22%2C%0A%20%20%20%20input%3A%20%7B%0A%20%20%20%20%20%20title%3A%20%22Pages%22%2C%0A%20%20%20%20%20%20slug%3A%20%22pages%22%2C%0A%20%20%20%20%20%20singular%3A%20%22page%22%2C%0A%20%20%20%20%7D%0A%20%20)%20%7B%0A%20%20%20%20title%0A%20%20%7D%0A%7D">Full screen</a>
+<iframe src="https://cosmic-graphql-playground.netlify.app/?endpoint=https://graphql.cosmicjs.com/v2&query=mutation%20%7B%0A%20%20addObjectType(%0A%20%20%20%20bucket_slug%3A%20%22graphql-bucket%22%2C%0A%20%20%20%20input%3A%20%7B%0A%20%20%20%20%20%20title%3A%20%22Pages%22%2C%0A%20%20%20%20%20%20slug%3A%20%22pages%22%2C%0A%20%20%20%20%20%20singular%3A%20%22page%22%2C%0A%20%20%20%20%7D%0A%20%20)%20%7B%0A%20%20%20%20title%0A%20%20%7D%0A%7D" frameBorder="0" style={{ width: '100%', height: '470px'}}></iframe>
+</div>
+</Tabs>
 
 **Example Body (JSON)**
 
@@ -208,9 +235,22 @@ _**Note:** At least one of the Parameters is required to process the request._
 
 **Definition**
 
+<Tabs>
+<div label="REST">
 ```bash
 PATCH $BASE_URL/buckets/${bucket_slug}/object-types/${type_slug}
 ```
+
+</div>
+
+<div label="GraphQL">
+```javascript
+editObjectType(bucket_slug)
+```
+<a href="https://cosmic-graphql-playground.netlify.app/?endpoint=https://graphql.cosmicjs.com/v2&query=mutation%20%7B%0A%20%20editObjectType(%0A%20%20%20%20bucket_slug%3A%20%22graphql-bucket%22%2C%0A%20%20%20%20input%3A%20%7B%0A%20%20%20%20%20%20title%3A%20%22Pages%20EDITED%22%2C%0A%20%20%20%20%20%20slug%3A%20%22pages%22%2C%0A%20%20%20%20%20%20singular%3A%20%22page%22%2C%0A%20%20%20%20%7D%0A%20%20)%20%7B%0A%20%20%20%20title%0A%20%20%7D%0A%7D">Full screen</a>
+<iframe src="https://cosmic-graphql-playground.netlify.app/?endpoint=https://graphql.cosmicjs.com/v2&query=mutation%20%7B%0A%20%20editObjectType(%0A%20%20%20%20bucket_slug%3A%20%22graphql-bucket%22%2C%0A%20%20%20%20input%3A%20%7B%0A%20%20%20%20%20%20title%3A%20%22Pages%20EDITED%22%2C%0A%20%20%20%20%20%20slug%3A%20%22pages%22%2C%0A%20%20%20%20%20%20singular%3A%20%22page%22%2C%0A%20%20%20%20%7D%0A%20%20)%20%7B%0A%20%20%20%20title%0A%20%20%7D%0A%7D" frameBorder="0" style={{ width: '100%', height: '470px'}}></iframe>
+</div>
+</Tabs>
 
 **Example Body (JSON)**
 
@@ -253,9 +293,22 @@ _**Note:** This does not delete Objects in this Object Type._
 
 **Definition**
 
+<Tabs>
+<div label="REST">
 ```bash
-GET $BASE_URL/buckets/${bucket_slug}/object-types/${type_slug}
+DELETE $BASE_URL/buckets/${bucket_slug}/object-types/${type_slug}
 ```
+
+</div>
+
+<div label="GraphQL">
+```javascript
+deleteObjectType(bucket_slug, type_slug)
+```
+<a href="https://cosmic-graphql-playground.netlify.app/?endpoint=https://graphql.cosmicjs.com/v2&query=mutation%20%7B%0A%20%20deleteObjectType(%0A%20%20%20%20bucket_slug%3A%20%22graphql-bucket%22%2C%0A%20%20%20%20type_slug%3A%20%22pages%22%0A%20%20)%0A%7D">Full screen</a>
+<iframe src="https://cosmic-graphql-playground.netlify.app/?endpoint=https://graphql.cosmicjs.com/v2&query=mutation%20%7B%0A%20%20deleteObjectType(%0A%20%20%20%20bucket_slug%3A%20%22graphql-bucket%22%2C%0A%20%20%20%20type_slug%3A%20%22pages%22%0A%20%20)%0A%7D" frameBorder="0" style={{ width: '100%', height: '470px'}}></iframe>
+</div>
+</Tabs>
 
 **Example Response**
 
