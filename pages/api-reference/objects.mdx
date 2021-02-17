@@ -3,7 +3,7 @@ import Tabs from "components/tabs";
 
 # Objects
 
-The following endpoints allow you to get, add, edit and delete Objects in your Bucket.
+The following endpoints allow you to get, add, edit and delete Objects in your Bucket. See [API Introduction](/api-reference/getting-started/introduction) for getting started information.
 
 <Callout emoji="✅">
   **Quick Tip**
@@ -44,10 +44,29 @@ const query = {
 GET $BASE_URL/buckets/${bucket_slug}/objects?query=${query}&limit=1
 ```
 </div>
+<div label="Node.js">
+```javascript
+bucket.getObjects()
+```
+**Example Request**
+```javascript
+const Cosmic = require("cosmicjs");
+const bucket = Cosmic.bucket({
+  slug: "bucket-slug",
+  read_key: "your-read-key-found-in-bucket-settings",
+});
+bucket.getObjects({
+  type: "posts",
+  limit: 10,
+});
+```
+</div>
+
 <div label="GraphQL">
 ```javascript
 getObjects(bucket_slug, input)
 ```
+
 <a href="https://cosmic-graphql-playground.netlify.com/?endpoint=https%3A%2F%2Fgraphql.cosmicjs.com%2Fv2&amp;query=%7B%0A%20%20getObjects%28%0A%20%20%20%20bucket_slug%3A%20%22simple-react-blog%22%2C%0A%20%20%20%20input%3A%20%7B%20%0A%20%20%20%20%20%20type%3A%20%22posts%22%0A%20%20%20%20%7D%0A%20%20%29%20%7B%0A%20%20%20%20%20objects%20%7B%0A%20%20%20%20%20%20title%0A%20%20%20%20%20%20content%0A%20%20%20%20%7D%0A%20%20%20%20total%0A%20%20%7D%0A%7D">Full screen</a>
 <iframe src="https://cosmic-graphql-playground.netlify.com/?endpoint=https%3A%2F%2Fgraphql.cosmicjs.com%2Fv2&amp;query=%7B%0A%20%20getObjects%28%0A%20%20%20%20bucket_slug%3A%20%22simple-react-blog%22%2C%0A%20%20%20%20input%3A%20%7B%20%0A%20%20%20%20%20%20type%3A%20%22posts%22%0A%20%20%20%20%7D%0A%20%20%29%20%7B%0A%20%20%20%20%20objects%20%7B%0A%20%20%20%20%20%20title%0A%20%20%20%20%20%20content%0A%20%20%20%20%7D%0A%20%20%20%20total%0A%20%20%7D%0A%7D" frameBorder="0" style={{ width: '100%', height: '470px'}}></iframe>
 </div>
@@ -154,6 +173,30 @@ const props = `
 GET $BASE_URL/buckets/${bucket_slug}/objects?query=${query}&props=${props}&limit=1
 ```
 </div>
+<div label="Node.js">
+```javascript
+bucket.getObjects()
+```
+**Example Request**
+```javascript
+const Cosmic = require('cosmicjs')
+const bucket = Cosmic.bucket({
+  slug: "bucket-slug",
+  read_key: "your-read-key-found-in-bucket-settings",
+});
+const props = `
+  title,
+  content,
+  metadata.parent.title,
+  metadata.parent.metadata.category.metadata.description
+`;
+bucket.getObjects({
+  type: "posts",
+  props,
+  limit: 10,
+});
+```
+</div>
 <div label="GraphQL">
 ```javascript
 getObjects(bucket_slug, input)
@@ -211,10 +254,30 @@ GET $BASE_URL/buckets/${bucket_slug}/objects/${object_id}
 ```
 </div>
 
+<div label="Node.js">
+```javascript
+bucket.getObject()
+```
+**Example Request**
+```javascript
+const Cosmic = require('cosmicjs')
+const api = Cosmic()
+const bucket = api.bucket({
+  slug: 'your-bucket-slug',
+  read_key: 'your-read-key-found-in-bucket-settings'
+})
+bucket.getObject({
+  slug: 'a-wonderful-blog-post-about-earth'
+})
+```
+
+</div>
+
 <div label="GraphQL">
 ```javascript
 getObject(bucket_slug, input)
 ```
+
   <a href="https://cosmic-graphql-playground.netlify.app/?endpoint=https%3A%2F%2Fgraphql.cosmicjs.com%2Fv2&query=%7B%0A%20%20getObject%28bucket_slug%3A%20%22simple-react-blog%22%2C%0A%20%20%20%20input%3A%20%7B%20%0A%20%20%20%20%20%20slug%3A%20%22a-wonderful-blog-post-about-earth%22%0A%20%20%20%20%7D%0A%20%20%29%20%7B%0A%20%20%20%20title%0A%20%20%20%20content%0A%20%20%7D%0A%7D">
     Full screen
   </a>
@@ -322,6 +385,32 @@ GET $BASE_URL/buckets/${bucket_slug}/objects/${object_id}?props=${props}
 
 </div>
 
+<div label="Node.js">
+```javascript
+bucket.getObject()
+```
+**Example Request**
+```javascript
+const Cosmic = require('cosmicjs')
+const api = Cosmic()
+const bucket = api.bucket({
+  slug: 'your-bucket-slug',
+  read_key: 'your-read-key-found-in-bucket-settings'
+})
+const props = `
+  title,
+  metadata.description,
+  metadata.parent.title,
+  metadata.parent.metadata.category.title
+`;
+bucket.getObject({
+  slug: 'a-wonderful-blog-post-about-earth',
+  props
+})
+```
+
+</div>
+
 <div label="GraphQL">
 ```javascript
 getObject(bucket_slug, input)
@@ -400,6 +489,51 @@ POST $BASE_URL/buckets/${bucket_slug}/objects
   "title": "Title of the Post",
   "type": "posts"
 }
+```
+
+</div>
+
+<div label="Node.js">
+```javascript
+bucket.addObject()
+```
+
+**Example Request**
+
+```javascript
+const Cosmic = require("cosmicjs");
+const params = {
+  title: "Cosmic Example",
+  type_slug: "examples",
+  content: "Learning the Cosmic API is really fun and so easy",
+  metafields: [
+    {
+      key: "Headline",
+      type: "text",
+      value: "Learn Cosmic!",
+    },
+    {
+      key: "Author",
+      type: "text",
+      value: "Quasar Jones",
+    },
+  ],
+  options: {
+    slug_field: false,
+  },
+};
+const bucket = Cosmic.bucket({
+  slug: "bucket-slug",
+  write_key: "your-write-key-found-in-bucket-settings",
+});
+bucket
+  .addObject(params)
+  .then((data) => {
+    console.log(data);
+  })
+  .catch((err) => {
+    console.log(err);
+  });
 ```
 
 </div>
@@ -484,6 +618,34 @@ PATCH $BASE_URL/buckets/${bucket_slug}/objects/${object_id}
 
 </div>
 
+<div label="Node.js">
+```javascript
+bucket.editObject()
+```
+
+**Example Request**
+
+```javascript
+const Cosmic = require("cosmicjs");
+const bucket = Cosmic.bucket({
+  slug: "bucket-slug",
+  write_key: "your-write-key-found-in-bucket-settings",
+});
+bucket
+  .editObject({
+    slug: "cosmic-js-example",
+    title: "New Title Edit",
+  })
+  .then((data) => {
+    console.log(data);
+  })
+  .catch((err) => {
+    console.log(err);
+  });
+```
+
+</div>
+
 <div label="GraphQL">
 ```javascript
 editObject(bucket_slug, input)
@@ -536,6 +698,33 @@ Delete an existing Object by `id` from your Bucket.
 <div label="REST">
 ```bash
 DELETE $BASE_URL/buckets/${bucket_slug}/objects/${object_id}
+```
+
+</div>
+
+<div label="Node.js">
+```javascript
+bucket.deleteObject()
+```
+
+**Example Request**
+
+```javascript
+const Cosmic = require("cosmicjs");
+const bucket = Cosmic.bucket({
+  slug: "bucket-slug",
+  write_key: "",
+});
+bucket
+  .deleteObject({
+    slug: "cosmic-js-example",
+  })
+  .then((data) => {
+    console.log(data);
+  })
+  .catch((err) => {
+    console.log(err);
+  });
 ```
 
 </div>
