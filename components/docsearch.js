@@ -1,6 +1,6 @@
 import { useRef, useEffect } from 'react'
 
-export default function () {
+const docsearch = function () {
   const input = useRef(null)
 
   useEffect(() => {
@@ -42,3 +42,5 @@ export default function () {
     />
   </div>
 }
+
+export default docsearch
