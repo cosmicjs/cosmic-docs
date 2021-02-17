@@ -1,3 +1,5 @@
+import DocSearch from 'components/docsearch'
+
 const Logo = ({ height = 20, classes = '' }) => (
   <svg height={height} className={classes} viewBox="0 0 681 189" version="1.1">
     <defs></defs>
@@ -31,7 +33,7 @@ export default {
   path: "/", // path of docs,
   nextLinks: true,
   prevLinks: true,
-  search: true,
+  customSearch: <DocSearch/>,
   logo: (
     <>
       <Logo height={32} classes="mt-1" />
