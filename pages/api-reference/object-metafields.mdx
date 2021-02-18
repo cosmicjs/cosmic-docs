@@ -155,8 +155,6 @@ _**Note:** At least one of the Parameters is required to process the request._
 
 **Definition**
 
-<Tabs>
-<div label="REST">
 ```bash
 PATCH $BASE_URL/buckets/${bucket_slug}/objects/${object_id}/metafields/${metafield_key}
 ```
@@ -168,42 +166,6 @@ PATCH $BASE_URL/buckets/${bucket_slug}/objects/${object_id}/metafields/${metafie
   "value": 9876543210
 }
 ```
-
-</div>
-
-<div label="Node.js">
-```javascript
-bucket.editObjectMetafields()
-```
-**Example Request**
-```javascript
-const Cosmic = require("cosmicjs");
-const bucket = Cosmic.bucket({
-  slug: "bucket-slug",
-  read_key: "your-read-key-found-in-bucket-settings",
-});
-const params = {
-  "id": "1234asdf1234",  // Object id
-  "metafield": {
-    "key": "phone_number" // required
-    "value": 9876543210
-  }
-}
-const bucket = Cosmic.bucket({
-  slug: 'bucket-slug',
-  write_key: 'your-write-key-found-in-bucket-settings'
-})
-bucket.editObjectMetafield(params)
-  .then(data => {
-    console.log(data)
-  })
-  .catch(err => {
-    console.log(err)
-  })
-```
-</div>
-
-</Tabs>
 
 **Example Response**
 

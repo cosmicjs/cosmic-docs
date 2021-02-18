@@ -33,7 +33,7 @@ Gets all Buckets connected to your account.
 | :-------- | :--: | :------ | :-------------------------------------------- |
 | pretty    | Enum | false   | true, Makes the response more reader-friendly |
 
-**Definition**
+**Methods**
 
 <Tabs>
 <div label="REST">
@@ -87,6 +87,15 @@ getBuckets()
 <a href="https://cosmic-graphql-playground.netlify.app/?endpoint=https://graphql.cosmicjs.com/v2&query=%7B%0A%20%20getBuckets%20%7B%0A%20%20%20%20title%0A%20%20%7D%0A%7D">Full screen</a>
 <iframe src="https://cosmic-graphql-playground.netlify.app/?endpoint=https://graphql.cosmicjs.com/v2&query=%7B%0A%20%20getBuckets%20%7B%0A%20%20%20%20title%0A%20%20%7D%0A%7D" frameBorder="0" style={{ width: '100%', height: '470px'}}></iframe>
 </div>
+<div label="CLI">
+```bash
+cosmic get-buckets
+```
+**Example Request**
+```bash
+cosmic get-buckets
+```
+</div>
 </Tabs>
 
 **Example Response**
@@ -123,7 +132,7 @@ Returns bucket by `slug` connected to your Bucket.
 | :-------- | :--: | :------ | :-------------------------------------------- |
 | pretty    | Enum | false   | true, Makes the response more reader-friendly |
 
-**Definition**
+**Methods**
 
 <Tabs>
 <div label="REST">
@@ -161,6 +170,19 @@ getBucket(bucket_slug)
 ```
 <a href="https://cosmic-graphql-playground.netlify.app/?endpoint=https://graphql.cosmicjs.com/v2&query=%7B%0A%20%20getBucket(%0A%20%20%20%20bucket_slug%3A%20%22simple-react-blog%22%2C%0A%20%20)%20%7B%0A%20%20%20%20objects%20%7B%0A%20%20%20%20%20%20title%0A%20%20%20%20%20%20slug%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D">Full screen</a>
 <iframe src="https://cosmic-graphql-playground.netlify.app/?endpoint=https://graphql.cosmicjs.com/v2&query=%7B%0A%20%20getBucket(%0A%20%20%20%20bucket_slug%3A%20%22simple-react-blog%22%2C%0A%20%20)%20%7B%0A%20%20%20%20objects%20%7B%0A%20%20%20%20%20%20title%0A%20%20%20%20%20%20slug%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D" frameBorder="0" style={{ width: '100%', height: '470px'}}></iframe>
+</div>
+<div label="CLI">
+```bash
+cosmic get-bucket
+```
+Gets current Bucket.
+
+**Example Request**
+
+```bash
+cosmic get-bucket
+```
+
 </div>
 </Tabs>
 
@@ -202,12 +224,19 @@ Add a new bucket to your account.
 | cluster   |          | String | Add this Bucket to a Cluster. ID of existing Cluster                     |
 | pretty    |          |  Enum  | true, Makes the response more reader-friendly                            |
 
-**Definition**
+**Methods**
 
 <Tabs>
 <div label="REST">
 ```bash
 POST $BASE_URL/buckets
+```
+**Example Body (JSON)**
+
+```json
+{
+  "title": "New Bucket"
+}
 ```
 
 </div>
@@ -244,15 +273,16 @@ addBucket(input)
 <a href="https://cosmic-graphql-playground.netlify.app/?endpoint=https://graphql.cosmicjs.com/v2&query=mutation%20%7B%0A%20%20addBucket(%0A%20%20%20%20input%3A%20%7B%0A%20%20%20%20%20%20title%3A%20%22My%20New%20Bucket%22%0A%20%20%20%20%7D%0A%20%20)%20%7B%0A%20%20%20%20slug%0A%20%20%20%20title%0A%20%20%7D%0A%7D">Full screen</a>
 <iframe src="https://cosmic-graphql-playground.netlify.app/?endpoint=https://graphql.cosmicjs.com/v2&query=mutation%20%7B%0A%20%20addBucket(%0A%20%20%20%20input%3A%20%7B%0A%20%20%20%20%20%20title%3A%20%22My%20New%20Bucket%22%0A%20%20%20%20%7D%0A%20%20)%20%7B%0A%20%20%20%20slug%0A%20%20%20%20title%0A%20%20%7D%0A%7D" frameBorder="0" style={{ width: '100%', height: '470px'}}></iframe>
 </div>
-</Tabs>
-
-**Example Body (JSON)**
-
-```json
-{
-  "title": "New Bucket"
-}
+<div label="CLI">
+```bash
+cosmic add-bucket
 ```
+**Example Request**
+```bash
+cosmic add-bucket --title 'My New Bucket'
+```
+</div>
+</Tabs>
 
 **Example Response**
 
@@ -342,7 +372,7 @@ Delete an existing bucket by `slug` from your account.
   *This cannot be undone.*
 </Callout>
 
-**Definition**
+**Methods**
 
 <Tabs>
 <div label="REST">
@@ -382,6 +412,19 @@ deleteBucket(bucket_id)
 ```
 <a href="https://cosmic-graphql-playground.netlify.app/?endpoint=https://graphql.cosmicjs.com/v2&query=mutation%20%7B%0A%20%20deleteBucket(%0A%20%20%20%20bucket_id%3A%20%225cd8658c1287fc5d8e3ef1d8%22%0A%20%20)%0A%7D">Full screen</a>
 <iframe src="https://cosmic-graphql-playground.netlify.app/?endpoint=https://graphql.cosmicjs.com/v2&query=mutation%20%7B%0A%20%20deleteBucket(%0A%20%20%20%20bucket_id%3A%20%225cd8658c1287fc5d8e3ef1d8%22%0A%20%20)%0A%7D" frameBorder="0" style={{ width: '100%', height: '470px'}}></iframe>
+</div>
+<div label="CLI">
+```bash
+cosmic delete-bucket
+```
+Deletes current Bucket.
+
+**Example Request**
+
+```bash
+cosmic delete-bucket
+```
+
 </div>
 </Tabs>
 
