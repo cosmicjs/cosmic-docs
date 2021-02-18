@@ -1,0 +1,125 @@
+# Available Methods
+
+## REST API
+
+**Base URL**
+
+To keep things concise, all requests to the REST API use the `$BASE_URL` variable to indicate the following base URL:
+
+```bash
+https://api.cosmicjs.com/v2
+```
+
+## Node.js
+
+Install the [official NPM module for Cosmic](https://www.npmjs.com/package/cosmicjs) with the following command:
+
+```bash
+npm i cosmicjs
+```
+
+## GraphQL
+
+**Base URL**
+
+All GraphQL API examples use the following API endpoint:
+
+```bash
+https://graphql.cosmicjs.com/v2
+```
+
+## GraphQL Playground
+
+Use the playground for a full interactive demonstration. Use the "Docs" and "Schema" buttons on the right side for documentation on models, queries, inputs, and descriptions.
+
+<a href="https://cosmic-graphql-playground.netlify.app/?endpoint=https%3A%2F%2Fgraphql.cosmicjs.com%2Fv2&query=%7B%0A%20%20getObjects%28%0A%20%20%20%20bucket_slug%3A%20%22simple-react-blog%22%2C%0A%20%20%20%20input%3A%20%7B%20%0A%20%20%20%20%20%20type%3A%20%22posts%22%0A%20%20%20%20%7D%0A%20%20%29%20%7B%0A%20%20%20%20%20objects%20%7B%0A%20%20%20%20%20%20title%0A%20%20%20%20%20%20content%0A%20%20%20%20%7D%0A%20%20%20%20total%0A%20%20%7D%0A%7D">
+  Full screen
+</a>
+<iframe
+  src="https://cosmic-graphql-playground.netlify.app/?endpoint=https%3A%2F%2Fgraphql.cosmicjs.com%2Fv2&query=%7B%0A%20%20getObjects%28%0A%20%20%20%20bucket_slug%3A%20%22simple-react-blog%22%2C%0A%20%20%20%20input%3A%20%7B%20%0A%20%20%20%20%20%20type%3A%20%22posts%22%0A%20%20%20%20%7D%0A%20%20%29%20%7B%0A%20%20%20%20%20objects%20%7B%0A%20%20%20%20%20%20title%0A%20%20%20%20%20%20content%0A%20%20%20%20%7D%0A%20%20%20%20total%0A%20%20%7D%0A%7D"
+  frameBorder="0"
+  style={{ width: "100%", height: "470px" }}
+></iframe>
+
+## Cosmic CLI
+
+Use it to log in to your Cosmic account, manage Buckets, data, files and users within your Buckets, all from the comfort of your command line interface.
+
+### Installation
+
+Install the CLI globally:
+
+```bash
+npm i -g cosmic-cli
+```
+
+### Login
+
+Use your credentials (from https://cosmicjs.com) to login on the command line. You will only have to do this once. If you used GitHub to sign up, you can also login via authentication token which you can find at https://cosmicjs.com/account/authentication
+
+```bash
+$ cosmic login
+  ? Email: starman@gmail.com
+  ? Password: [hidden]
+Authenticated
+```
+
+### Usage
+
+All Cosmic CLI commands are of the format:
+
+```bash
+cosmic [command] [options]
+```
+
+### Use Bucket
+
+Now that you are logged in, you can connect to any of your Buckets on your account. The `use-bucket` command will set your Bucket config options. You can set your read and write access keys with this command for later use to interact with your Bucket content. Find your Bucket `slug`, `read_key`, and `write_key` access keys in <i>Your Bucket > Settings > API Access</i> after [logging into your account](https://app.cosmicjs.com/login).
+
+```bash
+$ cosmic use-bucket simple-react-blog --read_key your-read-key --write_key your-write-key
+Now using bucket simple-react-blog
+```
+
+Now you are ready to use any of the commands to have full control over your Bucket!
+
+### Help
+
+Run `cosmic -h` for a list of all commands. The list is also included at the [bottom of this README](https://github.com/cosmicjs/cosmic-cli#commands).
+
+Run `cosmic [command] -h` for details on options for a specific command.
+
+### Commands
+
+For a list of the options for a command, use `cosmic [command] -h`
+
+- begin `Guide to Getting Started`
+- login
+- which-user `outputs the email of the current user`
+- which-bucket `outputs the slug of the current Bucket`
+- which-app `outputs the slug of the current app`
+- get-buckets [options] `shows Buckets available to user`
+- install-app `installs an app to your bucket and downloads the repo to your machine`
+- deploy-app [options] `deploys an app to the Cosmic App Server`
+- view-app `Opens browser window with demo link`
+- browse-apps [options] `search for apps or see all`
+- start-app `starts a downloaded app on your machine`
+- get-bucket [options] `get current bucket object`
+- use-bucket [options] [slug]
+- add-bucket [options]
+- delete-bucket [options]
+- get-objects [options]
+- get-object [options]
+- get-object-types
+- add-object-type [options]
+- edit-object-type [options]
+- delete-object-type [options]
+- add-object [options]
+- edit-object [options]
+- delete-object [options]
+- add-media [options]
+- get-media [options]
+- delete-media [options]
+- add-webhook [options]
+- delete-webhook [options]
+- add-user [options]

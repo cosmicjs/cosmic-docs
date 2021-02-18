@@ -70,6 +70,16 @@ getObjects(bucket_slug, input)
 <a href="https://cosmic-graphql-playground.netlify.com/?endpoint=https%3A%2F%2Fgraphql.cosmicjs.com%2Fv2&amp;query=%7B%0A%20%20getObjects%28%0A%20%20%20%20bucket_slug%3A%20%22simple-react-blog%22%2C%0A%20%20%20%20input%3A%20%7B%20%0A%20%20%20%20%20%20type%3A%20%22posts%22%0A%20%20%20%20%7D%0A%20%20%29%20%7B%0A%20%20%20%20%20objects%20%7B%0A%20%20%20%20%20%20title%0A%20%20%20%20%20%20content%0A%20%20%20%20%7D%0A%20%20%20%20total%0A%20%20%7D%0A%7D">Full screen</a>
 <iframe src="https://cosmic-graphql-playground.netlify.com/?endpoint=https%3A%2F%2Fgraphql.cosmicjs.com%2Fv2&amp;query=%7B%0A%20%20getObjects%28%0A%20%20%20%20bucket_slug%3A%20%22simple-react-blog%22%2C%0A%20%20%20%20input%3A%20%7B%20%0A%20%20%20%20%20%20type%3A%20%22posts%22%0A%20%20%20%20%7D%0A%20%20%29%20%7B%0A%20%20%20%20%20objects%20%7B%0A%20%20%20%20%20%20title%0A%20%20%20%20%20%20content%0A%20%20%20%20%7D%0A%20%20%20%20total%0A%20%20%7D%0A%7D" frameBorder="0" style={{ width: '100%', height: '470px'}}></iframe>
 </div>
+
+<div label="CLI">
+```bash
+cosmic get-objects
+```
+**Example Request**
+```bash
+cosmic get-objects --limit 10 --type_slug=posts
+```
+</div>
 </Tabs>
 
 **Example Full Response**
@@ -204,6 +214,17 @@ getObjects(bucket_slug, input)
 <a href="https://cosmic-graphql-playground.netlify.app/?endpoint=https%3A%2F%2Fgraphql.cosmicjs.com%2Fv2&query=%7B%0A%20%20getObjects%28%0A%20%20%20%20bucket_slug%3A%20%22simple-react-blog%22%2C%0A%20%20%20%20input%3A%20%7B%20%0A%20%20%20%20%20%20type%3A%20%22posts%22%0A%20%20%20%20%20%20props%3A%20%22slug%2Ctitle%2Cmetadata.hero.url%22%0A%20%20%20%20%7D%0A%20%20%29%20%7B%0A%20%20%20%20%20objects%20%7B%0A%20%20%20%20%20%20slug%0A%20%20%20%20%20%20title%0A%20%20%20%20%20%20metadata%0A%20%20%20%20%7D%0A%20%20%20%20total%0A%20%20%7D%0A%7D">Full screen</a>
 <iframe src="https://cosmic-graphql-playground.netlify.app/?endpoint=https%3A%2F%2Fgraphql.cosmicjs.com%2Fv2&query=%7B%0A%20%20getObjects%28%0A%20%20%20%20bucket_slug%3A%20%22simple-react-blog%22%2C%0A%20%20%20%20input%3A%20%7B%20%0A%20%20%20%20%20%20type%3A%20%22posts%22%0A%20%20%20%20%20%20props%3A%20%22slug%2Ctitle%2Cmetadata.hero.url%22%0A%20%20%20%20%7D%0A%20%20%29%20%7B%0A%20%20%20%20%20objects%20%7B%0A%20%20%20%20%20%20slug%0A%20%20%20%20%20%20title%0A%20%20%20%20%20%20metadata%0A%20%20%20%20%7D%0A%20%20%20%20total%0A%20%20%7D%0A%7D" frameBorder="0" style={{ width: '100%', height: '470px'}}></iframe>
 </div>
+
+<div label="CLI">
+```bash
+cosmic get-objects
+```
+**Example Request**
+```bash
+cosmic get-objects --limit 10 --type_slug=posts --props=title,content,metadata.parent.title,metadata.parent.metadata.category.metadata.description
+```
+
+</div>
 </Tabs>
 
 **Example Response with Props**
@@ -286,6 +307,17 @@ getObject(bucket_slug, input)
     frameBorder="0"
     style={{ width: "100%", height: "470px" }}
   ></iframe>
+</div>
+
+<div label="CLI">
+```bash
+cosmic get-object
+```
+**Example Request**
+```bash
+cosmic get-object --slug=learning
+```
+
 </div>
 </Tabs>
 
@@ -424,6 +456,16 @@ getObject(bucket_slug, input)
     style={{ width: "100%", height: "470px" }}
   ></iframe>
 </div>
+<div label="CLI">
+```bash
+cosmic get-object
+```
+**Example Request**
+```bash
+cosmic get-object --slug=learning --props=title,content,metadata.parent.title,metadata.parent.metadata.category.metadata.description
+```
+
+</div>
 </Tabs>
 
 **Example Response with Props**
@@ -551,6 +593,15 @@ addObject(bucket_slug, input)
     style={{ width: "100%", height: "470px" }}
   ></iframe>
 </div>
+<div label="CLI">
+```bash
+cosmic add-object
+```
+**Example Request**
+```bash
+cosmic add-object --type_slug planets --title Venus --metafields '[{"title": "Radius","type":"text", "key": "radius", "value": "3,760 miles"},{"title": "Distance from Sun","type":"text", "key": "distance_from_sun", "value": "67.24 million miles"}]'
+```
+</div>
 </Tabs>
 
 **Example Response**
@@ -612,7 +663,7 @@ PATCH $BASE_URL/buckets/${bucket_slug}/objects/${object_id}
 
 ```json
 {
-  "title": "This is updated Title"
+  "title": "This is the updated Title"
 }
 ```
 
@@ -659,6 +710,15 @@ editObject(bucket_slug, input)
     style={{ width: "100%", height: "470px" }}
   ></iframe>
 </div>
+<div label="CLI">
+```bash
+cosmic edit-object
+```
+**Example Request**
+```bash
+cosmic edit-object --slug venus --title 'This is the updated Title'
+```
+</div>
 </Tabs>
 
 **Example Response**
@@ -668,7 +728,7 @@ editObject(bucket_slug, input)
   "object": {
     "id": "5ff75368c2dfa81a91695cec",
     "slug": "title-of-the-post",
-    "title": "This is updated Title",
+    "title": "This is the updated Title",
     "content": "",
     "metafields": [],
     "bucket": "5f7357124b331d76c08de989",
@@ -741,6 +801,15 @@ deleteObject(bucket_slug, input)
     frameBorder="0"
     style={{ width: "100%", height: "470px" }}
   ></iframe>
+</div>
+<div label="CLI">
+```bash
+cosmic delete-object
+```
+**Example Request**
+```bash
+cosmic delete-object --slug venus
+```
 </div>
 </Tabs>
 
