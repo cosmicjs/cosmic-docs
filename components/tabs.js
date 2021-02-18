@@ -4,7 +4,10 @@ const tabs = (props) => {
   return  <Tabs>
     <TabList>
       {
-        props.children.map(child => <Tab key={`tab-${child.props.label}`}>{child.props.label}</Tab>)
+        props.children.map(child => {
+          const label = child.props.label;
+          return <Tab key={`tab-${child.props.label}`}>{label}</Tab>
+        })
       }
     </TabList>
     {
