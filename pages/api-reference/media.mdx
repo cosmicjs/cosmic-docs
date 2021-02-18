@@ -37,6 +37,33 @@ GET $BASE_URL/buckets/${bucket_slug}/media
 
 </div>
 
+<div label="Node.js">
+```javascript
+Cosmic.getMedia()
+```
+
+**Example Request**
+
+```javascript
+const Cosmic = require("cosmicjs");
+const api = Cosmic();
+const bucket = api.bucket({
+  slug: "your-bucket-slug",
+  read_key: "your-read-key-found-in-bucket-settings",
+});
+bucket.getMedia({
+    folder: 'groomsmen',
+    props: 'imgix_url' // get only what you need
+    limit: 3
+  }).then(data => {
+    console.log(data)
+  }).catch(err => {
+    console.log(err)
+  })
+```
+
+</div>
+
 <div label="GraphQL">
 ```javascript
 getMedia(bucket_slug, input)
@@ -181,6 +208,34 @@ Delete an existing Media by `id` from your Bucket.
 <div label="REST">
 ```bash
 DELETE $BASE_URL/buckets/${bucket_slug}/media/${media_id}
+```
+
+</div>
+
+<div label="Node.js">
+```javascript
+Cosmic.deleteMedia()
+```
+
+**Example Request**
+
+```javascript
+const Cosmic = require("cosmicjs");
+const api = Cosmic();
+const bucket = api.bucket({
+  slug: "your-bucket-slug",
+  read_key: "your-read-key-found-in-bucket-settings",
+});
+bucket
+  .deleteMedia({
+    id: "5a4b18e12fff7ec0e3c13c65",
+  })
+  .then((data) => {
+    console.log(data);
+  })
+  .catch((err) => {
+    console.log(err);
+  });
 ```
 
 </div>

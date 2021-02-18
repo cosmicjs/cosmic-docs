@@ -32,6 +32,25 @@ GET $BASE_URL/buckets/${bucket_slug}/object-types
 
 </div>
 
+<div label="Node.js">
+```javascript
+bucket.getObjectTypes()
+```
+**Example Request**
+```javascript
+const Cosmic = require("cosmicjs");
+const bucket = Cosmic.bucket({
+  slug: "bucket-slug",
+  read_key: "your-read-key-found-in-bucket-settings",
+});
+bucket.getObjectTypes().then(data => {
+  console.log(data)
+}).catch(err => {
+  console.log(err)
+})
+```
+</div>
+
 <div label="GraphQL">
 ```javascript
 getObjectTypes(bucket_slug, input)
@@ -172,6 +191,48 @@ POST $BASE_URL/buckets/${bucket_slug}/object-types/
 
 </div>
 
+<div label="Node.js">
+```javascript
+bucket.addObjectType()
+```
+**Example Request**
+```javascript
+const Cosmic = require("cosmicjs");
+const bucket = Cosmic.bucket({
+  slug: "bucket-slug",
+  read_key: "your-read-key-found-in-bucket-settings",
+});
+const params = {
+  title: 'Pages',
+  singular: 'Page',
+  slug: 'pages',
+  emoji: '📄',
+  singleton: false,
+  metafields: [
+    {
+      type: 'text',
+      title: 'Headline',
+      key: 'headline',
+      required: true
+    },
+    {
+      type: 'file',
+      title: 'Hero',
+      key: 'hero',
+      required: true
+    }
+  ]
+}
+bucket.addObjectType(params)
+  .then(data => {
+    console.log(data)
+  })
+  .catch(err => {
+    console.log(err)
+  })
+```
+</div>
+
 <div label="GraphQL">
 ```javascript
 addObjectType(bucket_slug, input)
@@ -243,6 +304,30 @@ PATCH $BASE_URL/buckets/${bucket_slug}/object-types/${type_slug}
 
 </div>
 
+<div label="Node.js">
+```javascript
+bucket.editObjectType()
+```
+**Example Request**
+```javascript
+const Cosmic = require("cosmicjs");
+const bucket = Cosmic.bucket({
+  slug: 'bucket-slug',
+  write_key: ''
+})
+bucket.editObjectType({
+    slug: 'posts',
+    title: 'New Posts Title'
+  })
+  .then(data => {
+    console.log(data)
+  })
+  .catch(err => {
+    console.log(err)
+  })
+```
+</div>
+
 <div label="GraphQL">
 ```javascript
 editObjectType(bucket_slug)
@@ -299,6 +384,29 @@ _**Note:** This does not delete Objects in this Object Type._
 DELETE $BASE_URL/buckets/${bucket_slug}/object-types/${type_slug}
 ```
 
+</div>
+
+<div label="Node.js">
+```javascript
+bucket.deleteObjectType()
+```
+**Example Request**
+```javascript
+const Cosmic = require("cosmicjs");
+const bucket = Cosmic.bucket({
+  slug: 'bucket-slug',
+  write_key: ''
+})
+bucket.deleteObjectType({
+    slug: 'posts'
+  })
+  .then(data => {
+    console.log(data)
+  })
+  .catch(err => {
+    console.log(err)
+  })
+```
 </div>
 
 <div label="GraphQL">

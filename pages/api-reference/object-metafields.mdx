@@ -1,4 +1,5 @@
 import Callout from "nextra-theme-docs/callout";
+import Tabs from "components/tabs";
 
 # Object Metafields
 
@@ -115,7 +116,7 @@ Take a look at [Metafield Model](/api-reference/getting-started/metafields) for 
 **Definition**
 
 ```bash
-POST $BASE_URL/buckets/${bucket_slug}/objects/${object_id}/metafields/
+POST $BASE_URL/buckets/${bucket_slug}/objects/${object_id}/metafields
 ```
 
 **Example Body (JSON)**
@@ -154,6 +155,8 @@ _**Note:** At least one of the Parameters is required to process the request._
 
 **Definition**
 
+<Tabs>
+<div label="REST">
 ```bash
 PATCH $BASE_URL/buckets/${bucket_slug}/objects/${object_id}/metafields/${metafield_key}
 ```
@@ -162,9 +165,45 @@ PATCH $BASE_URL/buckets/${bucket_slug}/objects/${object_id}/metafields/${metafie
 
 ```json
 {
-  "value": 987654321
+  "value": 9876543210
 }
 ```
+
+</div>
+
+<div label="Node.js">
+```javascript
+bucket.editObjectMetafields()
+```
+**Example Request**
+```javascript
+const Cosmic = require("cosmicjs");
+const bucket = Cosmic.bucket({
+  slug: "bucket-slug",
+  read_key: "your-read-key-found-in-bucket-settings",
+});
+const params = {
+  "id": "1234asdf1234",  // Object id
+  "metafield": {
+    "key": "phone_number" // required
+    "value": 9876543210
+  }
+}
+const bucket = Cosmic.bucket({
+  slug: 'bucket-slug',
+  write_key: 'your-write-key-found-in-bucket-settings'
+})
+bucket.editObjectMetafield(params)
+  .then(data => {
+    console.log(data)
+  })
+  .catch(err => {
+    console.log(err)
+  })
+```
+</div>
+
+</Tabs>
 
 **Example Response**
 
@@ -173,8 +212,8 @@ PATCH $BASE_URL/buckets/${bucket_slug}/objects/${object_id}/metafields/${metafie
   "metafield": {
     "type": "number",
     "title": "Example Phone number",
-    "key": "example-phone-number",
-    "value": 987654321
+    "key": "phone_number",
+    "value": 9876543210
   }
 }
 ```

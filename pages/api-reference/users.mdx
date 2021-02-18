@@ -40,6 +40,28 @@ GET $BASE_URL/buckets/${bucket_slug}/users
 
 </div>
 
+<div label="Node.js">
+```javascript
+bucket.getUsers()
+```
+**Example Request**
+```javascript
+const Cosmic = require('cosmicjs')({
+  token: 'your-token-from-auth-request' // required
+})
+const bucket = Cosmic.bucket({
+  slug: 'bucket-slug'
+})
+bucket.getUsers()
+.then(data => {
+  console.log(data)
+})
+.catch(err => {
+  console.log(err)
+})
+```
+</div>
+
 <div label="GraphQL">
 ```javascript
 getUsers(bucket_slug)
@@ -99,6 +121,31 @@ Gets user by `id` in your bucket.
 GET $BASE_URL/buckets/${bucket_slug}/users/${user_id}
 ```
 
+</div>
+
+<div label="Node.js">
+```javascript
+bucket.getUser()
+```
+**Example Request**
+```javascript
+const Cosmic = require('cosmicjs')({
+  token: 'your-token-from-auth-request' // required
+})
+const bucket = Cosmic.bucket({
+  slug: 'bucket-slug'
+})
+const params = {
+  id: '5357ef811693be2118000001'
+}
+bucket.getUser(params)
+.then(data => {
+  console.log(data)
+})
+.catch(err => {
+  console.log(err)
+})
+```
 </div>
 
 <div label="GraphQL">
@@ -163,6 +210,34 @@ POST $BASE_URL/buckets/${bucket_slug}/users
 }
 ```
 
+</div>
+
+<div label="Node.js">
+```javascript
+bucket.addUser()
+```
+**Example Request**
+```javascript
+const Cosmic = require('cosmicjs')({
+  token: 'your-token-from-auth-request' // required
+})
+const bucket = Cosmic.bucket({
+  slug: 'bucket-slug'
+})
+const params = {
+  email: 'newuser@example.com',
+  role: 'editor',
+  first_name: 'Quasar',
+  last_name: 'Jones'
+}
+bucket.addUser(params)
+.then(data => {
+  console.log(data)
+})
+.catch(err => {
+  console.log(err)
+})
+```
 </div>
 
 <div label="GraphQL">

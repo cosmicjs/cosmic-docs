@@ -31,6 +31,29 @@ POST $BASE_URL/authenticate
 
 </div>
 
+<div label="Node.js">
+```javascript
+Cosmic.authenticate()
+```
+
+**Example Request**
+
+```javascript
+const Cosmic = require("cosmicjs")(); // double parentheses to init function without token
+Cosmic.authenticate({
+  email: "you@youremail.com",
+  password: "yourpassword",
+})
+  .then((data) => {
+    console.log(data);
+  })
+  .catch((err) => {
+    console.log(err);
+  });
+```
+
+</div>
+
 <div label="GraphQL">
 ```javascript
 getAccessToken(email, password)
@@ -73,20 +96,10 @@ You can use the Authentication token using REST requests to the API
 
 <Tabs>
 <div label="REST">
+
 ```bash
 GET $BASE_URL/buckets
 ```
-
-</div>
-
-<div label="GraphQL">
-```javascript
-getBuckets()
-```
-<a href="https://cosmic-graphql-playground.netlify.app/?endpoint=https://graphql.cosmicjs.com/v2&query=%7B%0A%20%20getBuckets%20%7B%0A%20%20%20%20title%0A%20%20%7D%0A%7D">Full screen</a>
-<iframe src="https://cosmic-graphql-playground.netlify.app/?endpoint=https://graphql.cosmicjs.com/v2&query=%7B%0A%20%20getBuckets%20%7B%0A%20%20%20%20title%0A%20%20%7D%0A%7D" frameBorder="0" style={{ width: '100%', height: '470px'}}></iframe>
-</div>
-</Tabs>
 
 **Header**
 
@@ -95,3 +108,44 @@ getBuckets()
   "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXV.eyJlbWFpbCI6InNwaXJvbnl..."
 }
 ```
+
+</div>
+
+<div label="Node.js">
+```javascript
+Cosmic.getBuckets()
+```
+
+**Example Request**
+
+```javascript
+const Cosmic = require("cosmicjs")({
+  token: "your-token-from-auth-request", // optional
+});
+Cosmic.getBuckets()
+  .then((data) => {
+    console.log(data);
+  })
+  .catch((err) => {
+    console.log(err);
+  });
+```
+
+</div>
+
+<div label="GraphQL">
+```javascript
+getBuckets()
+```
+**Header**
+
+```json
+{
+  "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXV.eyJlbWFpbCI6InNwaXJvbnl..."
+}
+```
+
+<a href="https://cosmic-graphql-playground.netlify.app/?endpoint=https://graphql.cosmicjs.com/v2&query=%7B%0A%20%20getBuckets%20%7B%0A%20%20%20%20title%0A%20%20%7D%0A%7D">Full screen</a>
+<iframe src="https://cosmic-graphql-playground.netlify.app/?endpoint=https://graphql.cosmicjs.com/v2&query=%7B%0A%20%20getBuckets%20%7B%0A%20%20%20%20title%0A%20%20%7D%0A%7D" frameBorder="0" style={{ width: '100%', height: '470px'}}></iframe>
+</div>
+</Tabs>

@@ -40,6 +40,35 @@ Gets all Buckets connected to your account.
 ```bash
 GET $BASE_URL/buckets
 ```
+**Header**
+
+```json
+{
+  "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXV.eyJlbWFpbCI6InNwaXJvbnl..."
+}
+```
+
+</div>
+
+<div label="Node.js">
+```javascript
+Cosmic.getBuckets()
+```
+
+**Example Request**
+
+```javascript
+const Cosmic = require("cosmicjs")({
+  token: "your-token-from-auth-request",
+});
+Cosmic.getBuckets()
+  .then((data) => {
+    console.log(data);
+  })
+  .catch((err) => {
+    console.log(err);
+  });
+```
 
 </div>
 
@@ -47,6 +76,14 @@ GET $BASE_URL/buckets
 ```javascript
 getBuckets()
 ```
+**Header**
+
+```json
+{
+  "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXV.eyJlbWFpbCI6InNwaXJvbnl..."
+}
+```
+
 <a href="https://cosmic-graphql-playground.netlify.app/?endpoint=https://graphql.cosmicjs.com/v2&query=%7B%0A%20%20getBuckets%20%7B%0A%20%20%20%20title%0A%20%20%7D%0A%7D">Full screen</a>
 <iframe src="https://cosmic-graphql-playground.netlify.app/?endpoint=https://graphql.cosmicjs.com/v2&query=%7B%0A%20%20getBuckets%20%7B%0A%20%20%20%20title%0A%20%20%7D%0A%7D" frameBorder="0" style={{ width: '100%', height: '470px'}}></iframe>
 </div>
@@ -92,6 +129,28 @@ Returns bucket by `slug` connected to your Bucket.
 <div label="REST">
 ```bash
 GET $BASE_URL/buckets/${bucket_slug}
+```
+
+</div>
+
+<div label="Node.js">
+```javascript
+Cosmic.getBucket()
+```
+
+**Example Request**
+
+```javascript
+const Cosmic = require("cosmicjs")({
+  token: "your-token-from-auth-request",
+});
+Cosmic.getBucket({ slug: "wedding-site" })
+  .then((data) => {
+    console.log(data);
+  })
+  .catch((err) => {
+    console.log(err);
+  });
 ```
 
 </div>
@@ -149,6 +208,31 @@ Add a new bucket to your account.
 <div label="REST">
 ```bash
 POST $BASE_URL/buckets
+```
+
+</div>
+
+<div label="Node.js">
+```javascript
+Cosmic.addBucket()
+```
+
+**Example Request**
+
+```javascript
+const Cosmic = require("cosmicjs")({
+  token: "your-token-from-auth-request", // required
+});
+Cosmic.addBucket({
+  title: "My New Bucket",
+  slug: "my-new-bucket", // must be unique across all Buckets in system
+})
+  .then((data) => {
+    console.log(data);
+  })
+  .catch((err) => {
+    console.log(err);
+  });
 ```
 
 </div>
@@ -264,6 +348,30 @@ Delete an existing bucket by `slug` from your account.
 <div label="REST">
 ```bash
 DELETE $BASE_URL/buckets/${bucket_slug}
+```
+
+</div>
+
+<div label="Node.js">
+```javascript
+Cosmic.deleteBucket()
+```
+
+**Example Request**
+
+```javascript
+const Cosmic = require("cosmicjs")({
+  token: "your-token-from-auth-request", // required
+});
+Cosmic.deleteBucket({
+  id: "bucket_id",
+})
+  .then((data) => {
+    console.log(data);
+  })
+  .catch((err) => {
+    console.log(err);
+  });
 ```
 
 </div>

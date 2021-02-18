@@ -24,6 +24,32 @@ GET $BASE_URL/buckets/${bucket_slug}/objects?read_key=${read_key}&query=${query}
 
 </div>
 
+<div label="Node.js">
+```javascript
+bucket.getObjects()
+```
+**Example Request**
+```javascript
+const Cosmic = require("cosmicjs");
+const bucket = Cosmic.bucket({
+  slug: "bucket-slug",
+  read_key: "your-read-key-found-in-bucket-settings",
+});
+const query = {
+  "content":
+    {
+      "$regex": "jamstack",
+      "$options": "i"
+    }
+  }
+bucket.getObjects({
+  type: "posts",
+  limit: 10,
+  query
+});
+```
+</div>
+
 <div label="GraphQL">
 ```javascript
 getObjects(bucket_slug, input: query)
