@@ -166,6 +166,13 @@ GET $BASE_URL/buckets/${bucket_slug}/media/${media_id}
 
 The only required post value is the `media` object. You can also add optional `folder` and `metadata` params.
 
+<Callout emoji="⚠">
+  **Required**
+  <br />
+  `write_key` must be passed as `Authorization Bearer` in the header of the
+  request.
+</Callout>
+
 <Callout emoji="✅">
   **Quick Tip**
   <br />
@@ -184,7 +191,6 @@ https://upload.cosmicjs.com/v2
 | media     | required | Media Object (see below) | Media object with specific properties |
 | folder    |          | String                   | Media folder slug                     |
 | metadata  |          | Object                   | Key / value data store                |
-| write_key |          | String                   | Your Bucket write key                 |
 
 ### Media Object
 
@@ -205,7 +211,7 @@ POST https://upload.cosmicjs.com/v2/:bucket_slug/media
 </div>
 <div label="Bash">
 ```bash
-curl --form "folder=folder-name" --form "media=@test.png" --form "write_key=<write-key>" 'https://upload.cosmicjs.com/v2/:bucket_slug/media'
+curl --form "folder=folder-name" --form "media=@test.png" -H "Authorization: Bearer <write-key>" 'https://upload.cosmicjs.com/v2/:bucket_slug/media'
 ```
 </div>
 
