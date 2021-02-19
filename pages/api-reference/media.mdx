@@ -98,7 +98,7 @@ cosmic get-media --limit 2
       "location": "https://cdn.cosmicjs.com",
       "folder": "product-images",
       "url": "https://cdn.cosmicjs.com/9c4d6b70-49e5-11eb-98a2-810fade44566-logo-layout-1.jpg",
-      "imgix_url": "https://cosmic-s3.imgix.net/9c4d6b70-49e5-11eb-98a2-810fade44566-logo-layout-1.jpg"
+      "imgix_url": "https://imgix.cosmicjs.com/9c4d6b70-49e5-11eb-98a2-810fade44566-logo-layout-1.jpg"
     },
     {
       "id": "5feb42f2601e2b3a61512899",
@@ -111,7 +111,7 @@ cosmic get-media --limit 2
       "location": "https://cdn.cosmicjs.com",
       "folder": "product-images",
       "url": "https://cdn.cosmicjs.com/9c5a3cb0-49e5-11eb-98a2-810fade44566-logo-layout-2.jpg",
-      "imgix_url": "https://cosmic-s3.imgix.net/9c5a3cb0-49e5-11eb-98a2-810fade44566-logo-layout-2.jpg"
+      "imgix_url": "https://imgix.cosmicjs.com/9c5a3cb0-49e5-11eb-98a2-810fade44566-logo-layout-2.jpg"
     }
   ],
   "total": 10,
@@ -153,10 +153,220 @@ GET $BASE_URL/buckets/${bucket_slug}/media/${media_id}
       "ok": true
     },
     "url": "https://cdn.cosmicjs.com/d319ff30-13b7-11e9-acee-bd778576f320-default_profile.png",
-    "imgix_url": "https://cosmic-s3.imgix.net/d319ff30-13b7-11e9-acee-bd778576f320-default_profile.png"
+    "imgix_url": "https://imgix.cosmicjs.com/d319ff30-13b7-11e9-acee-bd778576f320-default_profile.png"
   }
 }
 ```
+
+### Imgix
+
+[Imgix](https://imgix.com/) is included with every account. You can use the Imgix suite of image processing tools on the URL provided by the `imgix_url` property value. Check out the [Imgix documentation](https://docs.imgix.com/) for more info.
+
+## Add Media
+
+The only required post value is the `media` object. You can also add optional `folder` and `metadata` params.
+
+<Callout emoji="✅">
+  **Quick Tip**
+  <br />
+  The base endpoint is different than other REST API requests with a higher
+  upload size limit of `900MB`.
+</Callout>
+
+### Base URL
+
+```
+https://upload.cosmicjs.com/v2
+```
+
+| Parameter | Required | Type                     | Description                           |
+| --------- | -------- | ------------------------ | ------------------------------------- |
+| media     | required | Media Object (see below) | Media object with specific properties |
+| folder    |          | String                   | Media folder slug                     |
+| metadata  |          | Object                   | Key / value data store                |
+| write_key |          | String                   | Your Bucket write key                 |
+
+### Media Object
+
+The Media Object must be an object with certain properties indicated below. If using the [multer NPM module](https://www.npmjs.com/package/multer) the file objects have these by default. Otherwise you should create an object with these properties:
+
+| Parameter    | Required | Type        | Description                           |
+| ------------ | -------- | ----------- | ------------------------------------- |
+| originalname | required | String      | The name of your file (something.jpg) |
+| buffer       |          | File Buffer | The File Buffer                       |
+
+**Methods**
+
+<Tabs>
+<div label="REST">
+```bash
+POST https://upload.cosmicjs.com/v2/:bucket_slug/media
+```
+</div>
+<div label="Bash">
+```bash
+curl --form "folder=folder-name" --form "media=@test.png" --form "write_key=<write-key>" 'https://upload.cosmicjs.com/v2/:bucket_slug/media'
+```
+</div>
+
+<div label="Node.js">
+```javascript
+Cosmic.addMedia()
+```
+
+**Example Request**
+
+```javascript
+const bucket = Cosmic.bucket({
+  slug: "bucket-slug",
+  write_key: "",
+});
+
+const media_object = req.files[0]; // Using Multer
+// OR:
+// const media_object = { originalname: filename, buffer: filedata } // Not using Multer
+
+bucket
+  .addMedia({
+    media: media_object,
+    folder: "your-folder-slug",
+    metadata: {
+      caption: "Beautiful picture of the beach",
+      credit: "Tyler Jackson",
+    },
+  })
+  .then((data) => {
+    console.log(data);
+  })
+  .catch((err) => {
+    console.log(err);
+  });
+
+// In order to pass the file `req.files.foo` to Cosmic you would do:
+const media_object = {
+  originalname: req.files.foo.name,
+  buffer: req.files.foo.data,
+};
+```
+
+**Example Response**
+
+```json
+{
+  "media": {
+    "name": "c20391e0-b8a4-11e6-8836-fbdfd6956b31-bird.jpg",
+    "original_name": "bird.jpg",
+    "size": 457307,
+    "type": "image/jpeg",
+    "bucket": "5839c67f0d3201c114000004",
+    "created": "2016-12-02T15:34:05.054Z",
+    "location": "https://cosmicjs.com/uploads",
+    "url": "https://cdn.cosmicjs.com/c20391e0-b8a4-11e6-8836-fbdfd6956b31-bird.jpg",
+    "imgix_url": "https://imgix.cosmicjs.com/c20391e0-b8a4-11e6-8836-fbdfd6956b31-bird.jpg",
+    "metadata": [
+      {
+        "key": "caption",
+        "value": "Beautiful picture of the beach"
+      },
+      {
+        "key": "credit",
+        "value": "Tyler Jackson"
+      }
+    ]
+  }
+}
+```
+
+</div>
+
+<div label="CLI">
+```bash
+cosmic add-media
+```
+Add media from local machine.
+
+**Example Request**
+
+```bash
+cosmic add-media -f ./my-cat.png -t my-cat.png --folder cat-images
+```
+
+</div>
+</Tabs>
+
+**Example Response**
+
+```json
+{
+  "media": {
+    "id": "602fd622853cca45f4c9fd96",
+    "name": "c20391e0-b8a4-11e6-8836-fbdfd6956b31-test.png",
+    "original_name": "test.png",
+    "size": 457307,
+    "folder": "folder-name",
+    "type": "image/png",
+    "bucket": "5839c67f0d3201c114000004",
+    "created": "2016-12-02T15:34:05.054Z",
+    "location": "https://cdn.cosmicjs.com",
+    "url": "https://cdn.cosmicjs.com/c20391e0-b8a4-11e6-8836-fbdfd6956b31-test.png",
+    "imgix_url": "https://imgix.cosmicjs.com/c20391e0-b8a4-11e6-8836-fbdfd6956b31-test.png"
+  }
+}
+```
+
+## Examples
+
+### Multer: Server-Side
+
+This application uses Express and Multer to create a route `POST http://localhost:5000/upload` that will upload a file to your Bucket Media area. This is an example from the article [Upload Media to Your Cosmic Bucket Using Multer](https://www.cosmicjs.com/articles/upload-media-to-your-cosmic-js-bucket-using-multer-jzoddl9p).
+
+```javascript
+// index.js
+const fs = require("fs");
+const Cosmic = require("cosmicjs")();
+const multer = require("multer");
+const express = require("express");
+var app = express();
+const bucket = Cosmic.bucket({
+  slug: "your-bucket-slug",
+  write_key: "your-bucket-write-key",
+});
+var storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, __dirname + "/uploads");
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.fieldname + "-" + Date.now());
+  },
+});
+var upload = multer({ storage: storage });
+app.post("/upload", upload.single("file"), async function (req, res) {
+  try {
+    const media_object = {
+      originalname: req.file.originalname,
+      buffer: fs.createReadStream(req.file.path),
+    };
+    const response = await bucket.addMedia({ media: media_object });
+    return res.json(response);
+  } catch (e) {
+    console.log(e);
+  }
+});
+app.listen(5000);
+```
+
+### React Dropzone: Client-side
+
+React Dropzone is a popular file uploader on the client-side. For implementation, read the [React Dropzone docs on GitHub](https://github.com/react-dropzone/react-dropzone/).
+
+[View full screen / fork on StackBlitz ](https://stackblitz.com/edit/react-dropzone-cosmic)
+
+<iframe
+  src="https://stackblitz.com/edit/react-dropzone-cosmic?embed=1&file=index.js"
+  width="100%"
+  height="500"
+  frameBorder="0"
+></iframe>
 
 ## Edit Media
 
