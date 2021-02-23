@@ -140,8 +140,20 @@ bucket.getObjects({
 getObjects(bucket_slug, input)
 ```
 
-<a href="https://cosmic-graphql-playground.netlify.com/?endpoint=https%3A%2F%2Fgraphql.cosmicjs.com%2Fv2&amp;query=%7B%0A%20%20getObjects%28%0A%20%20%20%20bucket_slug%3A%20%22simple-react-blog%22%2C%0A%20%20%20%20input%3A%20%7B%20%0A%20%20%20%20%20%20type%3A%20%22posts%22%0A%20%20%20%20%7D%0A%20%20%29%20%7B%0A%20%20%20%20%20objects%20%7B%0A%20%20%20%20%20%20title%0A%20%20%20%20%20%20content%0A%20%20%20%20%7D%0A%20%20%20%20total%0A%20%20%7D%0A%7D">Full screen</a>
-<iframe src="https://cosmic-graphql-playground.netlify.com/?endpoint=https%3A%2F%2Fgraphql.cosmicjs.com%2Fv2&amp;query=%7B%0A%20%20getObjects%28%0A%20%20%20%20bucket_slug%3A%20%22simple-react-blog%22%2C%0A%20%20%20%20input%3A%20%7B%20%0A%20%20%20%20%20%20type%3A%20%22posts%22%0A%20%20%20%20%7D%0A%20%20%29%20%7B%0A%20%20%20%20%20objects%20%7B%0A%20%20%20%20%20%20title%0A%20%20%20%20%20%20content%0A%20%20%20%20%7D%0A%20%20%20%20total%0A%20%20%7D%0A%7D" frameBorder="0" style={{ width: '100%', height: '470px'}}></iframe>
+**Variables**
+
+```
+{
+  "bucket_slug": "{{bucket_slug}}",
+  "read_key": "{{read_key}}",
+  "query": {
+    "type": "posts"
+  }
+}
+```
+
+<a href="https://cosmic-graphql-playground.netlify.app/?endpoint=https%3A%2F%2Fgraphql.cosmicjs.com%2Fv3&query=%20query%20%28%24bucket_slug%3A%20String%21%2C%20%24read_key%3A%20String%2C%20%24query%3A%20JSON%29%20%7B%0A%20%20getObjects%28%0A%20%20%20%20bucket_slug%3A%20%24bucket_slug%0A%20%20%20%20read_key%3A%20%24read_key%0A%20%20%20%20input%3A%20%7B%0A%20%20%20%20%20%20%20query%3A%20%24query%0A%20%20%20%20%7D%0A%20%20%29%20%7B%0A%20%20%20%20%20objects%20%7B%0A%20%20%20%20%20%20id%0A%20%20%20%20%20%20title%0A%20%20%20%20%20%20slug%0A%20%20%20%20%7D%0A%20%20%20%20total%0A%20%20%7D%0A%7D">Full screen</a>
+<iframe src="https://cosmic-graphql-playground.netlify.app/?endpoint=https%3A%2F%2Fgraphql.cosmicjs.com%2Fv3&query=%20query%20%28%24bucket_slug%3A%20String%21%2C%20%24read_key%3A%20String%2C%20%24query%3A%20JSON%29%20%7B%0A%20%20getObjects%28%0A%20%20%20%20bucket_slug%3A%20%24bucket_slug%0A%20%20%20%20read_key%3A%20%24read_key%0A%20%20%20%20input%3A%20%7B%0A%20%20%20%20%20%20%20query%3A%20%24query%0A%20%20%20%20%7D%0A%20%20%29%20%7B%0A%20%20%20%20%20objects%20%7B%0A%20%20%20%20%20%20id%0A%20%20%20%20%20%20title%0A%20%20%20%20%20%20slug%0A%20%20%20%20%7D%0A%20%20%20%20total%0A%20%20%7D%0A%7D" frameBorder="0" style={{ width: '100%', height: '470px'}}></iframe>
 </div>
 
 <div label="CLI">
@@ -240,8 +252,21 @@ bucket.getObjects({
 ```javascript
 getObjects(bucket_slug, input)
 ```
-<a href="https://cosmic-graphql-playground.netlify.app/?endpoint=https%3A%2F%2Fgraphql.cosmicjs.com%2Fv2&query=%7B%0A%20%20getObjects%28%0A%20%20%20%20bucket_slug%3A%20%22simple-react-blog%22%2C%0A%20%20%20%20input%3A%20%7B%20%0A%20%20%20%20%20%20type%3A%20%22posts%22%0A%20%20%20%20%20%20props%3A%20%22slug%2Ctitle%2Cmetadata.hero.url%22%0A%20%20%20%20%7D%0A%20%20%29%20%7B%0A%20%20%20%20%20objects%20%7B%0A%20%20%20%20%20%20slug%0A%20%20%20%20%20%20title%0A%20%20%20%20%20%20metadata%0A%20%20%20%20%7D%0A%20%20%20%20total%0A%20%20%7D%0A%7D">Full screen</a>
-<iframe src="https://cosmic-graphql-playground.netlify.app/?endpoint=https%3A%2F%2Fgraphql.cosmicjs.com%2Fv2&query=%7B%0A%20%20getObjects%28%0A%20%20%20%20bucket_slug%3A%20%22simple-react-blog%22%2C%0A%20%20%20%20input%3A%20%7B%20%0A%20%20%20%20%20%20type%3A%20%22posts%22%0A%20%20%20%20%20%20props%3A%20%22slug%2Ctitle%2Cmetadata.hero.url%22%0A%20%20%20%20%7D%0A%20%20%29%20%7B%0A%20%20%20%20%20objects%20%7B%0A%20%20%20%20%20%20slug%0A%20%20%20%20%20%20title%0A%20%20%20%20%20%20metadata%0A%20%20%20%20%7D%0A%20%20%20%20total%0A%20%20%7D%0A%7D" frameBorder="0" style={{ width: '100%', height: '470px'}}></iframe>
+
+**Variables**
+
+```
+{
+  "bucket_slug": "{{bucket_slug}}",
+  "read_key": "{{read_key}}",
+  "query": {
+    "type": "posts"
+  }
+}
+```
+
+<a href="https://cosmic-graphql-playground.netlify.app/?endpoint=https%3A%2F%2Fgraphql.cosmicjs.com%2Fv3&query=%20query%20%28%24bucket_slug%3A%20String%21%2C%20%24read_key%3A%20String%2C%20%24query%3A%20JSON%29%20%7B%0A%20%20getObjects%28%0A%20%20%20%20bucket_slug%3A%20%24bucket_slug%0A%20%20%20%20read_key%3A%20%24read_key%0A%20%20%20%20input%3A%20%7B%0A%20%20%20%20%20%20%20query%3A%20%24query%0A%20%20%20%20%20%20%20props%3A%20%22slug%2Ctitle%2Cmetadata.hero.url%22%0A%20%20%20%20%7D%0A%20%20%29%20%7B%0A%20%20%20%20%20objects%20%7B%0A%20%20%20%20%20%20id%0A%20%20%20%20%20%20title%0A%20%20%20%20%20%20slug%0A%20%20%20%20%7D%0A%20%20%20%20total%0A%20%20%7D%0A%7D">Full screen</a>
+<iframe src="https://cosmic-graphql-playground.netlify.app/?endpoint=https%3A%2F%2Fgraphql.cosmicjs.com%2Fv3&query=%20query%20%28%24bucket_slug%3A%20String%21%2C%20%24read_key%3A%20String%2C%20%24query%3A%20JSON%29%20%7B%0A%20%20getObjects%28%0A%20%20%20%20bucket_slug%3A%20%24bucket_slug%0A%20%20%20%20read_key%3A%20%24read_key%0A%20%20%20%20input%3A%20%7B%0A%20%20%20%20%20%20%20query%3A%20%24query%0A%20%20%20%20%20%20%20props%3A%20%22slug%2Ctitle%2Cmetadata.hero.url%22%0A%20%20%20%20%7D%0A%20%20%29%20%7B%0A%20%20%20%20%20objects%20%7B%0A%20%20%20%20%20%20id%0A%20%20%20%20%20%20title%0A%20%20%20%20%20%20slug%0A%20%20%20%20%7D%0A%20%20%20%20total%0A%20%20%7D%0A%7D" frameBorder="0" style={{ width: '100%', height: '470px'}}></iframe>
 </div>
 
 <div label="CLI">
@@ -369,12 +394,20 @@ bucket.getObject({
 ```javascript
 getObject(bucket_slug, input)
 ```
+**Variables**
 
-  <a href="https://cosmic-graphql-playground.netlify.app/?endpoint=https%3A%2F%2Fgraphql.cosmicjs.com%2Fv2&query=%7B%0A%20%20getObject%28bucket_slug%3A%20%22simple-react-blog%22%2C%0A%20%20%20%20input%3A%20%7B%20%0A%20%20%20%20%20%20slug%3A%20%22a-wonderful-blog-post-about-earth%22%0A%20%20%20%20%7D%0A%20%20%29%20%7B%0A%20%20%20%20title%0A%20%20%20%20content%0A%20%20%7D%0A%7D">
+```
+{
+  "bucket_slug": "{{bucket_slug}}",
+  "read_key": "{{read_key}}"
+}
+```
+
+  <a href="https://cosmic-graphql-playground.netlify.app/?endpoint=https%3A%2F%2Fgraphql.cosmicjs.com%2Fv3&query=%20query%20%28%24bucket_slug%3A%20String%21%2C%20%24read_key%3A%20String%29%20%7B%0A%20%20getObject%28%0A%20%20%20%20bucket_slug%3A%20%24bucket_slug%0A%20%20%20%20read_key%3A%20%24read_key%0A%20%20%20%20object_id%3A%20%2260105b2ed026d40008d745e5%22%0A%20%20%29%20%7B%0A%20%20%20%20%20%20title%0A%20%20%7D%0A%7D">
     Full screen
   </a>
   <iframe
-    src="https://cosmic-graphql-playground.netlify.app/?endpoint=https%3A%2F%2Fgraphql.cosmicjs.com%2Fv2&query=%7B%0A%20%20getObject%28bucket_slug%3A%20%22simple-react-blog%22%2C%0A%20%20%20%20input%3A%20%7B%20%0A%20%20%20%20%20%20slug%3A%20%22a-wonderful-blog-post-about-earth%22%0A%20%20%20%20%7D%0A%20%20%29%20%7B%0A%20%20%20%20title%0A%20%20%20%20content%0A%20%20%7D%0A%7D"
+    src="https://cosmic-graphql-playground.netlify.app/?endpoint=https%3A%2F%2Fgraphql.cosmicjs.com%2Fv3&query=%20query%20%28%24bucket_slug%3A%20String%21%2C%20%24read_key%3A%20String%29%20%7B%0A%20%20getObject%28%0A%20%20%20%20bucket_slug%3A%20%24bucket_slug%0A%20%20%20%20read_key%3A%20%24read_key%0A%20%20%20%20object_id%3A%20%2260105b2ed026d40008d745e5%22%0A%20%20%29%20%7B%0A%20%20%20%20%20%20title%0A%20%20%7D%0A%7D"
     frameBorder="0"
     style={{ width: "100%", height: "470px" }}
   ></iframe>
@@ -468,14 +501,26 @@ bucket.getObject({
 </div>
 
 <div label="GraphQL">
+**Note:**  Using props with the GraphQL API may optimize server response time.
+
 ```javascript
-getObject(bucket_slug, input)
+getObject(bucket_slug, input);
 ```
-  <a href="https://cosmic-graphql-playground.netlify.app/?endpoint=https%3A%2F%2Fgraphql.cosmicjs.com%2Fv2&query=%7B%0A%20%20getObject%28bucket_slug%3A%20%22simple-react-blog%22%2C%0A%20%20%20%20input%3A%20%7B%20%0A%20%20%20%20%20%20slug%3A%20%22a-wonderful-blog-post-about-earth%22%0A%20%20%20%20%7D%0A%20%20%29%20%7B%0A%20%20%20%20title%0A%20%20%20%20content%0A%20%20%7D%0A%7D">
+
+**Variables**
+
+```
+{
+  "bucket_slug": "{{bucket_slug}}",
+  "read_key": "{{read_key}}"
+}
+```
+
+  <a href="https://cosmic-graphql-playground.netlify.app/?endpoint=https%3A%2F%2Fgraphql.cosmicjs.com%2Fv3&query=%20query%20%28%24bucket_slug%3A%20String%21%2C%20%24read_key%3A%20String%29%20%7B%0A%20%20getObject%28%0A%20%20%20%20bucket_slug%3A%20%24bucket_slug%0A%20%20%20%20read_key%3A%20%24read_key%0A%20%20%20%20object_id%3A%20%2260105b2ed026d40008d745e5%22%0A%20%20%20%20input%3A%20%7B%0A%20%20%20%20%20%20%20%20props%3A%20%22title%22%0A%20%20%20%20%7D%0A%20%20%29%20%7B%0A%20%20%20%20%20%20title%0A%20%20%7D%0A%7D">
     Full screen
   </a>
   <iframe
-    src="https://cosmic-graphql-playground.netlify.app/?endpoint=https%3A%2F%2Fgraphql.cosmicjs.com%2Fv2&query=%7B%0A%20%20getObject%28bucket_slug%3A%20%22simple-react-blog%22%2C%0A%20%20%20%20input%3A%20%7B%20%0A%20%20%20%20%20%20slug%3A%20%22a-wonderful-blog-post-about-earth%22%0A%20%20%20%20%7D%0A%20%20%29%20%7B%0A%20%20%20%20title%0A%20%20%20%20content%0A%20%20%7D%0A%7D"
+    src="https://cosmic-graphql-playground.netlify.app/?endpoint=https%3A%2F%2Fgraphql.cosmicjs.com%2Fv3&query=%20query%20%28%24bucket_slug%3A%20String%21%2C%20%24read_key%3A%20String%29%20%7B%0A%20%20getObject%28%0A%20%20%20%20bucket_slug%3A%20%24bucket_slug%0A%20%20%20%20read_key%3A%20%24read_key%0A%20%20%20%20object_id%3A%20%2260105b2ed026d40008d745e5%22%0A%20%20%20%20input%3A%20%7B%0A%20%20%20%20%20%20%20%20props%3A%20%22title%22%0A%20%20%20%20%7D%0A%20%20%29%20%7B%0A%20%20%20%20%20%20title%0A%20%20%7D%0A%7D"
     frameBorder="0"
     style={{ width: "100%", height: "470px" }}
   ></iframe>
@@ -622,11 +667,19 @@ addObject(bucket_slug, input)
 }
 ```
 
-  <a href="https://cosmic-graphql-playground.netlify.app/?endpoint=https%3A%2F%2Fgraphql.cosmicjs.com%2Fv2&query=mutation%20%7B%0A%20%20addObject%28%0A%20%20%20%20bucket_slug%3A%20%22graphql-bucket%22%2C%0A%20%20%20%20input%3A%20%7B%20%0A%20%20%20%20%20%20title%3A%20%22Post%20Title%22%2C%0A%20%20%20%20%20%20type_slug%3A%20%22posts%22%2C%0A%20%20%20%20%20%20content%3A%20%22This%20is%20my%20post%20content%22%2C%0A%20%20%20%20%20%20write_key%3A%20%22your-write-key-in-bucket-settings%22%0A%20%20%20%20%7D%0A%20%20%29%20%7B%0A%20%20%20%20title%0A%20%20%20%20content%0A%20%20%7D%0A%7D">
+**Variables**
+
+```
+{
+  "bucket_slug": "{{bucket_slug}}"
+}
+```
+
+  <a href="https://cosmic-graphql-playground.netlify.app/?endpoint=https%3A%2F%2Fgraphql.cosmicjs.com%2Fv3&query=mutation%20%28%24bucket_slug%3A%20String%21%29%20%7B%0A%20%20addObject%28%0A%20%20%20%20bucket_slug%3A%20%24bucket_slug%0A%20%20%20%20input%3A%20%7B%20%0A%20%20%20%20%20%20title%3A%20%22Test%20Post%20Title%22%0A%20%20%20%20%20%20type%3A%20%22posts%22%0A%20%20%20%20%20%20content%3A%20%22This%20is%20test%20post%20content%22%2C%0A%20%20%20%20%20%20metafields%3A%20%5B%0A%20%20%20%20%20%20%20%20%7B%0A%20%20%20%20%20%20%20%20%20%20type%3A%20text%2C%0A%20%20%20%20%20%20%20%20%20%20key%3A%20%22test%22%2C%0A%20%20%20%20%20%20%20%20%20%20title%3A%20%22Test%22%2C%0A%20%20%20%20%20%20%20%20%20%20value%3A%20%22test%20value%22%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%5D%0A%20%20%20%20%7D%0A%20%20%29%20%7B%0A%20%20%20%20title%0A%20%20%7D%0A%7D">
     Full screen
   </a>
   <iframe
-    src="https://cosmic-graphql-playground.netlify.app/?endpoint=https%3A%2F%2Fgraphql.cosmicjs.com%2Fv2&query=mutation%20%7B%0A%20%20addObject%28%0A%20%20%20%20bucket_slug%3A%20%22graphql-bucket%22%2C%0A%20%20%20%20input%3A%20%7B%20%0A%20%20%20%20%20%20title%3A%20%22Post%20Title%22%2C%0A%20%20%20%20%20%20type_slug%3A%20%22posts%22%2C%0A%20%20%20%20%20%20content%3A%20%22This%20is%20my%20post%20content%22%2C%0A%20%20%20%20%20%20write_key%3A%20%22your-write-key-in-bucket-settings%22%0A%20%20%20%20%7D%0A%20%20%29%20%7B%0A%20%20%20%20title%0A%20%20%20%20content%0A%20%20%7D%0A%7D"
+    src="https://cosmic-graphql-playground.netlify.app/?endpoint=https%3A%2F%2Fgraphql.cosmicjs.com%2Fv3&query=mutation%20%28%24bucket_slug%3A%20String%21%29%20%7B%0A%20%20addObject%28%0A%20%20%20%20bucket_slug%3A%20%24bucket_slug%0A%20%20%20%20input%3A%20%7B%20%0A%20%20%20%20%20%20title%3A%20%22Test%20Post%20Title%22%0A%20%20%20%20%20%20type%3A%20%22posts%22%0A%20%20%20%20%20%20content%3A%20%22This%20is%20test%20post%20content%22%2C%0A%20%20%20%20%20%20metafields%3A%20%5B%0A%20%20%20%20%20%20%20%20%7B%0A%20%20%20%20%20%20%20%20%20%20type%3A%20text%2C%0A%20%20%20%20%20%20%20%20%20%20key%3A%20%22test%22%2C%0A%20%20%20%20%20%20%20%20%20%20title%3A%20%22Test%22%2C%0A%20%20%20%20%20%20%20%20%20%20value%3A%20%22test%20value%22%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%5D%0A%20%20%20%20%7D%0A%20%20%29%20%7B%0A%20%20%20%20title%0A%20%20%7D%0A%7D"
     frameBorder="0"
     style={{ width: "100%", height: "470px" }}
   ></iframe>
@@ -754,11 +807,19 @@ editObject(bucket_slug, input)
 }
 ```
 
-  <a href="https://cosmic-graphql-playground.netlify.app/?endpoint=https%3A%2F%2Fgraphql.cosmicjs.com%2Fv2&query=mutation%20%7B%0A%20%20editObject%28%0A%20%20%20%20bucket_slug%3A%20%22graphql-bucket%22%2C%0A%20%20%20%20input%3A%20%7B%20%0A%20%20%20%20%20%20slug%3A%20%22post-title%22%2C%0A%20%20%20%20%20%20title%3A%20%22Post%20Title%22%2C%0A%20%20%20%20%20%20type_slug%3A%20%22posts%22%2C%0A%20%20%20%20%20%20content%3A%20%22This%20is%20my%20EDITED%20post%20content%22%2C%0A%20%20%20%20%20%20write_key%3A%20%22your-write-key-in-bucket-settings%22%0A%20%20%20%20%7D%0A%20%20%29%20%7B%0A%20%20%20%20title%0A%20%20%20%20content%0A%20%20%7D%0A%7D">
+**Variables**
+
+```
+{
+  "bucket_slug": "{{bucket_slug}}"
+}
+```
+
+  <a href="https://cosmic-graphql-playground.netlify.app/?endpoint=https%3A%2F%2Fgraphql.cosmicjs.com%2Fv3&query=mutation%20%28%24bucket_slug%3A%20String%21%29%20%7B%0A%20%20editObject%28%0A%20%20%20%20bucket_slug%3A%20%24bucket_slug%0A%20%20%20%20object_id%3A%20%2260354074b1069b0008404513%22%0A%20%20%20%20input%3A%20%7B%20%0A%20%20%20%20%20%20title%3A%20%22Test%20Edit%20from%20GQL%22%0A%20%20%20%20%20%20content%3A%20%22This%20is%20an%20edit%20test%22%0A%20%20%20%20%7D%0A%20%20%29%20%7B%0A%20%20%20%20title%0A%20%20%7D%0A%7D">
     Full screen
   </a>
   <iframe
-    src="https://cosmic-graphql-playground.netlify.app/?endpoint=https%3A%2F%2Fgraphql.cosmicjs.com%2Fv2&query=mutation%20%7B%0A%20%20editObject%28%0A%20%20%20%20bucket_slug%3A%20%22graphql-bucket%22%2C%0A%20%20%20%20input%3A%20%7B%20%0A%20%20%20%20%20%20slug%3A%20%22post-title%22%2C%0A%20%20%20%20%20%20title%3A%20%22Post%20Title%22%2C%0A%20%20%20%20%20%20type_slug%3A%20%22posts%22%2C%0A%20%20%20%20%20%20content%3A%20%22This%20is%20my%20EDITED%20post%20content%22%2C%0A%20%20%20%20%20%20write_key%3A%20%22your-write-key-in-bucket-settings%22%0A%20%20%20%20%7D%0A%20%20%29%20%7B%0A%20%20%20%20title%0A%20%20%20%20content%0A%20%20%7D%0A%7D"
+    src="https://cosmic-graphql-playground.netlify.app/?endpoint=https%3A%2F%2Fgraphql.cosmicjs.com%2Fv3&query=mutation%20%28%24bucket_slug%3A%20String%21%29%20%7B%0A%20%20editObject%28%0A%20%20%20%20bucket_slug%3A%20%24bucket_slug%0A%20%20%20%20object_id%3A%20%2260354074b1069b0008404513%22%0A%20%20%20%20input%3A%20%7B%20%0A%20%20%20%20%20%20title%3A%20%22Test%20Edit%20from%20GQL%22%0A%20%20%20%20%20%20content%3A%20%22This%20is%20an%20edit%20test%22%0A%20%20%20%20%7D%0A%20%20%29%20%7B%0A%20%20%20%20title%0A%20%20%7D%0A%7D"
     frameBorder="0"
     style={{ width: "100%", height: "470px" }}
   ></iframe>
@@ -849,11 +910,19 @@ deleteObject(bucket_slug, input)
 }
 ```
 
-  <a href="https://cosmic-graphql-playground.netlify.app/?endpoint=https%3A%2F%2Fgraphql.cosmicjs.com%2Fv2&query=mutation%20%7B%0A%20%20deleteObject%28%0A%20%20%20%20bucket_slug%3A%20%22graphql-bucket%22%2C%0A%20%20%20%20object_slug%3A%20%22post-title%22%2C%0A%20%20%09write_key%3A%20%22your-write-key-in-bucket-settings%22%29%0A%7D">
+**Variables**
+
+```
+{
+  "bucket_slug": "{{bucket_slug}}"
+}
+```
+
+  <a href="https://cosmic-graphql-playground.netlify.app/?endpoint=https%3A%2F%2Fgraphql.cosmicjs.com%2Fv3&query=mutation%20%28%24bucket_slug%3A%20String%21%29%20%7B%0A%20%20deleteObject%28%0A%20%20%20%20bucket_slug%3A%20%24bucket_slug%0A%20%20%20%20object_id%3A%20%2260354074b1069b0008404513%22%0A%20%20%29%0A%7D">
     Full screen
   </a>
   <iframe
-    src="https://cosmic-graphql-playground.netlify.app/?endpoint=https%3A%2F%2Fgraphql.cosmicjs.com%2Fv2&query=mutation%20%7B%0A%20%20deleteObject%28%0A%20%20%20%20bucket_slug%3A%20%22graphql-bucket%22%2C%0A%20%20%20%20object_slug%3A%20%22post-title%22%2C%0A%20%20%09write_key%3A%20%22your-write-key-in-bucket-settings%22%29%0A%7D"
+    src="https://cosmic-graphql-playground.netlify.app/?endpoint=https%3A%2F%2Fgraphql.cosmicjs.com%2Fv3&query=mutation%20%28%24bucket_slug%3A%20String%21%29%20%7B%0A%20%20deleteObject%28%0A%20%20%20%20bucket_slug%3A%20%24bucket_slug%0A%20%20%20%20object_id%3A%20%2260354074b1069b0008404513%22%0A%20%20%29%0A%7D"
     frameBorder="0"
     style={{ width: "100%", height: "470px" }}
   ></iframe>
