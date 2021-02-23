@@ -526,6 +526,13 @@ Add a new Object to your Bucket.
 ```bash
 POST $BASE_URL/buckets/${bucket_slug}/objects
 ```
+**Header**
+
+```json
+{
+  "Authorization": "Bearer n5MbD59UPBoVpyqi6B6DnOzAvZ..."
+}
+```
 
 **Example Body (JSON)**
 
@@ -607,6 +614,14 @@ bucket
 ```javascript
 addObject(bucket_slug, input)
 ```
+**Header**
+
+```json
+{
+  "Authorization": "Bearer n5MbD59UPBoVpyqi6B6DnOzAvZ..."
+}
+```
+
   <a href="https://cosmic-graphql-playground.netlify.app/?endpoint=https%3A%2F%2Fgraphql.cosmicjs.com%2Fv2&query=mutation%20%7B%0A%20%20addObject%28%0A%20%20%20%20bucket_slug%3A%20%22graphql-bucket%22%2C%0A%20%20%20%20input%3A%20%7B%20%0A%20%20%20%20%20%20title%3A%20%22Post%20Title%22%2C%0A%20%20%20%20%20%20type_slug%3A%20%22posts%22%2C%0A%20%20%20%20%20%20content%3A%20%22This%20is%20my%20post%20content%22%2C%0A%20%20%20%20%20%20write_key%3A%20%22your-write-key-in-bucket-settings%22%0A%20%20%20%20%7D%0A%20%20%29%20%7B%0A%20%20%20%20title%0A%20%20%20%20content%0A%20%20%7D%0A%7D">
     Full screen
   </a>
@@ -660,6 +675,13 @@ _**Note:** At least one of the Parameters is required to process the request._
 <div label="REST">
 ```bash
 PATCH $BASE_URL/buckets/${bucket_slug}/objects/${object_id}
+```
+**Header**
+
+```json
+{
+  "Authorization": "Bearer n5MbD59UPBoVpyqi6B6DnOzAvZ..."
+}
 ```
 
 **Example Body (JSON)**
@@ -724,6 +746,14 @@ bucket
 ```javascript
 editObject(bucket_slug, input)
 ```
+**Header**
+
+```json
+{
+  "Authorization": "Bearer n5MbD59UPBoVpyqi6B6DnOzAvZ..."
+}
+```
+
   <a href="https://cosmic-graphql-playground.netlify.app/?endpoint=https%3A%2F%2Fgraphql.cosmicjs.com%2Fv2&query=mutation%20%7B%0A%20%20editObject%28%0A%20%20%20%20bucket_slug%3A%20%22graphql-bucket%22%2C%0A%20%20%20%20input%3A%20%7B%20%0A%20%20%20%20%20%20slug%3A%20%22post-title%22%2C%0A%20%20%20%20%20%20title%3A%20%22Post%20Title%22%2C%0A%20%20%20%20%20%20type_slug%3A%20%22posts%22%2C%0A%20%20%20%20%20%20content%3A%20%22This%20is%20my%20EDITED%20post%20content%22%2C%0A%20%20%20%20%20%20write_key%3A%20%22your-write-key-in-bucket-settings%22%0A%20%20%20%20%7D%0A%20%20%29%20%7B%0A%20%20%20%20title%0A%20%20%20%20content%0A%20%20%7D%0A%7D">
     Full screen
   </a>
@@ -762,6 +792,13 @@ Delete an existing Object by `id` from your Bucket.
 ```bash
 DELETE $BASE_URL/buckets/${bucket_slug}/objects/${object_id}
 ```
+**Header**
+
+```json
+{
+  "Authorization": "Bearer n5MbD59UPBoVpyqi6B6DnOzAvZ..."
+}
+```
 
 **Example Response**
 
@@ -784,7 +821,7 @@ bucket.deleteObject()
 const Cosmic = require("cosmicjs");
 const bucket = Cosmic.bucket({
   slug: "bucket-slug",
-  write_key: "",
+  write_key: "your-write-key-found-in-bucket-settings",
 });
 bucket
   .deleteObject({
@@ -804,6 +841,14 @@ bucket
 ```javascript
 deleteObject(bucket_slug, input)
 ```
+**Header**
+
+```json
+{
+  "Authorization": "Bearer n5MbD59UPBoVpyqi6B6DnOzAvZ..."
+}
+```
+
   <a href="https://cosmic-graphql-playground.netlify.app/?endpoint=https%3A%2F%2Fgraphql.cosmicjs.com%2Fv2&query=mutation%20%7B%0A%20%20deleteObject%28%0A%20%20%20%20bucket_slug%3A%20%22graphql-bucket%22%2C%0A%20%20%20%20object_slug%3A%20%22post-title%22%2C%0A%20%20%09write_key%3A%20%22your-write-key-in-bucket-settings%22%29%0A%7D">
     Full screen
   </a>

@@ -180,7 +180,7 @@ The only required post value is the `media` object. You can also add optional `f
   upload size limit of `900MB`.
 </Callout>
 
-### Base URL
+### Upload URL
 
 ```
 https://upload.cosmicjs.com/v2
@@ -205,9 +205,18 @@ The Media Object must be an object with certain properties indicated below. If u
 
 <Tabs>
 <div label="REST">
+  See [upload URL above](#upload-url).
 ```bash
-POST https://upload.cosmicjs.com/v2/:bucket_slug/media
+POST $UPLOAD_URL/:bucket_slug/media
 ```
+**Header**
+
+```json
+{
+  "Authorization": "Bearer n5MbD59UPBoVpyqi6B6DnOzAvZ..."
+}
+```
+
 </div>
 <div label="Bash">
 ```bash
@@ -225,7 +234,7 @@ Cosmic.addMedia()
 ```javascript
 const bucket = Cosmic.bucket({
   slug: "bucket-slug",
-  write_key: "",
+  write_key: "your-write-key-found-in-bucket-settings",
 });
 
 const media_object = req.files[0]; // Using Multer
@@ -335,7 +344,7 @@ const express = require("express");
 var app = express();
 const bucket = Cosmic.bucket({
   slug: "your-bucket-slug",
-  write_key: "your-bucket-write-key",
+  write_key: "your-write-key-found-in-bucket-settings",
 });
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -398,6 +407,14 @@ _**Note:** At least one of the Parameters is required to process the request._
 PATCH $BASE_URL/buckets/${bucket_slug}/media/${media_id}
 ```
 
+**Header**
+
+```json
+{
+  "Authorization": "Bearer n5MbD59UPBoVpyqi6B6DnOzAvZ..."
+}
+```
+
 **Example Body (JSON)**
 
 ```json
@@ -434,6 +451,13 @@ Delete an existing Media by `id` from your Bucket.
 ```bash
 DELETE $BASE_URL/buckets/${bucket_slug}/media/${media_id}
 ```
+**Header**
+
+```json
+{
+  "Authorization": "Bearer n5MbD59UPBoVpyqi6B6DnOzAvZ..."
+}
+```
 
 </div>
 
@@ -469,6 +493,14 @@ bucket
 ```javascript
 deleteMedia(bucket_slug, media_id)
 ```
+**Header**
+
+```json
+{
+  "Authorization": "Bearer n5MbD59UPBoVpyqi6B6DnOzAvZ..."
+}
+```
+
 <a href="https://cosmic-graphql-playground.netlify.app/?endpoint=https%3A%2F%2Fgraphql.cosmicjs.com%2Fv2&query=mutation%20%7B%0A%20%20deleteMedia%28%0A%20%20%20%20bucket_slug%3A%20%22graphql-bucket%22%2C%0A%20%20%20%20media_id%3A%20%225cd86aff743e735b05b3add3%22%2C%0A%20%20%20%20write_key%3A%20%22your-write-key-in-bucket-settings%22%0A%20%20%29%0A%7D">Full screen</a>
 <iframe src="https://cosmic-graphql-playground.netlify.app/?endpoint=https%3A%2F%2Fgraphql.cosmicjs.com%2Fv2&query=mutation%20%7B%0A%20%20deleteMedia%28%0A%20%20%20%20bucket_slug%3A%20%22graphql-bucket%22%2C%0A%20%20%20%20media_id%3A%20%225cd86aff743e735b05b3add3%22%2C%0A%20%20%20%20write_key%3A%20%22your-write-key-in-bucket-settings%22%0A%20%20%29%0A%7D" frameBorder="0" style={{ width: '100%', height: '470px'}}></iframe>
 </div>

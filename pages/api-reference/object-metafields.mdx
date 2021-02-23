@@ -119,6 +119,14 @@ Take a look at [Metafield Model](/api-reference/getting-started/metafields) for 
 POST $BASE_URL/buckets/${bucket_slug}/objects/${object_id}/metafields
 ```
 
+**Header**
+
+```json
+{
+  "Authorization": "Bearer n5MbD59UPBoVpyqi6B6DnOzAvZ..."
+}
+```
+
 **Example Body (JSON)**
 
 ```json
@@ -159,6 +167,14 @@ _**Note:** At least one of the Parameters is required to process the request._
 PATCH $BASE_URL/buckets/${bucket_slug}/objects/${object_id}/metafields/${metafield_key}
 ```
 
+**Header**
+
+```json
+{
+  "Authorization": "Bearer n5MbD59UPBoVpyqi6B6DnOzAvZ..."
+}
+```
+
 **Example Body (JSON)**
 
 ```json
@@ -195,6 +211,14 @@ Delete an existing Metafield by `key` from your Object.
 
 ```bash
 DELETE $BASE_URL/buckets/${bucket_slug}/objects/${object_id}/metafields/${metafield_key}
+```
+
+**Header**
+
+```json
+{
+  "Authorization": "Bearer n5MbD59UPBoVpyqi6B6DnOzAvZ..."
+}
 ```
 
 **Example Response**
