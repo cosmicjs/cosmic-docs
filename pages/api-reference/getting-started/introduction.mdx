@@ -1,4 +1,5 @@
 import Callout from "nextra-theme-docs/callout";
+import Tabs from "components/tabs";
 
 # Introduction
 
@@ -26,41 +27,52 @@ We offer a [Postman](https://www.postman.com/) collection for a quick reference 
 
 ### Install and configure
 
-1. Click the button below to install the collection into your Postman account:
+1.  Start by selecting between the REST or GraphQL APIs. Click the button below to install the collection.
 
-   <a href="https://app.getpostman.com/run-collection/d18f51536ac067f0e4d1">
-     <img
-       src="https://run.pstmn.io/button.svg"
-       alt="Run in Postman"
-       className="w-1/5"
-     />
-   </a>
+<Tabs>
+  <div label="REST">
+    <a
+      className="postman-button"
+      href="https://app.getpostman.com/run-collection/d18f51536ac067f0e4d1"
+    >
+      Run REST API in Postman →
+    </a>
+  </div>
+  <div label="GraphQL">
+    <a
+      className="postman-button"
+      href="https://app.getpostman.com/run-collection/9623206b9267c1fbbb72"
+    >
+      Run GraphQL API in Postman →
+    </a>
+  </div>
+</Tabs>
 
-2. Click the dots then "Edit" option to get into the "Cosmic API V2" collection settings
+2.  Click the dots then "Edit" option to get into the "Cosmic API V2" collection settings
 
-   <img
-     alt="Postman settings"
-     src="https://imgix.cosmicjs.com/d54cdae0-68c2-11eb-82fa-03c9fae183bd-postman-1.png?auto=format&w=1000"
-     className="w-6/12"
-   />
+    <img
+      alt="Postman settings"
+      src="https://imgix.cosmicjs.com/d54cdae0-68c2-11eb-82fa-03c9fae183bd-postman-1.png?auto=format&w=1000"
+      className="w-6/12"
+    />
 
-3. Edit your variables to match with your Cosmic user account and Bucket API access keys.
+3.  Edit your variables to match with your Cosmic user account and Bucket API access keys.
 
-   <img
-     alt="Postman varialbes"
-     src="https://imgix.cosmicjs.com/0bf7e940-68c3-11eb-82fa-03c9fae183bd-postman-2.png?auto=format&w=2000"
-     className="w-full"
-   />
+    <img
+      alt="Postman varialbes"
+      src="https://imgix.cosmicjs.com/0bf7e940-68c3-11eb-82fa-03c9fae183bd-postman-2.png?auto=format&w=2000"
+      className="w-full"
+    />
 
-   ### Encode queries
+    ### Encode queries
 
-   If you are using [Queries](/api-reference/queries) in Postman here's a handy way to encode your `query` param:
+    If you are using [Queries](/api-reference/queries) in Postman here's a handy way to encode your `query` param:
 
-   1. Add your query as a `param` in your Postman request and select the input or right click:
-      ![Encode Query Screenshot 1](https://cdn.cosmicjs.com/b43bf5e0-675d-11eb-9ea4-1be290e7bb91-query-1.png)
+    1. Add your query as a `param` in your Postman request and select the input or right click:
+       ![Encode Query Screenshot 1](https://cdn.cosmicjs.com/b43bf5e0-675d-11eb-9ea4-1be290e7bb91-query-1.png)
 
-   2. Click the three dots and select "Encode URI Component":
-      ![Encode Query Screenshot 2](https://cdn.cosmicjs.com/b43f2a30-675d-11eb-9ea4-1be290e7bb91-query-2.png)
+    2. Click the three dots and select "Encode URI Component":
+       ![Encode Query Screenshot 2](https://cdn.cosmicjs.com/b43f2a30-675d-11eb-9ea4-1be290e7bb91-query-2.png)
 
-   3. See your query now encoded and ready to use:
-      ![Encode Query Screenshot 3](https://cdn.cosmicjs.com/b4414d10-675d-11eb-9ea4-1be290e7bb91-query-3.png)
+    3. See your query now encoded and ready to use:
+       ![Encode Query Screenshot 3](https://cdn.cosmicjs.com/b4414d10-675d-11eb-9ea4-1be290e7bb91-query-3.png)
