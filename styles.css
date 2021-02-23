@@ -37,16 +37,24 @@ code {
 }
 /* Tabs */
 .react-tabs {
-  background: #727D9C;
-  color: #fff;
+  margin-top: 20px;
   border-radius: .5rem;
+  border-width: 1px;
+  border-color: rgba(226,232,240);
+  border-width: 1px;
+}
+.dark .react-tabs {
+  background: #1b1c22;
+  border-color: rgba(226,232,240, .5)
 }
 .react-tabs__tab-list {
-  background: #404B6A;
   padding: 0 20px !important;
-  border-bottom: none !important;
   border-top-left-radius: .5rem;
   border-top-right-radius: .5rem;
+  border-bottom: 1px solid rgba(226,232,240) !important;
+}
+.dark .react-tabs__tabs-list {
+  background: #1e263b;
 }
 .react-tabs__tab-panel--selected {
   padding: 20px;
