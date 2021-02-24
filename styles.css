@@ -46,7 +46,7 @@ code {
   border-width: 1px;
 }
 .react-tabs__tab-list {
-  padding: 0 20px;
+  padding: 0 20px 0 15px;
   border-top-left-radius: .5rem;
   border-top-right-radius: .5rem;
   border-bottom: 1px solid rgba(226,232,240);
@@ -59,7 +59,7 @@ code {
   position: relative;
   list-style: none;
   cursor: pointer;
-  padding: 5px 15px 5px;
+  padding: 5px 10px;
   margin-top: 0;
 }
 .react-tabs__tab--selected {
