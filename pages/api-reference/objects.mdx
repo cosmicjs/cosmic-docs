@@ -17,18 +17,19 @@ The following endpoints allow you to get, add, edit and delete Objects in your B
 
 Get Objects in your Bucket.
 
-| Parameter       | Required |  Type  | Default   | Description                                                                                                                                                                                                  |
-| :-------------- | :------: | :----: | :-------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| read_key        | required | String |           | Restrict read access to your Bucket                                                                                                                                                                          |
-| query           |          |  JSON  |           | A JSON string to perform Object search and filtering. See [Queries section](/api-reference/queries) for more detail.                                                                                         |
-| props           |          | String |           | Declare which properties to return in comma-separated string. Reference full Object for all available properties. Can include nested metadata. Example: `?props=id,title,metadata.author.metadata.image.url` |
-| status          |          |  Enum  | published | published, any (returns latest draft or published Object)                                                                                                                                                    |
-| sort            |          |  Enum  | order     | created_at, -created_at, modified_at, -modified_at, random, order                                                                                                                                            |
-| limit           |          | Number | 1000      | The number of Objects to return                                                                                                                                                                              |
-| skip            |          | Number | 0         | The number of Objects to skip                                                                                                                                                                                |
-| after           |          | String |           | Objects after specified Object Id (can only use one of `skip` or `after`)                                                                                                                                    |
-| pretty          |          |  Enum  | false     | true, Makes the response more reader-friendly                                                                                                                                                                |
-| show_metafields |          |  Enum  | false     | true, Shows metafields                                                                                                                                                                                       |
+| Parameter       | Required |  Type  | Default   | Description                                                                                                                                                                                                             |
+| :-------------- | :------: | :----: | :-------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| read_key        | required | String |           | Required to read data from your Bucket                                                                                                                                                                                  |
+| query           |          |  JSON  |           | A JSON string to perform Object search and filtering. See [Queries section](/api-reference/queries) for more detail.                                                                                                    |
+| props           |          | String |           | Declare which properties to return in comma-separated string. Remove to see full Object and get a list of all available properties. Can include nested metadata. Example: `id,title,metadata.author.metadata.image.url` |
+| status          |          |  Enum  | published | Set to `any` for latest draft or published Object                                                                                                                                                                       |
+| sort            |          |  Enum  | order     | `created_at`, `-created_at`, `modified_at`, `-modified_at`, `random`, `order`                                                                                                                                           |
+| limit           |          | Number | 1000      | The number of Objects to return                                                                                                                                                                                         |
+| skip            |          | Number | 0         | The number of Objects to skip                                                                                                                                                                                           |
+| after           |          | String |           | Objects after specified Object Id (can only use one of `skip` or `after`)                                                                                                                                               |
+| pretty          |          |  Enum  | false     | Set to `true` to make the response more reader-friendly                                                                                                                                                                 |
+| show_metafields |          |  Enum  | false     | Set to `true` to show metafields                                                                                                                                                                                        |
+| use_cache       |          |  Enum  | true      | Set to `false` for real-time updates. Increases latency of endpoint.                                                                                                                                                    |
 
 **Methods**
 
@@ -289,13 +290,14 @@ cosmic get-objects --limit 10 --type_slug=posts --props=title,content,metadata.p
 
 Returns a single Object by `id` from your Bucket.
 
-| Parameter       | Required |  Type  | Default   | Description                                                                                                                                                  |
-| :-------------- | :------: | :----: | :-------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| read_key        | required | String |           | Restrict read access to your Bucket                                                                                                                          |
-| props           |          | String |           | Declare which properties to return in comma-separated string. Reference full Object for all available properties. Example: `?props=id,title,metadata.author` |
-| status          |          |  Enum  | published | published, any (returns latest draft or published Object)                                                                                                    |
-| pretty          |          |  Enum  | false     | true, Makes the response more reader-friendly                                                                                                                |
-| show_metafields |          |  Enum  | false     | true, Shows metafields                                                                                                                                       |
+| Parameter       | Required |  Type  | Default   | Description                                                                                                                                                                                                             |
+| :-------------- | :------: | :----: | :-------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| read_key        | required | String |           | Required to read data from your Bucket                                                                                                                                                                                  |
+| props           |          | String |           | Declare which properties to return in comma-separated string. Remove to see full Object and get a list of all available properties. Can include nested metadata. Example: `id,title,metadata.author.metadata.image.url` |
+| status          |          |  Enum  | published | Set to `any` for latest draft or published Object                                                                                                                                                                       |
+| pretty          |          |  Enum  | false     | Set to `true` to make the response more reader-friendly                                                                                                                                                                 |
+| show_metafields |          |  Enum  | false     | Set to `true` to show metafields                                                                                                                                                                                        |
+| use_cache       |          |  Enum  | true      | Set to `false` for real-time updates. Increases latency of endpoint.                                                                                                                                                    |
 
 **Methods**
 
