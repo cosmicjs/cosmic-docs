@@ -32,11 +32,11 @@ https://graphql.cosmicjs.com/v3
 
 Use the playground for a full interactive demonstration. Use the "Docs" and "Schema" buttons on the right side for documentation on models, queries, inputs, and descriptions.
 
-<a href="https://cosmic-graphql-playground.netlify.app/?endpoint=https%3A%2F%2Fgraphql.cosmicjs.com%2Fv2&query=%7B%0A%20%20getObjects%28%0A%20%20%20%20bucket_slug%3A%20%22simple-react-blog%22%2C%0A%20%20%20%20input%3A%20%7B%20%0A%20%20%20%20%20%20type%3A%20%22posts%22%0A%20%20%20%20%7D%0A%20%20%29%20%7B%0A%20%20%20%20%20objects%20%7B%0A%20%20%20%20%20%20title%0A%20%20%20%20%20%20content%0A%20%20%20%20%7D%0A%20%20%20%20total%0A%20%20%7D%0A%7D">
+<a href="https://cosmic-graphql-playground.netlify.app/?endpoint=https%3A%2F%2Fgraphql.cosmicjs.com%2Fv3&query=%7B%0A%20%20getObjects%28%0A%20%20%20%20bucket_slug%3A%20%22simple-react-blog%22%0A%20%20%20%20read_key%3A%20%22%22%0A%20%20%20%20input%3A%20%7B%20%0A%20%20%20%20%20%20query%3A%20%7B%0A%20%20%20%20%20%20%20%20type%3A%20%22posts%22%0A%20%20%20%20%20%20%7D%0A%20%20%20%20%7D%0A%20%20%29%20%7B%0A%20%20%20%20%20objects%20%7B%0A%20%20%20%20%20%20title%0A%20%20%20%20%20%20content%0A%20%20%20%20%7D%0A%20%20%20%20total%0A%20%20%7D%0A%7D">
   Full screen
 </a>
 <iframe
-  src="https://cosmic-graphql-playground.netlify.app/?endpoint=https%3A%2F%2Fgraphql.cosmicjs.com%2Fv2&query=%7B%0A%20%20getObjects%28%0A%20%20%20%20bucket_slug%3A%20%22simple-react-blog%22%2C%0A%20%20%20%20input%3A%20%7B%20%0A%20%20%20%20%20%20type%3A%20%22posts%22%0A%20%20%20%20%7D%0A%20%20%29%20%7B%0A%20%20%20%20%20objects%20%7B%0A%20%20%20%20%20%20title%0A%20%20%20%20%20%20content%0A%20%20%20%20%7D%0A%20%20%20%20total%0A%20%20%7D%0A%7D"
+  src="https://cosmic-graphql-playground.netlify.app/?endpoint=https%3A%2F%2Fgraphql.cosmicjs.com%2Fv3&query=%7B%0A%20%20getObjects%28%0A%20%20%20%20bucket_slug%3A%20%22simple-react-blog%22%0A%20%20%20%20read_key%3A%20%22%22%0A%20%20%20%20input%3A%20%7B%20%0A%20%20%20%20%20%20query%3A%20%7B%0A%20%20%20%20%20%20%20%20type%3A%20%22posts%22%0A%20%20%20%20%20%20%7D%0A%20%20%20%20%7D%0A%20%20%29%20%7B%0A%20%20%20%20%20objects%20%7B%0A%20%20%20%20%20%20title%0A%20%20%20%20%20%20content%0A%20%20%20%20%7D%0A%20%20%20%20total%0A%20%20%7D%0A%7D"
   frameBorder="0"
   style={{ width: "100%", height: "470px" }}
 ></iframe>
@@ -77,8 +77,8 @@ cosmic [command] [options]
 Now that you are logged in, you can connect to any of your Buckets on your account. The `use-bucket` command will set your Bucket config options. You can set your read and write access keys with this command for later use to interact with your Bucket content. Find your Bucket `slug`, `read_key`, and `write_key` access keys in <i>Your Bucket > Settings > API Access</i> after [logging into your account](https://app.cosmicjs.com/login).
 
 ```bash
-$ cosmic use-bucket simple-react-blog --read_key your-read-key --write_key your-write-key
-Now using bucket simple-react-blog
+$ cosmic use-bucket your-bucket-slug --read_key your-read-key --write_key your-write-key
+Now using bucket your-bucket-slug
 ```
 
 Now you are ready to use any of the commands to have full control over your Bucket!
