@@ -95,11 +95,9 @@ code {
 }
 /* Dark */
 .dark .react-tabs {
-  background: #1b1c22;
   border-color: rgba(226,232,240, .5)
 }
 .dark .react-tabs__tab-list {
-  background: #1e263b;
   border-bottom: 1px solid rgba(226,232,240, .5);
 }
 
