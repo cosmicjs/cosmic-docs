@@ -1,6 +1,6 @@
 import DocSearch from 'components/docsearch'
 
-const Logo = ({ height = 20, classes = '' }) => (
+export const Logo = ({ height = 20, classes = '' }) => (
   <svg height={height} className={classes} viewBox="0 0 681 189" version="1.1">
     <defs></defs>
     <g id="Page-1" stroke="none" strokeWidth="1" fill="none">
