@@ -51,7 +51,7 @@ code {
   border-top-right-radius: .5rem;
   border-bottom: 1px solid rgba(226,232,240);
   margin: 0;
-  width: 500px;
+  min-width: 500px;
 }
 .react-tabs__tab {
   display: inline-block;
