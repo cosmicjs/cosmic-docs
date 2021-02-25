@@ -51,6 +51,7 @@ code {
   border-top-right-radius: .5rem;
   border-bottom: 1px solid rgba(226,232,240);
   margin: 0;
+  width: 500px;
 }
 .react-tabs__tab {
   display: inline-block;
@@ -112,6 +113,9 @@ code {
 .react-tabs__tab--selected .label-icon {
   position: relative;
   top: -2px;
+}
+.tablist-wrapper {
+  overflow-x: auto;
 }
 /* Dark */
 .dark .react-tabs {
