@@ -18,7 +18,7 @@ export default function FourOhFour() {
       </Link>
       <h1 className="mb-8">404 - Page Not Found</h1>
       <div className="mb-8">
-        Maybe try to find what you're looking for below:
+        Looking for something specific? Try searching below:
       </div>
       <div className="w-1/6 block mx-auto my-0 mb-8">
         <DocSearch />
