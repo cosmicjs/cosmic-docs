@@ -60,7 +60,7 @@ code {
   position: relative;
   list-style: none;
   cursor: pointer;
-  padding: 5px 10px;
+  padding: 10px;
   margin-top: 0;
 }
 .react-tabs__tab--selected {
