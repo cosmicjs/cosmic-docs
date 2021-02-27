@@ -51,15 +51,16 @@ const bucket = api.bucket({
   slug: "your-bucket-slug",
   read_key: "your-read-key-found-in-bucket-settings",
 });
+
 bucket.getMedia({
-    folder: 'groomsmen',
-    props: 'imgix_url' // get only what you need
-    limit: 3
-  }).then(data => {
-    console.log(data)
-  }).catch(err => {
-    console.log(err)
-  })
+  folder: 'groomsmen',
+  props: 'imgix_url' // get only what you need
+  limit: 3
+}).then(data => {
+  console.log(data)
+}).catch(err => {
+  console.log(err)
+})
 ```
 
 </div>
@@ -139,11 +140,46 @@ Returns a single Media by `id` from your Bucket.
 | props     |          | String |         | Declare which properties to return in comma-separated string. Reference full Media for all available properties. Example: `?props=name,url,imgix_url,metadata` |
 | pretty    |          |  Enum  | false   | true, Makes the response more reader-friendly                                                                                                                  |
 
-**Definition**
+**Methods**
 
+<Tabs>
+<div label="REST">
 ```bash
 GET $BASE_URL/buckets/${bucket_slug}/media/${media_id}
 ```
+
+</div>
+
+<div label="Node.js">
+```javascript
+Cosmic.getSingleMedia()
+```
+
+**Example Request**
+
+```javascript
+const Cosmic = require("cosmicjs");
+const api = Cosmic();
+const bucket = api.bucket({
+  slug: "your-bucket-slug",
+  read_key: "your-read-key-found-in-bucket-settings",
+});
+
+bucket
+  .getMedia({
+    id: "5f331eac9d52b17aee21d1b4",
+    props: "imgix_url", // get only what you need
+  })
+  .then((data) => {
+    console.log(data);
+  })
+  .catch((err) => {
+    console.log(err);
+  });
+```
+
+</div>
+</Tabs>
 
 **Example Response**
 
@@ -219,6 +255,13 @@ The Media Object must be an object with certain properties indicated below. If u
 ```bash
 POST $UPLOAD_URL/buckets/:bucket_slug/media
 ```
+
+**Curl**
+
+```bash
+curl --form "folder=folder-name" --form "media=@test.png" -H "Authorization: Bearer <write-key>" 'https://upload.cosmicjs.com/v2/buckets/:bucket_slug/media'
+```
+
 **Header**
 
 ```json
@@ -227,11 +270,6 @@ POST $UPLOAD_URL/buckets/:bucket_slug/media
 }
 ```
 
-</div>
-<div label="Bash">
-```bash
-curl --form "folder=folder-name" --form "media=@test.png" -H "Authorization: Bearer <write-key>" 'https://upload.cosmicjs.com/v2/buckets/:bucket_slug/media'
-```
 </div>
 
 <div label="Node.js">
@@ -407,7 +445,7 @@ Edit an existing Media by `id` in your Bucket.
 | Parameter |  Type  | Description                                           |
 | :-------- | :----: | :---------------------------------------------------- |
 | folder    | String | Slug of the `folder` where you want to move the media |
-| Metadata  | Object | Metadata object                                       |
+| metadata  | Object | JSON object                                           |
 
 _**Note:** At least one of the Parameters is required to process the request._
 

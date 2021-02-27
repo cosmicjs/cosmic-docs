@@ -28,36 +28,59 @@ GET $BASE_URL/buckets/${bucket_slug}/objects?read_key=${read_key}&query=${query}
 ```javascript
 bucket.getObjects()
 ```
-**Example Request**
+**Configure Bucket**
 ```javascript
 const Cosmic = require("cosmicjs");
 const bucket = Cosmic.bucket({
   slug: "bucket-slug",
   read_key: "your-read-key-found-in-bucket-settings",
 });
+```
+
+### Example Requests
+
+**Get Multiple Objects**
+
+```javascript
 const query = {
-  "type": "products",
-  { 
+  type: "products",
+  {
     "metadata.price": {
       "$gte": 100
     }
   }
 }
 bucket.getObjects({
-  type: "posts",
-  limit: 10,
-  query
+  query,
+  limit: 10
 });
 ```
+
+**Get Single Object**
+
+```javascript
+const query = {
+  slug: "home",
+  props: "title,content",
+};
+const objects = bucket.getObjects({
+  query,
+});
+const home = objects[0];
+```
+
 </div>
 
 <div label="GraphQL">
+
 ```javascript
-getObjects(bucket_slug, input: query)
+getObjects(bucket_slug, (input: query));
 ```
-  Some queries will require a separate variable. Add this to the Query Variables area in the GraphQL Playground below:
-  
+
+Some queries will require a separate variable. Add this to the Query Variables area in the GraphQL Playground below:
+
 **Variables**
+
 ```json
 {
   "bucket_slug": "{{bucket_slug}}",
@@ -70,6 +93,7 @@ getObjects(bucket_slug, input: query)
   }
 }
 ```
+
 <a href="https://cosmic-graphql-playground.netlify.app/?endpoint=https%3A%2F%2Fgraphql.cosmicjs.com%2Fv3&query=%20query%20%28%24bucket_slug%3A%20String%21%2C%20%24read_key%3A%20String%2C%20%24query%3A%20JSON%29%20%7B%0A%20%20getObjects%28%0A%20%20%20%20bucket_slug%3A%20%24bucket_slug%0A%20%20%20%20read_key%3A%20%24read_key%0A%20%20%20%20input%3A%20%7B%0A%20%20%20%20%20%20%20query%3A%20%24query%0A%20%20%20%20%7D%0A%20%20%29%20%7B%0A%20%20%20%20%20objects%20%7B%0A%20%20%20%20%20%20id%0A%20%20%20%20%20%20title%0A%20%20%20%20%20%20slug%0A%20%20%20%20%7D%0A%20%20%20%20total%0A%20%20%7D%0A%7D">Full screen</a>
 <iframe src="https://cosmic-graphql-playground.netlify.app/?endpoint=https%3A%2F%2Fgraphql.cosmicjs.com%2Fv3&query=%20query%20%28%24bucket_slug%3A%20String%21%2C%20%24read_key%3A%20String%2C%20%24query%3A%20JSON%29%20%7B%0A%20%20getObjects%28%0A%20%20%20%20bucket_slug%3A%20%24bucket_slug%0A%20%20%20%20read_key%3A%20%24read_key%0A%20%20%20%20input%3A%20%7B%0A%20%20%20%20%20%20%20query%3A%20%24query%0A%20%20%20%20%7D%0A%20%20%29%20%7B%0A%20%20%20%20%20objects%20%7B%0A%20%20%20%20%20%20id%0A%20%20%20%20%20%20title%0A%20%20%20%20%20%20slug%0A%20%20%20%20%7D%0A%20%20%20%20total%0A%20%20%7D%0A%7D" frameBorder="0" style={{ width: '100%', height: '470px'}}></iframe>
 </div>
@@ -233,7 +257,7 @@ curl '$endpoint&query={"metadata.category":"category_id-1"}'
 Match not equal to Single Object Metafield value
 
 ```bash
-curl '$endpoint&query={"metadata.category":{"$ne": "category_id-1"}}'
+curl '$endpoint&query={"metadata.category":{"$ne":"category_id-1"}}'
 ```
 
 Match all Multiple Object Metafield values
