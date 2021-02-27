@@ -3,6 +3,16 @@
 .docs-search > span {
   width: 100%;
 }
+.docs-search {
+  max-width: 500px;
+}
+.docs-search input {
+  padding-left: 35px;
+}
+.dark .docs-search input {
+  border: 2px solid #909BBA;
+  background-color: #111;
+}
 
 .algolia-autocomplete .algolia-docsearch-suggestion--category-header span {
   display: inline-block;
@@ -141,4 +151,18 @@ video {
   color: #fff;
   padding: 10px  15px;
   text-decoration: none;
+}
+/* Sidebar */
+.sidebar .active-anchor {
+  font-weight: bold !important;
+}
+.search-icon {
+  position: absolute;
+  left: 10px;
+  top: 10px;
+}
+.search-slash {
+  position: absolute;
+  right: 15px;
+  top: 13px;
 }
