@@ -904,9 +904,13 @@ function File({
       });
       return /*#__PURE__*/React__default.createElement("li", {
         className: active ? 'active' : ''
+      }, /*#__PURE__*/React__default.createElement("div", {
+        className: "relative"
       }, /*#__PURE__*/React__default.createElement(Link, {
         href: item.route
-      }, /*#__PURE__*/React__default.createElement("a", null, title)), /*#__PURE__*/React__default.createElement("ul", null, anchors.map((_, i) => {
+      }, /*#__PURE__*/React__default.createElement("a", null, title)), /*#__PURE__*/React__default.createElement("div", {
+        className: "absolute right-0 top-0 mt-2 mr-2"
+      }, active ? /*#__PURE__*/React__default.createElement(ChevronDown, null) : /*#__PURE__*/React__default.createElement(ChevronRight, null))), /*#__PURE__*/React__default.createElement("ul", null, anchors.map((_, i) => {
         const {
           slug,
           text
@@ -932,11 +936,15 @@ function File({
 
   return /*#__PURE__*/React__default.createElement("li", {
     className: active ? 'active' : ''
+  }, /*#__PURE__*/React__default.createElement("div", {
+    className: "relative"
   }, /*#__PURE__*/React__default.createElement(Link, {
     href: item.route
   }, /*#__PURE__*/React__default.createElement("a", {
     onClick: () => setMenu(false)
-  }, title)));
+  }, title)), item.route === '/' && /*#__PURE__*/React__default.createElement("div", {
+    className: "absolute right-0 top-0 mt-2 mr-2"
+  }, active ? /*#__PURE__*/React__default.createElement(ChevronDown, null) : /*#__PURE__*/React__default.createElement(ChevronRight, null))));
 }
 
 function Menu({
