@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "next",
     "start": "next start",
-    "build": "next build"
+    "build:theme": "cd nextra-theme-docs; yarn; yarn build;",
+    "build": "yarn build:theme; next build"
   },
   "repository": {
     "type": "git",
