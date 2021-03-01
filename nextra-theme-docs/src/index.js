@@ -122,9 +122,16 @@ function File({ item, anchors }) {
 
       return (
         <li className={active ? 'active' : ''}>
-          <Link href={item.route}>
-            <a>{title}</a>
-          </Link>
+          <div className="relative">
+            <Link href={item.route}>
+              <a>{title}</a>
+            </Link>
+            <div className="absolute right-0 top-0 mt-2 mr-2">
+              {
+                active ? <ChevronDown /> : <ChevronRight />
+              }
+            </div>
+          </div>
           <ul>
             {anchors.map((_, i) => {
               const { slug, text } = anchorInfo[i]
@@ -150,12 +157,21 @@ function File({ item, anchors }) {
       )
     }
   }
-
   return (
     <li className={active ? 'active' : ''}>
-      <Link href={item.route}>
-        <a onClick={() => setMenu(false)}>{title}</a>
-      </Link>
+      <div className="relative">
+        <Link href={item.route}>
+          <a onClick={() => setMenu(false)}>{title}</a>
+        </Link>
+        {
+          item.route === '/' &&
+            <div className="absolute right-0 top-0 mt-2 mr-2">
+            {
+              active ? <ChevronDown /> : <ChevronRight />
+            }
+          </div>
+        }
+      </div>
     </li>
   )
 }
