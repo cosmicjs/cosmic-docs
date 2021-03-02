@@ -167,7 +167,7 @@ cosmic get-objects
 ```
 **Example Request**
 ```bash
-cosmic get-objects --limit 10 --type=posts
+cosmic get-objects --limit 10 --type posts
 ```
 </div>
 </Tabs>
@@ -431,7 +431,7 @@ cosmic get-object
 ```
 **Example Request**
 ```bash
-cosmic get-object --slug=learning
+cosmic get-object --id 5ff75368c2dfa81a91695cec
 ```
 
 </div>
@@ -545,7 +545,7 @@ cosmic get-object
 ```
 **Example Request**
 ```bash
-cosmic get-object --slug=learning --props=title,content,metadata.parent.title,metadata.parent.metadata.category.metadata.description
+cosmic get-object --id 5ff75368c2dfa81a91695cec --props "title,content,metadata.parent.title,metadata.parent.metadata.category.metadata.description"
 ```
 
 </div>
@@ -849,7 +849,7 @@ cosmic edit-object
 ```
 **Example Request**
 ```bash
-cosmic edit-object --slug venus --title 'This is the updated Title'
+cosmic edit-object --id 5ff75368c2dfa81a91695cec --title 'This is the updated Title'
 ```
 </div>
 </Tabs>
@@ -953,7 +953,7 @@ cosmic delete-object
 ```
 **Example Request**
 ```bash
-cosmic delete-object --slug venus
+cosmic delete-object --id 5ff75368c2dfa81a91695cec
 ```
 </div>
 </Tabs>
