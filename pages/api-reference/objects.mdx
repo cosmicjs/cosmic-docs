@@ -167,7 +167,7 @@ cosmic get-objects
 ```
 **Example Request**
 ```bash
-cosmic get-objects --limit 10 --type posts
+cosmic get-objects --limit 10 --query '{"type":"posts"}'
 ```
 </div>
 </Tabs>
@@ -284,7 +284,7 @@ cosmic get-objects
 ```
 **Example Request**
 ```bash
-cosmic get-objects --limit 10 --type=posts --props=title,content,metadata.parent.title,metadata.parent.metadata.category.metadata.description
+cosmic get-objects --limit 10 --query '{"type":"posts"}' --props title,content,metadata.parent.title,metadata.parent.metadata.category.metadata.description
 ```
 
 </div>
