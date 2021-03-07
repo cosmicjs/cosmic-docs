@@ -42,14 +42,14 @@ const getFSRoute = (asPath, locale) => {
 }
 
 const ChevronDown = () =>
-  <div className={`float-right relative mt-2 mr-1`}>
+  <div className={`chevron-down`}>
     <svg width="14" height="8" viewBox="0 0 24 14" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M2 2L12 12L22 2" stroke="#727D9C" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"/>
     </svg>
   </div>
 
 const ChevronRight = () =>
-  <div className={`float-right relative mt-1 mr-1`}>
+  <div className={`chevron-right`}>
     <svg width="8" height="14" viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M1 13L7 7L1 1" stroke="#727D9C" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
     </svg>

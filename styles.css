@@ -166,3 +166,11 @@ video {
   right: 15px;
   top: 13px;
 }
+
+/* Chevron */
+.chevron-down {
+  @apply float-right relative mt-2 mr-0
+}
+.chevron-right {
+  @apply float-right relative mt-1 mr-1
+}
