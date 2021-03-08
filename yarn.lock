@@ -5125,7 +5125,7 @@ next@^10.0.0:
   optionalDependencies:
     sharp "0.26.2"
 
-nextra-theme-docs@./nextra-theme-docs:
+"nextra-theme-docs@file:./nextra-theme-docs":
   version "1.1.2"
   dependencies:
     "@mdx-js/react" "^1.6.16"
