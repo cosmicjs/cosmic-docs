@@ -7,7 +7,7 @@
     "dev": "next",
     "start": "next start",
     "build:theme": "cd nextra-theme-docs; yarn; yarn build;",
-    "build": "yarn build:theme; file:./nextra-theme-docs; next build"
+    "build": "yarn build:theme; yarn add file:./nextra-theme-docs; next build"
   },
   "repository": {
     "type": "git",
