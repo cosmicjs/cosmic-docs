@@ -1,0 +1,32 @@
+# Changelog
+
+### <font color="#28ACE2">2.0.0-alpha</font>
+
+Published on Tue Feb 9 2021.
+
+### New Features
+
+- Nested `metadata` props are now possible without limit. See [examples of nested props](/api-reference/objects#get-objects).
+- No depth limit for Object relationships. The only limit is the prevention of infinite recursion.
+- We now offer a [Postman collection](/api-reference/getting-started/introduction#postman) to review and demo all REST API methods.
+- You can now use the `after` param for Object pagination (experimental).
+- We now have endpoints for `Metafields` and `Media Folders` to do CRUD operations directly.
+
+### Improvements
+
+- Lighter codebase, faster endpoints. In some cases, endpoint response times are up to 50% faster (non-cached).
+- Better endpoint structures that follow standard REST conventions such as `POST /resources`, `GET /resources/:resource_id`, etc.
+- Consistent error responses with verbose messages.
+- The Select Dropdown Metafield now includes both `key` and `value` in the API response.
+
+### Changes
+
+- `_id` has been changed to `id`.
+- `type_slug` has been changed to `type`.
+- `status` can now either be `published` or `any` (which returns latest Object version draft or published).
+- `query` is now the primary method for fetching and filtering Objects (Advanced Queries from v1). See [Queries and Logic](/api-reference/queries) for examples.
+- Single Objects must now be fetched using `id`. To fetch by `slug`, you will need to use `query`.
+- `write_key` will now be required in the request header as `Authorization Bearer`.
+- `metafields` are hidden by default.
+- Stricter user input requirements. No additional fields are possible in the body for `POST` and `PATCH` requests.
+- There is a new, more secure token authentication strategy.

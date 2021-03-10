@@ -1,0 +1,205 @@
+# Go
+
+[Go](https://golang.org/) is an open source programming language that makes it easy to build **simple**, **reliable**, and **efficient** software.
+
+Cosmic makes a great [Go CMS](https://www.cosmicjs.com/knowledge-base/go-cms) for your websites and apps.
+
+Before adding any code, make sure to follow the [Initial Setup](/guides/initial-setup) at the start of this section to set up your content in Cosmic. Then take the following steps to add Cosmic-powered content to your Go apps:
+
+### 1. Go app setup
+
+If you don't have Go installed on your machine, you may need to start by installing Go by following the [documentation](https://golang.org/doc/install).
+
+After everything is ready, create a folder which will contain all of our code:
+
+```bash
+mkdir go-cosmic-app
+cd go-cosmic-app
+```
+
+### 2. Install `godotenv` package
+
+```bash
+go mod init go-cosmic-app
+go get github.com/joho/godotenv
+```
+
+### 3. Create `.env`
+
+Create a `.env` file and add cosmic bucket configuration. You can find your Bucket slug and API read key in <i>Your Bucket > Settings > API Access</i> after [logging in](https://app.cosmicjs.com).
+
+```bash
+# Set these values, found in Bucket > Settings after logging in at https://app.cosmicjs.com/
+BUCKET_SLUG= # Required
+READ_KEY= # Required if activated in the bucket
+```
+
+### 4. Create HTTP Server and Route
+
+Create a `app.go` file and paste the following code:
+
+```go
+// app.go
+package main
+
+import (
+	"encoding/json"
+	"fmt"
+	"html/template"
+	"io/ioutil"
+	"log"
+	"net/http"
+	"github.com/joho/godotenv"
+	"os"
+)
+
+// Data is a array of objects from Cosmic API
+type Data struct {
+	Objects []Post
+}
+
+// Post is a representation of post object
+type Post struct {
+	Title    string
+	Slug     string
+	Content  template.HTML
+	Metadata Metadata
+}
+
+// Metadata is a representation of metadata object
+type Metadata struct {
+	Hero Image
+}
+
+// Image is a object of URL & ImgixURL
+type Image struct {
+	URL      string
+	ImgixURL string `json:"imgix_url"`
+}
+
+func indexHandler(w http.ResponseWriter, r *http.Request) {
+  if r.URL.Path != "/" {
+    http.Error(w, "404 not found.", http.StatusNotFound)
+    return
+  }
+
+  if r.Method != "GET" {
+    http.Error(w, "Method is not supported.", http.StatusNotFound)
+    return
+  }
+
+  if ok := checkIfEnvExists("BUCKET_SLUG"); !ok {
+    http.Error(w, "BUCKET_SLUG is not present in the .env", http.StatusInternalServerError)
+    return
+  }
+
+  var readKey string
+  if ok := checkIfEnvExists("READ_KEY"); ok {
+    readKey = "&read_key=" + os.Getenv("READ_KEY")
+  }
+
+  bucketSlug := os.Getenv("BUCKET_SLUG")
+
+  apiURL := "https://api.cosmicjs.com/v1/"
+  url := apiURL + bucketSlug + "/objects?&hide_metafields=true&type=posts&props=slug,title,content,metadata" + readKey
+
+  res, err := http.Get(url)
+  var data Data
+
+  if err != nil {
+    log.Println(err)
+  } else {
+    body, err := ioutil.ReadAll(res.Body)
+    if err != nil {
+      log.Println(err)
+    } else {
+      json.Unmarshal(body, &data)
+    }
+  }
+
+  t, _ := template.ParseFiles("index.html")
+
+  t.Execute(w, data)
+}
+
+func getPortEnv() string {
+  var port string
+  var ok bool
+
+  if port, ok = os.LookupEnv("PORT"); !ok {
+    port = "8080"
+  }
+
+  return ":" + port
+}
+
+func checkIfEnvExists(key string) bool {
+  var ok bool
+  if _, ok = os.LookupEnv(key); !ok {
+    return false
+  }
+  return true
+}
+
+func main() {
+  http.HandleFunc("/", indexHandler)
+
+  if err := godotenv.Load(); err != nil {
+    log.Fatal("Error loading .env file")
+  }
+
+  port := getPortEnv()
+
+  fmt.Println("Starting server at port", port)
+  if err := http.ListenAndServe(port, nil); err != nil {
+    log.Fatal(err)
+  }
+}
+```
+
+### 5. Add template
+
+Create `index.html` file and paste the following code:
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Go Cosmic Blog</title>
+    <meta name="description" content="Go Cosmic Blog" />
+    <meta name="author" content="Cosmic" />
+    <style>
+      body {
+        font-family: Avenir, Helvetica, Arial, sans-serif;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        text-align: left;
+        color: #2c3e50;
+      }
+    </style>
+  </head>
+  <body>
+    <div>
+      <h1>Go Cosmic Blog</h1>
+      {{if not .Objects}}
+      <h2>No post found</h2>
+      {{end}} {{range .Objects}}
+      <article>
+        <h3>{{ .Title }}</h3>
+        <img alt="{{.Title}}" src="{{.Metadata.Hero.ImgixURL}}?w=400" />
+        {{.Content}}
+      </article>
+      {{end}}
+    </div>
+  </body>
+</html>
+```
+
+### 6. Start your app
+
+Start your app, and go to http://localhost:8080. Dance 🎉
+
+```bash
+go run app.go
+```

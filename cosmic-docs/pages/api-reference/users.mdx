@@ -1,0 +1,365 @@
+import Callout from "nextra-theme-docs/callout";
+import Tabs from "../../components/tabs";
+
+# Users
+
+The following endpoints allow you to get, add, edit and delete users in your bucket.
+
+<Callout emoji="✅">
+	**Quick Tip**
+	<br />
+	Your authentication `token` will be required to perform the following
+	requests.
+	<br />
+	You can get your authentication token in your user account settings located in
+	<i>
+		[Account Settings {">"}
+		Authentication](https://app.cosmicjs.com/account/authentication)
+	</i>. You can also get your token using the [API](/api-reference/authentication#get-your-token)
+	with your `email` and `password`.
+</Callout>
+
+## Get Users
+
+Gets all users in your bucket.
+
+<Callout emoji="⚠">
+	**Required**
+	<br />
+	`token` must be passed as `Authorization Bearer` in the header of the request
+	and you must have `admin` access to perform this operation.
+</Callout>
+
+**Methods**
+
+<Tabs>
+<div label="REST">
+```bash
+GET $BASE_URL/buckets/${bucket_slug}/users
+```
+
+</div>
+
+<div label="Node.js">
+```javascript
+bucket.getUsers()
+```
+**Example Request**
+```javascript
+const Cosmic = require('cosmicjs')({
+  token: 'your-token-from-auth-request' // required
+})
+const bucket = Cosmic.bucket({
+  slug: 'bucket-slug'
+})
+bucket.getUsers()
+.then(data => {
+  console.log(data)
+})
+.catch(err => {
+  console.log(err)
+})
+```
+</div>
+
+<div label="GraphQL">
+```javascript
+getUsers(bucket_slug)
+```
+**Header**
+
+```json
+{
+	"Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXV.eyJlbWFpbCI6InNwaXJvbnl..."
+}
+```
+
+**Variables**
+
+```
+{
+  "bucket_slug": "{{bucket_slug}}"
+}
+```
+
+<a href="https://cosmic-graphql-playground.netlify.app/?endpoint=https%3A%2F%2Fgraphql.cosmicjs.com%2Fv3&query=%20query%20%28%24bucket_slug%3A%20String%21%29%20%7B%0A%20%20getUsers%28bucket_slug%3A%20%24bucket_slug%29%20%7B%0A%20%20%20%20first_name%0A%20%20%20%20email%0A%20%20%7D%0A%7D">Full screen</a>
+<iframe src="https://cosmic-graphql-playground.netlify.app/?endpoint=https%3A%2F%2Fgraphql.cosmicjs.com%2Fv3&query=%20query%20%28%24bucket_slug%3A%20String%21%29%20%7B%0A%20%20getUsers%28bucket_slug%3A%20%24bucket_slug%29%20%7B%0A%20%20%20%20first_name%0A%20%20%20%20email%0A%20%20%7D%0A%7D" frameBorder="0" style={{ width: '100%', height: '470px'}}></iframe>
+</div>
+</Tabs>
+
+**Example Response**
+
+```json
+{
+	"users": [
+		{
+			"id": "5e4d7eb92850c717ea93dba4",
+			"first_name": "Starman",
+			"last_name": "Jones",
+			"email": "starman@milkyway.com",
+			"username": "starman",
+			"bio": "",
+			"website": "",
+			"twitter": "",
+			"linkedin": "",
+			"github": "",
+			"company": "",
+			"location": ""
+		},
+		{
+			"id": "5f46a1c25711926847cd6b5c",
+			"first_name": "Quasar",
+			"last_name": "Jones",
+			"email": "quasar@milkyway.com",
+			"username": "quasar"
+		}
+	],
+	"total": 2
+}
+```
+
+## Get User
+
+Gets user by `id` in your bucket.
+
+<Callout emoji="⚠">
+	**Required**
+	<br />
+	`token` must be passed as `Authorization Bearer` in the header of the request
+	and you must have `admin` access to perform this operation.
+</Callout>
+
+**Methods**
+
+<Tabs>
+<div label="REST">
+```bash
+GET $BASE_URL/buckets/${bucket_slug}/users/${user_id}
+```
+
+</div>
+
+<div label="Node.js">
+```javascript
+bucket.getUser()
+```
+**Example Request**
+```javascript
+const Cosmic = require('cosmicjs')({
+  token: 'your-token-from-auth-request' // required
+})
+const bucket = Cosmic.bucket({
+  slug: 'bucket-slug'
+})
+const params = {
+  id: '5357ef811693be2118000001'
+}
+bucket.getUser(params)
+.then(data => {
+  console.log(data)
+})
+.catch(err => {
+  console.log(err)
+})
+```
+</div>
+
+<div label="GraphQL">
+```javascript
+getUser(bucket_slug, user_id)
+```
+**Header**
+
+```json
+{
+	"Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXV.eyJlbWFpbCI6InNwaXJvbnl..."
+}
+```
+
+**Variables**
+
+```
+{
+  "bucket_slug": "{{bucket_slug}}",
+  "user_id": "{{user_id}}"
+}
+```
+
+<a href="https://cosmic-graphql-playground.netlify.app/?endpoint=https%3A%2F%2Fgraphql.cosmicjs.com%2Fv3&query=query%20%28%24bucket_slug%3A%20String%21%2C%20%24user_id%3A%20String%21%29%20%7B%0A%20%20getUser%28bucket_slug%3A%20%24bucket_slug%2C%20user_id%3A%20%24user_id%29%20%7B%0A%20%20%20%20first_name%0A%20%20%20%20email%0A%20%20%20%20id%0A%20%20%7D%0A%7D">Full screen</a>
+<iframe src="https://cosmic-graphql-playground.netlify.app/?endpoint=https%3A%2F%2Fgraphql.cosmicjs.com%2Fv3&query=query%20%28%24bucket_slug%3A%20String%21%2C%20%24user_id%3A%20String%21%29%20%7B%0A%20%20getUser%28bucket_slug%3A%20%24bucket_slug%2C%20user_id%3A%20%24user_id%29%20%7B%0A%20%20%20%20first_name%0A%20%20%20%20email%0A%20%20%20%20id%0A%20%20%7D%0A%7D" frameBorder="0" style={{ width: '100%', height: '470px'}}></iframe>
+</div>
+</Tabs>
+
+**Example Response**
+
+```json
+{
+	"user": {
+		"id": "5f46a1c25711926847cd6b5c",
+		"first_name": "Quasar",
+		"last_name": "Jones",
+		"email": "quasar@milkyway.com",
+		"username": "quasar"
+	}
+}
+```
+
+## Add User
+
+Add user to your bucket.
+
+<Callout emoji="⚠">
+	**Required**
+	<br />
+	`token` must be passed as `Authorization Bearer` in the header of the request
+	and you must have `admin` access to perform this operation.
+</Callout>
+
+| Parameter               |             Required              |          Type          | Description                                     |
+| :---------------------- | :-------------------------------: | :--------------------: | :---------------------------------------------- |
+| first_name              |             required              |         String         | The new user's first name                       |
+| last_name               |             required              |         String         | The new user's last name                        |
+| email                   |             required              |         String         | The new user's email                            |
+| role                    |             required              |          Enum          | `admin`, `developer`, `editor` or `contributor` |
+| publishing_restrictions |                                   |          Enum          | `draft_only`                                    |
+| additional_permissions  |                                   | String / Array[String] | `users`, `settings`, `sort_metafields`          |
+| object_types            | required if role is `contributor` | String / Array[String] | Your Cosmic login password                      |
+
+**Methods**
+
+<Tabs>
+<div label="REST">
+```bash
+POST $BASE_URL/buckets/${bucket_slug}/users
+```
+**Example Body (JSON)**
+
+```json
+{
+	"first_name": "ABC",
+	"last_name": "XYZ",
+	"email": "abc@xyz.com",
+	"role": "admin"
+}
+```
+
+</div>
+
+<div label="Node.js">
+```javascript
+bucket.addUser()
+```
+**Example Request**
+```javascript
+const Cosmic = require('cosmicjs')({
+  token: 'your-token-from-auth-request' // required
+})
+const bucket = Cosmic.bucket({
+  slug: 'bucket-slug'
+})
+const params = {
+  email: 'newuser@example.com',
+  role: 'editor',
+  first_name: 'Quasar',
+  last_name: 'Jones'
+}
+bucket.addUser(params)
+.then(data => {
+  console.log(data)
+})
+.catch(err => {
+  console.log(err)
+})
+```
+</div>
+
+<div label="GraphQL">
+```javascript
+addUser(bucket_slug, input)
+```
+<a href="https://cosmic-graphql-playground.netlify.app/?endpoint=https%3A%2F%2Fgraphql.cosmicjs.com%2Fv3&query=mutation%20%28%24bucket_slug%3A%20String%21%29%20%7B%0A%20%20addUser%28%0A%20%20%20%20bucket_slug%3A%20%24bucket_slug%2C%0A%20%20%20%20input%3A%20%7B%0A%20%20%20%20%20%20email%3A%20%20%22someguy%40test.com%22%2C%0A%20%20%20%20%20%20role%3A%20editor%2C%0A%20%20%20%20%20%20first_name%3A%20%22Test%22%2C%0A%20%20%20%20%20%20last_name%3A%20%22User%22%0A%20%20%20%20%7D%0A%20%20%29%0A%7D">Full screen</a>
+<iframe src="https://cosmic-graphql-playground.netlify.app/?endpoint=https%3A%2F%2Fgraphql.cosmicjs.com%2Fv3&query=mutation%20%28%24bucket_slug%3A%20String%21%29%20%7B%0A%20%20addUser%28%0A%20%20%20%20bucket_slug%3A%20%24bucket_slug%2C%0A%20%20%20%20input%3A%20%7B%0A%20%20%20%20%20%20email%3A%20%20%22someguy%40test.com%22%2C%0A%20%20%20%20%20%20role%3A%20editor%2C%0A%20%20%20%20%20%20first_name%3A%20%22Test%22%2C%0A%20%20%20%20%20%20last_name%3A%20%22User%22%0A%20%20%20%20%7D%0A%20%20%29%0A%7D" frameBorder="0" style={{ width: '100%', height: '470px'}}></iframe>
+</div>
+<div label="CLI">
+```bash
+cosmic add-user
+```
+**Example Request**
+```bash
+$ cosmic add-user --email test@user.com --first_name John --last_name Smith --role editor
+```
+</div>
+</Tabs>
+
+**Example Response**
+
+```json
+{
+	"message": "User added successfully."
+}
+```
+
+## Edit User
+
+Edit user by `id` in your bucket.
+
+<Callout emoji="⚠">
+	**Required**
+	<br />
+	`token` must be passed as `Authorization Bearer` in the header of the request
+	and you must have `admin` access to perform this operation.
+</Callout>
+
+| Parameter               |             Required              |          Type          | Description                                     |
+| :---------------------- | :-------------------------------: | :--------------------: | :---------------------------------------------- |
+| role                    |             required              |          Enum          | `admin`, `developer`, `editor` or `contributor` |
+| publishing_restrictions |                                   |          Enum          | `draft_only`                                    |
+| additional_permissions  |                                   | String / Array[String] | `users`, `settings`, `sort_metafields`          |
+| object_types            | required if role is `contributor` | String / Array[String] | Object Type slugs                               |
+
+**Definition**
+
+```bash
+PATCH $BASE_URL/buckets/${bucket_slug}/users/${user_id}
+```
+
+**Example Body (JSON)**
+
+```json
+{
+	"role": "editor"
+}
+```
+
+**Example Response**
+
+```json
+{
+	"message": "User role edited successfully from bucket."
+}
+```
+
+## Delete User
+
+Delete user by `id` from your bucket.
+
+<Callout emoji="⚠">
+	**Required**
+	<br />
+	`token` must be passed as `Authorization Bearer` in the header of the request
+	and you must have `admin` access to perform this operation.
+</Callout>
+
+**Definition**
+
+```bash
+DELETE $BASE_URL/buckets/${bucket_slug}/users/${user_id}
+```
+
+**Example Response**
+
+```json
+{
+	"message": "User delete successfully from bucket."
+}
+```

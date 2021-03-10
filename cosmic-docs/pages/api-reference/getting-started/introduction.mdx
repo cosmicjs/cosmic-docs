@@ -1,0 +1,76 @@
+import Callout from "nextra-theme-docs/callout";
+import Tabs from "../../../components/tabs";
+
+# Introduction
+
+In this API Reference, find ways to deliver Cosmic content to your websites and apps using the APIs and available clients.
+
+<Callout emoji="🚀">
+	For a quick reference to get content from your Bucket, click the "Developer
+	Tools" button found on select pages in your [Bucket Dashboard
+	](https://app.cosmicjs.com/login).
+</Callout>
+
+## Status Check
+
+You can check on the API system status via the [Cosmic status page](https://cosmicjs.statuspage.io/) and via the following endpoint:
+
+```
+https://api.cosmicjs.com/v2/status
+```
+
+## Postman
+
+We offer a [Postman](https://www.postman.com/) collection for a quick reference to review and interact with all Cosmic REST API endpoints. Follow the steps to install and configure below.
+
+### Install and configure
+
+1.  Start by selecting between the REST or GraphQL APIs. Click the button below to install the collection.
+
+<Tabs>
+	<div label="REST">
+		<a
+			className="postman-button"
+			href="https://app.getpostman.com/run-collection/7496aac8596d11c87ea9"
+		>
+			Run REST API in Postman →
+		</a>
+	</div>
+	<div label="GraphQL">
+		<a
+			className="postman-button"
+			href="https://app.getpostman.com/run-collection/07ec9bd7eb423a6247ae"
+		>
+			Run GraphQL API in Postman →
+		</a>
+	</div>
+</Tabs>
+
+2.  Click the dots then "Edit" option to get into the "Cosmic API V2" collection settings
+
+    <img
+    	alt="Postman settings"
+    	src="https://imgix.cosmicjs.com/d54cdae0-68c2-11eb-82fa-03c9fae183bd-postman-1.png?auto=format&w=1000"
+    	className="w-6/12"
+    />
+
+3.  Edit your variables to match with your Cosmic user account and Bucket API access keys.
+
+    <img
+    	alt="Postman variables"
+    	src="https://imgix.cosmicjs.com/0bf7e940-68c3-11eb-82fa-03c9fae183bd-postman-2.png?auto=format&w=2000"
+    	className="w-full"
+    />
+
+    ### Encode queries
+
+    If you are using [Queries](/api-reference/queries) in Postman here's a handy way to encode your `query` param:
+
+    1. Add your query as a `param` in your Postman request and select the input or right click:
+       ![Encode Query Screenshot 1](https://cdn.cosmicjs.com/b43bf5e0-675d-11eb-9ea4-1be290e7bb91-query-1.png)
+
+    2. Click the three dots and select "Encode URI Component":
+       ![Encode Query Screenshot 2](https://cdn.cosmicjs.com/b43f2a30-675d-11eb-9ea4-1be290e7bb91-query-2.png)
+
+    3. See your query now encoded and ready to use:
+       ![Encode Query Screenshot 3](https://cdn.cosmicjs.com/b4414d10-675d-11eb-9ea4-1be290e7bb91-query-3.png)

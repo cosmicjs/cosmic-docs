@@ -1,0 +1,532 @@
+import Callout from "nextra-theme-docs/callout";
+import Tabs from "../../components/tabs";
+
+# Object Types
+
+The following endpoints allow you to get, add, edit and delete Object Types in your Bucket.
+
+<Callout emoji="✅">
+	**Quick Tip**
+	<br />
+	Your `read` and `write` keys will be required to perform the following
+	requests. These can be found in <i>Your Bucket > Settings > API Access</i> in
+	your [Bucket Dashboard ](https://app.cosmicjs.com/login).
+</Callout>
+
+## Get Object Types
+
+Get all Object Types in your Bucket.
+
+| Parameter | Required |  Type  | Description                                   |
+| :-------- | :------: | :----: | :-------------------------------------------- |
+| read_key  | required | String | Restrict read access to your Bucket           |
+| pretty    |          |  Enum  | true, Makes the response more reader-friendly |
+
+**Methods**
+
+<Tabs>
+<div label="REST">
+```bash
+GET $BASE_URL/buckets/${bucket_slug}/object-types
+```
+
+</div>
+
+<div label="Node.js">
+```javascript
+bucket.getObjectTypes()
+```
+**Example Request**
+```javascript
+const Cosmic = require("cosmicjs");
+const bucket = Cosmic.bucket({
+  slug: "bucket-slug",
+  read_key: "your-read-key-found-in-bucket-settings",
+});
+bucket.getObjectTypes().then(data => {
+  console.log(data)
+}).catch(err => {
+  console.log(err)
+})
+```
+</div>
+
+<div label="GraphQL">
+```javascript
+getObjectTypes(bucket_slug, input)
+```
+<a href="https://cosmic-graphql-playground.netlify.app/?endpoint=https://graphql.cosmicjs.com/v3&query=%7B%0A%20%20getObjectTypes(bucket_slug%3A%20%22simple-vue-blog%22)%20%7B%0A%20%20%20%20title%0A%20%20%7D%0A%7D">Full screen</a>
+<iframe src="https://cosmic-graphql-playground.netlify.app/?endpoint=https://graphql.cosmicjs.com/v3&query=%7B%0A%20%20getObjectTypes(bucket_slug%3A%20%22simple-vue-blog%22)%20%7B%0A%20%20%20%20title%0A%20%20%7D%0A%7D" frameBorder="0" style={{ width: '100%', height: '470px'}}></iframe>
+</div>
+<div label="CLI">
+```bash
+cosmic get-object-types
+```
+**Example Request**
+```bash
+cosmic get-object-types
+```
+</div>
+</Tabs>
+
+**Example Response**
+
+```json
+{
+	"object_types": [
+		{
+			"title": "Posts",
+			"slug": "posts",
+			"singular": "Post",
+			"metafields": [
+				{
+					"children": null,
+					"type": "object",
+					"title": "Category",
+					"key": "category",
+					"id": "qc8ado5qusyaj9og8yi8",
+					"object_type": "categories",
+					"value": "5f7357967286d7773adc551e"
+				},
+				{
+					"children": null,
+					"type": "text",
+					"title": "Headline",
+					"key": "headline",
+					"id": "g6Klj1ABP8",
+					"value": ""
+				}
+			],
+			"options": {
+				"slug_field": 1,
+				"content_editor": 1
+			},
+			"preview_link": "",
+			"priority_locale": null,
+			"extensions": null,
+			"order": 0,
+			"localization": false,
+			"locales": null,
+			"emoji": ""
+		},
+		{
+			"title": "Pages",
+			"slug": "pages",
+			"singular": "Page",
+			"metafields": [],
+			"options": {
+				"slug_field": 1,
+				"content_editor": 1
+			},
+			"preview_link": "",
+			"priority_locale": null,
+			"extensions": null,
+			"emoji": "📁",
+			"order": 1
+		}
+	]
+}
+```
+
+## Get Object Type
+
+Get Object Type by `type_slug` from your Bucket.
+
+| Parameter | Required |  Type  | Description                                   |
+| :-------- | :------: | :----: | :-------------------------------------------- |
+| read_key  | required | String | Restrict read access to your Bucket           |
+| pretty    |          |  Enum  | true, Makes the response more reader-friendly |
+
+**Definition**
+
+```bash
+GET $BASE_URL/buckets/${bucket_slug}/object-types/${type_slug}
+```
+
+**Example Response**
+
+```json
+{
+	"object_type": {
+		"title": "Pages",
+		"slug": "pages",
+		"singular": "Page",
+		"metafields": [],
+		"options": {
+			"slug_field": 1,
+			"content_editor": 1
+		},
+		"preview_link": "",
+		"priority_locale": null,
+		"extensions": null,
+		"emoji": "📁",
+		"order": 1
+	}
+}
+```
+
+## Add Object Type
+
+Add a new Object Type to your Bucket.
+
+<Callout emoji="⚠">
+	**Required**
+	<br />
+	`write_key` must be passed as `Authorization Bearer` in the header of the
+	request.
+</Callout>
+
+| Parameter              |             Required             |       Type       | Description                                                                                                                                        |
+| :--------------------- | :------------------------------: | :--------------: | :------------------------------------------------------------------------------------------------------------------------------------------------- |
+| title                  |             required             |      String      | Plural title of your Object Type                                                                                                                   |
+| slug                   |                                  |      String      | Plural slug of your Object Type                                                                                                                    |
+| singular               |                                  |      String      | Singular title of your Object Type                                                                                                                 |
+| metafields             |                                  | Array of Objects | Default Metafields for each Object in this type. Add Metafields to your Object. See [Metafields Model](/api-reference/getting-started/metafields). |
+| options.slug_field     |                                  |     Boolean      | Set to false to hide the slug field                                                                                                                |
+| options.content_editor |                                  |     Boolean      | Set to false to hide the content editor                                                                                                            |
+| localization           |                                  |       Enum       | true, Adds localization to the Object Type                                                                                                         |
+| locales                | required if localization is true | Array of String  | Array of active locales in the Object Type. Check the [available locale codes](/api-reference/localization).                                       |
+| priority_locale        |                                  |      String      | Default locale code for Objects in Object Type. Check the [available locale codes](/api-reference/localization)                                    |
+| emoji                  |                                  |      String      | Valid Unicode emoji                                                                                                                                |
+| pretty                 |                                  |       Enum       | true, Makes the response more reader-friendly                                                                                                      |
+
+**Methods**
+
+<Tabs>
+<div label="REST">
+```bash
+POST $BASE_URL/buckets/${bucket_slug}/object-types
+```
+**Header**
+
+```json
+{
+	"Authorization": "Bearer n5MbD59UPBoVpyqi6B6DnOzAvZ..."
+}
+```
+
+</div>
+
+<div label="Node.js">
+```javascript
+bucket.addObjectType()
+```
+**Example Request**
+```javascript
+const Cosmic = require("cosmicjs");
+const bucket = Cosmic.bucket({
+  slug: "bucket-slug",
+  read_key: "your-read-key-found-in-bucket-settings",
+});
+const params = {
+  title: 'Pages',
+  singular: 'Page',
+  slug: 'pages',
+  emoji: '📄',
+  singleton: false,
+  metafields: [
+    {
+      type: 'text',
+      title: 'Headline',
+      key: 'headline',
+      required: true
+    },
+    {
+      type: 'file',
+      title: 'Hero',
+      key: 'hero',
+      required: true
+    }
+  ]
+}
+bucket.addObjectType(params)
+  .then(data => {
+    console.log(data)
+  })
+  .catch(err => {
+    console.log(err)
+  })
+```
+</div>
+
+<div label="GraphQL">
+```javascript
+addObjectType(bucket_slug, input)
+```
+**Header**
+
+```json
+{
+	"Authorization": "Bearer n5MbD59UPBoVpyqi6B6DnOzAvZ..."
+}
+```
+
+**Variables**
+
+```json
+{
+	"bucket_slug": "{{bucket_slug}}"
+}
+```
+
+<a href="https://cosmic-graphql-playground.netlify.app/?endpoint=https%3A%2F%2Fgraphql.cosmicjs.com%2Fv3&query=mutation%20%28%24bucket_slug%3A%20String%21%29%20%7B%0A%20%20addObjectType%28%0A%20%20%20%20bucket_slug%3A%20%24bucket_slug%2C%0A%20%20%20%20input%3A%20%7B%0A%20%20%20%20%20%20title%3A%20%22Pages%22%2C%0A%20%20%20%20%20%20slug%3A%20%22pages%22%2C%0A%20%20%20%20%20%20singular%3A%20%22page%22%2C%0A%20%20%20%20%7D%0A%20%20%29%20%7B%0A%20%20%20%20title%0A%20%20%7D%0A%7D">Full screen</a>
+<iframe src="https://cosmic-graphql-playground.netlify.app/?endpoint=https%3A%2F%2Fgraphql.cosmicjs.com%2Fv3&query=mutation%20%28%24bucket_slug%3A%20String%21%29%20%7B%0A%20%20addObjectType%28%0A%20%20%20%20bucket_slug%3A%20%24bucket_slug%2C%0A%20%20%20%20input%3A%20%7B%0A%20%20%20%20%20%20title%3A%20%22Pages%22%2C%0A%20%20%20%20%20%20slug%3A%20%22pages%22%2C%0A%20%20%20%20%20%20singular%3A%20%22page%22%2C%0A%20%20%20%20%7D%0A%20%20%29%20%7B%0A%20%20%20%20title%0A%20%20%7D%0A%7D" frameBorder="0" style={{ width: '100%', height: '470px'}}></iframe>
+</div>
+<div label="CLI">
+```bash
+cosmic add-object-type
+```
+**Example Request**
+```bash
+cosmic add-object-type --slug planets --title Planets --metafields '[{"title": "Radius","type":"text", "key": "radius"}]'
+```
+</div>
+</Tabs>
+
+**Example Body (JSON)**
+
+```json
+{
+	"title": "Categories"
+}
+```
+
+**Example Response**
+
+```json
+{
+	"object_type": {
+		"title": "Categories",
+		"slug": "categories",
+		"singular": "Categories",
+		"metafields": [],
+		"created_at": "2021-01-07T14:08:24.309Z",
+		"modifield_at": "2021-01-07T14:08:24.309Z",
+		"localization": false,
+		"locales": [],
+		"priority_locale": ""
+	}
+}
+```
+
+## Edit Object Type
+
+Edit an existing Object Type by `type_slug` in your Bucket.
+
+<Callout emoji="⚠">
+	**Required**
+	<br />
+	`write_key` must be passed as `Authorization Bearer` in the header of the
+	request.
+</Callout>
+
+| Parameter              |             Required             |       Type       | Description                                                                                                                                        |
+| :--------------------- | :------------------------------: | :--------------: | :------------------------------------------------------------------------------------------------------------------------------------------------- |
+| title                  |                                  |      String      | Plural title of your Object Type                                                                                                                   |
+| singular               |                                  |      String      | Singular title of your Object Type                                                                                                                 |
+| metafields             |                                  | Array of Objects | Default Metafields for each Object in this type. Add Metafields to your Object. See [Metafields Model](/api-reference/getting-started/metafields). |
+| options.slug_field     |                                  |     Boolean      | Set to false to hide the slug field                                                                                                                |
+| options.content_editor |                                  |     Boolean      | Set to false to hide the content editor                                                                                                            |
+| localization           |                                  |       Enum       | true, Adds localization to the Object Type                                                                                                         |
+| locales                | required if localization is true | Array of String  | Array of active locales in the Object Type. Check the [available locale codes](/api-reference/localization).                                       |
+| priority_locale        |                                  |      String      | Default locale code for Objects in Object Type. Check the [available locale codes](/api-reference/localization)                                    |
+| emoji                  |                                  |      String      | Valid Unicode emoji                                                                                                                                |
+| pretty                 |                                  |       Enum       | true, Makes the response more reader-friendly                                                                                                      |
+
+_**Note:** At least one of the Parameters is required to process the request._
+
+**Methods**
+
+<Tabs>
+<div label="REST">
+```bash
+PATCH $BASE_URL/buckets/${bucket_slug}/object-types/${type_slug}
+```
+**Header**
+
+```json
+{
+	"Authorization": "Bearer n5MbD59UPBoVpyqi6B6DnOzAvZ..."
+}
+```
+
+</div>
+
+<div label="Node.js">
+```javascript
+bucket.editObjectType()
+```
+**Example Request**
+```javascript
+const Cosmic = require("cosmicjs");
+const bucket = Cosmic.bucket({
+  slug: 'bucket-slug',
+  write_key: 'your-write-key-found-in-bucket-settings'
+})
+bucket.editObjectType({
+    slug: 'posts',
+    title: 'New Posts Title'
+  })
+  .then(data => {
+    console.log(data)
+  })
+  .catch(err => {
+    console.log(err)
+  })
+```
+</div>
+
+<div label="GraphQL">
+```javascript
+editObjectType(bucket_slug)
+```
+**Header**
+
+```json
+{
+	"Authorization": "Bearer n5MbD59UPBoVpyqi6B6DnOzAvZ..."
+}
+```
+
+**Variables**
+
+```json
+{
+	"bucket_slug": "{{bucket_slug}}"
+}
+```
+
+<a href="https://cosmic-graphql-playground.netlify.app/?endpoint=https%3A%2F%2Fgraphql.cosmicjs.com%2Fv3&query=mutation%20%28%24bucket_slug%3A%20String%21%29%20%7B%0A%20%20editObjectType%28%0A%20%20%20%20bucket_slug%3A%20%24bucket_slug%0A%20%20%20%20type_slug%3A%20%22pages%22%0A%20%20%20%20input%3A%20%7B%0A%20%20%20%20%20%20title%3A%20%22Pages%20UPDATED%22%0A%20%20%20%20%7D%0A%20%20%29%20%7B%0A%20%20%20%20title%0A%20%20%7D%0A%7D">Full screen</a>
+<iframe src="https://cosmic-graphql-playground.netlify.app/?endpoint=https%3A%2F%2Fgraphql.cosmicjs.com%2Fv3&query=mutation%20%28%24bucket_slug%3A%20String%21%29%20%7B%0A%20%20editObjectType%28%0A%20%20%20%20bucket_slug%3A%20%24bucket_slug%0A%20%20%20%20type_slug%3A%20%22pages%22%0A%20%20%20%20input%3A%20%7B%0A%20%20%20%20%20%20title%3A%20%22Pages%20UPDATED%22%0A%20%20%20%20%7D%0A%20%20%29%20%7B%0A%20%20%20%20title%0A%20%20%7D%0A%7D" frameBorder="0" style={{ width: '100%', height: '470px'}}></iframe>
+</div>
+<div label="CLI">
+```bash
+cosmic edit-object-type
+```
+**Example Request**
+```bash
+cosmic edit-object-type --slug planets --singluar Planet
+```
+</div>
+</Tabs>
+
+**Example Body (JSON)**
+
+```json
+{
+	"singular": "Category"
+}
+```
+
+**Example Response**
+
+```json
+{
+	"object_type": {
+		"title": "Categories",
+		"slug": "categories",
+		"singular": "Category",
+		"metafields": [],
+		"created_at": "2021-01-07T14:08:24.309Z",
+		"modifield_at": "2021-01-07T14:17:04.124Z",
+		"localization": false,
+		"locales": [],
+		"priority_locale": ""
+	}
+}
+```
+
+## Delete Object Type
+
+Delete an existing Object Type by `type_slug` from your Bucket.
+
+<Callout emoji="⚠">
+	**Required**
+	<br />
+	`write_key` must be passed as `Authorization Bearer` in the header of the
+	request.
+</Callout>
+
+_**Note:** This does not delete Objects in this Object Type._
+
+**Methods**
+
+<Tabs>
+<div label="REST">
+```bash
+DELETE $BASE_URL/buckets/${bucket_slug}/object-types/${type_slug}
+```
+**Header**
+
+```json
+{
+	"Authorization": "Bearer n5MbD59UPBoVpyqi6B6DnOzAvZ..."
+}
+```
+
+</div>
+
+<div label="Node.js">
+```javascript
+bucket.deleteObjectType()
+```
+**Example Request**
+```javascript
+const Cosmic = require("cosmicjs");
+const bucket = Cosmic.bucket({
+  slug: 'bucket-slug',
+  write_key: 'your-write-key-found-in-bucket-settings'
+})
+bucket.deleteObjectType({
+    slug: 'posts'
+  })
+  .then(data => {
+    console.log(data)
+  })
+  .catch(err => {
+    console.log(err)
+  })
+```
+</div>
+
+<div label="GraphQL">
+```javascript
+deleteObjectType(bucket_slug, type_slug)
+```
+**Header**
+
+```json
+{
+	"Authorization": "Bearer n5MbD59UPBoVpyqi6B6DnOzAvZ..."
+}
+```
+
+**Variables**
+
+```json
+{
+	"bucket_slug": "{{bucket_slug}}"
+}
+```
+
+<a href="https://cosmic-graphql-playground.netlify.app/?endpoint=https%3A%2F%2Fgraphql.cosmicjs.com%2Fv3&query=mutation%20%28%24bucket_slug%3A%20String%21%29%20%7B%0A%20%20deleteObjectType%28%0A%20%20%20%20bucket_slug%3A%20%24bucket_slug%0A%20%20%20%20type_slug%3A%20%22pages%22%0A%20%20%29%0A%7D">Full screen</a>
+<iframe src="https://cosmic-graphql-playground.netlify.app/?endpoint=https%3A%2F%2Fgraphql.cosmicjs.com%2Fv3&query=mutation%20%28%24bucket_slug%3A%20String%21%29%20%7B%0A%20%20deleteObjectType%28%0A%20%20%20%20bucket_slug%3A%20%24bucket_slug%0A%20%20%20%20type_slug%3A%20%22pages%22%0A%20%20%29%0A%7D" frameBorder="0" style={{ width: '100%', height: '470px'}}></iframe>
+</div>
+<div label="CLI">
+```bash
+cosmic delete-object-type
+```
+**Example Request**
+```bash
+cosmic delete-object-type --slug planets
+```
+</div>
+</Tabs>
+
+**Example Response**
+
+```json
+{
+	"message": "Object Type with slug 'categories' deleted successfully from bucket."
+}
+```

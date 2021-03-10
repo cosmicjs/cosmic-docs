@@ -1,0 +1,95 @@
+# Angular
+
+[Angular](https://angular.io/) is a JavaScript library for building user interfaces.
+
+Cosmic makes a great [Angular CMS](https://www.cosmicjs.com/knowledge-base/angularjs-cms) for your Angular websites and apps.
+
+Before adding any code, make sure to follow the [Initial Setup](/guides/initial-setup) at the start of this section to set up your content in Cosmic. Then take the following steps to add Cosmic-powered content to your Angular apps:
+
+### 1. Install a new Angular app
+
+Install the Angular CLI to create a project that includes tooling and configurations.
+
+```bash
+npm install -g @angular/cli
+ng new cosmic-angular-app
+```
+
+### 2. Install the Cosmic NPM module
+
+```bash
+cd cosmic-angular-app
+npm i cosmicjs
+```
+
+### 3. Add the following code into your `src/app/app.component.ts` file
+
+Find your Bucket slug and API read key in <i>Your Bucket > Settings > API Access</i> after [logging in](https://app.cosmicjs.com).
+
+```javascript
+// src/app/app.component.ts
+import { Component, OnInit } from "@angular/core";
+import Cosmic from "cosmicjs";
+
+@Component({
+  selector: "app-root",
+  template: `
+    <div id="app">
+      <h1>Cosmic Angular App</h1>
+      <div *ngIf="loading">Loading...</div>
+      <ul>
+        <li *ngFor="let post of posts">
+          <div>{{ post.title }}</div>
+          <img alt="" [src]="post.metadata.hero.imgix_url + '?w=400'" />
+        </li>
+      </ul>
+    </div>
+  `,
+})
+export class AppComponent implements OnInit {
+  title = "cosmic-angular-app";
+  bucket = null;
+  loading = false;
+  posts = [];
+
+  constructor() {
+    // Set these values, found in Bucket > Settings after logging in at https://app.cosmicjs.com/login
+    this.bucket = Cosmic().bucket({
+      slug: "YOUR_BUCKET_SLUG",
+      read_key: "YOUR_BUCKET_READ_KEY",
+    });
+  }
+
+  async ngOnInit() {
+    this.loading = true;
+
+    await this.bucket
+      .getObjects({
+        type: "posts",
+        props: "slug,title,content,metadata", // Limit the API response data by props
+      })
+      .then((response) => {
+        this.posts = response.objects;
+      });
+
+    this.loading = false;
+  }
+}
+```
+
+### 4. Edit `src/polyfills.ts` and add the following code
+
+```javascript
+// src/polyfills.ts
+(window as any).process = {
+    env: { DEBUG: undefined },
+};
+```
+
+### 5. Start your app
+
+Start your app, and go to http://localhost:4200. Dance 🎉
+
+```
+ng serve --open
+```

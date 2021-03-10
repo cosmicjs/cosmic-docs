@@ -1,0 +1,580 @@
+import Callout from "nextra-theme-docs/callout";
+import Tabs from "../../components/tabs";
+
+# Media
+
+The following endpoints allow you to manage media in your Bucket.
+
+<Callout emoji="✅">
+	**Quick Tip**
+	<br />
+	Your `read` and `write` keys will be required to perform the following
+	requests. These can be found in <i>Your Bucket > Settings > API Access</i> in
+	your [Bucket Dashboard ](https://app.cosmicjs.com/login).
+</Callout>
+
+## Get Media List
+
+Get Media List in your Bucket.
+
+| Parameter | Required |  Type  | Default  | Description                                                                                                                                                    |
+| :-------- | :------: | :----: | :------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| read_key  | required | String |          | Restrict read access to your Bucket                                                                                                                            |
+| props     |          | String |          | Declare which properties to return in comma-separated string. Reference full Media for all available properties. Example: `?props=name,url,imgix_url,metadata` |
+| sort      |          |  Enum  | -created | created, -created, size, -size, random                                                                                                                         |
+| limit     |          | Number | 1000     | The number of Media to return                                                                                                                                  |
+| skip      |          | Number | 0        | The number of Media to skip                                                                                                                                    |
+| pretty    |          |  Enum  | false    | true, Makes the response more reader-friendly                                                                                                                  |
+| query     |          |  JSON  |          | COMING SOON! A JSON string to perform media search and filtering. See [Queries section](/api-reference/queries) for more detail.                               |
+
+**Methods**
+
+<Tabs>
+<div label="REST">
+```bash
+GET $BASE_URL/buckets/${bucket_slug}/media
+```
+
+</div>
+
+<div label="Node.js">
+```javascript
+Cosmic.getMedia()
+```
+
+**Example Request**
+
+```javascript
+const Cosmic = require("cosmicjs");
+const api = Cosmic();
+const bucket = api.bucket({
+  slug: "your-bucket-slug",
+  read_key: "your-read-key-found-in-bucket-settings",
+});
+
+bucket.getMedia({
+  folder: 'groomsmen',
+  props: 'imgix_url' // get only what you need
+  limit: 3
+}).then(data => {
+  console.log(data)
+}).catch(err => {
+  console.log(err)
+})
+```
+
+</div>
+
+<div label="GraphQL">
+```javascript
+getMedia(bucket_slug, input)
+```
+
+**Variables**
+
+```
+{
+  "bucket_slug": "{{bucket_slug}}",
+  "read_key": "{{read_key}}"
+}
+```
+
+<a href="https://cosmic-graphql-playground.netlify.app/?endpoint=https%3A%2F%2Fgraphql.cosmicjs.com%2Fv3&query=query%20%28%24bucket_slug%3A%20String%21%2C%20%24read_key%3A%20String%29%20%7B%0A%20%20getMedia%28%0A%20%20%20%20bucket_slug%3A%20%24bucket_slug%0A%20%20%20%20read_key%3A%20%24read_key%0A%20%20%29%20%7B%0A%20%20%20%20%20media%20%7B%0A%20%20%20%20%20%20name%0A%20%20%20%20%7D%0A%20%20%20%20total%0A%20%20%7D%0A%7D">Full screen</a>
+<iframe src="https://cosmic-graphql-playground.netlify.app/?endpoint=https%3A%2F%2Fgraphql.cosmicjs.com%2Fv3&query=query%20%28%24bucket_slug%3A%20String%21%2C%20%24read_key%3A%20String%29%20%7B%0A%20%20getMedia%28%0A%20%20%20%20bucket_slug%3A%20%24bucket_slug%0A%20%20%20%20read_key%3A%20%24read_key%0A%20%20%29%20%7B%0A%20%20%20%20%20media%20%7B%0A%20%20%20%20%20%20name%0A%20%20%20%20%7D%0A%20%20%20%20total%0A%20%20%7D%0A%7D" frameBorder="0" style={{ width: '100%', height: '470px'}}></iframe>
+</div>
+<div label="CLI">
+```bash
+cosmic get-media
+```
+**Example Request**
+```bash
+cosmic get-media --limit 2
+```
+</div>
+</Tabs>
+
+**Example Response**
+
+```json
+{
+	"media": [
+		{
+			"id": "5feb42f3601e2b3a6151289a",
+			"name": "9c4d6b70-49e5-11eb-98a2-810fade44566-logo-layout-1.jpg",
+			"original_name": "logo-layout-1.jpg",
+			"size": 256652,
+			"type": "image/jpeg",
+			"bucket": "5e6818d8e11cffafef7a6230",
+			"created": "2020-12-29T14:53:39.847Z",
+			"location": "https://cdn.cosmicjs.com",
+			"folder": "product-images",
+			"url": "https://cdn.cosmicjs.com/9c4d6b70-49e5-11eb-98a2-810fade44566-logo-layout-1.jpg",
+			"imgix_url": "https://imgix.cosmicjs.com/9c4d6b70-49e5-11eb-98a2-810fade44566-logo-layout-1.jpg"
+		},
+		{
+			"id": "5feb42f2601e2b3a61512899",
+			"name": "9c5a3cb0-49e5-11eb-98a2-810fade44566-logo-layout-2.jpg",
+			"original_name": "logo-layout-2.jpg",
+			"size": 170482,
+			"type": "image/jpeg",
+			"bucket": "5e6818d8e11cffafef7a6230",
+			"created": "2020-12-29T14:53:38.494Z",
+			"location": "https://cdn.cosmicjs.com",
+			"folder": "product-images",
+			"url": "https://cdn.cosmicjs.com/9c5a3cb0-49e5-11eb-98a2-810fade44566-logo-layout-2.jpg",
+			"imgix_url": "https://imgix.cosmicjs.com/9c5a3cb0-49e5-11eb-98a2-810fade44566-logo-layout-2.jpg"
+		}
+	],
+	"total": 10,
+	"limit": 2
+}
+```
+
+## Get Media
+
+Returns a single Media by `id` from your Bucket.
+
+| Parameter | Required |  Type  | Default | Description                                                                                                                                                    |
+| :-------- | :------: | :----: | :------ | :------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| read_key  | required | String |         | Restrict read access to your Bucket                                                                                                                            |
+| props     |          | String |         | Declare which properties to return in comma-separated string. Reference full Media for all available properties. Example: `?props=name,url,imgix_url,metadata` |
+| pretty    |          |  Enum  | false   | true, Makes the response more reader-friendly                                                                                                                  |
+
+**Methods**
+
+<Tabs>
+<div label="REST">
+```bash
+GET $BASE_URL/buckets/${bucket_slug}/media/${media_id}
+```
+
+</div>
+
+<div label="Node.js">
+```javascript
+Cosmic.getSingleMedia()
+```
+
+**Example Request**
+
+```javascript
+const Cosmic = require("cosmicjs");
+const api = Cosmic();
+const bucket = api.bucket({
+	slug: "your-bucket-slug",
+	read_key: "your-read-key-found-in-bucket-settings",
+});
+
+bucket
+	.getMedia({
+		id: "5f331eac9d52b17aee21d1b4",
+		props: "imgix_url", // get only what you need
+	})
+	.then((data) => {
+		console.log(data);
+	})
+	.catch((err) => {
+		console.log(err);
+	});
+```
+
+</div>
+</Tabs>
+
+**Example Response**
+
+```json
+{
+	"media": {
+		"id": "5f331eac9d52b17aee21d1b4",
+		"name": "d319ff30-13b7-11e9-acee-bd778576f320-default_profile.png",
+		"original_name": "default_profile.png",
+		"size": 4889,
+		"type": "image/png",
+		"bucket": "5e6818d8e11cffafef7a6230",
+		"created": "2020-08-11T22:41:48.651Z",
+		"location": "https://cdn.cosmicjs.com",
+		"folder": null,
+		"metadata": {
+			"ok": true
+		},
+		"url": "https://cdn.cosmicjs.com/d319ff30-13b7-11e9-acee-bd778576f320-default_profile.png",
+		"imgix_url": "https://imgix.cosmicjs.com/d319ff30-13b7-11e9-acee-bd778576f320-default_profile.png"
+	}
+}
+```
+
+### Imgix
+
+[Imgix](https://imgix.com/) is included with every account. You can use the Imgix suite of image processing tools on the URL provided by the `imgix_url` property value. Check out the [Imgix documentation](https://docs.imgix.com/) for more info.
+
+## Add Media
+
+The only required post value is the `media` object. You can also add optional `folder` and `metadata` params.
+
+<Callout emoji="⚠">
+	**Required**
+	<br />
+	`write_key` must be passed as `Authorization Bearer` in the header of the
+	request.
+</Callout>
+
+<Callout emoji="✅">
+	**Quick Tip**
+	<br />
+	The base endpoint is different than other REST API requests with a higher
+	upload size limit of `900MB`.
+</Callout>
+
+### Upload URL
+
+```
+https://upload.cosmicjs.com/v2
+```
+
+| Parameter | Required | Type                     | Description                           |
+| --------- | -------- | ------------------------ | ------------------------------------- |
+| media     | required | Media Object (see below) | Media object with specific properties |
+| folder    |          | String                   | Media folder slug                     |
+| metadata  |          | Object                   | Key / value data store                |
+
+### Media Object
+
+The Media Object must be an object with certain properties indicated below. If using the [multer NPM module](https://www.npmjs.com/package/multer) the file objects have these by default. Otherwise you should create an object with these properties:
+
+| Parameter    | Required | Type        | Description                           |
+| ------------ | -------- | ----------- | ------------------------------------- |
+| originalname | required | String      | The name of your file (something.jpg) |
+| buffer       |          | File Buffer | The File Buffer                       |
+
+**Methods**
+
+<Tabs>
+<div label="REST">
+  See [upload URL above](#upload-url).
+```bash
+POST $UPLOAD_URL/buckets/:bucket_slug/media
+```
+
+**Curl**
+
+```bash
+curl --form "folder=folder-name" --form "media=@test.png" -H "Authorization: Bearer <write-key>" 'https://upload.cosmicjs.com/v2/buckets/:bucket_slug/media'
+```
+
+**Header**
+
+```json
+{
+	"Authorization": "Bearer n5MbD59UPBoVpyqi6B6DnOzAvZ..."
+}
+```
+
+</div>
+
+<div label="Node.js">
+```javascript
+Cosmic.addMedia()
+```
+
+**Example Request**
+
+```javascript
+const bucket = Cosmic.bucket({
+	slug: "bucket-slug",
+	write_key: "your-write-key-found-in-bucket-settings",
+});
+
+const media_object = req.files[0]; // Using Multer
+// OR:
+// const media_object = { originalname: filename, buffer: filedata } // Not using Multer
+
+bucket
+	.addMedia({
+		media: media_object,
+		folder: "your-folder-slug",
+		metadata: {
+			caption: "Beautiful picture of the beach",
+			credit: "Tyler Jackson",
+		},
+	})
+	.then((data) => {
+		console.log(data);
+	})
+	.catch((err) => {
+		console.log(err);
+	});
+
+// In order to pass the file `req.files.foo` to Cosmic you would do:
+const media_object = {
+	originalname: req.files.foo.name,
+	buffer: req.files.foo.data,
+};
+```
+
+**Example Response**
+
+```json
+{
+	"media": {
+		"name": "c20391e0-b8a4-11e6-8836-fbdfd6956b31-bird.jpg",
+		"original_name": "bird.jpg",
+		"size": 457307,
+		"type": "image/jpeg",
+		"bucket": "5839c67f0d3201c114000004",
+		"created": "2016-12-02T15:34:05.054Z",
+		"location": "https://cosmicjs.com/uploads",
+		"url": "https://cdn.cosmicjs.com/c20391e0-b8a4-11e6-8836-fbdfd6956b31-bird.jpg",
+		"imgix_url": "https://imgix.cosmicjs.com/c20391e0-b8a4-11e6-8836-fbdfd6956b31-bird.jpg",
+		"metadata": [
+			{
+				"key": "caption",
+				"value": "Beautiful picture of the beach"
+			},
+			{
+				"key": "credit",
+				"value": "Tyler Jackson"
+			}
+		]
+	}
+}
+```
+
+</div>
+
+<div label="CLI">
+```bash
+cosmic add-media
+```
+Add media from local machine.
+
+**Example Request**
+
+```bash
+cosmic add-media -f ./my-cat.png -t my-cat.png --folder cat-images
+```
+
+</div>
+</Tabs>
+
+**Example Response**
+
+```json
+{
+	"media": {
+		"id": "602fd622853cca45f4c9fd96",
+		"name": "c20391e0-b8a4-11e6-8836-fbdfd6956b31-test.png",
+		"original_name": "test.png",
+		"size": 457307,
+		"folder": "folder-name",
+		"type": "image/png",
+		"bucket": "5839c67f0d3201c114000004",
+		"created": "2016-12-02T15:34:05.054Z",
+		"location": "https://cdn.cosmicjs.com",
+		"url": "https://cdn.cosmicjs.com/c20391e0-b8a4-11e6-8836-fbdfd6956b31-test.png",
+		"imgix_url": "https://imgix.cosmicjs.com/c20391e0-b8a4-11e6-8836-fbdfd6956b31-test.png"
+	}
+}
+```
+
+## Examples
+
+### Multer: Server-Side
+
+This application uses Express and Multer to create a route `POST http://localhost:5000/upload` that will upload a file to your Bucket Media area. This is an example from the article [Upload Media to Your Cosmic Bucket Using Multer](https://www.cosmicjs.com/articles/upload-media-to-your-cosmic-js-bucket-using-multer-jzoddl9p).
+
+```javascript
+// index.js
+const fs = require("fs");
+const Cosmic = require("cosmicjs")();
+const multer = require("multer");
+const express = require("express");
+var app = express();
+const bucket = Cosmic.bucket({
+	slug: "your-bucket-slug",
+	write_key: "your-write-key-found-in-bucket-settings",
+});
+var storage = multer.diskStorage({
+	destination: function (req, file, cb) {
+		cb(null, __dirname + "/uploads");
+	},
+	filename: function (req, file, cb) {
+		cb(null, file.fieldname + "-" + Date.now());
+	},
+});
+var upload = multer({ storage: storage });
+app.post("/upload", upload.single("file"), async function (req, res) {
+	try {
+		const media_object = {
+			originalname: req.file.originalname,
+			buffer: fs.createReadStream(req.file.path),
+		};
+		const response = await bucket.addMedia({ media: media_object });
+		return res.json(response);
+	} catch (e) {
+		console.log(e);
+	}
+});
+app.listen(5000);
+```
+
+### React Dropzone: Client-side
+
+React Dropzone is a popular file uploader on the client-side. For implementation, read the [React Dropzone docs on GitHub](https://github.com/react-dropzone/react-dropzone/).
+
+[View full screen / fork on StackBlitz ](https://stackblitz.com/edit/react-dropzone-cosmic)
+
+<iframe
+	src="https://stackblitz.com/edit/react-dropzone-cosmic?embed=1&file=index.js"
+	width="100%"
+	height="500"
+	frameBorder="0"
+></iframe>
+
+## Edit Media
+
+Edit an existing Media by `id` in your Bucket.
+
+<Callout emoji="⚠">
+	**Required**
+	<br />
+	`write_key` must be passed as `Authorization Bearer` in the header of the
+	request.
+</Callout>
+
+| Parameter |  Type  | Description                                           |
+| :-------- | :----: | :---------------------------------------------------- |
+| folder    | String | Slug of the `folder` where you want to move the media |
+| metadata  | Object | JSON object                                           |
+
+_**Note:** At least one of the Parameters is required to process the request._
+
+**Definition**
+
+```bash
+PATCH $BASE_URL/buckets/${bucket_slug}/media/${media_id}
+```
+
+**Header**
+
+```json
+{
+	"Authorization": "Bearer n5MbD59UPBoVpyqi6B6DnOzAvZ..."
+}
+```
+
+**Example Body (JSON)**
+
+```json
+{
+	"metadata": {
+		"avatar": true
+	}
+}
+```
+
+**Example Response**
+
+```json
+{
+	"message": "Media with id '${media_id}' edited successfully in bucket."
+}
+```
+
+## Delete Media
+
+Delete an existing Media by `id` from your Bucket.
+
+<Callout emoji="⚠">
+	**Required**
+	<br />
+	`write_key` must be passed as `Authorization Bearer` in the header of the
+	request.
+</Callout>
+
+**Methods**
+
+<Tabs>
+<div label="REST">
+```bash
+DELETE $BASE_URL/buckets/${bucket_slug}/media/${media_id}
+```
+**Header**
+
+```json
+{
+	"Authorization": "Bearer n5MbD59UPBoVpyqi6B6DnOzAvZ..."
+}
+```
+
+</div>
+
+<div label="Node.js">
+```javascript
+Cosmic.deleteMedia()
+```
+
+**Example Request**
+
+```javascript
+const Cosmic = require("cosmicjs");
+const api = Cosmic();
+const bucket = api.bucket({
+	slug: "your-bucket-slug",
+	read_key: "your-read-key-found-in-bucket-settings",
+});
+bucket
+	.deleteMedia({
+		id: "5a4b18e12fff7ec0e3c13c65",
+	})
+	.then((data) => {
+		console.log(data);
+	})
+	.catch((err) => {
+		console.log(err);
+	});
+```
+
+</div>
+
+<div label="GraphQL">
+```javascript
+deleteMedia(bucket_slug, media_id)
+```
+**Header**
+
+```json
+{
+	"Authorization": "Bearer n5MbD59UPBoVpyqi6B6DnOzAvZ..."
+}
+```
+
+**Variables**
+
+```
+{
+  "bucket_slug": "{{bucket_slug}}"
+}
+```
+
+<a href="https://cosmic-graphql-playground.netlify.app/?endpoint=https%3A%2F%2Fgraphql.cosmicjs.com%2Fv3&query=mutation%20%28%24bucket_slug%3A%20String%21%29%20%7B%0A%20%20deleteMedia%28%0A%20%20%20%20bucket_slug%3A%20%24bucket_slug%0A%20%20%20%20media_id%3A%20%2260355130bb60530ee315ad2c%22%0A%20%20%29%0A%7D">Full screen</a>
+<iframe src="https://cosmic-graphql-playground.netlify.app/?endpoint=https%3A%2F%2Fgraphql.cosmicjs.com%2Fv3&query=mutation%20%28%24bucket_slug%3A%20String%21%29%20%7B%0A%20%20deleteMedia%28%0A%20%20%20%20bucket_slug%3A%20%24bucket_slug%0A%20%20%20%20media_id%3A%20%2260355130bb60530ee315ad2c%22%0A%20%20%29%0A%7D" frameBorder="0" style={{ width: '100%', height: '470px'}}></iframe>
+</div>
+<div label="CLI">
+```bash
+cosmic delete-media
+```
+**Example Request**
+```bash
+cosmic delete-media --id 5ff75368c2dfa81a91695cec
+```
+</div>
+</Tabs>
+
+**Example Response**
+
+```json
+{
+	"message": "Media with id '${media_id}' deleted successfully from bucket."
+}
+```

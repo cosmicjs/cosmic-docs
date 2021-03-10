@@ -1,0 +1,70 @@
+# Webhooks
+
+Cosmic makes it easy to add Webhooks to trigger a `POST` request to the endpoint of your choice when an event occurs in your Bucket. This is great for integrating static site rebuilds whenever content is changed, or adding third-party integrations like notifying your team on Slack whenever content has been added.
+
+## Format
+
+All requests to your endpoint are sent via `POST` with Header and Body information. For example:
+
+#### Example Header
+
+```json
+{
+  "content-length": "450", // Your content length
+  "x-cosmicjs-event": "object.edited.draft", // Your event key (see below)
+  "accept": "application/json",
+  "content-type": "application/json"
+}
+```
+
+#### Example Body
+
+```json
+{
+  "type": "object.edited.draft",
+  "created_at": 1576861549889,
+  "data": {
+    "_id": "5dfcff5d6340c9000865cc25",
+    "slug": "my-awesome-title",
+    "title": "My Awesome Title",
+    "content": "<p>My awesome content</p>",
+    "metafields": [],
+    "modified_at": "2019-12-20T17:05:49.879Z",
+    "modified_by": "56d66b2f903a79b904000001",
+    "type_slug": "tests",
+    "status": "draft",
+    "publish_at": null,
+    "bucket": "5df644188e47080008e7721a",
+    "created_at": "2019-12-20T17:05:49.879Z",
+    "created_by": "56d66b2f903a79b904000001",
+    "metadata": null
+  }
+}
+```
+
+## Events
+
+This is a list of available events. We will add to this list as more features become available.
+
+| Event                     | Occurs When                              |
+| ------------------------- | ---------------------------------------- |
+| object.created.draft      | Object created and set to draft.         |
+| object.created.published  | Object created and published.            |
+| object.edited.draft       | Existing Object edited and set to draft. |
+| object.edited.published   | Existing Object edited and published.    |
+| object.edited.unpublished | Existing Object edited and unpublished.  |
+| object.deleted            | Object deleted.                          |
+| media.created             | Media created.                           |
+| media.edited              | Media edited.                            |
+| media.deleted             | Media deleted.                           |
+| merge.completed           | Merge Request completed.                 |
+
+### Getting Started
+
+Manage Webhooks in your Bucket by logging in and going to the Webhooks section in your Bucket located at:
+
+- Your Bucket Dashboard > Webhooks
+
+## Testing
+
+Using a service like [Beeceptor](https://beeceptor.com/) makes it easy to test your Webhooks and view response data.

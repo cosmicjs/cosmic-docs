@@ -1,0 +1,197 @@
+# Gatsby
+
+[Gatsby](https://gatsbyjs.org/) is a framework for building React websites and apps.
+
+Cosmic makes a great [Gatsby CMS](https://www.cosmicjs.com/knowledge-base/gatsby-cms) for your Gatsby websites and apps.
+
+Before adding any code, make sure to follow the [Initial Setup](/guides/initial-setup) at the start of this section to set up your content in Cosmic. Then take the following steps to add Cosmic-powered content to your Gatsby apps:
+
+### 1. Install a new Gatsby app
+
+You can use the Gatsby CLI to install a new Gatsby app that includes tooling and configurations.
+
+```bash
+npm install -g gatsby-cli
+gatsby new cosmic-gatsby-app
+```
+
+### 2. Install the Cosmic source plugin for Gatsby
+
+Install the [Cosmic source plugin for Gatsby](https://www.npmjs.com/package/gatsby-source-cosmicjs).
+
+```bash
+cd cosmic-gatsby-app
+yarn add gatsby-source-cosmicjs
+```
+
+### 3. Add the following code into your `gatsby-config.js` file in the plugins section.
+
+Find your Bucket slug and API read key in <i>Your Bucket > Settings > API Access</i> after [logging in](https://app.cosmicjs.com).
+
+```javascript
+// In your gatsby-config.js
+plugins: [
+  {
+    resolve: `gatsby-source-cosmicjs`,
+    options: {
+      bucketSlug: `YOUR_BUCKET_SLUG`, // Get this value in Bucket > Settings
+      objectTypes: [`posts`], // Note it will result in GraphQL queries (allCosmicjsPosts, cosmicjsPosts)
+      // If you have enabled read_key to fetch data (optional).
+      apiAccess: {
+        read_key: `YOUR_BUCKET_READ_KEY`, // Get this value in Bucket > Settings
+      },
+      localMedia: true, // Download media locally for gatsby image (optional)
+    },
+  },
+];
+```
+
+### 4. Add the following code into your `gatsby-node.js` file
+
+```javascript
+const path = require(`path`);
+
+exports.createPages = async ({ graphql, actions }) => {
+  const { createPage } = actions;
+
+  // Get the single post layout file
+  const blogPost = path.resolve(`./src/templates/blog-post.js`);
+  // Query the GraphQL to get our posts
+  const result = await graphql(
+    `
+      {
+        allCosmicjsPosts(
+          sort: { fields: [created], order: DESC }
+          limit: 1000
+        ) {
+          edges {
+            node {
+              slug
+              title
+            }
+          }
+        }
+      }
+    `
+  );
+
+  if (result.errors) {
+    throw result.errors;
+  }
+
+  // Create blog posts pages.
+  const posts = result.data.allCosmicjsPosts.edges;
+
+  // For each post in posts create a separate page
+  posts.forEach((post, index) => {
+    createPage({
+      path: post.node.slug,
+      component: blogPost,
+      context: {
+        slug: post.node.slug,
+      },
+    });
+  });
+};
+```
+
+### 5. Create `blog-post.js` in `src/templates/` directory and add following code
+
+This is the layout for a single blog post page which we used in `gatsby-node.js`
+
+```javascript
+import React from "react";
+import { graphql } from "gatsby";
+
+const BlogPostTemplate = ({ data }) => {
+  const post = data.cosmicjsPosts; // get the post data from query
+
+  // Render the post data
+  return (
+    <article>
+      <h1>{post.title}</h1>
+      <small>{post.created}</small>
+      <div>
+        <img alt="" src={`${post.metadata.hero.imgix_url}?w=400`} />
+      </div>
+      <section dangerouslySetInnerHTML={{ __html: post.content }} />
+    </article>
+  );
+};
+
+export default BlogPostTemplate;
+
+// Query to get single Post where slug is equal
+export const pageQuery = graphql`
+  query BlogPostBySlug($slug: String!) {
+    cosmicjsPosts(slug: { eq: $slug }) {
+      id
+      content
+      title
+      metadata {
+        hero {
+          imgix_url
+        }
+      }
+      created(formatString: "MMMM DD, YYYY")
+    }
+  }
+`;
+```
+
+### 6. Edit `index.js` file in `src/pages/` directory and add following code
+
+```javascript
+import React from "react";
+import { Link, graphql } from "gatsby";
+
+const BlogIndex = ({ data }) => {
+  const posts = data.allCosmicjsPosts.edges; // getting all posts from query
+
+  // Rendering list of posts with link to their url
+  return (
+    <div>
+      {posts.map(({ node }) => {
+        return (
+          <div key={node.slug}>
+            <Link to={node.slug}>
+              <h3>{node.title}</h3>
+              <img alt="" src={`${node.metadata.hero.imgix_url}?w=400`} />
+            </Link>
+          </div>
+        );
+      })}
+    </div>
+  );
+};
+
+export default BlogIndex;
+
+// Query all posts from GraphQL
+export const pageQuery = graphql`
+  query {
+    allCosmicjsPosts(sort: { fields: [created], order: DESC }, limit: 1000) {
+      edges {
+        node {
+          slug
+          title
+          metadata {
+            hero {
+              imgix_url
+            }
+          }
+          created(formatString: "DD MMMM, YYYY")
+        }
+      }
+    }
+  }
+`;
+```
+
+### 7. Start your app
+
+Start your app, and go to http://localhost:8000. Dance 🎉
+
+```
+ yarn develop
+```

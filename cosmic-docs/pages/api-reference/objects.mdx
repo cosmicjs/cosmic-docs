@@ -1,0 +1,959 @@
+import Callout from "nextra-theme-docs/callout";
+import Tabs from "../../components/tabs";
+
+# Objects
+
+The following endpoints allow you to get, add, edit and delete Objects in your Bucket. See [API Introduction](/api-reference/getting-started/introduction) for getting started information.
+
+<Callout emoji="✅">
+	**Quick Tip**
+	<br />
+	Your `read` and `write` keys will be required to perform the following
+	requests. These can be found in <i>Your Bucket > Settings > API Access</i> in
+	your [Bucket Dashboard ](https://app.cosmicjs.com/login).
+</Callout>
+
+## Get Objects
+
+Get Objects in your Bucket.
+
+| Parameter       | Required |  Type  | Default   | Description                                                                                                                                                                                                             |
+| :-------------- | :------: | :----: | :-------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| read_key        | required | String |           | Required to read data from your Bucket                                                                                                                                                                                  |
+| query           |          |  JSON  |           | A JSON string to perform Object search and filtering. See [Queries section](/api-reference/queries) for more detail.                                                                                                    |
+| props           |          | String |           | Declare which properties to return in comma-separated string. Remove to see full Object and get a list of all available properties. Can include nested metadata. Example: `id,title,metadata.author.metadata.image.url` |
+| status          |          |  Enum  | published | Set to `any` for latest draft or published Object                                                                                                                                                                       |
+| sort            |          |  Enum  | order     | `created_at`, `-created_at`, `modified_at`, `-modified_at`, `random`, `order`                                                                                                                                           |
+| limit           |          | Number | 1000      | The number of Objects to return                                                                                                                                                                                         |
+| skip            |          | Number | 0         | The number of Objects to skip                                                                                                                                                                                           |
+| after           |          | String |           | Objects after specified Object Id (can only use one of `skip` or `after`)                                                                                                                                               |
+| pretty          |          |  Enum  | false     | Set to `true` to make the response more reader-friendly                                                                                                                                                                 |
+| show_metafields |          |  Enum  | false     | Set to `true` to show metafields                                                                                                                                                                                        |
+| use_cache       |          |  Enum  | true      | Set to `false` for real-time updates. Increases latency of endpoint.                                                                                                                                                    |
+
+**Methods**
+
+<Tabs>
+<div label="REST">
+```javascript
+const query = {
+  type: "posts",
+};
+```
+**Endpoint**
+```bash
+GET $BASE_URL/buckets/${bucket_slug}/objects?query=${query}&limit=1
+```
+
+**Example Full Response**
+
+```json
+{
+	"objects": [
+		{
+			"id": "5f7357967286d7773adc551e",
+			"slug": "learning",
+			"title": "Learning",
+			"content": "<p>Learning is fun!!</p>",
+			"bucket": "5f7357124b331d76c08de989",
+			"created": "2020-09-29T15:49:42.005Z",
+			"created_at": "2020-09-29T15:49:42.005Z",
+			"modified_at": "2020-11-16T18:50:48.750Z",
+			"status": "published",
+			"locale": null,
+			"published_at": "2020-11-16T18:50:48.750Z",
+			"modified_by": "5e4d7eb92850c717ea93dba4",
+			"publish_at": null,
+			"unpublish_at": null,
+			"type": "categories",
+			"metadata": {
+				"description": "This is the example description",
+				"parent": {
+					"id": "5f7357b27286d7773adc551f",
+					"slug": "example-post",
+					"title": "Example Post",
+					"content": "<p>This is the post Edited!! Draft Latest</p>",
+					"bucket": "5f7357124b331d76c08de989",
+					"created_at": "2020-09-29T15:50:10.193Z",
+					"created_by": "5e4d7eb92850c717ea93dba4",
+					"modified_at": "2020-12-11T17:08:52.463Z",
+					"created": "2020-09-29T15:50:10.193Z",
+					"status": "published",
+					"thumbnail": "",
+					"published_at": "2020-12-11T16:07:10.451Z",
+					"modified_by": "5e4d7eb92850c717ea93dba4",
+					"publish_at": null,
+					"unpublish_at": null,
+					"type": "posts",
+					"metadata": {
+						"category": {
+							"id": "5f7357967286d7773adc551e",
+							"slug": "learning",
+							"title": "Learning",
+							"content": "<p>Learning is fun!!</p>",
+							"bucket": "5f7357124b331d76c08de989",
+							"created": "2020-09-29T15:49:42.005Z",
+							"created_at": "2020-09-29T15:49:42.005Z",
+							"modified_at": "2020-11-16T18:50:48.750Z",
+							"status": "published",
+							"locale": null,
+							"published_at": "2020-11-16T18:50:48.750Z",
+							"modified_by": "5e4d7eb92850c717ea93dba4",
+							"publish_at": null,
+							"unpublish_at": null,
+							"type": "categories",
+							"metadata": {
+								"description": "This is the example description",
+								"parent": "5f7357b27286d7773adc551f"
+							}
+						}
+					}
+				}
+			}
+		}
+	],
+	"total": 6,
+	"limit": 1
+}
+```
+
+</div>
+<div label="Node.js">
+```javascript
+bucket.getObjects()
+```
+**Example Request**
+```javascript
+const Cosmic = require("cosmicjs");
+const bucket = Cosmic.bucket({
+  slug: "bucket-slug",
+  read_key: "your-read-key-found-in-bucket-settings",
+});
+bucket.getObjects({
+  query: {
+    type: "posts"
+  },
+  limit: 10
+});
+```
+</div>
+
+<div label="GraphQL">
+```javascript
+getObjects(bucket_slug, input)
+```
+
+**Variables**
+
+Add this with your variable values to "Query Variables".
+
+```
+{
+  "bucket_slug": "{{bucket_slug}}",
+  "read_key": "{{read_key}}",
+  "query": {
+    "type": "posts"
+  }
+}
+```
+
+<a href="https://cosmic-graphql-playground.netlify.app/?endpoint=https%3A%2F%2Fgraphql.cosmicjs.com%2Fv3&query=%20query%20%28%24bucket_slug%3A%20String%21%2C%20%24read_key%3A%20String%2C%20%24query%3A%20JSON%29%20%7B%0A%20%20getObjects%28%0A%20%20%20%20bucket_slug%3A%20%24bucket_slug%0A%20%20%20%20read_key%3A%20%24read_key%0A%20%20%20%20input%3A%20%7B%0A%20%20%20%20%20%20%20query%3A%20%24query%0A%20%20%20%20%7D%0A%20%20%29%20%7B%0A%20%20%20%20%20objects%20%7B%0A%20%20%20%20%20%20id%0A%20%20%20%20%20%20title%0A%20%20%20%20%20%20slug%0A%20%20%20%20%7D%0A%20%20%20%20total%0A%20%20%7D%0A%7D">Full screen</a>
+<iframe src="https://cosmic-graphql-playground.netlify.app/?endpoint=https%3A%2F%2Fgraphql.cosmicjs.com%2Fv3&query=%20query%20%28%24bucket_slug%3A%20String%21%2C%20%24read_key%3A%20String%2C%20%24query%3A%20JSON%29%20%7B%0A%20%20getObjects%28%0A%20%20%20%20bucket_slug%3A%20%24bucket_slug%0A%20%20%20%20read_key%3A%20%24read_key%0A%20%20%20%20input%3A%20%7B%0A%20%20%20%20%20%20%20query%3A%20%24query%0A%20%20%20%20%7D%0A%20%20%29%20%7B%0A%20%20%20%20%20objects%20%7B%0A%20%20%20%20%20%20id%0A%20%20%20%20%20%20title%0A%20%20%20%20%20%20slug%0A%20%20%20%20%7D%0A%20%20%20%20total%0A%20%20%7D%0A%7D" frameBorder="0" style={{ width: '100%', height: '470px'}}></iframe>
+</div>
+
+<div label="CLI">
+```bash
+cosmic get-objects
+```
+**Example Request**
+```bash
+cosmic get-objects --limit 10 --query '{"type":"posts"}'
+```
+</div>
+</Tabs>
+
+### Using Props
+
+<Callout emoji="💡">
+	**Quick Tip**
+	<br />
+	Use `props` to limit the payload size and get only the data you need. Metadata
+	can be nested as far as you need. There is no depth limit.
+</Callout>
+
+**Example Request with Props**
+
+<Tabs>
+<div label="REST">
+```javascript
+const query = {
+  type: "posts",
+};
+const props = `
+  title,
+  content,
+  metadata.parent.title,
+  metadata.parent.metadata.category.metadata.description
+`;
+```
+**Endpoint**
+```bash
+GET $BASE_URL/buckets/${bucket_slug}/objects?query=${query}&props=${props}&limit=1
+```
+
+**Example Response with Props**
+
+```json
+{
+	"objects": [
+		{
+			"title": "Learning",
+			"content": "<p>Learning is fun!!</p>",
+			"metadata": {
+				"parent": {
+					"title": "Example Post",
+					"metadata": {
+						"category": {
+							"metadata": {
+								"description": "This is the example description"
+							}
+						}
+					}
+				}
+			}
+		}
+	],
+	"total": 6,
+	"limit": 1
+}
+```
+
+</div>
+<div label="Node.js">
+```javascript
+bucket.getObjects()
+```
+**Example Request**
+```javascript
+const Cosmic = require('cosmicjs')
+const bucket = Cosmic.bucket({
+  slug: "bucket-slug",
+  read_key: "your-read-key-found-in-bucket-settings",
+});
+const props = `
+  title,
+  content,
+  metadata.parent.title,
+  metadata.parent.metadata.category.metadata.description
+`;
+bucket.getObjects({
+  query: {
+    type: "posts"
+  },
+  props,
+  limit: 10,
+});
+```
+</div>
+<div label="GraphQL">
+```javascript
+getObjects(bucket_slug, input)
+```
+
+**Variables**
+
+Add this with your variable values to "Query Variables".
+
+```
+{
+  "bucket_slug": "{{bucket_slug}}",
+  "read_key": "{{read_key}}",
+  "query": {
+    "type": "posts"
+  }
+}
+```
+
+<a href="https://cosmic-graphql-playground.netlify.app/?endpoint=https%3A%2F%2Fgraphql.cosmicjs.com%2Fv3&query=%20query%20%28%24bucket_slug%3A%20String%21%2C%20%24read_key%3A%20String%2C%20%24query%3A%20JSON%29%20%7B%0A%20%20getObjects%28%0A%20%20%20%20bucket_slug%3A%20%24bucket_slug%0A%20%20%20%20read_key%3A%20%24read_key%0A%20%20%20%20input%3A%20%7B%0A%20%20%20%20%20%20%20query%3A%20%24query%0A%20%20%20%20%20%20%20props%3A%20%22slug%2Ctitle%2Cmetadata.hero.url%22%0A%20%20%20%20%7D%0A%20%20%29%20%7B%0A%20%20%20%20%20objects%20%7B%0A%20%20%20%20%20%20id%0A%20%20%20%20%20%20title%0A%20%20%20%20%20%20slug%0A%20%20%20%20%7D%0A%20%20%20%20total%0A%20%20%7D%0A%7D">Full screen</a>
+<iframe src="https://cosmic-graphql-playground.netlify.app/?endpoint=https%3A%2F%2Fgraphql.cosmicjs.com%2Fv3&query=%20query%20%28%24bucket_slug%3A%20String%21%2C%20%24read_key%3A%20String%2C%20%24query%3A%20JSON%29%20%7B%0A%20%20getObjects%28%0A%20%20%20%20bucket_slug%3A%20%24bucket_slug%0A%20%20%20%20read_key%3A%20%24read_key%0A%20%20%20%20input%3A%20%7B%0A%20%20%20%20%20%20%20query%3A%20%24query%0A%20%20%20%20%20%20%20props%3A%20%22slug%2Ctitle%2Cmetadata.hero.url%22%0A%20%20%20%20%7D%0A%20%20%29%20%7B%0A%20%20%20%20%20objects%20%7B%0A%20%20%20%20%20%20id%0A%20%20%20%20%20%20title%0A%20%20%20%20%20%20slug%0A%20%20%20%20%7D%0A%20%20%20%20total%0A%20%20%7D%0A%7D" frameBorder="0" style={{ width: '100%', height: '470px'}}></iframe>
+</div>
+
+<div label="CLI">
+```bash
+cosmic get-objects
+```
+**Example Request**
+```bash
+cosmic get-objects --limit 10 --query '{"type":"posts"}' --props title,content,metadata.parent.title,metadata.parent.metadata.category.metadata.description
+```
+
+</div>
+</Tabs>
+
+## Get Object
+
+Returns a single Object by `id` from your Bucket.
+
+| Parameter       | Required |  Type  | Default   | Description                                                                                                                                                                                                             |
+| :-------------- | :------: | :----: | :-------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| read_key        | required | String |           | Required to read data from your Bucket                                                                                                                                                                                  |
+| props           |          | String |           | Declare which properties to return in comma-separated string. Remove to see full Object and get a list of all available properties. Can include nested metadata. Example: `id,title,metadata.author.metadata.image.url` |
+| status          |          |  Enum  | published | Set to `any` for latest draft or published Object                                                                                                                                                                       |
+| pretty          |          |  Enum  | false     | Set to `true` to make the response more reader-friendly                                                                                                                                                                 |
+| show_metafields |          |  Enum  | false     | Set to `true` to show metafields                                                                                                                                                                                        |
+| use_cache       |          |  Enum  | true      | Set to `false` for real-time updates. Increases latency of endpoint.                                                                                                                                                    |
+
+**Methods**
+
+<Tabs>
+  <div label="REST">
+```bash
+GET $BASE_URL/buckets/${bucket_slug}/objects/${object_id}
+```
+
+**Example Full Response**
+
+```json
+{
+	"object": {
+		"id": "5f7357967286d7773adc551e",
+		"slug": "learning",
+		"title": "Learning",
+		"content": "<p>Learning is fun!!</p>",
+		"bucket": "5f7357124b331d76c08de989",
+		"created": "2020-09-29T15:49:42.005Z",
+		"created_at": "2020-09-29T15:49:42.005Z",
+		"modified_at": "2020-11-16T18:50:48.750Z",
+		"status": "published",
+		"locale": null,
+		"published_at": "2020-11-16T18:50:48.750Z",
+		"modified_by": "5e4d7eb92850c717ea93dba4",
+		"publish_at": null,
+		"unpublish_at": null,
+		"type": "categories",
+		"metadata": {
+			"description": "This is the example description",
+			"parent": {
+				"id": "5f7357b27286d7773adc551f",
+				"slug": "example-post",
+				"title": "Example Post",
+				"content": "<p>This is the post Edited!! Draft Latest</p>",
+				"bucket": "5f7357124b331d76c08de989",
+				"created_at": "2020-09-29T15:50:10.193Z",
+				"created_by": "5e4d7eb92850c717ea93dba4",
+				"modified_at": "2020-12-11T17:08:52.463Z",
+				"created": "2020-09-29T15:50:10.193Z",
+				"status": "published",
+				"thumbnail": "",
+				"published_at": "2020-12-11T16:07:10.451Z",
+				"modified_by": "5e4d7eb92850c717ea93dba4",
+				"publish_at": null,
+				"unpublish_at": null,
+				"type": "posts",
+				"metadata": {
+					"category": {
+						"id": "5f7357967286d7773adc551e",
+						"slug": "learning",
+						"title": "Learning",
+						"content": "<p>Learning is fun!!</p>",
+						"bucket": "5f7357124b331d76c08de989",
+						"created": "2020-09-29T15:49:42.005Z",
+						"created_at": "2020-09-29T15:49:42.005Z",
+						"modified_at": "2020-11-16T18:50:48.750Z",
+						"status": "published",
+						"locale": null,
+						"published_at": "2020-11-16T18:50:48.750Z",
+						"modified_by": "5e4d7eb92850c717ea93dba4",
+						"publish_at": null,
+						"unpublish_at": null,
+						"type": "categories",
+						"metadata": {
+							"description": "This is the example description",
+							"parent": "5f7357b27286d7773adc551f"
+						}
+					}
+				}
+			}
+		}
+	}
+}
+```
+
+</div>
+
+<div label="Node.js">
+```javascript
+bucket.getObject()
+```
+**Example Request**
+```javascript
+const Cosmic = require('cosmicjs')
+const api = Cosmic()
+const bucket = api.bucket({
+  slug: 'your-bucket-slug',
+  read_key: 'your-read-key-found-in-bucket-settings'
+})
+bucket.getObject({
+  id: '5e4d7eb92850c717ea93dba1'
+})
+```
+
+</div>
+
+<div label="GraphQL">
+```javascript
+getObject(bucket_slug, input)
+```
+**Variables**
+
+Add this with your variable values to "Query Variables".
+
+```
+{
+  "bucket_slug": "{{bucket_slug}}",
+  "read_key": "{{read_key}}"
+}
+```
+
+  <a href="https://cosmic-graphql-playground.netlify.app/?endpoint=https%3A%2F%2Fgraphql.cosmicjs.com%2Fv3&query=%20query%20%28%24bucket_slug%3A%20String%21%2C%20%24read_key%3A%20String%29%20%7B%0A%20%20getObject%28%0A%20%20%20%20bucket_slug%3A%20%24bucket_slug%0A%20%20%20%20read_key%3A%20%24read_key%0A%20%20%20%20object_id%3A%20%2260105b2ed026d40008d745e5%22%0A%20%20%29%20%7B%0A%20%20%20%20%20%20title%0A%20%20%7D%0A%7D">
+    Full screen
+  </a>
+  <iframe
+    src="https://cosmic-graphql-playground.netlify.app/?endpoint=https%3A%2F%2Fgraphql.cosmicjs.com%2Fv3&query=%20query%20%28%24bucket_slug%3A%20String%21%2C%20%24read_key%3A%20String%29%20%7B%0A%20%20getObject%28%0A%20%20%20%20bucket_slug%3A%20%24bucket_slug%0A%20%20%20%20read_key%3A%20%24read_key%0A%20%20%20%20object_id%3A%20%2260105b2ed026d40008d745e5%22%0A%20%20%29%20%7B%0A%20%20%20%20%20%20title%0A%20%20%7D%0A%7D"
+    frameBorder="0"
+    style={{ width: "100%", height: "470px" }}
+  ></iframe>
+</div>
+
+<div label="CLI">
+```bash
+cosmic get-object
+```
+**Example Request**
+```bash
+cosmic get-object --id 5ff75368c2dfa81a91695cec
+```
+
+</div>
+</Tabs>
+
+### Using Props
+
+<Callout emoji="💡">
+	**Quick Tip**
+	<br />
+	Use `props` to limit the payload size and get only the data you need. Metadata
+	can be nested as far as you need. There is no depth limit.
+</Callout>
+
+**Example Request with Props**
+
+<Tabs>
+<div label="REST">
+```javascript
+const props = `
+  title,
+  metadata.description,
+  metadata.parent.title,
+  metadata.parent.metadata.category.title
+`;
+```
+
+```bash
+GET $BASE_URL/buckets/${bucket_slug}/objects/${object_id}?props=${props}
+```
+
+**Example Response with Props**
+
+```json
+{
+	"object": {
+		"title": "Learning",
+		"metadata": {
+			"description": "This is the example description",
+			"parent": {
+				"title": "Example Post",
+				"metadata": {
+					"category": {
+						"title": "Learning"
+					}
+				}
+			}
+		}
+	}
+}
+```
+
+</div>
+
+<div label="Node.js">
+```javascript
+bucket.getObject()
+```
+**Example Request**
+```javascript
+const Cosmic = require('cosmicjs')
+const api = Cosmic()
+const bucket = api.bucket({
+  slug: 'your-bucket-slug',
+  read_key: 'your-read-key-found-in-bucket-settings'
+})
+const props = `
+  title,
+  metadata.description,
+  metadata.parent.title,
+  metadata.parent.metadata.category.title
+`;
+bucket.getObject({
+  id: '5e4d7eb92850c717ea93dba1',
+  props
+})
+```
+
+</div>
+
+<div label="GraphQL">
+**Note:**  Using props with the GraphQL API may optimize server response time.
+
+```javascript
+getObject(bucket_slug, input);
+```
+
+**Variables**
+
+Add this with your variable values to "Query Variables".
+
+```
+{
+  "bucket_slug": "{{bucket_slug}}",
+  "read_key": "{{read_key}}"
+}
+```
+
+  <a href="https://cosmic-graphql-playground.netlify.app/?endpoint=https%3A%2F%2Fgraphql.cosmicjs.com%2Fv3&query=%20query%20%28%24bucket_slug%3A%20String%21%2C%20%24read_key%3A%20String%29%20%7B%0A%20%20getObject%28%0A%20%20%20%20bucket_slug%3A%20%24bucket_slug%0A%20%20%20%20read_key%3A%20%24read_key%0A%20%20%20%20object_id%3A%20%2260105b2ed026d40008d745e5%22%0A%20%20%20%20input%3A%20%7B%0A%20%20%20%20%20%20%20%20props%3A%20%22title%22%0A%20%20%20%20%7D%0A%20%20%29%20%7B%0A%20%20%20%20%20%20title%0A%20%20%7D%0A%7D">
+    Full screen
+  </a>
+  <iframe
+    src="https://cosmic-graphql-playground.netlify.app/?endpoint=https%3A%2F%2Fgraphql.cosmicjs.com%2Fv3&query=%20query%20%28%24bucket_slug%3A%20String%21%2C%20%24read_key%3A%20String%29%20%7B%0A%20%20getObject%28%0A%20%20%20%20bucket_slug%3A%20%24bucket_slug%0A%20%20%20%20read_key%3A%20%24read_key%0A%20%20%20%20object_id%3A%20%2260105b2ed026d40008d745e5%22%0A%20%20%20%20input%3A%20%7B%0A%20%20%20%20%20%20%20%20props%3A%20%22title%22%0A%20%20%20%20%7D%0A%20%20%29%20%7B%0A%20%20%20%20%20%20title%0A%20%20%7D%0A%7D"
+    frameBorder="0"
+    style={{ width: "100%", height: "470px" }}
+  ></iframe>
+</div>
+<div label="CLI">
+```bash
+cosmic get-object
+```
+**Example Request**
+```bash
+cosmic get-object --id 5ff75368c2dfa81a91695cec --props "title,content,metadata.parent.title,metadata.parent.metadata.category.metadata.description"
+```
+
+</div>
+</Tabs>
+
+## Add Object
+
+Add a new Object to your Bucket.
+
+<Callout emoji="⚠">
+	**Required**
+	<br />
+	`write_key` must be passed as `Authorization Bearer` in the header of the
+	request.
+</Callout>
+
+| Parameter              | Required |       Type       | Description                                                                                       |
+| :--------------------- | :------: | :--------------: | :------------------------------------------------------------------------------------------------ |
+| type                   | required |      String      | Add Object to Object Type                                                                         |
+| title                  | required |      String      | Your Object title                                                                                 |
+| slug                   |          |      String      | Unique identifier for your Object                                                                 |
+| content                |          |      String      | Add Content to your Object                                                                        |
+| status                 |          |       Enum       | draft, published, defaults to published                                                           |
+| metafields             |          | Array of Objects | Add Metafields to your Object. See [Metafields Model](/api-reference/getting-started/metafields). |
+| created_by             |          |      String      | Author User Id                                                                                    |
+| publish_at             |          |      Number      | UNIX millisecond timestamp. Publish automatically at a later time.                                |
+| options.slug_field     |          |     Boolean      | Set to false to hide the slug field                                                               |
+| options.content_editor |          |     Boolean      | Set to false to hide the content editor                                                           |
+| locale                 |          |      String      | Add localization to the Object                                                                    |
+| thumbnail              |          |      String      | Media `name`. Media must be available in Bucket. See [Media](/api-reference/media).               |
+| pretty                 |          |       Enum       | true, Makes the response more reader-friendly                                                     |
+
+**Methods**
+
+<Tabs>
+<div label="REST">
+```bash
+POST $BASE_URL/buckets/${bucket_slug}/objects
+```
+**Header**
+
+```json
+{
+	"Authorization": "Bearer n5MbD59UPBoVpyqi6B6DnOzAvZ..."
+}
+```
+
+**Example Body (JSON)**
+
+```json
+{
+	"title": "Title of the Post",
+	"type": "posts"
+}
+```
+
+**Example Response**
+
+```json
+{
+	"object": {
+		"id": "5ff75368c2dfa81a91695cec",
+		"slug": "title-of-the-post",
+		"title": "Title of the Post",
+		"content": "",
+		"metafields": [],
+		"bucket": "5f7357124b331d76c08de989",
+		"created_at": "2021-01-07T18:31:04.005Z",
+		"modified_at": "2021-01-07T18:31:04.005Z",
+		"status": "published",
+		"published_at": "2021-01-07T18:31:04.005Z",
+		"type": "posts"
+	}
+}
+```
+
+</div>
+
+<div label="Node.js">
+```javascript
+bucket.addObject()
+```
+
+**Example Request**
+
+```javascript
+const bucket = Cosmic.bucket({
+	slug: "bucket-slug",
+	write_key: "your-write-key-found-in-bucket-settings",
+});
+const params = {
+	title: "Cosmic Example",
+	type: "examples",
+	content: "Learning the Cosmic API is really fun and so easy",
+	metafields: [
+		{
+			title: "Headline",
+			key: "headline",
+			type: "text",
+			value: "Learn Cosmic!",
+		},
+		{
+			title: "Author",
+			key: "author",
+			type: "text",
+			value: "Quasar Jones",
+		},
+	],
+	options: {
+		slug_field: false,
+	},
+};
+bucket
+	.addObject(params)
+	.then((data) => {
+		console.log(data);
+	})
+	.catch((err) => {
+		console.log(err);
+	});
+```
+
+</div>
+
+<div label="GraphQL">
+```javascript
+addObject(bucket_slug, input)
+```
+**Header**
+
+```json
+{
+	"Authorization": "Bearer n5MbD59UPBoVpyqi6B6DnOzAvZ..."
+}
+```
+
+**Variables**
+
+Add this with your variable values to "Query Variables".
+
+```
+{
+  "bucket_slug": "{{bucket_slug}}"
+}
+```
+
+  <a href="https://cosmic-graphql-playground.netlify.app/?endpoint=https%3A%2F%2Fgraphql.cosmicjs.com%2Fv3&query=mutation%20%28%24bucket_slug%3A%20String%21%29%20%7B%0A%20%20addObject%28%0A%20%20%20%20bucket_slug%3A%20%24bucket_slug%0A%20%20%20%20input%3A%20%7B%20%0A%20%20%20%20%20%20title%3A%20%22Test%20Post%20Title%22%0A%20%20%20%20%20%20type%3A%20%22posts%22%0A%20%20%20%20%20%20content%3A%20%22This%20is%20test%20post%20content%22%2C%0A%20%20%20%20%20%20metafields%3A%20%5B%0A%20%20%20%20%20%20%20%20%7B%0A%20%20%20%20%20%20%20%20%20%20type%3A%20text%2C%0A%20%20%20%20%20%20%20%20%20%20key%3A%20%22test%22%2C%0A%20%20%20%20%20%20%20%20%20%20title%3A%20%22Test%22%2C%0A%20%20%20%20%20%20%20%20%20%20value%3A%20%22test%20value%22%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%5D%0A%20%20%20%20%7D%0A%20%20%29%20%7B%0A%20%20%20%20title%0A%20%20%7D%0A%7D">
+    Full screen
+  </a>
+  <iframe
+    src="https://cosmic-graphql-playground.netlify.app/?endpoint=https%3A%2F%2Fgraphql.cosmicjs.com%2Fv3&query=mutation%20%28%24bucket_slug%3A%20String%21%29%20%7B%0A%20%20addObject%28%0A%20%20%20%20bucket_slug%3A%20%24bucket_slug%0A%20%20%20%20input%3A%20%7B%20%0A%20%20%20%20%20%20title%3A%20%22Test%20Post%20Title%22%0A%20%20%20%20%20%20type%3A%20%22posts%22%0A%20%20%20%20%20%20content%3A%20%22This%20is%20test%20post%20content%22%2C%0A%20%20%20%20%20%20metafields%3A%20%5B%0A%20%20%20%20%20%20%20%20%7B%0A%20%20%20%20%20%20%20%20%20%20type%3A%20text%2C%0A%20%20%20%20%20%20%20%20%20%20key%3A%20%22test%22%2C%0A%20%20%20%20%20%20%20%20%20%20title%3A%20%22Test%22%2C%0A%20%20%20%20%20%20%20%20%20%20value%3A%20%22test%20value%22%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%5D%0A%20%20%20%20%7D%0A%20%20%29%20%7B%0A%20%20%20%20title%0A%20%20%7D%0A%7D"
+    frameBorder="0"
+    style={{ width: "100%", height: "470px" }}
+  ></iframe>
+</div>
+<div label="CLI">
+```bash
+cosmic add-object
+```
+**Example Request**
+```bash
+cosmic add-object --type planets --title Venus --metafields '[{"title": "Radius","type":"text", "key": "radius", "value": "3,760 miles"},{"title": "Distance from Sun","type":"text", "key": "distance_from_sun", "value": "67.24 million miles"}]'
+```
+</div>
+</Tabs>
+
+## Edit Object
+
+Edit an existing Object by `id` in your Bucket.
+
+<Callout emoji="⚠">
+	**Required**
+	<br />
+	`write_key` must be passed as `Authorization Bearer` in the header of the
+	request.
+</Callout>
+
+| Parameter              |       Type       | Description                                                                                       |
+| :--------------------- | :--------------: | :------------------------------------------------------------------------------------------------ |
+| title                  |      String      | Your Object title                                                                                 |
+| slug                   |      String      | Unique identifier for your Object                                                                 |
+| content                |      String      | Add Content to your Object                                                                        |
+| status                 |       Enum       | draft, published, defaults to published                                                           |
+| metafields             | Array of Objects | Add Metafields to your Object. See [Metafields Model](/api-reference/getting-started/metafields). |
+| publish_at             |      Number      | UNIX millisecond timestamp. Publish automatically at a later time.                                |
+| options.slug_field     |     Boolean      | Set to false to hide the slug field                                                               |
+| options.content_editor |     Boolean      | Set to false to hide the content editor                                                           |
+| locale                 |      String      | Add localization to the Object                                                                    |
+| thumbnail              |      String      | Media `name`. Media must be available in Bucket. See [Media](/api-reference/media).               |
+| pretty                 |       Enum       | true, Makes the response more reader-friendly                                                     |
+
+_**Note:** At least one of the Parameters is required to process the request._
+
+**Methods**
+
+<Tabs>
+<div label="REST">
+```bash
+PATCH $BASE_URL/buckets/${bucket_slug}/objects/${object_id}
+```
+**Header**
+
+```json
+{
+	"Authorization": "Bearer n5MbD59UPBoVpyqi6B6DnOzAvZ..."
+}
+```
+
+**Example Body (JSON)**
+
+```json
+{
+	"title": "This is the updated Title"
+}
+```
+
+**Example Response**
+
+```json
+{
+	"object": {
+		"id": "5ff75368c2dfa81a91695cec",
+		"slug": "title-of-the-post",
+		"title": "This is the updated Title",
+		"content": "",
+		"metafields": [],
+		"bucket": "5f7357124b331d76c08de989",
+		"created_at": "2021-01-07T18:31:04.005Z",
+		"modified_at": "2021-01-07T18:38:12.124Z",
+		"status": "published",
+		"published_at": "2021-01-07T18:31:04.005Z",
+		"type": "posts"
+	}
+}
+```
+
+</div>
+
+<div label="Node.js">
+```javascript
+bucket.editObject()
+```
+
+**Example Request**
+
+```javascript
+const Cosmic = require("cosmicjs");
+const bucket = Cosmic.bucket({
+	slug: "bucket-slug",
+	write_key: "your-write-key-found-in-bucket-settings",
+});
+bucket
+	.editObject({
+		id: "5ff75368c2dfa81a91695cec",
+		title: "New Title Edit",
+	})
+	.then((data) => {
+		console.log(data);
+	})
+	.catch((err) => {
+		console.log(err);
+	});
+```
+
+</div>
+
+<div label="GraphQL">
+```javascript
+editObject(bucket_slug, input)
+```
+**Header**
+
+```json
+{
+	"Authorization": "Bearer n5MbD59UPBoVpyqi6B6DnOzAvZ..."
+}
+```
+
+**Variables**
+
+Add this with your variable values to "Query Variables".
+
+```
+{
+  "bucket_slug": "{{bucket_slug}}"
+}
+```
+
+  <a href="https://cosmic-graphql-playground.netlify.app/?endpoint=https%3A%2F%2Fgraphql.cosmicjs.com%2Fv3&query=mutation%20%28%24bucket_slug%3A%20String%21%29%20%7B%0A%20%20editObject%28%0A%20%20%20%20bucket_slug%3A%20%24bucket_slug%0A%20%20%20%20object_id%3A%20%2260354074b1069b0008404513%22%0A%20%20%20%20input%3A%20%7B%20%0A%20%20%20%20%20%20title%3A%20%22Test%20Edit%20from%20GQL%22%0A%20%20%20%20%20%20content%3A%20%22This%20is%20an%20edit%20test%22%0A%20%20%20%20%7D%0A%20%20%29%20%7B%0A%20%20%20%20title%0A%20%20%7D%0A%7D">
+    Full screen
+  </a>
+  <iframe
+    src="https://cosmic-graphql-playground.netlify.app/?endpoint=https%3A%2F%2Fgraphql.cosmicjs.com%2Fv3&query=mutation%20%28%24bucket_slug%3A%20String%21%29%20%7B%0A%20%20editObject%28%0A%20%20%20%20bucket_slug%3A%20%24bucket_slug%0A%20%20%20%20object_id%3A%20%2260354074b1069b0008404513%22%0A%20%20%20%20input%3A%20%7B%20%0A%20%20%20%20%20%20title%3A%20%22Test%20Edit%20from%20GQL%22%0A%20%20%20%20%20%20content%3A%20%22This%20is%20an%20edit%20test%22%0A%20%20%20%20%7D%0A%20%20%29%20%7B%0A%20%20%20%20title%0A%20%20%7D%0A%7D"
+    frameBorder="0"
+    style={{ width: "100%", height: "470px" }}
+  ></iframe>
+</div>
+<div label="CLI">
+```bash
+cosmic edit-object
+```
+**Example Request**
+```bash
+cosmic edit-object --id 5ff75368c2dfa81a91695cec --title 'This is the updated Title'
+```
+</div>
+</Tabs>
+
+## Delete Object
+
+Delete an existing Object by `id` from your Bucket.
+
+<Callout emoji="⚠">
+	**Required**
+	<br />
+	`write_key` must be passed as `Authorization Bearer` in the header of the
+	request.
+</Callout>
+
+**Methods**
+
+<Tabs>
+<div label="REST">
+```bash
+DELETE $BASE_URL/buckets/${bucket_slug}/objects/${object_id}
+```
+**Header**
+
+```json
+{
+	"Authorization": "Bearer n5MbD59UPBoVpyqi6B6DnOzAvZ..."
+}
+```
+
+**Example Response**
+
+```json
+{
+	"message": "Object with id '${object_id}' deleted successfully from bucket."
+}
+```
+
+</div>
+
+<div label="Node.js">
+```javascript
+bucket.deleteObject()
+```
+
+**Example Request**
+
+```javascript
+const Cosmic = require("cosmicjs");
+const bucket = Cosmic.bucket({
+	slug: "bucket-slug",
+	write_key: "your-write-key-found-in-bucket-settings",
+});
+bucket
+	.deleteObject({
+		id: "5ff75368c2dfa81a91695cec",
+	})
+	.then((data) => {
+		console.log(data);
+	})
+	.catch((err) => {
+		console.log(err);
+	});
+```
+
+</div>
+
+<div label="GraphQL">
+```javascript
+deleteObject(bucket_slug, input)
+```
+**Header**
+
+```json
+{
+	"Authorization": "Bearer n5MbD59UPBoVpyqi6B6DnOzAvZ..."
+}
+```
+
+**Variables**
+Add this with your variable values to "Query Variables".
+
+```
+{
+  "bucket_slug": "{{bucket_slug}}"
+}
+```
+
+  <a href="https://cosmic-graphql-playground.netlify.app/?endpoint=https%3A%2F%2Fgraphql.cosmicjs.com%2Fv3&query=mutation%20%28%24bucket_slug%3A%20String%21%29%20%7B%0A%20%20deleteObject%28%0A%20%20%20%20bucket_slug%3A%20%24bucket_slug%0A%20%20%20%20object_id%3A%20%2260354074b1069b0008404513%22%0A%20%20%29%0A%7D">
+    Full screen
+  </a>
+  <iframe
+    src="https://cosmic-graphql-playground.netlify.app/?endpoint=https%3A%2F%2Fgraphql.cosmicjs.com%2Fv3&query=mutation%20%28%24bucket_slug%3A%20String%21%29%20%7B%0A%20%20deleteObject%28%0A%20%20%20%20bucket_slug%3A%20%24bucket_slug%0A%20%20%20%20object_id%3A%20%2260354074b1069b0008404513%22%0A%20%20%29%0A%7D"
+    frameBorder="0"
+    style={{ width: "100%", height: "470px" }}
+  ></iframe>
+</div>
+<div label="CLI">
+```bash
+cosmic delete-object
+```
+**Example Request**
+```bash
+cosmic delete-object --id 5ff75368c2dfa81a91695cec
+```
+</div>
+</Tabs>

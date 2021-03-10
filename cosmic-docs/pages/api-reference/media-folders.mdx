@@ -1,0 +1,236 @@
+import Callout from "nextra-theme-docs/callout";
+
+# Media Folders
+
+The following endpoints allow you to manage media folders in your Bucket.
+
+<Callout emoji="✅">
+	**Quick Tip**
+	<br />
+	Your `read` and `write` keys will be required to perform the following
+	requests. These can be found in <i>Your Bucket > Settings > API Access</i> in
+	your [Bucket Dashboard ](https://app.cosmicjs.com/login).
+</Callout>
+
+## Get Media Folders
+
+Get Media Folders in your Bucket.
+
+| Parameter | Required |  Type  | Default | Description                                   |
+| :-------- | :------: | :----: | :------ | :-------------------------------------------- |
+| read_key  | required | String |         | Restrict read access to your Bucket           |
+| pretty    |          |  Enum  | false   | true, Makes the response more reader-friendly |
+
+**Definition**
+
+```bash
+GET $BASE_URL/buckets/${bucket_slug}/media-folders
+```
+
+**Example Response**
+
+```json
+{
+	"media_folders": [
+		{
+			"title": "Product Images",
+			"slug": "product-images"
+		},
+		{
+			"title": "Jungle Animals",
+			"slug": "jungle-animals"
+		}
+	],
+	"total": 2
+}
+```
+
+## Get Media List In Folder
+
+Returns list of media in Folder by `slug` from your Bucket.
+
+| Parameter | Required |  Type  | Default  | Description                                                                                                                                                    |
+| :-------- | :------: | :----: | :------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| read_key  | required | String |          | Restrict read access to your Bucket                                                                                                                            |
+| props     |          | String |          | Declare which properties to return in comma-separated string. Reference full Media for all available properties. Example: `?props=name,url,imgix_url,metadata` |
+| sort      |          |  Enum  | -created | created, -created, size, -size, random                                                                                                                         |
+| limit     |          | Number | 1000     | The number of Media to return                                                                                                                                  |
+| skip      |          | Number | 0        | The number of Media to skip                                                                                                                                    |
+| pretty    |          |  Enum  | false    | true, Makes the response more reader-friendly                                                                                                                  |
+
+**Definition**
+
+```bash
+GET $BASE_URL/buckets/${bucket_slug}/media-folders/${media_folder_slug}/media
+```
+
+**Example Response**
+
+```json
+{
+	"media": [
+		{
+			"id": "5feb42f3601e2b3a6151289a",
+			"name": "9c4d6b70-49e5-11eb-98a2-810fade44566-logo-layout-1.jpg",
+			"original_name": "logo-layout-1.jpg",
+			"size": 256652,
+			"type": "image/jpeg",
+			"bucket": "5e6818d8e11cffafef7a6230",
+			"created": "2020-12-29T14:53:39.847Z",
+			"location": "https://cdn.cosmicjs.com",
+			"folder": "product-images",
+			"metadata": {
+				"ok": true
+			},
+			"url": "https://cdn.cosmicjs.com/9c4d6b70-49e5-11eb-98a2-810fade44566-logo-layout-1.jpg",
+			"imgix_url": "https://imgix.cosmicjs.com/9c4d6b70-49e5-11eb-98a2-810fade44566-logo-layout-1.jpg"
+		},
+		{
+			"id": "5feb42f2601e2b3a61512899",
+			"name": "9c5a3cb0-49e5-11eb-98a2-810fade44566-logo-layout-2.jpg",
+			"original_name": "logo-layout-2.jpg",
+			"size": 170482,
+			"type": "image/jpeg",
+			"bucket": "5e6818d8e11cffafef7a6230",
+			"created": "2020-12-29T14:53:38.494Z",
+			"location": "https://cdn.cosmicjs.com",
+			"folder": "product-images",
+			"url": "https://cdn.cosmicjs.com/9c5a3cb0-49e5-11eb-98a2-810fade44566-logo-layout-2.jpg",
+			"imgix_url": "https://imgix.cosmicjs.com/9c5a3cb0-49e5-11eb-98a2-810fade44566-logo-layout-2.jpg"
+		}
+	],
+	"total": 3,
+	"limit": 2
+}
+```
+
+## Add Media Folder
+
+Add a new Media Folder to your Bucket.
+
+<Callout emoji="⚠">
+	**Required**
+	<br />
+	`write_key` must be passed as `Authorization Bearer` in the header of the
+	request.
+</Callout>
+
+| Parameter | Required |  Type  | Description                                                          |
+| :-------- | :------: | :----: | :------------------------------------------------------------------- |
+| title     | required | String | Title of the media folder. _**Note:**_ `slug` will be auto-generated |
+
+**Definition**
+
+```bash
+POST $BASE_URL/buckets/${bucket_slug}/media-folders/
+```
+
+**Header**
+
+```json
+{
+	"Authorization": "Bearer n5MbD59UPBoVpyqi6B6DnOzAvZ..."
+}
+```
+
+**Example Body (JSON)**
+
+```json
+{
+	"title": "Slideshow"
+}
+```
+
+**Example Response**
+
+```json
+{
+	"media_folder": {
+		"title": "Slideshow",
+		"slug": "slideshow"
+	}
+}
+```
+
+## Edit Media Folder
+
+Edit an existing Media Folder by `slug` in your Bucket.
+
+<Callout emoji="⚠">
+	**Required**
+	<br />
+	`write_key` must be passed as `Authorization Bearer` in the header of the
+	request.
+</Callout>
+
+| Parameter |  Type  | Description                                                          |
+| :-------- | :----: | :------------------------------------------------------------------- |
+| title     | String | Title of the media folder. _**Note:**_ `slug` will be auto-generated |
+
+_**Note:** At least one of the Parameters is required to process the request._
+
+**Definition**
+
+```bash
+PATCH $BASE_URL/buckets/${bucket_slug}/media-folders/${media_folder_slug}
+```
+
+**Header**
+
+```json
+{
+	"Authorization": "Bearer n5MbD59UPBoVpyqi6B6DnOzAvZ..."
+}
+```
+
+**Example Body (JSON)**
+
+```json
+{
+	"title": "Product Images"
+}
+```
+
+**Example Response**
+
+```json
+{
+	"media_folder": {
+		"title": "Product Images",
+		"slug": "product-images"
+	}
+}
+```
+
+## Delete Media Folder
+
+Delete an existing Media Folder by `slug` from your Bucket.
+
+<Callout emoji="⚠">
+	**Required**
+	<br />
+	`write_key` must be passed as `Authorization Bearer` in the header of the
+	request.
+</Callout>
+
+**Definition**
+
+```bash
+DELETE $BASE_URL/buckets/${bucket_slug}/media-folders/${media_folder_slug}
+```
+
+**Header**
+
+```json
+{
+	"Authorization": "Bearer n5MbD59UPBoVpyqi6B6DnOzAvZ..."
+}
+```
+
+**Example Response**
+
+```json
+{
+	"message": "Media folder with slug '${media_folder_slug}' deleted successfully from bucket."
+}
+```

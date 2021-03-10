@@ -1,0 +1,109 @@
+# Nuxt.js
+
+[Nuxt.js](https://nuxtjs.org/) is a framework for building Vue websites and apps.
+
+Cosmic makes a great [Nuxt.js CMS](https://www.cosmicjs.com/knowledge-base/nuxtjs-cms) for your Nuxt.js websites and apps.
+
+Before adding any code, make sure to follow the [Initial Setup](/guides/initial-setup) at the start of this section to set up your content in Cosmic. Then take the following steps to add Cosmic-powered content to your Nuxt.js apps:
+
+### 1. Install a new Nuxt.js app
+
+You can use [Create Nuxt App](https://github.com/nuxt/create-nuxt-app) to install a new Nuxt.js app that includes tooling and configurations.
+
+```bash
+npm i -g create-nuxt-app
+create-nuxt-app cosmic-nuxt-app
+```
+
+### 2. Install the Cosmic NPM module
+
+```bash
+cd cosmic-nuxt-app
+npm i cosmicjs
+```
+
+### 3. Add the following code into your `pages/index.vue` file
+
+Find your Bucket slug and API read key in <i>Your Bucket > Settings > API Access</i> after [logging in](https://app.cosmicjs.com).
+
+```javascript
+// pages/index.vue
+<template>
+  <div class="container">
+    <div>
+      <Logo />
+      <h1 class="title">
+        cosmic-nuxt-app
+      </h1>
+      <div v-if="loading">Loading...</div>
+      <div v-for="post in posts" :key="post.slug">
+        <h3>{{ post.title }}</h3>
+        <img alt="" :src="post.metadata.hero.imgix_url + '?w=400'"/>
+      </div>
+    </div>
+  </div>
+</template>
+<script>
+const Cosmic = require('cosmicjs')
+const api = Cosmic()
+// Set these values, found in Bucket > Settings after logging in at https://app.cosmicjs.com/login
+const bucket = api.bucket({
+  slug: 'YOUR_BUCKET_SLUG',
+  read_key: 'YOUR_BUCKET_READ_KEY'
+})
+export default {
+  data() {
+    return {
+      loading: true
+    }
+  },
+  async asyncData () {
+    const data = await bucket.getObjects({
+      type: 'posts',
+      props: 'slug,title,content,metadata' // Limit the API response data by props
+    })
+    const posts = await data.objects
+    return {
+      posts,
+      loading: false
+    }
+  }
+}
+</script>
+<style>
+.container {
+  margin: 0 auto;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.title {
+  font-family:
+    'Quicksand',
+    'Source Sans Pro',
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    Roboto,
+    'Helvetica Neue',
+    Arial,
+    sans-serif;
+  display: block;
+  font-weight: 300;
+  font-size: 100px;
+  color: #35495e;
+  letter-spacing: 1px;
+}
+</style>
+```
+
+### 4. Start your app
+
+Start your app, and go to http://localhost:3000. Dance 🎉
+
+```
+npm run dev
+```
