@@ -19,6 +19,7 @@ import flatten from './utils/flatten'
 import cleanupAndReorder from './utils/cleanup-and-reorder'
 
 import Search from './search'
+import StorkSearch from './stork-search'
 import GitHubIcon from './github-icon'
 import ThemeSwitch from './theme-switch'
 import LocaleSwitch from './locale-switch'
@@ -34,28 +35,52 @@ const titleType = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6']
 const MenuContext = createContext(false)
 
 const getFSRoute = (asPath, locale) => {
-  if (!locale) return asPath.replace(new RegExp('\/index(\/|$)'), '$1')
+  if (!locale) return asPath.replace(new RegExp('/index(/|$)'), '$1')
 
   return asPath
     .replace(new RegExp(`\.${locale}(\/|$)`), '$1')
-    .replace(new RegExp('\/index(\/|$)'), '$1')
+    .replace(new RegExp('/index(/|$)'), '$1')
 }
 
-const ChevronDown = () =>
+const ChevronDown = () => (
   <div className={`chevron-down`}>
-    <svg width="14" height="8" viewBox="0 0 24 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M2 2L12 12L22 2" stroke="#727D9C" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"/>
+    <svg
+      width="14"
+      height="8"
+      viewBox="0 0 24 14"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M2 2L12 12L22 2"
+        stroke="#727D9C"
+        strokeWidth="4"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
     </svg>
   </div>
+)
 
-const ChevronRight = () =>
+const ChevronRight = () => (
   <div className={`chevron-right`}>
-    <svg width="8" height="14" viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M1 13L7 7L1 1" stroke="#727D9C" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+    <svg
+      width="8"
+      height="14"
+      viewBox="0 0 8 14"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M1 13L7 7L1 1"
+        stroke="#727D9C"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
     </svg>
   </div>
-
-
+)
 
 function Folder({ item, anchors }) {
   const { asPath, locale } = useRouter()
@@ -69,7 +94,7 @@ function Folder({ item, anchors }) {
       TreeState[item.route] = true
     }
   }, [active])
-  
+
   return (
     <li className={open ? 'active' : ''}>
       <button
@@ -79,12 +104,8 @@ function Folder({ item, anchors }) {
           render(x => !x)
         }}
       >
-        <div className="float-left">
-          {item.title}
-        </div>
-          {
-            open ? <ChevronDown /> : <ChevronRight />
-          }
+        <div className="float-left">{item.title}</div>
+        {open ? <ChevronDown /> : <ChevronRight />}
       </button>
       <div
         style={{
@@ -127,9 +148,7 @@ function File({ item, anchors }) {
               <a>{title}</a>
             </Link>
             <div className="absolute right-0 top-0 mt-2 mr-2">
-              {
-                active ? <ChevronDown /> : <ChevronRight />
-              }
+              {active ? <ChevronDown /> : <ChevronRight />}
             </div>
           </div>
           <ul>
@@ -157,20 +176,16 @@ function File({ item, anchors }) {
       )
     }
   }
+
   return (
     <li className={active ? 'active' : ''}>
       <div className="relative">
         <Link href={item.route}>
-          <a onClick={() => setMenu(false)}>{title}</a>
+          <a>{title}</a>
         </Link>
-        {
-          item.route === '/' &&
-            <div className="absolute right-0 top-0 mt-2 mr-2">
-            {
-              active ? <ChevronDown /> : <ChevronRight />
-            }
-          </div>
-        }
+        {/* <div className="absolute right-0 top-0 mt-2 mr-2">
+          {active ? <ChevronDown /> : <ChevronRight />}
+        </div> */}
       </div>
     </li>
   )
@@ -213,7 +228,10 @@ const Layout = ({ filename, config: _config, pageMap, meta, children }) => {
   const { route, asPath, locale, defaultLocale } = router
   const fsPath = getFSRoute(asPath, locale)
 
-  const directories = useMemo(() => cleanupAndReorder(pageMap, locale, defaultLocale), [pageMap, locale, defaultLocale])
+  const directories = useMemo(
+    () => cleanupAndReorder(pageMap, locale, defaultLocale),
+    [pageMap, locale, defaultLocale]
+  )
   const flatDirectories = useMemo(() => flatten(directories), [directories])
   const config = Object.assign({}, defaultConfig, _config)
 
@@ -241,7 +259,7 @@ const Layout = ({ filename, config: _config, pageMap, meta, children }) => {
     () => flatDirectories.findIndex(dir => dir.route === fsPath),
     [flatDirectories, fsPath]
   )
-  
+
   const isRTL = useMemo(() => {
     if (!config.i18n) return config.direction === 'rtl' || null
     const localeConfig = config.i18n.find(l => l.locale === locale)
@@ -251,12 +269,20 @@ const Layout = ({ filename, config: _config, pageMap, meta, children }) => {
   return (
     <React.Fragment>
       <Head>
-        {config.font ? <link rel="stylesheet" href="https://rsms.me/inter/inter.css" /> : null}
+        {config.font ? (
+          <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
+        ) : null}
         <title>
           {title}
           {renderComponent(config.titleSuffix, { locale })}
         </title>
-        {config.font ? <style dangerouslySetInnerHTML={{__html: `html{font-family:Inter,sans-serif}@supports(font-variation-settings:normal){html{font-family:'Inter var',sans-serif}}`}}/> : null}
+        {config.font ? (
+          <style
+            dangerouslySetInnerHTML={{
+              __html: `html{font-family:Inter,sans-serif}@supports(font-variation-settings:normal){html{font-family:'Inter var',sans-serif}}`
+            }}
+          />
+        ) : null}
         {renderComponent(config.head, { locale })}
       </Head>
       <div
@@ -274,7 +300,13 @@ const Layout = ({ filename, config: _config, pageMap, meta, children }) => {
           </div>
 
           {config.customSearch ||
-            (config.search ? <Search directories={flatDirectories} /> : null)}
+            (config.search ? (
+              config.UNSTABLE_stork ? (
+                <StorkSearch />
+              ) : (
+                <Search directories={flatDirectories} />
+              )
+            ) : null)}
 
           <div className="mr-2" />
 
@@ -319,7 +351,11 @@ const Layout = ({ filename, config: _config, pageMap, meta, children }) => {
         <ActiveAnchor>
           <div className="flex flex-1 h-full">
             <MenuContext.Provider value={{ setMenu }}>
-              <Sidebar show={menu} anchors={anchors} directories={directories} />
+              <Sidebar
+                show={menu}
+                anchors={anchors}
+                directories={directories}
+              />
             </MenuContext.Provider>
             <SkipNavContent />
             {meta.full ? (
