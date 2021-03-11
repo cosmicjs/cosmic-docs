@@ -1,16 +1,16 @@
-import Callout from "nextra-theme-docs/callout";
-import Tabs from "../../components/tabs";
+import Callout from 'nextra-theme-docs/callout'
+import Tabs from '../../components/tabs'
 
 # Object Types
 
 The following endpoints allow you to get, add, edit and delete Object Types in your Bucket.
 
 <Callout emoji="✅">
-	**Quick Tip**
-	<br />
-	Your `read` and `write` keys will be required to perform the following
-	requests. These can be found in <i>Your Bucket > Settings > API Access</i> in
-	your [Bucket Dashboard ](https://app.cosmicjs.com/login).
+  **Quick Tip**
+  <br />
+  Your `read` and `write` keys will be required to perform the following
+  requests. These can be found in <i>Your Bucket > Settings > API Access</i> in
+  your [Bucket Dashboard ](https://app.cosmicjs.com/login).
 </Callout>
 
 ## Get Object Types
@@ -73,58 +73,58 @@ cosmic get-object-types
 
 ```json
 {
-	"object_types": [
-		{
-			"title": "Posts",
-			"slug": "posts",
-			"singular": "Post",
-			"metafields": [
-				{
-					"children": null,
-					"type": "object",
-					"title": "Category",
-					"key": "category",
-					"id": "qc8ado5qusyaj9og8yi8",
-					"object_type": "categories",
-					"value": "5f7357967286d7773adc551e"
-				},
-				{
-					"children": null,
-					"type": "text",
-					"title": "Headline",
-					"key": "headline",
-					"id": "g6Klj1ABP8",
-					"value": ""
-				}
-			],
-			"options": {
-				"slug_field": 1,
-				"content_editor": 1
-			},
-			"preview_link": "",
-			"priority_locale": null,
-			"extensions": null,
-			"order": 0,
-			"localization": false,
-			"locales": null,
-			"emoji": ""
-		},
-		{
-			"title": "Pages",
-			"slug": "pages",
-			"singular": "Page",
-			"metafields": [],
-			"options": {
-				"slug_field": 1,
-				"content_editor": 1
-			},
-			"preview_link": "",
-			"priority_locale": null,
-			"extensions": null,
-			"emoji": "📁",
-			"order": 1
-		}
-	]
+  "object_types": [
+    {
+      "title": "Posts",
+      "slug": "posts",
+      "singular": "Post",
+      "metafields": [
+        {
+          "children": null,
+          "type": "object",
+          "title": "Category",
+          "key": "category",
+          "id": "qc8ado5qusyaj9og8yi8",
+          "object_type": "categories",
+          "value": "5f7357967286d7773adc551e"
+        },
+        {
+          "children": null,
+          "type": "text",
+          "title": "Headline",
+          "key": "headline",
+          "id": "g6Klj1ABP8",
+          "value": ""
+        }
+      ],
+      "options": {
+        "slug_field": 1,
+        "content_editor": 1
+      },
+      "preview_link": "",
+      "priority_locale": null,
+      "extensions": null,
+      "order": 0,
+      "localization": false,
+      "locales": null,
+      "emoji": ""
+    },
+    {
+      "title": "Pages",
+      "slug": "pages",
+      "singular": "Page",
+      "metafields": [],
+      "options": {
+        "slug_field": 1,
+        "content_editor": 1
+      },
+      "preview_link": "",
+      "priority_locale": null,
+      "extensions": null,
+      "emoji": "📁",
+      "order": 1
+    }
+  ]
 }
 ```
 
@@ -147,21 +147,21 @@ GET $BASE_URL/buckets/${bucket_slug}/object-types/${type_slug}
 
 ```json
 {
-	"object_type": {
-		"title": "Pages",
-		"slug": "pages",
-		"singular": "Page",
-		"metafields": [],
-		"options": {
-			"slug_field": 1,
-			"content_editor": 1
-		},
-		"preview_link": "",
-		"priority_locale": null,
-		"extensions": null,
-		"emoji": "📁",
-		"order": 1
-	}
+  "object_type": {
+    "title": "Pages",
+    "slug": "pages",
+    "singular": "Page",
+    "metafields": [],
+    "options": {
+      "slug_field": 1,
+      "content_editor": 1
+    },
+    "preview_link": "",
+    "priority_locale": null,
+    "extensions": null,
+    "emoji": "📁",
+    "order": 1
+  }
 }
 ```
 
@@ -170,10 +170,10 @@ GET $BASE_URL/buckets/${bucket_slug}/object-types/${type_slug}
 Add a new Object Type to your Bucket.
 
 <Callout emoji="⚠">
-	**Required**
-	<br />
-	`write_key` must be passed as `Authorization Bearer` in the header of the
-	request.
+  **Required**
+  <br />
+  `write_key` must be passed as `Authorization Bearer` in the header of the
+  request.
 </Callout>
 
 | Parameter              |             Required             |       Type       | Description                                                                                                                                        |
@@ -201,7 +201,7 @@ POST $BASE_URL/buckets/${bucket_slug}/object-types
 
 ```json
 {
-	"Authorization": "Bearer n5MbD59UPBoVpyqi6B6DnOzAvZ..."
+  "Authorization": "Bearer n5MbD59UPBoVpyqi6B6DnOzAvZ..."
 }
 ```
 
@@ -257,7 +257,7 @@ addObjectType(bucket_slug, input)
 
 ```json
 {
-	"Authorization": "Bearer n5MbD59UPBoVpyqi6B6DnOzAvZ..."
+  "Authorization": "Bearer n5MbD59UPBoVpyqi6B6DnOzAvZ..."
 }
 ```
 
@@ -265,7 +265,7 @@ addObjectType(bucket_slug, input)
 
 ```json
 {
-	"bucket_slug": "{{bucket_slug}}"
+  "bucket_slug": "{{bucket_slug}}"
 }
 ```
 
@@ -287,7 +287,7 @@ cosmic add-object-type --slug planets --title Planets --metafields '[{"title": "
 
 ```json
 {
-	"title": "Categories"
+  "title": "Categories"
 }
 ```
 
@@ -295,17 +295,17 @@ cosmic add-object-type --slug planets --title Planets --metafields '[{"title": "
 
 ```json
 {
-	"object_type": {
-		"title": "Categories",
-		"slug": "categories",
-		"singular": "Categories",
-		"metafields": [],
-		"created_at": "2021-01-07T14:08:24.309Z",
-		"modifield_at": "2021-01-07T14:08:24.309Z",
-		"localization": false,
-		"locales": [],
-		"priority_locale": ""
-	}
+  "object_type": {
+    "title": "Categories",
+    "slug": "categories",
+    "singular": "Categories",
+    "metafields": [],
+    "created_at": "2021-01-07T14:08:24.309Z",
+    "modifield_at": "2021-01-07T14:08:24.309Z",
+    "localization": false,
+    "locales": [],
+    "priority_locale": ""
+  }
 }
 ```
 
@@ -314,10 +314,10 @@ cosmic add-object-type --slug planets --title Planets --metafields '[{"title": "
 Edit an existing Object Type by `type_slug` in your Bucket.
 
 <Callout emoji="⚠">
-	**Required**
-	<br />
-	`write_key` must be passed as `Authorization Bearer` in the header of the
-	request.
+  **Required**
+  <br />
+  `write_key` must be passed as `Authorization Bearer` in the header of the
+  request.
 </Callout>
 
 | Parameter              |             Required             |       Type       | Description                                                                                                                                        |
@@ -346,7 +346,7 @@ PATCH $BASE_URL/buckets/${bucket_slug}/object-types/${type_slug}
 
 ```json
 {
-	"Authorization": "Bearer n5MbD59UPBoVpyqi6B6DnOzAvZ..."
+  "Authorization": "Bearer n5MbD59UPBoVpyqi6B6DnOzAvZ..."
 }
 ```
 
@@ -384,7 +384,7 @@ editObjectType(bucket_slug)
 
 ```json
 {
-	"Authorization": "Bearer n5MbD59UPBoVpyqi6B6DnOzAvZ..."
+  "Authorization": "Bearer n5MbD59UPBoVpyqi6B6DnOzAvZ..."
 }
 ```
 
@@ -392,7 +392,7 @@ editObjectType(bucket_slug)
 
 ```json
 {
-	"bucket_slug": "{{bucket_slug}}"
+  "bucket_slug": "{{bucket_slug}}"
 }
 ```
 
@@ -414,7 +414,7 @@ cosmic edit-object-type --slug planets --singluar Planet
 
 ```json
 {
-	"singular": "Category"
+  "singular": "Category"
 }
 ```
 
@@ -422,17 +422,17 @@ cosmic edit-object-type --slug planets --singluar Planet
 
 ```json
 {
-	"object_type": {
-		"title": "Categories",
-		"slug": "categories",
-		"singular": "Category",
-		"metafields": [],
-		"created_at": "2021-01-07T14:08:24.309Z",
-		"modifield_at": "2021-01-07T14:17:04.124Z",
-		"localization": false,
-		"locales": [],
-		"priority_locale": ""
-	}
+  "object_type": {
+    "title": "Categories",
+    "slug": "categories",
+    "singular": "Category",
+    "metafields": [],
+    "created_at": "2021-01-07T14:08:24.309Z",
+    "modifield_at": "2021-01-07T14:17:04.124Z",
+    "localization": false,
+    "locales": [],
+    "priority_locale": ""
+  }
 }
 ```
 
@@ -441,10 +441,10 @@ cosmic edit-object-type --slug planets --singluar Planet
 Delete an existing Object Type by `type_slug` from your Bucket.
 
 <Callout emoji="⚠">
-	**Required**
-	<br />
-	`write_key` must be passed as `Authorization Bearer` in the header of the
-	request.
+  **Required**
+  <br />
+  `write_key` must be passed as `Authorization Bearer` in the header of the
+  request.
 </Callout>
 
 _**Note:** This does not delete Objects in this Object Type._
@@ -460,7 +460,7 @@ DELETE $BASE_URL/buckets/${bucket_slug}/object-types/${type_slug}
 
 ```json
 {
-	"Authorization": "Bearer n5MbD59UPBoVpyqi6B6DnOzAvZ..."
+  "Authorization": "Bearer n5MbD59UPBoVpyqi6B6DnOzAvZ..."
 }
 ```
 
@@ -497,7 +497,7 @@ deleteObjectType(bucket_slug, type_slug)
 
 ```json
 {
-	"Authorization": "Bearer n5MbD59UPBoVpyqi6B6DnOzAvZ..."
+  "Authorization": "Bearer n5MbD59UPBoVpyqi6B6DnOzAvZ..."
 }
 ```
 
@@ -505,7 +505,7 @@ deleteObjectType(bucket_slug, type_slug)
 
 ```json
 {
-	"bucket_slug": "{{bucket_slug}}"
+  "bucket_slug": "{{bucket_slug}}"
 }
 ```
 
@@ -527,6 +527,6 @@ cosmic delete-object-type --slug planets
 
 ```json
 {
-	"message": "Object Type with slug 'categories' deleted successfully from bucket."
+  "message": "Object Type with slug 'categories' deleted successfully from bucket."
 }
 ```

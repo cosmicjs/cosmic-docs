@@ -28,29 +28,29 @@ Find your Bucket slug and API read key in <i>Your Bucket > Settings > API Access
 
 ```javascript
 // src/App.js
-import React from "react";
-import useSWR from "swr";
-import Cosmic from "cosmicjs";
-const api = Cosmic();
+import React from 'react'
+import useSWR from 'swr'
+import Cosmic from 'cosmicjs'
+const api = Cosmic()
 // Set these values, found in Bucket > Settings after logging in at https://app.cosmicjs.com/login
 const bucket = api.bucket({
-  slug: "YOUR_BUCKET_SLUG",
-  read_key: "YOUR_BUCKET_READ_KEY",
-});
+  slug: 'YOUR_BUCKET_SLUG',
+  read_key: 'YOUR_BUCKET_READ_KEY'
+})
 const fetchPosts = async () => {
   const data = await bucket.getObjects({
-    type: "posts",
-    props: "slug,title,metadata", // Limit the API response data by props
-  });
-  return data;
-};
+    type: 'posts',
+    props: 'slug,title,metadata' // Limit the API response data by props
+  })
+  return data
+}
 function App() {
-  const { data, error } = useSWR("fetch-posts", fetchPosts); // Use SWR hook
-  if (!data) return <div>Loading...</div>;
-  const posts = data.objects;
+  const { data, error } = useSWR('fetch-posts', fetchPosts) // Use SWR hook
+  if (!data) return <div>Loading...</div>
+  const posts = data.objects
   return (
     <div>
-      {posts.map((post) => (
+      {posts.map(post => (
         <div key={post.slug} style={{ marginBottom: 20 }}>
           {post.metadata.hero && (
             <div>
@@ -61,9 +61,9 @@ function App() {
         </div>
       ))}
     </div>
-  );
+  )
 }
-export default App;
+export default App
 ```
 
 ### 4. Start your app

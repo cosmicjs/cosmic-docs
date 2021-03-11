@@ -1,22 +1,22 @@
-import Callout from "nextra-theme-docs/callout";
-import Tabs from "../../components/tabs";
+import Callout from 'nextra-theme-docs/callout'
+import Tabs from '../../components/tabs'
 
 # Buckets
 
 The following endpoints allow you to get, add, edit and delete buckets in your account.
 
 <Callout emoji="✅">
-	**Quick Tip**
-	<br />
-	Your authentication `token` will be required to perform the following
-	requests.
-	<br />
-	You can get your authentication token in your user account settings located in
-	<i>
-		[Account Settings {">"}
-		Authentication](https://app.cosmicjs.com/account/authentication)
-	</i>. You can also get your token using the [API](/api-reference/authentication#get-your-token)
-	with your `email` and `password`.
+  **Quick Tip**
+  <br />
+  Your authentication `token` will be required to perform the following
+  requests.
+  <br />
+  You can get your authentication token in your user account settings located in
+  <i>
+    [Account Settings {'>'}
+    Authentication](https://app.cosmicjs.com/account/authentication)
+  </i>. You can also get your token using the [API](/api-reference/authentication#get-your-token)
+  with your `email` and `password`.
 </Callout>
 
 ## Get Buckets
@@ -24,9 +24,9 @@ The following endpoints allow you to get, add, edit and delete buckets in your a
 Gets all Buckets connected to your account.
 
 <Callout emoji="⚠">
-	**Required**
-	<br />
-	`token` must be passed as `Authorization Bearer` in the header of the request.
+  **Required**
+  <br />
+  `token` must be passed as `Authorization Bearer` in the header of the request.
 </Callout>
 
 | Parameter | Type | Default | Description                                   |
@@ -44,7 +44,7 @@ GET $BASE_URL/buckets
 
 ```json
 {
-	"Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXV.eyJlbWFpbCI6InNwaXJvbnl..."
+  "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXV.eyJlbWFpbCI6InNwaXJvbnl..."
 }
 ```
 
@@ -58,16 +58,16 @@ Cosmic.getBuckets()
 **Example Request**
 
 ```javascript
-const Cosmic = require("cosmicjs")({
-	token: "your-token-from-auth-request",
-});
+const Cosmic = require('cosmicjs')({
+  token: 'your-token-from-auth-request'
+})
 Cosmic.getBuckets()
-	.then((data) => {
-		console.log(data);
-	})
-	.catch((err) => {
-		console.log(err);
-	});
+  .then(data => {
+    console.log(data)
+  })
+  .catch(err => {
+    console.log(err)
+  })
 ```
 
 </div>
@@ -80,7 +80,7 @@ getBuckets()
 
 ```json
 {
-	"Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXV.eyJlbWFpbCI6InNwaXJvbnl..."
+  "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXV.eyJlbWFpbCI6InNwaXJvbnl..."
 }
 ```
 
@@ -102,19 +102,19 @@ cosmic get-buckets
 
 ```json
 {
-	"buckets": [
-		{
-			"id": "600af4e0c56e342a668b0d30",
-			"slug": "bucket-added-from-api",
-			"title": "Bucket added from API V2",
-			"created_at": "2021-01-22T15:53:04.754Z",
-			"modified_at": "2021-01-22T15:57:44.863Z",
-			"api_access": {
-				"write_key": "...",
-				"read_key": "..."
-			}
-		}
-	]
+  "buckets": [
+    {
+      "id": "600af4e0c56e342a668b0d30",
+      "slug": "bucket-added-from-api",
+      "title": "Bucket added from API V2",
+      "created_at": "2021-01-22T15:53:04.754Z",
+      "modified_at": "2021-01-22T15:57:44.863Z",
+      "api_access": {
+        "write_key": "...",
+        "read_key": "..."
+      }
+    }
+  ]
 }
 ```
 
@@ -123,9 +123,9 @@ cosmic get-buckets
 Returns bucket by `slug` connected to your Bucket.
 
 <Callout emoji="⚠">
-	**Required**
-	<br />
-	`token` must be passed as `Authorization Bearer` in the header of the request.
+  **Required**
+  <br />
+  `token` must be passed as `Authorization Bearer` in the header of the request.
 </Callout>
 
 | Parameter | Type | Default | Description                                   |
@@ -150,16 +150,16 @@ Cosmic.getBucket()
 **Example Request**
 
 ```javascript
-const Cosmic = require("cosmicjs")({
-	token: "your-token-from-auth-request",
-});
-Cosmic.getBucket({ slug: "wedding-site" })
-	.then((data) => {
-		console.log(data);
-	})
-	.catch((err) => {
-		console.log(err);
-	});
+const Cosmic = require('cosmicjs')({
+  token: 'your-token-from-auth-request'
+})
+Cosmic.getBucket({ slug: 'wedding-site' })
+  .then(data => {
+    console.log(data)
+  })
+  .catch(err => {
+    console.log(err)
+  })
 ```
 
 </div>
@@ -172,7 +172,7 @@ getBucket(bucket_slug)
 
 ```json
 {
-	"Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXV.eyJlbWFpbCI6InNwaXJvbnl..."
+  "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXV.eyJlbWFpbCI6InNwaXJvbnl..."
 }
 ```
 
@@ -180,7 +180,7 @@ getBucket(bucket_slug)
 
 ```json
 {
-	"bucket_slug": "{{bucket_slug}}"
+  "bucket_slug": "{{bucket_slug}}"
 }
 ```
 
@@ -206,17 +206,17 @@ cosmic get-bucket --slug my-blog
 
 ```json
 {
-	"bucket": {
-		"id": "600af4e0c56e342a668b0d30",
-		"slug": "bucket-added-from-api",
-		"title": "Bucket added from API V2",
-		"created_at": "2021-01-22T15:53:04.754Z",
-		"modified_at": "2021-01-22T15:57:44.863Z",
-		"api_access": {
-			"write_key": "5WT161Y1Qd8fv6we7anNgA4X3ya5fX4EFcq7hYdV5QpC3EsHbh",
-			"read_key": "O1eShESixXMMizLFEH1pg7kh4qwMWCqkccUJ7EIFSZOUy37YSW"
-		}
-	}
+  "bucket": {
+    "id": "600af4e0c56e342a668b0d30",
+    "slug": "bucket-added-from-api",
+    "title": "Bucket added from API V2",
+    "created_at": "2021-01-22T15:53:04.754Z",
+    "modified_at": "2021-01-22T15:57:44.863Z",
+    "api_access": {
+      "write_key": "5WT161Y1Qd8fv6we7anNgA4X3ya5fX4EFcq7hYdV5QpC3EsHbh",
+      "read_key": "O1eShESixXMMizLFEH1pg7kh4qwMWCqkccUJ7EIFSZOUy37YSW"
+    }
+  }
 }
 ```
 
@@ -228,9 +228,9 @@ Add a new bucket to your account.
 > `read_key` & `write_key` will be auto-generated.
 
 <Callout emoji="⚠">
-	**Required**
-	<br />
-	`token` must be passed as `Authorization Bearer` in the header of the request.
+  **Required**
+  <br />
+  `token` must be passed as `Authorization Bearer` in the header of the request.
 </Callout>
 
 | Parameter | Required |  Type  | Description                                                              |
@@ -251,7 +251,7 @@ POST $BASE_URL/buckets
 
 ```json
 {
-	"title": "New Bucket"
+  "title": "New Bucket"
 }
 ```
 
@@ -265,19 +265,19 @@ Cosmic.addBucket()
 **Example Request**
 
 ```javascript
-const Cosmic = require("cosmicjs")({
-	token: "your-token-from-auth-request", // required
-});
-Cosmic.addBucket({
-	title: "My New Bucket",
-	slug: "my-new-bucket", // must be unique across all Buckets in system
+const Cosmic = require('cosmicjs')({
+  token: 'your-token-from-auth-request' // required
 })
-	.then((data) => {
-		console.log(data);
-	})
-	.catch((err) => {
-		console.log(err);
-	});
+Cosmic.addBucket({
+  title: 'My New Bucket',
+  slug: 'my-new-bucket' // must be unique across all Buckets in system
+})
+  .then(data => {
+    console.log(data)
+  })
+  .catch(err => {
+    console.log(err)
+  })
 ```
 
 </div>
@@ -290,7 +290,7 @@ addBucket(input)
 
 ```json
 {
-	"Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXV.eyJlbWFpbCI6InNwaXJvbnl..."
+  "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXV.eyJlbWFpbCI6InNwaXJvbnl..."
 }
 ```
 
@@ -312,17 +312,17 @@ cosmic add-bucket --title 'My New Bucket'
 
 ```json
 {
-	"bucket": {
-		"id": "600ef5162394f77404e0d447",
-		"slug": "new-bucket",
-		"title": "New Bucket",
-		"created_at": "2021-01-25T16:43:02.477Z",
-		"modified_at": "2021-01-25T16:43:02.477Z",
-		"api_access": {
-			"write_key": "xcnH0RKeKsCMdgavr6XySyiwZL36eTx2Q3gH9gER3J8QtniGuq",
-			"read_key": "fE5cjxPSMDodKilD1t6gutaxDLjTVFl5XlgEIAg9IBAO2AZHlK"
-		}
-	}
+  "bucket": {
+    "id": "600ef5162394f77404e0d447",
+    "slug": "new-bucket",
+    "title": "New Bucket",
+    "created_at": "2021-01-25T16:43:02.477Z",
+    "modified_at": "2021-01-25T16:43:02.477Z",
+    "api_access": {
+      "write_key": "xcnH0RKeKsCMdgavr6XySyiwZL36eTx2Q3gH9gER3J8QtniGuq",
+      "read_key": "fE5cjxPSMDodKilD1t6gutaxDLjTVFl5XlgEIAg9IBAO2AZHlK"
+    }
+  }
 }
 ```
 
@@ -331,10 +331,10 @@ cosmic add-bucket --title 'My New Bucket'
 Edit an existing bucket by `slug` in your account.
 
 <Callout emoji="⚠">
-	**Required**
-	<br />
-	`token` must be passed as `Authorization Bearer` in the header of the request
-	and you must have `admin` access to perform this operation.
+  **Required**
+  <br />
+  `token` must be passed as `Authorization Bearer` in the header of the request
+  and you must have `admin` access to perform this operation.
 </Callout>
 
 | Parameter             |  Type  | Default | Description                                                                         |
@@ -356,7 +356,7 @@ PATCH $BASE_URL/buckets/${bucket_slug}
 
 ```json
 {
-	"reset_api_access_keys": true
+  "reset_api_access_keys": true
 }
 ```
 
@@ -364,17 +364,17 @@ PATCH $BASE_URL/buckets/${bucket_slug}
 
 ```json
 {
-	"bucket": {
-		"id": "600ef5162394f77404e0d447",
-		"slug": "new-bucket",
-		"title": "New Bucket",
-		"created_at": "2021-01-25T16:43:02.477Z",
-		"modified_at": "2021-01-25T16:46:53.226Z",
-		"api_access": {
-			"write_key": "fcVx2WoqyiIHffR8A0hEBaljT3ecrBubrYigJnDnXP8Cx6AeK7",
-			"read_key": "vZ40FJ8wJzV2nhh9CEhniKpI6NtA4IP9uCUpPt8WgP2sxV4UpD"
-		}
-	}
+  "bucket": {
+    "id": "600ef5162394f77404e0d447",
+    "slug": "new-bucket",
+    "title": "New Bucket",
+    "created_at": "2021-01-25T16:43:02.477Z",
+    "modified_at": "2021-01-25T16:46:53.226Z",
+    "api_access": {
+      "write_key": "fcVx2WoqyiIHffR8A0hEBaljT3ecrBubrYigJnDnXP8Cx6AeK7",
+      "read_key": "vZ40FJ8wJzV2nhh9CEhniKpI6NtA4IP9uCUpPt8WgP2sxV4UpD"
+    }
+  }
 }
 ```
 
@@ -383,17 +383,17 @@ PATCH $BASE_URL/buckets/${bucket_slug}
 Delete an existing bucket by `slug` from your account.
 
 <Callout emoji="⚠">
-	**Required**
-	<br />
-	`token` must be passed as `Authorization Bearer` in the header of the request
-	and you must have `admin` access to perform this operation.
+  **Required**
+  <br />
+  `token` must be passed as `Authorization Bearer` in the header of the request
+  and you must have `admin` access to perform this operation.
 </Callout>
 
 <Callout emoji="❗">
-	**Danger**
-	<br />
-	Deletes the whole Bucket with objects, revisions, object types and media.
-	*This cannot be undone.*
+  **Danger**
+  <br />
+  Deletes the whole Bucket with objects, revisions, object types and media.
+  *This cannot be undone.*
 </Callout>
 
 **Methods**
@@ -414,18 +414,18 @@ Cosmic.deleteBucket()
 **Example Request**
 
 ```javascript
-const Cosmic = require("cosmicjs")({
-	token: "your-token-from-auth-request", // required
-});
-Cosmic.deleteBucket({
-	id: "bucket_id",
+const Cosmic = require('cosmicjs')({
+  token: 'your-token-from-auth-request' // required
 })
-	.then((data) => {
-		console.log(data);
-	})
-	.catch((err) => {
-		console.log(err);
-	});
+Cosmic.deleteBucket({
+  id: 'bucket_id'
+})
+  .then(data => {
+    console.log(data)
+  })
+  .catch(err => {
+    console.log(err)
+  })
 ```
 
 </div>
@@ -439,7 +439,7 @@ deleteBucket(bucket_id)
 
 ```json
 {
-	"Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXV.eyJlbWFpbCI6InNwaXJvbnl..."
+  "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXV.eyJlbWFpbCI6InNwaXJvbnl..."
 }
 ```
 
@@ -447,7 +447,7 @@ deleteBucket(bucket_id)
 
 ```json
 {
-	"bucket_slug": "{{bucket_slug}}"
+  "bucket_slug": "{{bucket_slug}}"
 }
 ```
 
@@ -474,6 +474,6 @@ cosmic delete-bucket
 
 ```json
 {
-	"message": "Bucket with slug: '${bucket_slug}' deleted successfully.'"
+  "message": "Bucket with slug: '${bucket_slug}' deleted successfully.'"
 }
 ```

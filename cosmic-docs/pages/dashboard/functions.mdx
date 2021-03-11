@@ -35,12 +35,12 @@ module.exports.handler = function (event, context, callback) {
   const response = {
     statusCode: 200,
     headers: {
-      "Access-Control-Allow-Origin": "*", // Required for CORS support to work
+      'Access-Control-Allow-Origin': '*' // Required for CORS support to work
     },
-    body: "Hello World " + process.env.SOME_OPTIONAL_VAR,
-  };
-  callback(null, response);
-};
+    body: 'Hello World ' + process.env.SOME_OPTIONAL_VAR
+  }
+  callback(null, response)
+}
 ```
 
 ### Function config file
@@ -100,14 +100,14 @@ Your index.js file will look something like this:
 
 ```js
 // index.js
-const serverless = require("serverless-http");
-const express = require("express");
-const app = express();
-app.get("/:slug?", (req, res) => {
-  res.json({ message: "Your dynamic slug is " + req.params.slug });
-});
+const serverless = require('serverless-http')
+const express = require('express')
+const app = express()
+app.get('/:slug?', (req, res) => {
+  res.json({ message: 'Your dynamic slug is ' + req.params.slug })
+})
 
-module.exports.handler = serverless(app);
+module.exports.handler = serverless(app)
 ```
 
 ## Install your Function

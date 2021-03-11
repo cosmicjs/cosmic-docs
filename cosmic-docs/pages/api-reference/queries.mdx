@@ -1,5 +1,5 @@
-import Callout from "nextra-theme-docs/callout";
-import Tabs from "../../components/tabs";
+import Callout from 'nextra-theme-docs/callout'
+import Tabs from '../../components/tabs'
 
 # Queries
 
@@ -60,13 +60,13 @@ bucket.getObjects({
 
 ```javascript
 const query = {
-	slug: "home",
-	props: "title,content",
-};
+  slug: 'home',
+  props: 'title,content'
+}
 const objects = bucket.getObjects({
-	query,
-});
-const home = objects[0];
+  query
+})
+const home = objects[0]
 ```
 
 </div>
@@ -74,7 +74,7 @@ const home = objects[0];
 <div label="GraphQL">
 
 ```javascript
-getObjects(bucket_slug, (input: query));
+getObjects(bucket_slug, (input: query))
 ```
 
 Some queries will require a separate variable. Add this to the Query Variables area in the GraphQL Playground below:
@@ -83,14 +83,14 @@ Some queries will require a separate variable. Add this to the Query Variables a
 
 ```json
 {
-	"bucket_slug": "{{bucket_slug}}",
-	"read_key": "{{read_key}}",
-	"query": {
-		"title": {
-			"$regex": "another",
-			"$options": "i"
-		}
-	}
+  "bucket_slug": "{{bucket_slug}}",
+  "read_key": "{{read_key}}",
+  "query": {
+    "title": {
+      "$regex": "another",
+      "$options": "i"
+    }
+  }
 }
 ```
 
@@ -289,9 +289,9 @@ curl '$endpoint&query={"slug":"home","locale":"en-US"}'
 ### More info
 
 <Callout>
-	**Want more information?**
-	<br />
-	Our queries follow MongoDB methods of comparison and logical operators. See
-	further documentation and more examples in the [MongoDB
-	docs](https://docs.mongodb.com/manual/reference/operator/query/index.html).
+  **Want more information?**
+  <br />
+  Our queries follow MongoDB methods of comparison and logical operators. See
+  further documentation and more examples in the [MongoDB
+  docs](https://docs.mongodb.com/manual/reference/operator/query/index.html).
 </Callout>

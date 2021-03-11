@@ -1,22 +1,22 @@
-import Callout from "nextra-theme-docs/callout";
-import Tabs from "../../components/tabs";
+import Callout from 'nextra-theme-docs/callout'
+import Tabs from '../../components/tabs'
 
 # Users
 
 The following endpoints allow you to get, add, edit and delete users in your bucket.
 
 <Callout emoji="✅">
-	**Quick Tip**
-	<br />
-	Your authentication `token` will be required to perform the following
-	requests.
-	<br />
-	You can get your authentication token in your user account settings located in
-	<i>
-		[Account Settings {">"}
-		Authentication](https://app.cosmicjs.com/account/authentication)
-	</i>. You can also get your token using the [API](/api-reference/authentication#get-your-token)
-	with your `email` and `password`.
+  **Quick Tip**
+  <br />
+  Your authentication `token` will be required to perform the following
+  requests.
+  <br />
+  You can get your authentication token in your user account settings located in
+  <i>
+    [Account Settings {'>'}
+    Authentication](https://app.cosmicjs.com/account/authentication)
+  </i>. You can also get your token using the [API](/api-reference/authentication#get-your-token)
+  with your `email` and `password`.
 </Callout>
 
 ## Get Users
@@ -24,10 +24,10 @@ The following endpoints allow you to get, add, edit and delete users in your buc
 Gets all users in your bucket.
 
 <Callout emoji="⚠">
-	**Required**
-	<br />
-	`token` must be passed as `Authorization Bearer` in the header of the request
-	and you must have `admin` access to perform this operation.
+  **Required**
+  <br />
+  `token` must be passed as `Authorization Bearer` in the header of the request
+  and you must have `admin` access to perform this operation.
 </Callout>
 
 **Methods**
@@ -70,7 +70,7 @@ getUsers(bucket_slug)
 
 ```json
 {
-	"Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXV.eyJlbWFpbCI6InNwaXJvbnl..."
+  "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXV.eyJlbWFpbCI6InNwaXJvbnl..."
 }
 ```
 
@@ -91,30 +91,30 @@ getUsers(bucket_slug)
 
 ```json
 {
-	"users": [
-		{
-			"id": "5e4d7eb92850c717ea93dba4",
-			"first_name": "Starman",
-			"last_name": "Jones",
-			"email": "starman@milkyway.com",
-			"username": "starman",
-			"bio": "",
-			"website": "",
-			"twitter": "",
-			"linkedin": "",
-			"github": "",
-			"company": "",
-			"location": ""
-		},
-		{
-			"id": "5f46a1c25711926847cd6b5c",
-			"first_name": "Quasar",
-			"last_name": "Jones",
-			"email": "quasar@milkyway.com",
-			"username": "quasar"
-		}
-	],
-	"total": 2
+  "users": [
+    {
+      "id": "5e4d7eb92850c717ea93dba4",
+      "first_name": "Starman",
+      "last_name": "Jones",
+      "email": "starman@milkyway.com",
+      "username": "starman",
+      "bio": "",
+      "website": "",
+      "twitter": "",
+      "linkedin": "",
+      "github": "",
+      "company": "",
+      "location": ""
+    },
+    {
+      "id": "5f46a1c25711926847cd6b5c",
+      "first_name": "Quasar",
+      "last_name": "Jones",
+      "email": "quasar@milkyway.com",
+      "username": "quasar"
+    }
+  ],
+  "total": 2
 }
 ```
 
@@ -123,10 +123,10 @@ getUsers(bucket_slug)
 Gets user by `id` in your bucket.
 
 <Callout emoji="⚠">
-	**Required**
-	<br />
-	`token` must be passed as `Authorization Bearer` in the header of the request
-	and you must have `admin` access to perform this operation.
+  **Required**
+  <br />
+  `token` must be passed as `Authorization Bearer` in the header of the request
+  and you must have `admin` access to perform this operation.
 </Callout>
 
 **Methods**
@@ -172,7 +172,7 @@ getUser(bucket_slug, user_id)
 
 ```json
 {
-	"Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXV.eyJlbWFpbCI6InNwaXJvbnl..."
+  "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXV.eyJlbWFpbCI6InNwaXJvbnl..."
 }
 ```
 
@@ -194,13 +194,13 @@ getUser(bucket_slug, user_id)
 
 ```json
 {
-	"user": {
-		"id": "5f46a1c25711926847cd6b5c",
-		"first_name": "Quasar",
-		"last_name": "Jones",
-		"email": "quasar@milkyway.com",
-		"username": "quasar"
-	}
+  "user": {
+    "id": "5f46a1c25711926847cd6b5c",
+    "first_name": "Quasar",
+    "last_name": "Jones",
+    "email": "quasar@milkyway.com",
+    "username": "quasar"
+  }
 }
 ```
 
@@ -209,10 +209,10 @@ getUser(bucket_slug, user_id)
 Add user to your bucket.
 
 <Callout emoji="⚠">
-	**Required**
-	<br />
-	`token` must be passed as `Authorization Bearer` in the header of the request
-	and you must have `admin` access to perform this operation.
+  **Required**
+  <br />
+  `token` must be passed as `Authorization Bearer` in the header of the request
+  and you must have `admin` access to perform this operation.
 </Callout>
 
 | Parameter               |             Required              |          Type          | Description                                     |
@@ -236,10 +236,10 @@ POST $BASE_URL/buckets/${bucket_slug}/users
 
 ```json
 {
-	"first_name": "ABC",
-	"last_name": "XYZ",
-	"email": "abc@xyz.com",
-	"role": "admin"
+  "first_name": "ABC",
+  "last_name": "XYZ",
+  "email": "abc@xyz.com",
+  "role": "admin"
 }
 ```
 
@@ -295,7 +295,7 @@ $ cosmic add-user --email test@user.com --first_name John --last_name Smith --ro
 
 ```json
 {
-	"message": "User added successfully."
+  "message": "User added successfully."
 }
 ```
 
@@ -304,10 +304,10 @@ $ cosmic add-user --email test@user.com --first_name John --last_name Smith --ro
 Edit user by `id` in your bucket.
 
 <Callout emoji="⚠">
-	**Required**
-	<br />
-	`token` must be passed as `Authorization Bearer` in the header of the request
-	and you must have `admin` access to perform this operation.
+  **Required**
+  <br />
+  `token` must be passed as `Authorization Bearer` in the header of the request
+  and you must have `admin` access to perform this operation.
 </Callout>
 
 | Parameter               |             Required              |          Type          | Description                                     |
@@ -327,7 +327,7 @@ PATCH $BASE_URL/buckets/${bucket_slug}/users/${user_id}
 
 ```json
 {
-	"role": "editor"
+  "role": "editor"
 }
 ```
 
@@ -335,7 +335,7 @@ PATCH $BASE_URL/buckets/${bucket_slug}/users/${user_id}
 
 ```json
 {
-	"message": "User role edited successfully from bucket."
+  "message": "User role edited successfully from bucket."
 }
 ```
 
@@ -344,10 +344,10 @@ PATCH $BASE_URL/buckets/${bucket_slug}/users/${user_id}
 Delete user by `id` from your bucket.
 
 <Callout emoji="⚠">
-	**Required**
-	<br />
-	`token` must be passed as `Authorization Bearer` in the header of the request
-	and you must have `admin` access to perform this operation.
+  **Required**
+  <br />
+  `token` must be passed as `Authorization Bearer` in the header of the request
+  and you must have `admin` access to perform this operation.
 </Callout>
 
 **Definition**
@@ -360,6 +360,6 @@ DELETE $BASE_URL/buckets/${bucket_slug}/users/${user_id}
 
 ```json
 {
-	"message": "User delete successfully from bucket."
+  "message": "User delete successfully from bucket."
 }
 ```

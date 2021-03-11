@@ -1,16 +1,16 @@
-import Callout from "nextra-theme-docs/callout";
-import Tabs from "../../components/tabs";
+import Callout from 'nextra-theme-docs/callout'
+import Tabs from '../../components/tabs'
 
 # Object Metafields
 
 The following endpoints allow you to get, add, edit and delete Metafields in your Object.
 
 <Callout emoji="✅">
-	**Quick Tip**
-	<br />
-	Your `read` and `write` keys will be required to perform the following
-	requests. These can be found in <i>Your Bucket > Settings > API Access</i> in
-	your [Bucket Dashboard ](https://app.cosmicjs.com/login).
+  **Quick Tip**
+  <br />
+  Your `read` and `write` keys will be required to perform the following
+  requests. These can be found in <i>Your Bucket > Settings > API Access</i> in
+  your [Bucket Dashboard ](https://app.cosmicjs.com/login).
 </Callout>
 
 ## Get Object Metafields
@@ -32,33 +32,33 @@ GET $BASE_URL/buckets/${bucket_slug}/objects/${object_id}/metafields
 
 ```json
 {
-	"metafields": [
-		{
-			"children": null,
-			"type": "number",
-			"title": "number",
-			"key": "number",
-			"id": "Hvix3sGVi0",
-			"value": ""
-		},
-		{
-			"children": null,
-			"type": "radio-buttons",
-			"title": "radio-buttons",
-			"key": "radio-buttons",
-			"id": "QCEI7BnfuO",
-			"value": "Ok",
-			"options": [
-				{
-					"value": "Ok"
-				},
-				{
-					"value": "All"
-				}
-			]
-		}
-	],
-	"total": 2
+  "metafields": [
+    {
+      "children": null,
+      "type": "number",
+      "title": "number",
+      "key": "number",
+      "id": "Hvix3sGVi0",
+      "value": ""
+    },
+    {
+      "children": null,
+      "type": "radio-buttons",
+      "title": "radio-buttons",
+      "key": "radio-buttons",
+      "id": "QCEI7BnfuO",
+      "value": "Ok",
+      "options": [
+        {
+          "value": "Ok"
+        },
+        {
+          "value": "All"
+        }
+      ]
+    }
+  ],
+  "total": 2
 }
 ```
 
@@ -81,22 +81,22 @@ GET $BASE_URL/buckets/${bucket_slug}/objects/${object_id}/metafields/${metafield
 
 ```json
 {
-	"metafield": {
-		"children": null,
-		"type": "radio-buttons",
-		"title": "radio-buttons",
-		"key": "radio-buttons",
-		"id": "QCEI7BnfuO",
-		"value": "Ok",
-		"options": [
-			{
-				"value": "Ok"
-			},
-			{
-				"value": "All"
-			}
-		]
-	}
+  "metafield": {
+    "children": null,
+    "type": "radio-buttons",
+    "title": "radio-buttons",
+    "key": "radio-buttons",
+    "id": "QCEI7BnfuO",
+    "value": "Ok",
+    "options": [
+      {
+        "value": "Ok"
+      },
+      {
+        "value": "All"
+      }
+    ]
+  }
 }
 ```
 
@@ -105,10 +105,10 @@ GET $BASE_URL/buckets/${bucket_slug}/objects/${object_id}/metafields/${metafield
 Add a new Metafield to your Object.
 
 <Callout emoji="⚠">
-	**Required**
-	<br />
-	`write_key` must be passed as `Authorization Bearer` in the header of the
-	request.
+  **Required**
+  <br />
+  `write_key` must be passed as `Authorization Bearer` in the header of the
+  request.
 </Callout>
 
 Take a look at [Metafield Model](/api-reference/getting-started/metafields) for reference to be passed in the body.
@@ -123,7 +123,7 @@ POST $BASE_URL/buckets/${bucket_slug}/objects/${object_id}/metafields
 
 ```json
 {
-	"Authorization": "Bearer n5MbD59UPBoVpyqi6B6DnOzAvZ..."
+  "Authorization": "Bearer n5MbD59UPBoVpyqi6B6DnOzAvZ..."
 }
 ```
 
@@ -131,10 +131,10 @@ POST $BASE_URL/buckets/${bucket_slug}/objects/${object_id}/metafields
 
 ```json
 {
-	"type": "number",
-	"title": "Example Phone number",
-	"key": "example-phone-number",
-	"value": 123456789
+  "type": "number",
+  "title": "Example Phone number",
+  "key": "example-phone-number",
+  "value": 123456789
 }
 ```
 
@@ -142,7 +142,7 @@ POST $BASE_URL/buckets/${bucket_slug}/objects/${object_id}/metafields
 
 ```json
 {
-	"message": "metafield with key: 'example-phone-number' added successfully in object with id:'${object_id}"
+  "message": "metafield with key: 'example-phone-number' added successfully in object with id:'${object_id}"
 }
 ```
 
@@ -151,10 +151,10 @@ POST $BASE_URL/buckets/${bucket_slug}/objects/${object_id}/metafields
 Edit an existing Metafield by `key` in your Object.
 
 <Callout emoji="⚠">
-	**Required**
-	<br />
-	`write_key` must be passed as `Authorization Bearer` in the header of the
-	request.
+  **Required**
+  <br />
+  `write_key` must be passed as `Authorization Bearer` in the header of the
+  request.
 </Callout>
 
 Take a look at [Metafield Model](/api-reference/getting-started/metafields) for reference to be passed in the body.
@@ -171,7 +171,7 @@ PATCH $BASE_URL/buckets/${bucket_slug}/objects/${object_id}/metafields/${metafie
 
 ```json
 {
-	"Authorization": "Bearer n5MbD59UPBoVpyqi6B6DnOzAvZ..."
+  "Authorization": "Bearer n5MbD59UPBoVpyqi6B6DnOzAvZ..."
 }
 ```
 
@@ -179,7 +179,7 @@ PATCH $BASE_URL/buckets/${bucket_slug}/objects/${object_id}/metafields/${metafie
 
 ```json
 {
-	"value": 9876543210
+  "value": 9876543210
 }
 ```
 
@@ -187,12 +187,12 @@ PATCH $BASE_URL/buckets/${bucket_slug}/objects/${object_id}/metafields/${metafie
 
 ```json
 {
-	"metafield": {
-		"type": "number",
-		"title": "Example Phone number",
-		"key": "phone_number",
-		"value": 9876543210
-	}
+  "metafield": {
+    "type": "number",
+    "title": "Example Phone number",
+    "key": "phone_number",
+    "value": 9876543210
+  }
 }
 ```
 
@@ -201,10 +201,10 @@ PATCH $BASE_URL/buckets/${bucket_slug}/objects/${object_id}/metafields/${metafie
 Delete an existing Metafield by `key` from your Object.
 
 <Callout emoji="⚠">
-	**Required**
-	<br />
-	`write_key` must be passed as `Authorization Bearer` in the header of the
-	request.
+  **Required**
+  <br />
+  `write_key` must be passed as `Authorization Bearer` in the header of the
+  request.
 </Callout>
 
 **Definition**
@@ -217,7 +217,7 @@ DELETE $BASE_URL/buckets/${bucket_slug}/objects/${object_id}/metafields/${metafi
 
 ```json
 {
-	"Authorization": "Bearer n5MbD59UPBoVpyqi6B6DnOzAvZ..."
+  "Authorization": "Bearer n5MbD59UPBoVpyqi6B6DnOzAvZ..."
 }
 ```
 
@@ -225,6 +225,6 @@ DELETE $BASE_URL/buckets/${bucket_slug}/objects/${object_id}/metafields/${metafi
 
 ```json
 {
-	"message": "metafield with key: '${metafield_key}' deleted successfully from object with id:'${object_id}"
+  "message": "metafield with key: '${metafield_key}' deleted successfully from object with id:'${object_id}"
 }
 ```

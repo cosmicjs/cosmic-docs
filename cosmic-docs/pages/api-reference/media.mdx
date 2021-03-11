@@ -1,16 +1,16 @@
-import Callout from "nextra-theme-docs/callout";
-import Tabs from "../../components/tabs";
+import Callout from 'nextra-theme-docs/callout'
+import Tabs from '../../components/tabs'
 
 # Media
 
 The following endpoints allow you to manage media in your Bucket.
 
 <Callout emoji="✅">
-	**Quick Tip**
-	<br />
-	Your `read` and `write` keys will be required to perform the following
-	requests. These can be found in <i>Your Bucket > Settings > API Access</i> in
-	your [Bucket Dashboard ](https://app.cosmicjs.com/login).
+  **Quick Tip**
+  <br />
+  Your `read` and `write` keys will be required to perform the following
+  requests. These can be found in <i>Your Bucket > Settings > API Access</i> in
+  your [Bucket Dashboard ](https://app.cosmicjs.com/login).
 </Callout>
 
 ## Get Media List
@@ -97,36 +97,36 @@ cosmic get-media --limit 2
 
 ```json
 {
-	"media": [
-		{
-			"id": "5feb42f3601e2b3a6151289a",
-			"name": "9c4d6b70-49e5-11eb-98a2-810fade44566-logo-layout-1.jpg",
-			"original_name": "logo-layout-1.jpg",
-			"size": 256652,
-			"type": "image/jpeg",
-			"bucket": "5e6818d8e11cffafef7a6230",
-			"created": "2020-12-29T14:53:39.847Z",
-			"location": "https://cdn.cosmicjs.com",
-			"folder": "product-images",
-			"url": "https://cdn.cosmicjs.com/9c4d6b70-49e5-11eb-98a2-810fade44566-logo-layout-1.jpg",
-			"imgix_url": "https://imgix.cosmicjs.com/9c4d6b70-49e5-11eb-98a2-810fade44566-logo-layout-1.jpg"
-		},
-		{
-			"id": "5feb42f2601e2b3a61512899",
-			"name": "9c5a3cb0-49e5-11eb-98a2-810fade44566-logo-layout-2.jpg",
-			"original_name": "logo-layout-2.jpg",
-			"size": 170482,
-			"type": "image/jpeg",
-			"bucket": "5e6818d8e11cffafef7a6230",
-			"created": "2020-12-29T14:53:38.494Z",
-			"location": "https://cdn.cosmicjs.com",
-			"folder": "product-images",
-			"url": "https://cdn.cosmicjs.com/9c5a3cb0-49e5-11eb-98a2-810fade44566-logo-layout-2.jpg",
-			"imgix_url": "https://imgix.cosmicjs.com/9c5a3cb0-49e5-11eb-98a2-810fade44566-logo-layout-2.jpg"
-		}
-	],
-	"total": 10,
-	"limit": 2
+  "media": [
+    {
+      "id": "5feb42f3601e2b3a6151289a",
+      "name": "9c4d6b70-49e5-11eb-98a2-810fade44566-logo-layout-1.jpg",
+      "original_name": "logo-layout-1.jpg",
+      "size": 256652,
+      "type": "image/jpeg",
+      "bucket": "5e6818d8e11cffafef7a6230",
+      "created": "2020-12-29T14:53:39.847Z",
+      "location": "https://cdn.cosmicjs.com",
+      "folder": "product-images",
+      "url": "https://cdn.cosmicjs.com/9c4d6b70-49e5-11eb-98a2-810fade44566-logo-layout-1.jpg",
+      "imgix_url": "https://imgix.cosmicjs.com/9c4d6b70-49e5-11eb-98a2-810fade44566-logo-layout-1.jpg"
+    },
+    {
+      "id": "5feb42f2601e2b3a61512899",
+      "name": "9c5a3cb0-49e5-11eb-98a2-810fade44566-logo-layout-2.jpg",
+      "original_name": "logo-layout-2.jpg",
+      "size": 170482,
+      "type": "image/jpeg",
+      "bucket": "5e6818d8e11cffafef7a6230",
+      "created": "2020-12-29T14:53:38.494Z",
+      "location": "https://cdn.cosmicjs.com",
+      "folder": "product-images",
+      "url": "https://cdn.cosmicjs.com/9c5a3cb0-49e5-11eb-98a2-810fade44566-logo-layout-2.jpg",
+      "imgix_url": "https://imgix.cosmicjs.com/9c5a3cb0-49e5-11eb-98a2-810fade44566-logo-layout-2.jpg"
+    }
+  ],
+  "total": 10,
+  "limit": 2
 }
 ```
 
@@ -158,24 +158,24 @@ Cosmic.getSingleMedia()
 **Example Request**
 
 ```javascript
-const Cosmic = require("cosmicjs");
-const api = Cosmic();
+const Cosmic = require('cosmicjs')
+const api = Cosmic()
 const bucket = api.bucket({
-	slug: "your-bucket-slug",
-	read_key: "your-read-key-found-in-bucket-settings",
-});
+  slug: 'your-bucket-slug',
+  read_key: 'your-read-key-found-in-bucket-settings'
+})
 
 bucket
-	.getMedia({
-		id: "5f331eac9d52b17aee21d1b4",
-		props: "imgix_url", // get only what you need
-	})
-	.then((data) => {
-		console.log(data);
-	})
-	.catch((err) => {
-		console.log(err);
-	});
+  .getMedia({
+    id: '5f331eac9d52b17aee21d1b4',
+    props: 'imgix_url' // get only what you need
+  })
+  .then(data => {
+    console.log(data)
+  })
+  .catch(err => {
+    console.log(err)
+  })
 ```
 
 </div>
@@ -185,22 +185,22 @@ bucket
 
 ```json
 {
-	"media": {
-		"id": "5f331eac9d52b17aee21d1b4",
-		"name": "d319ff30-13b7-11e9-acee-bd778576f320-default_profile.png",
-		"original_name": "default_profile.png",
-		"size": 4889,
-		"type": "image/png",
-		"bucket": "5e6818d8e11cffafef7a6230",
-		"created": "2020-08-11T22:41:48.651Z",
-		"location": "https://cdn.cosmicjs.com",
-		"folder": null,
-		"metadata": {
-			"ok": true
-		},
-		"url": "https://cdn.cosmicjs.com/d319ff30-13b7-11e9-acee-bd778576f320-default_profile.png",
-		"imgix_url": "https://imgix.cosmicjs.com/d319ff30-13b7-11e9-acee-bd778576f320-default_profile.png"
-	}
+  "media": {
+    "id": "5f331eac9d52b17aee21d1b4",
+    "name": "d319ff30-13b7-11e9-acee-bd778576f320-default_profile.png",
+    "original_name": "default_profile.png",
+    "size": 4889,
+    "type": "image/png",
+    "bucket": "5e6818d8e11cffafef7a6230",
+    "created": "2020-08-11T22:41:48.651Z",
+    "location": "https://cdn.cosmicjs.com",
+    "folder": null,
+    "metadata": {
+      "ok": true
+    },
+    "url": "https://cdn.cosmicjs.com/d319ff30-13b7-11e9-acee-bd778576f320-default_profile.png",
+    "imgix_url": "https://imgix.cosmicjs.com/d319ff30-13b7-11e9-acee-bd778576f320-default_profile.png"
+  }
 }
 ```
 
@@ -213,17 +213,17 @@ bucket
 The only required post value is the `media` object. You can also add optional `folder` and `metadata` params.
 
 <Callout emoji="⚠">
-	**Required**
-	<br />
-	`write_key` must be passed as `Authorization Bearer` in the header of the
-	request.
+  **Required**
+  <br />
+  `write_key` must be passed as `Authorization Bearer` in the header of the
+  request.
 </Callout>
 
 <Callout emoji="✅">
-	**Quick Tip**
-	<br />
-	The base endpoint is different than other REST API requests with a higher
-	upload size limit of `900MB`.
+  **Quick Tip**
+  <br />
+  The base endpoint is different than other REST API requests with a higher
+  upload size limit of `900MB`.
 </Callout>
 
 ### Upload URL
@@ -266,7 +266,7 @@ curl --form "folder=folder-name" --form "media=@test.png" -H "Authorization: Bea
 
 ```json
 {
-	"Authorization": "Bearer n5MbD59UPBoVpyqi6B6DnOzAvZ..."
+  "Authorization": "Bearer n5MbD59UPBoVpyqi6B6DnOzAvZ..."
 }
 ```
 
@@ -281,62 +281,62 @@ Cosmic.addMedia()
 
 ```javascript
 const bucket = Cosmic.bucket({
-	slug: "bucket-slug",
-	write_key: "your-write-key-found-in-bucket-settings",
-});
+  slug: 'bucket-slug',
+  write_key: 'your-write-key-found-in-bucket-settings'
+})
 
-const media_object = req.files[0]; // Using Multer
+const media_object = req.files[0] // Using Multer
 // OR:
 // const media_object = { originalname: filename, buffer: filedata } // Not using Multer
 
 bucket
-	.addMedia({
-		media: media_object,
-		folder: "your-folder-slug",
-		metadata: {
-			caption: "Beautiful picture of the beach",
-			credit: "Tyler Jackson",
-		},
-	})
-	.then((data) => {
-		console.log(data);
-	})
-	.catch((err) => {
-		console.log(err);
-	});
+  .addMedia({
+    media: media_object,
+    folder: 'your-folder-slug',
+    metadata: {
+      caption: 'Beautiful picture of the beach',
+      credit: 'Tyler Jackson'
+    }
+  })
+  .then(data => {
+    console.log(data)
+  })
+  .catch(err => {
+    console.log(err)
+  })
 
 // In order to pass the file `req.files.foo` to Cosmic you would do:
 const media_object = {
-	originalname: req.files.foo.name,
-	buffer: req.files.foo.data,
-};
+  originalname: req.files.foo.name,
+  buffer: req.files.foo.data
+}
 ```
 
 **Example Response**
 
 ```json
 {
-	"media": {
-		"name": "c20391e0-b8a4-11e6-8836-fbdfd6956b31-bird.jpg",
-		"original_name": "bird.jpg",
-		"size": 457307,
-		"type": "image/jpeg",
-		"bucket": "5839c67f0d3201c114000004",
-		"created": "2016-12-02T15:34:05.054Z",
-		"location": "https://cosmicjs.com/uploads",
-		"url": "https://cdn.cosmicjs.com/c20391e0-b8a4-11e6-8836-fbdfd6956b31-bird.jpg",
-		"imgix_url": "https://imgix.cosmicjs.com/c20391e0-b8a4-11e6-8836-fbdfd6956b31-bird.jpg",
-		"metadata": [
-			{
-				"key": "caption",
-				"value": "Beautiful picture of the beach"
-			},
-			{
-				"key": "credit",
-				"value": "Tyler Jackson"
-			}
-		]
-	}
+  "media": {
+    "name": "c20391e0-b8a4-11e6-8836-fbdfd6956b31-bird.jpg",
+    "original_name": "bird.jpg",
+    "size": 457307,
+    "type": "image/jpeg",
+    "bucket": "5839c67f0d3201c114000004",
+    "created": "2016-12-02T15:34:05.054Z",
+    "location": "https://cosmicjs.com/uploads",
+    "url": "https://cdn.cosmicjs.com/c20391e0-b8a4-11e6-8836-fbdfd6956b31-bird.jpg",
+    "imgix_url": "https://imgix.cosmicjs.com/c20391e0-b8a4-11e6-8836-fbdfd6956b31-bird.jpg",
+    "metadata": [
+      {
+        "key": "caption",
+        "value": "Beautiful picture of the beach"
+      },
+      {
+        "key": "credit",
+        "value": "Tyler Jackson"
+      }
+    ]
+  }
 }
 ```
 
@@ -361,19 +361,19 @@ cosmic add-media -f ./my-cat.png -t my-cat.png --folder cat-images
 
 ```json
 {
-	"media": {
-		"id": "602fd622853cca45f4c9fd96",
-		"name": "c20391e0-b8a4-11e6-8836-fbdfd6956b31-test.png",
-		"original_name": "test.png",
-		"size": 457307,
-		"folder": "folder-name",
-		"type": "image/png",
-		"bucket": "5839c67f0d3201c114000004",
-		"created": "2016-12-02T15:34:05.054Z",
-		"location": "https://cdn.cosmicjs.com",
-		"url": "https://cdn.cosmicjs.com/c20391e0-b8a4-11e6-8836-fbdfd6956b31-test.png",
-		"imgix_url": "https://imgix.cosmicjs.com/c20391e0-b8a4-11e6-8836-fbdfd6956b31-test.png"
-	}
+  "media": {
+    "id": "602fd622853cca45f4c9fd96",
+    "name": "c20391e0-b8a4-11e6-8836-fbdfd6956b31-test.png",
+    "original_name": "test.png",
+    "size": 457307,
+    "folder": "folder-name",
+    "type": "image/png",
+    "bucket": "5839c67f0d3201c114000004",
+    "created": "2016-12-02T15:34:05.054Z",
+    "location": "https://cdn.cosmicjs.com",
+    "url": "https://cdn.cosmicjs.com/c20391e0-b8a4-11e6-8836-fbdfd6956b31-test.png",
+    "imgix_url": "https://imgix.cosmicjs.com/c20391e0-b8a4-11e6-8836-fbdfd6956b31-test.png"
+  }
 }
 ```
 
@@ -385,37 +385,37 @@ This application uses Express and Multer to create a route `POST http://localhos
 
 ```javascript
 // index.js
-const fs = require("fs");
-const Cosmic = require("cosmicjs")();
-const multer = require("multer");
-const express = require("express");
-var app = express();
+const fs = require('fs')
+const Cosmic = require('cosmicjs')()
+const multer = require('multer')
+const express = require('express')
+var app = express()
 const bucket = Cosmic.bucket({
-	slug: "your-bucket-slug",
-	write_key: "your-write-key-found-in-bucket-settings",
-});
+  slug: 'your-bucket-slug',
+  write_key: 'your-write-key-found-in-bucket-settings'
+})
 var storage = multer.diskStorage({
-	destination: function (req, file, cb) {
-		cb(null, __dirname + "/uploads");
-	},
-	filename: function (req, file, cb) {
-		cb(null, file.fieldname + "-" + Date.now());
-	},
-});
-var upload = multer({ storage: storage });
-app.post("/upload", upload.single("file"), async function (req, res) {
-	try {
-		const media_object = {
-			originalname: req.file.originalname,
-			buffer: fs.createReadStream(req.file.path),
-		};
-		const response = await bucket.addMedia({ media: media_object });
-		return res.json(response);
-	} catch (e) {
-		console.log(e);
-	}
-});
-app.listen(5000);
+  destination: function (req, file, cb) {
+    cb(null, __dirname + '/uploads')
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.fieldname + '-' + Date.now())
+  }
+})
+var upload = multer({ storage: storage })
+app.post('/upload', upload.single('file'), async function (req, res) {
+  try {
+    const media_object = {
+      originalname: req.file.originalname,
+      buffer: fs.createReadStream(req.file.path)
+    }
+    const response = await bucket.addMedia({ media: media_object })
+    return res.json(response)
+  } catch (e) {
+    console.log(e)
+  }
+})
+app.listen(5000)
 ```
 
 ### React Dropzone: Client-side
@@ -425,10 +425,10 @@ React Dropzone is a popular file uploader on the client-side. For implementation
 [View full screen / fork on StackBlitz ](https://stackblitz.com/edit/react-dropzone-cosmic)
 
 <iframe
-	src="https://stackblitz.com/edit/react-dropzone-cosmic?embed=1&file=index.js"
-	width="100%"
-	height="500"
-	frameBorder="0"
+  src="https://stackblitz.com/edit/react-dropzone-cosmic?embed=1&file=index.js"
+  width="100%"
+  height="500"
+  frameBorder="0"
 ></iframe>
 
 ## Edit Media
@@ -436,10 +436,10 @@ React Dropzone is a popular file uploader on the client-side. For implementation
 Edit an existing Media by `id` in your Bucket.
 
 <Callout emoji="⚠">
-	**Required**
-	<br />
-	`write_key` must be passed as `Authorization Bearer` in the header of the
-	request.
+  **Required**
+  <br />
+  `write_key` must be passed as `Authorization Bearer` in the header of the
+  request.
 </Callout>
 
 | Parameter |  Type  | Description                                           |
@@ -459,7 +459,7 @@ PATCH $BASE_URL/buckets/${bucket_slug}/media/${media_id}
 
 ```json
 {
-	"Authorization": "Bearer n5MbD59UPBoVpyqi6B6DnOzAvZ..."
+  "Authorization": "Bearer n5MbD59UPBoVpyqi6B6DnOzAvZ..."
 }
 ```
 
@@ -467,9 +467,9 @@ PATCH $BASE_URL/buckets/${bucket_slug}/media/${media_id}
 
 ```json
 {
-	"metadata": {
-		"avatar": true
-	}
+  "metadata": {
+    "avatar": true
+  }
 }
 ```
 
@@ -477,7 +477,7 @@ PATCH $BASE_URL/buckets/${bucket_slug}/media/${media_id}
 
 ```json
 {
-	"message": "Media with id '${media_id}' edited successfully in bucket."
+  "message": "Media with id '${media_id}' edited successfully in bucket."
 }
 ```
 
@@ -486,10 +486,10 @@ PATCH $BASE_URL/buckets/${bucket_slug}/media/${media_id}
 Delete an existing Media by `id` from your Bucket.
 
 <Callout emoji="⚠">
-	**Required**
-	<br />
-	`write_key` must be passed as `Authorization Bearer` in the header of the
-	request.
+  **Required**
+  <br />
+  `write_key` must be passed as `Authorization Bearer` in the header of the
+  request.
 </Callout>
 
 **Methods**
@@ -503,7 +503,7 @@ DELETE $BASE_URL/buckets/${bucket_slug}/media/${media_id}
 
 ```json
 {
-	"Authorization": "Bearer n5MbD59UPBoVpyqi6B6DnOzAvZ..."
+  "Authorization": "Bearer n5MbD59UPBoVpyqi6B6DnOzAvZ..."
 }
 ```
 
@@ -517,22 +517,22 @@ Cosmic.deleteMedia()
 **Example Request**
 
 ```javascript
-const Cosmic = require("cosmicjs");
-const api = Cosmic();
+const Cosmic = require('cosmicjs')
+const api = Cosmic()
 const bucket = api.bucket({
-	slug: "your-bucket-slug",
-	read_key: "your-read-key-found-in-bucket-settings",
-});
+  slug: 'your-bucket-slug',
+  read_key: 'your-read-key-found-in-bucket-settings'
+})
 bucket
-	.deleteMedia({
-		id: "5a4b18e12fff7ec0e3c13c65",
-	})
-	.then((data) => {
-		console.log(data);
-	})
-	.catch((err) => {
-		console.log(err);
-	});
+  .deleteMedia({
+    id: '5a4b18e12fff7ec0e3c13c65'
+  })
+  .then(data => {
+    console.log(data)
+  })
+  .catch(err => {
+    console.log(err)
+  })
 ```
 
 </div>
@@ -545,7 +545,7 @@ deleteMedia(bucket_slug, media_id)
 
 ```json
 {
-	"Authorization": "Bearer n5MbD59UPBoVpyqi6B6DnOzAvZ..."
+  "Authorization": "Bearer n5MbD59UPBoVpyqi6B6DnOzAvZ..."
 }
 ```
 
@@ -575,6 +575,6 @@ cosmic delete-media --id 5ff75368c2dfa81a91695cec
 
 ```json
 {
-	"message": "Media with id '${media_id}' deleted successfully from bucket."
+  "message": "Media with id '${media_id}' deleted successfully from bucket."
 }
 ```

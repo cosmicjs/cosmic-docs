@@ -14,9 +14,9 @@ npm install axios
 
 ```javascript
 // index.js
-const axios = require("axios");
+const axios = require('axios')
 axios
-  .post("https://graphql.cosmicjs.com/v3", {
+  .post('https://graphql.cosmicjs.com/v3', {
     query: `{ 
     getObjects(
       bucket_slug: "simple-react-blog",
@@ -28,15 +28,15 @@ axios
       }
       total
     }
-  }`,
+  }`
   })
   .then(function (response) {
-    const objects = response.data.data.getObjects;
-    console.log(objects);
+    const objects = response.data.data.getObjects
+    console.log(objects)
   })
   .catch(function (error) {
-    console.log(error);
-  });
+    console.log(error)
+  })
 ```
 
 3. Run the following command
@@ -59,12 +59,12 @@ npm install apollo-boost graphql
 
 ```javascript
 // index.js
-import ApolloClient from "apollo-boost";
+import ApolloClient from 'apollo-boost'
 const client = new ApolloClient({
-  uri: "https://graphql.cosmicjs.com/v3",
-});
+  uri: 'https://graphql.cosmicjs.com/v3'
+})
 
-import { gql } from "apollo-boost";
+import { gql } from 'apollo-boost'
 
 client
   .query({
@@ -82,14 +82,14 @@ client
           total
         }
       }
-    `,
+    `
   })
-  .then((result) => {
-    console.log(result);
-    document.getElementById("root").innerHTML = JSON.stringify(
+  .then(result => {
+    console.log(result)
+    document.getElementById('root').innerHTML = JSON.stringify(
       result.data.getObjects
-    );
-  });
+    )
+  })
 ```
 
 3. Install [`webpack-cli`](https://www.npmjs.com/package/webpack-cli)
@@ -102,14 +102,14 @@ npm i -g webpack-cli
 
 ```javascript
 // webpack.config.js
-const path = require("path");
+const path = require('path')
 module.exports = {
-  entry: "./index.js",
+  entry: './index.js',
   output: {
-    path: path.resolve(__dirname, "dist"),
-    filename: "bundle.js",
-  },
-};
+    path: path.resolve(__dirname, 'dist'),
+    filename: 'bundle.js'
+  }
+}
 ```
 
 5. Create an HTML file titled `index.html`

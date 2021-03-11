@@ -1,16 +1,16 @@
-import Callout from "nextra-theme-docs/callout";
-import Tabs from "../../components/tabs";
+import Callout from 'nextra-theme-docs/callout'
+import Tabs from '../../components/tabs'
 
 # Objects
 
 The following endpoints allow you to get, add, edit and delete Objects in your Bucket. See [API Introduction](/api-reference/getting-started/introduction) for getting started information.
 
 <Callout emoji="✅">
-	**Quick Tip**
-	<br />
-	Your `read` and `write` keys will be required to perform the following
-	requests. These can be found in <i>Your Bucket > Settings > API Access</i> in
-	your [Bucket Dashboard ](https://app.cosmicjs.com/login).
+  **Quick Tip**
+  <br />
+  Your `read` and `write` keys will be required to perform the following
+  requests. These can be found in <i>Your Bucket > Settings > API Access</i> in
+  your [Bucket Dashboard ](https://app.cosmicjs.com/login).
 </Callout>
 
 ## Get Objects
@@ -49,71 +49,71 @@ GET $BASE_URL/buckets/${bucket_slug}/objects?query=${query}&limit=1
 
 ```json
 {
-	"objects": [
-		{
-			"id": "5f7357967286d7773adc551e",
-			"slug": "learning",
-			"title": "Learning",
-			"content": "<p>Learning is fun!!</p>",
-			"bucket": "5f7357124b331d76c08de989",
-			"created": "2020-09-29T15:49:42.005Z",
-			"created_at": "2020-09-29T15:49:42.005Z",
-			"modified_at": "2020-11-16T18:50:48.750Z",
-			"status": "published",
-			"locale": null,
-			"published_at": "2020-11-16T18:50:48.750Z",
-			"modified_by": "5e4d7eb92850c717ea93dba4",
-			"publish_at": null,
-			"unpublish_at": null,
-			"type": "categories",
-			"metadata": {
-				"description": "This is the example description",
-				"parent": {
-					"id": "5f7357b27286d7773adc551f",
-					"slug": "example-post",
-					"title": "Example Post",
-					"content": "<p>This is the post Edited!! Draft Latest</p>",
-					"bucket": "5f7357124b331d76c08de989",
-					"created_at": "2020-09-29T15:50:10.193Z",
-					"created_by": "5e4d7eb92850c717ea93dba4",
-					"modified_at": "2020-12-11T17:08:52.463Z",
-					"created": "2020-09-29T15:50:10.193Z",
-					"status": "published",
-					"thumbnail": "",
-					"published_at": "2020-12-11T16:07:10.451Z",
-					"modified_by": "5e4d7eb92850c717ea93dba4",
-					"publish_at": null,
-					"unpublish_at": null,
-					"type": "posts",
-					"metadata": {
-						"category": {
-							"id": "5f7357967286d7773adc551e",
-							"slug": "learning",
-							"title": "Learning",
-							"content": "<p>Learning is fun!!</p>",
-							"bucket": "5f7357124b331d76c08de989",
-							"created": "2020-09-29T15:49:42.005Z",
-							"created_at": "2020-09-29T15:49:42.005Z",
-							"modified_at": "2020-11-16T18:50:48.750Z",
-							"status": "published",
-							"locale": null,
-							"published_at": "2020-11-16T18:50:48.750Z",
-							"modified_by": "5e4d7eb92850c717ea93dba4",
-							"publish_at": null,
-							"unpublish_at": null,
-							"type": "categories",
-							"metadata": {
-								"description": "This is the example description",
-								"parent": "5f7357b27286d7773adc551f"
-							}
-						}
-					}
-				}
-			}
-		}
-	],
-	"total": 6,
-	"limit": 1
+  "objects": [
+    {
+      "id": "5f7357967286d7773adc551e",
+      "slug": "learning",
+      "title": "Learning",
+      "content": "<p>Learning is fun!!</p>",
+      "bucket": "5f7357124b331d76c08de989",
+      "created": "2020-09-29T15:49:42.005Z",
+      "created_at": "2020-09-29T15:49:42.005Z",
+      "modified_at": "2020-11-16T18:50:48.750Z",
+      "status": "published",
+      "locale": null,
+      "published_at": "2020-11-16T18:50:48.750Z",
+      "modified_by": "5e4d7eb92850c717ea93dba4",
+      "publish_at": null,
+      "unpublish_at": null,
+      "type": "categories",
+      "metadata": {
+        "description": "This is the example description",
+        "parent": {
+          "id": "5f7357b27286d7773adc551f",
+          "slug": "example-post",
+          "title": "Example Post",
+          "content": "<p>This is the post Edited!! Draft Latest</p>",
+          "bucket": "5f7357124b331d76c08de989",
+          "created_at": "2020-09-29T15:50:10.193Z",
+          "created_by": "5e4d7eb92850c717ea93dba4",
+          "modified_at": "2020-12-11T17:08:52.463Z",
+          "created": "2020-09-29T15:50:10.193Z",
+          "status": "published",
+          "thumbnail": "",
+          "published_at": "2020-12-11T16:07:10.451Z",
+          "modified_by": "5e4d7eb92850c717ea93dba4",
+          "publish_at": null,
+          "unpublish_at": null,
+          "type": "posts",
+          "metadata": {
+            "category": {
+              "id": "5f7357967286d7773adc551e",
+              "slug": "learning",
+              "title": "Learning",
+              "content": "<p>Learning is fun!!</p>",
+              "bucket": "5f7357124b331d76c08de989",
+              "created": "2020-09-29T15:49:42.005Z",
+              "created_at": "2020-09-29T15:49:42.005Z",
+              "modified_at": "2020-11-16T18:50:48.750Z",
+              "status": "published",
+              "locale": null,
+              "published_at": "2020-11-16T18:50:48.750Z",
+              "modified_by": "5e4d7eb92850c717ea93dba4",
+              "publish_at": null,
+              "unpublish_at": null,
+              "type": "categories",
+              "metadata": {
+                "description": "This is the example description",
+                "parent": "5f7357b27286d7773adc551f"
+              }
+            }
+          }
+        }
+      }
+    }
+  ],
+  "total": 6,
+  "limit": 1
 }
 ```
 
@@ -175,10 +175,10 @@ cosmic get-objects --limit 10 --query '{"type":"posts"}'
 ### Using Props
 
 <Callout emoji="💡">
-	**Quick Tip**
-	<br />
-	Use `props` to limit the payload size and get only the data you need. Metadata
-	can be nested as far as you need. There is no depth limit.
+  **Quick Tip**
+  <br />
+  Use `props` to limit the payload size and get only the data you need. Metadata
+  can be nested as far as you need. There is no depth limit.
 </Callout>
 
 **Example Request with Props**
@@ -205,26 +205,26 @@ GET $BASE_URL/buckets/${bucket_slug}/objects?query=${query}&props=${props}&limit
 
 ```json
 {
-	"objects": [
-		{
-			"title": "Learning",
-			"content": "<p>Learning is fun!!</p>",
-			"metadata": {
-				"parent": {
-					"title": "Example Post",
-					"metadata": {
-						"category": {
-							"metadata": {
-								"description": "This is the example description"
-							}
-						}
-					}
-				}
-			}
-		}
-	],
-	"total": 6,
-	"limit": 1
+  "objects": [
+    {
+      "title": "Learning",
+      "content": "<p>Learning is fun!!</p>",
+      "metadata": {
+        "parent": {
+          "title": "Example Post",
+          "metadata": {
+            "category": {
+              "metadata": {
+                "description": "This is the example description"
+              }
+            }
+          }
+        }
+      }
+    }
+  ],
+  "total": 6,
+  "limit": 1
 }
 ```
 
@@ -315,67 +315,67 @@ GET $BASE_URL/buckets/${bucket_slug}/objects/${object_id}
 
 ```json
 {
-	"object": {
-		"id": "5f7357967286d7773adc551e",
-		"slug": "learning",
-		"title": "Learning",
-		"content": "<p>Learning is fun!!</p>",
-		"bucket": "5f7357124b331d76c08de989",
-		"created": "2020-09-29T15:49:42.005Z",
-		"created_at": "2020-09-29T15:49:42.005Z",
-		"modified_at": "2020-11-16T18:50:48.750Z",
-		"status": "published",
-		"locale": null,
-		"published_at": "2020-11-16T18:50:48.750Z",
-		"modified_by": "5e4d7eb92850c717ea93dba4",
-		"publish_at": null,
-		"unpublish_at": null,
-		"type": "categories",
-		"metadata": {
-			"description": "This is the example description",
-			"parent": {
-				"id": "5f7357b27286d7773adc551f",
-				"slug": "example-post",
-				"title": "Example Post",
-				"content": "<p>This is the post Edited!! Draft Latest</p>",
-				"bucket": "5f7357124b331d76c08de989",
-				"created_at": "2020-09-29T15:50:10.193Z",
-				"created_by": "5e4d7eb92850c717ea93dba4",
-				"modified_at": "2020-12-11T17:08:52.463Z",
-				"created": "2020-09-29T15:50:10.193Z",
-				"status": "published",
-				"thumbnail": "",
-				"published_at": "2020-12-11T16:07:10.451Z",
-				"modified_by": "5e4d7eb92850c717ea93dba4",
-				"publish_at": null,
-				"unpublish_at": null,
-				"type": "posts",
-				"metadata": {
-					"category": {
-						"id": "5f7357967286d7773adc551e",
-						"slug": "learning",
-						"title": "Learning",
-						"content": "<p>Learning is fun!!</p>",
-						"bucket": "5f7357124b331d76c08de989",
-						"created": "2020-09-29T15:49:42.005Z",
-						"created_at": "2020-09-29T15:49:42.005Z",
-						"modified_at": "2020-11-16T18:50:48.750Z",
-						"status": "published",
-						"locale": null,
-						"published_at": "2020-11-16T18:50:48.750Z",
-						"modified_by": "5e4d7eb92850c717ea93dba4",
-						"publish_at": null,
-						"unpublish_at": null,
-						"type": "categories",
-						"metadata": {
-							"description": "This is the example description",
-							"parent": "5f7357b27286d7773adc551f"
-						}
-					}
-				}
-			}
-		}
-	}
+  "object": {
+    "id": "5f7357967286d7773adc551e",
+    "slug": "learning",
+    "title": "Learning",
+    "content": "<p>Learning is fun!!</p>",
+    "bucket": "5f7357124b331d76c08de989",
+    "created": "2020-09-29T15:49:42.005Z",
+    "created_at": "2020-09-29T15:49:42.005Z",
+    "modified_at": "2020-11-16T18:50:48.750Z",
+    "status": "published",
+    "locale": null,
+    "published_at": "2020-11-16T18:50:48.750Z",
+    "modified_by": "5e4d7eb92850c717ea93dba4",
+    "publish_at": null,
+    "unpublish_at": null,
+    "type": "categories",
+    "metadata": {
+      "description": "This is the example description",
+      "parent": {
+        "id": "5f7357b27286d7773adc551f",
+        "slug": "example-post",
+        "title": "Example Post",
+        "content": "<p>This is the post Edited!! Draft Latest</p>",
+        "bucket": "5f7357124b331d76c08de989",
+        "created_at": "2020-09-29T15:50:10.193Z",
+        "created_by": "5e4d7eb92850c717ea93dba4",
+        "modified_at": "2020-12-11T17:08:52.463Z",
+        "created": "2020-09-29T15:50:10.193Z",
+        "status": "published",
+        "thumbnail": "",
+        "published_at": "2020-12-11T16:07:10.451Z",
+        "modified_by": "5e4d7eb92850c717ea93dba4",
+        "publish_at": null,
+        "unpublish_at": null,
+        "type": "posts",
+        "metadata": {
+          "category": {
+            "id": "5f7357967286d7773adc551e",
+            "slug": "learning",
+            "title": "Learning",
+            "content": "<p>Learning is fun!!</p>",
+            "bucket": "5f7357124b331d76c08de989",
+            "created": "2020-09-29T15:49:42.005Z",
+            "created_at": "2020-09-29T15:49:42.005Z",
+            "modified_at": "2020-11-16T18:50:48.750Z",
+            "status": "published",
+            "locale": null,
+            "published_at": "2020-11-16T18:50:48.750Z",
+            "modified_by": "5e4d7eb92850c717ea93dba4",
+            "publish_at": null,
+            "unpublish_at": null,
+            "type": "categories",
+            "metadata": {
+              "description": "This is the example description",
+              "parent": "5f7357b27286d7773adc551f"
+            }
+          }
+        }
+      }
+    }
+  }
 }
 ```
 
@@ -440,10 +440,10 @@ cosmic get-object --id 5ff75368c2dfa81a91695cec
 ### Using Props
 
 <Callout emoji="💡">
-	**Quick Tip**
-	<br />
-	Use `props` to limit the payload size and get only the data you need. Metadata
-	can be nested as far as you need. There is no depth limit.
+  **Quick Tip**
+  <br />
+  Use `props` to limit the payload size and get only the data you need. Metadata
+  can be nested as far as you need. There is no depth limit.
 </Callout>
 
 **Example Request with Props**
@@ -467,20 +467,20 @@ GET $BASE_URL/buckets/${bucket_slug}/objects/${object_id}?props=${props}
 
 ```json
 {
-	"object": {
-		"title": "Learning",
-		"metadata": {
-			"description": "This is the example description",
-			"parent": {
-				"title": "Example Post",
-				"metadata": {
-					"category": {
-						"title": "Learning"
-					}
-				}
-			}
-		}
-	}
+  "object": {
+    "title": "Learning",
+    "metadata": {
+      "description": "This is the example description",
+      "parent": {
+        "title": "Example Post",
+        "metadata": {
+          "category": {
+            "title": "Learning"
+          }
+        }
+      }
+    }
+  }
 }
 ```
 
@@ -516,7 +516,7 @@ bucket.getObject({
 **Note:**  Using props with the GraphQL API may optimize server response time.
 
 ```javascript
-getObject(bucket_slug, input);
+getObject(bucket_slug, input)
 ```
 
 **Variables**
@@ -556,10 +556,10 @@ cosmic get-object --id 5ff75368c2dfa81a91695cec --props "title,content,metadata.
 Add a new Object to your Bucket.
 
 <Callout emoji="⚠">
-	**Required**
-	<br />
-	`write_key` must be passed as `Authorization Bearer` in the header of the
-	request.
+  **Required**
+  <br />
+  `write_key` must be passed as `Authorization Bearer` in the header of the
+  request.
 </Callout>
 
 | Parameter              | Required |       Type       | Description                                                                                       |
@@ -589,7 +589,7 @@ POST $BASE_URL/buckets/${bucket_slug}/objects
 
 ```json
 {
-	"Authorization": "Bearer n5MbD59UPBoVpyqi6B6DnOzAvZ..."
+  "Authorization": "Bearer n5MbD59UPBoVpyqi6B6DnOzAvZ..."
 }
 ```
 
@@ -597,8 +597,8 @@ POST $BASE_URL/buckets/${bucket_slug}/objects
 
 ```json
 {
-	"title": "Title of the Post",
-	"type": "posts"
+  "title": "Title of the Post",
+  "type": "posts"
 }
 ```
 
@@ -606,19 +606,19 @@ POST $BASE_URL/buckets/${bucket_slug}/objects
 
 ```json
 {
-	"object": {
-		"id": "5ff75368c2dfa81a91695cec",
-		"slug": "title-of-the-post",
-		"title": "Title of the Post",
-		"content": "",
-		"metafields": [],
-		"bucket": "5f7357124b331d76c08de989",
-		"created_at": "2021-01-07T18:31:04.005Z",
-		"modified_at": "2021-01-07T18:31:04.005Z",
-		"status": "published",
-		"published_at": "2021-01-07T18:31:04.005Z",
-		"type": "posts"
-	}
+  "object": {
+    "id": "5ff75368c2dfa81a91695cec",
+    "slug": "title-of-the-post",
+    "title": "Title of the Post",
+    "content": "",
+    "metafields": [],
+    "bucket": "5f7357124b331d76c08de989",
+    "created_at": "2021-01-07T18:31:04.005Z",
+    "modified_at": "2021-01-07T18:31:04.005Z",
+    "status": "published",
+    "published_at": "2021-01-07T18:31:04.005Z",
+    "type": "posts"
+  }
 }
 ```
 
@@ -633,39 +633,39 @@ bucket.addObject()
 
 ```javascript
 const bucket = Cosmic.bucket({
-	slug: "bucket-slug",
-	write_key: "your-write-key-found-in-bucket-settings",
-});
+  slug: 'bucket-slug',
+  write_key: 'your-write-key-found-in-bucket-settings'
+})
 const params = {
-	title: "Cosmic Example",
-	type: "examples",
-	content: "Learning the Cosmic API is really fun and so easy",
-	metafields: [
-		{
-			title: "Headline",
-			key: "headline",
-			type: "text",
-			value: "Learn Cosmic!",
-		},
-		{
-			title: "Author",
-			key: "author",
-			type: "text",
-			value: "Quasar Jones",
-		},
-	],
-	options: {
-		slug_field: false,
-	},
-};
+  title: 'Cosmic Example',
+  type: 'examples',
+  content: 'Learning the Cosmic API is really fun and so easy',
+  metafields: [
+    {
+      title: 'Headline',
+      key: 'headline',
+      type: 'text',
+      value: 'Learn Cosmic!'
+    },
+    {
+      title: 'Author',
+      key: 'author',
+      type: 'text',
+      value: 'Quasar Jones'
+    }
+  ],
+  options: {
+    slug_field: false
+  }
+}
 bucket
-	.addObject(params)
-	.then((data) => {
-		console.log(data);
-	})
-	.catch((err) => {
-		console.log(err);
-	});
+  .addObject(params)
+  .then(data => {
+    console.log(data)
+  })
+  .catch(err => {
+    console.log(err)
+  })
 ```
 
 </div>
@@ -678,7 +678,7 @@ addObject(bucket_slug, input)
 
 ```json
 {
-	"Authorization": "Bearer n5MbD59UPBoVpyqi6B6DnOzAvZ..."
+  "Authorization": "Bearer n5MbD59UPBoVpyqi6B6DnOzAvZ..."
 }
 ```
 
@@ -717,10 +717,10 @@ cosmic add-object --type planets --title Venus --metafields '[{"title": "Radius"
 Edit an existing Object by `id` in your Bucket.
 
 <Callout emoji="⚠">
-	**Required**
-	<br />
-	`write_key` must be passed as `Authorization Bearer` in the header of the
-	request.
+  **Required**
+  <br />
+  `write_key` must be passed as `Authorization Bearer` in the header of the
+  request.
 </Callout>
 
 | Parameter              |       Type       | Description                                                                                       |
@@ -750,7 +750,7 @@ PATCH $BASE_URL/buckets/${bucket_slug}/objects/${object_id}
 
 ```json
 {
-	"Authorization": "Bearer n5MbD59UPBoVpyqi6B6DnOzAvZ..."
+  "Authorization": "Bearer n5MbD59UPBoVpyqi6B6DnOzAvZ..."
 }
 ```
 
@@ -758,7 +758,7 @@ PATCH $BASE_URL/buckets/${bucket_slug}/objects/${object_id}
 
 ```json
 {
-	"title": "This is the updated Title"
+  "title": "This is the updated Title"
 }
 ```
 
@@ -766,19 +766,19 @@ PATCH $BASE_URL/buckets/${bucket_slug}/objects/${object_id}
 
 ```json
 {
-	"object": {
-		"id": "5ff75368c2dfa81a91695cec",
-		"slug": "title-of-the-post",
-		"title": "This is the updated Title",
-		"content": "",
-		"metafields": [],
-		"bucket": "5f7357124b331d76c08de989",
-		"created_at": "2021-01-07T18:31:04.005Z",
-		"modified_at": "2021-01-07T18:38:12.124Z",
-		"status": "published",
-		"published_at": "2021-01-07T18:31:04.005Z",
-		"type": "posts"
-	}
+  "object": {
+    "id": "5ff75368c2dfa81a91695cec",
+    "slug": "title-of-the-post",
+    "title": "This is the updated Title",
+    "content": "",
+    "metafields": [],
+    "bucket": "5f7357124b331d76c08de989",
+    "created_at": "2021-01-07T18:31:04.005Z",
+    "modified_at": "2021-01-07T18:38:12.124Z",
+    "status": "published",
+    "published_at": "2021-01-07T18:31:04.005Z",
+    "type": "posts"
+  }
 }
 ```
 
@@ -792,22 +792,22 @@ bucket.editObject()
 **Example Request**
 
 ```javascript
-const Cosmic = require("cosmicjs");
+const Cosmic = require('cosmicjs')
 const bucket = Cosmic.bucket({
-	slug: "bucket-slug",
-	write_key: "your-write-key-found-in-bucket-settings",
-});
+  slug: 'bucket-slug',
+  write_key: 'your-write-key-found-in-bucket-settings'
+})
 bucket
-	.editObject({
-		id: "5ff75368c2dfa81a91695cec",
-		title: "New Title Edit",
-	})
-	.then((data) => {
-		console.log(data);
-	})
-	.catch((err) => {
-		console.log(err);
-	});
+  .editObject({
+    id: '5ff75368c2dfa81a91695cec',
+    title: 'New Title Edit'
+  })
+  .then(data => {
+    console.log(data)
+  })
+  .catch(err => {
+    console.log(err)
+  })
 ```
 
 </div>
@@ -820,7 +820,7 @@ editObject(bucket_slug, input)
 
 ```json
 {
-	"Authorization": "Bearer n5MbD59UPBoVpyqi6B6DnOzAvZ..."
+  "Authorization": "Bearer n5MbD59UPBoVpyqi6B6DnOzAvZ..."
 }
 ```
 
@@ -859,10 +859,10 @@ cosmic edit-object --id 5ff75368c2dfa81a91695cec --title 'This is the updated Ti
 Delete an existing Object by `id` from your Bucket.
 
 <Callout emoji="⚠">
-	**Required**
-	<br />
-	`write_key` must be passed as `Authorization Bearer` in the header of the
-	request.
+  **Required**
+  <br />
+  `write_key` must be passed as `Authorization Bearer` in the header of the
+  request.
 </Callout>
 
 **Methods**
@@ -876,7 +876,7 @@ DELETE $BASE_URL/buckets/${bucket_slug}/objects/${object_id}
 
 ```json
 {
-	"Authorization": "Bearer n5MbD59UPBoVpyqi6B6DnOzAvZ..."
+  "Authorization": "Bearer n5MbD59UPBoVpyqi6B6DnOzAvZ..."
 }
 ```
 
@@ -884,7 +884,7 @@ DELETE $BASE_URL/buckets/${bucket_slug}/objects/${object_id}
 
 ```json
 {
-	"message": "Object with id '${object_id}' deleted successfully from bucket."
+  "message": "Object with id '${object_id}' deleted successfully from bucket."
 }
 ```
 
@@ -898,21 +898,21 @@ bucket.deleteObject()
 **Example Request**
 
 ```javascript
-const Cosmic = require("cosmicjs");
+const Cosmic = require('cosmicjs')
 const bucket = Cosmic.bucket({
-	slug: "bucket-slug",
-	write_key: "your-write-key-found-in-bucket-settings",
-});
+  slug: 'bucket-slug',
+  write_key: 'your-write-key-found-in-bucket-settings'
+})
 bucket
-	.deleteObject({
-		id: "5ff75368c2dfa81a91695cec",
-	})
-	.then((data) => {
-		console.log(data);
-	})
-	.catch((err) => {
-		console.log(err);
-	});
+  .deleteObject({
+    id: '5ff75368c2dfa81a91695cec'
+  })
+  .then(data => {
+    console.log(data)
+  })
+  .catch(err => {
+    console.log(err)
+  })
 ```
 
 </div>
@@ -925,7 +925,7 @@ deleteObject(bucket_slug, input)
 
 ```json
 {
-	"Authorization": "Bearer n5MbD59UPBoVpyqi6B6DnOzAvZ..."
+  "Authorization": "Bearer n5MbD59UPBoVpyqi6B6DnOzAvZ..."
 }
 ```
 

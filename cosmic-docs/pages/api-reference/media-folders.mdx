@@ -1,15 +1,15 @@
-import Callout from "nextra-theme-docs/callout";
+import Callout from 'nextra-theme-docs/callout'
 
 # Media Folders
 
 The following endpoints allow you to manage media folders in your Bucket.
 
 <Callout emoji="✅">
-	**Quick Tip**
-	<br />
-	Your `read` and `write` keys will be required to perform the following
-	requests. These can be found in <i>Your Bucket > Settings > API Access</i> in
-	your [Bucket Dashboard ](https://app.cosmicjs.com/login).
+  **Quick Tip**
+  <br />
+  Your `read` and `write` keys will be required to perform the following
+  requests. These can be found in <i>Your Bucket > Settings > API Access</i> in
+  your [Bucket Dashboard ](https://app.cosmicjs.com/login).
 </Callout>
 
 ## Get Media Folders
@@ -31,17 +31,17 @@ GET $BASE_URL/buckets/${bucket_slug}/media-folders
 
 ```json
 {
-	"media_folders": [
-		{
-			"title": "Product Images",
-			"slug": "product-images"
-		},
-		{
-			"title": "Jungle Animals",
-			"slug": "jungle-animals"
-		}
-	],
-	"total": 2
+  "media_folders": [
+    {
+      "title": "Product Images",
+      "slug": "product-images"
+    },
+    {
+      "title": "Jungle Animals",
+      "slug": "jungle-animals"
+    }
+  ],
+  "total": 2
 }
 ```
 
@@ -68,39 +68,39 @@ GET $BASE_URL/buckets/${bucket_slug}/media-folders/${media_folder_slug}/media
 
 ```json
 {
-	"media": [
-		{
-			"id": "5feb42f3601e2b3a6151289a",
-			"name": "9c4d6b70-49e5-11eb-98a2-810fade44566-logo-layout-1.jpg",
-			"original_name": "logo-layout-1.jpg",
-			"size": 256652,
-			"type": "image/jpeg",
-			"bucket": "5e6818d8e11cffafef7a6230",
-			"created": "2020-12-29T14:53:39.847Z",
-			"location": "https://cdn.cosmicjs.com",
-			"folder": "product-images",
-			"metadata": {
-				"ok": true
-			},
-			"url": "https://cdn.cosmicjs.com/9c4d6b70-49e5-11eb-98a2-810fade44566-logo-layout-1.jpg",
-			"imgix_url": "https://imgix.cosmicjs.com/9c4d6b70-49e5-11eb-98a2-810fade44566-logo-layout-1.jpg"
-		},
-		{
-			"id": "5feb42f2601e2b3a61512899",
-			"name": "9c5a3cb0-49e5-11eb-98a2-810fade44566-logo-layout-2.jpg",
-			"original_name": "logo-layout-2.jpg",
-			"size": 170482,
-			"type": "image/jpeg",
-			"bucket": "5e6818d8e11cffafef7a6230",
-			"created": "2020-12-29T14:53:38.494Z",
-			"location": "https://cdn.cosmicjs.com",
-			"folder": "product-images",
-			"url": "https://cdn.cosmicjs.com/9c5a3cb0-49e5-11eb-98a2-810fade44566-logo-layout-2.jpg",
-			"imgix_url": "https://imgix.cosmicjs.com/9c5a3cb0-49e5-11eb-98a2-810fade44566-logo-layout-2.jpg"
-		}
-	],
-	"total": 3,
-	"limit": 2
+  "media": [
+    {
+      "id": "5feb42f3601e2b3a6151289a",
+      "name": "9c4d6b70-49e5-11eb-98a2-810fade44566-logo-layout-1.jpg",
+      "original_name": "logo-layout-1.jpg",
+      "size": 256652,
+      "type": "image/jpeg",
+      "bucket": "5e6818d8e11cffafef7a6230",
+      "created": "2020-12-29T14:53:39.847Z",
+      "location": "https://cdn.cosmicjs.com",
+      "folder": "product-images",
+      "metadata": {
+        "ok": true
+      },
+      "url": "https://cdn.cosmicjs.com/9c4d6b70-49e5-11eb-98a2-810fade44566-logo-layout-1.jpg",
+      "imgix_url": "https://imgix.cosmicjs.com/9c4d6b70-49e5-11eb-98a2-810fade44566-logo-layout-1.jpg"
+    },
+    {
+      "id": "5feb42f2601e2b3a61512899",
+      "name": "9c5a3cb0-49e5-11eb-98a2-810fade44566-logo-layout-2.jpg",
+      "original_name": "logo-layout-2.jpg",
+      "size": 170482,
+      "type": "image/jpeg",
+      "bucket": "5e6818d8e11cffafef7a6230",
+      "created": "2020-12-29T14:53:38.494Z",
+      "location": "https://cdn.cosmicjs.com",
+      "folder": "product-images",
+      "url": "https://cdn.cosmicjs.com/9c5a3cb0-49e5-11eb-98a2-810fade44566-logo-layout-2.jpg",
+      "imgix_url": "https://imgix.cosmicjs.com/9c5a3cb0-49e5-11eb-98a2-810fade44566-logo-layout-2.jpg"
+    }
+  ],
+  "total": 3,
+  "limit": 2
 }
 ```
 
@@ -109,10 +109,10 @@ GET $BASE_URL/buckets/${bucket_slug}/media-folders/${media_folder_slug}/media
 Add a new Media Folder to your Bucket.
 
 <Callout emoji="⚠">
-	**Required**
-	<br />
-	`write_key` must be passed as `Authorization Bearer` in the header of the
-	request.
+  **Required**
+  <br />
+  `write_key` must be passed as `Authorization Bearer` in the header of the
+  request.
 </Callout>
 
 | Parameter | Required |  Type  | Description                                                          |
@@ -129,7 +129,7 @@ POST $BASE_URL/buckets/${bucket_slug}/media-folders/
 
 ```json
 {
-	"Authorization": "Bearer n5MbD59UPBoVpyqi6B6DnOzAvZ..."
+  "Authorization": "Bearer n5MbD59UPBoVpyqi6B6DnOzAvZ..."
 }
 ```
 
@@ -137,7 +137,7 @@ POST $BASE_URL/buckets/${bucket_slug}/media-folders/
 
 ```json
 {
-	"title": "Slideshow"
+  "title": "Slideshow"
 }
 ```
 
@@ -145,10 +145,10 @@ POST $BASE_URL/buckets/${bucket_slug}/media-folders/
 
 ```json
 {
-	"media_folder": {
-		"title": "Slideshow",
-		"slug": "slideshow"
-	}
+  "media_folder": {
+    "title": "Slideshow",
+    "slug": "slideshow"
+  }
 }
 ```
 
@@ -157,10 +157,10 @@ POST $BASE_URL/buckets/${bucket_slug}/media-folders/
 Edit an existing Media Folder by `slug` in your Bucket.
 
 <Callout emoji="⚠">
-	**Required**
-	<br />
-	`write_key` must be passed as `Authorization Bearer` in the header of the
-	request.
+  **Required**
+  <br />
+  `write_key` must be passed as `Authorization Bearer` in the header of the
+  request.
 </Callout>
 
 | Parameter |  Type  | Description                                                          |
@@ -179,7 +179,7 @@ PATCH $BASE_URL/buckets/${bucket_slug}/media-folders/${media_folder_slug}
 
 ```json
 {
-	"Authorization": "Bearer n5MbD59UPBoVpyqi6B6DnOzAvZ..."
+  "Authorization": "Bearer n5MbD59UPBoVpyqi6B6DnOzAvZ..."
 }
 ```
 
@@ -187,7 +187,7 @@ PATCH $BASE_URL/buckets/${bucket_slug}/media-folders/${media_folder_slug}
 
 ```json
 {
-	"title": "Product Images"
+  "title": "Product Images"
 }
 ```
 
@@ -195,10 +195,10 @@ PATCH $BASE_URL/buckets/${bucket_slug}/media-folders/${media_folder_slug}
 
 ```json
 {
-	"media_folder": {
-		"title": "Product Images",
-		"slug": "product-images"
-	}
+  "media_folder": {
+    "title": "Product Images",
+    "slug": "product-images"
+  }
 }
 ```
 
@@ -207,10 +207,10 @@ PATCH $BASE_URL/buckets/${bucket_slug}/media-folders/${media_folder_slug}
 Delete an existing Media Folder by `slug` from your Bucket.
 
 <Callout emoji="⚠">
-	**Required**
-	<br />
-	`write_key` must be passed as `Authorization Bearer` in the header of the
-	request.
+  **Required**
+  <br />
+  `write_key` must be passed as `Authorization Bearer` in the header of the
+  request.
 </Callout>
 
 **Definition**
@@ -223,7 +223,7 @@ DELETE $BASE_URL/buckets/${bucket_slug}/media-folders/${media_folder_slug}
 
 ```json
 {
-	"Authorization": "Bearer n5MbD59UPBoVpyqi6B6DnOzAvZ..."
+  "Authorization": "Bearer n5MbD59UPBoVpyqi6B6DnOzAvZ..."
 }
 ```
 
@@ -231,6 +231,6 @@ DELETE $BASE_URL/buckets/${bucket_slug}/media-folders/${media_folder_slug}
 
 ```json
 {
-	"message": "Media folder with slug '${media_folder_slug}' deleted successfully from bucket."
+  "message": "Media folder with slug '${media_folder_slug}' deleted successfully from bucket."
 }
 ```

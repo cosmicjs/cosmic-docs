@@ -38,24 +38,24 @@ plugins: [
       objectTypes: [`posts`], // Note it will result in GraphQL queries (allCosmicjsPosts, cosmicjsPosts)
       // If you have enabled read_key to fetch data (optional).
       apiAccess: {
-        read_key: `YOUR_BUCKET_READ_KEY`, // Get this value in Bucket > Settings
+        read_key: `YOUR_BUCKET_READ_KEY` // Get this value in Bucket > Settings
       },
-      localMedia: true, // Download media locally for gatsby image (optional)
-    },
-  },
-];
+      localMedia: true // Download media locally for gatsby image (optional)
+    }
+  }
+]
 ```
 
 ### 4. Add the following code into your `gatsby-node.js` file
 
 ```javascript
-const path = require(`path`);
+const path = require(`path`)
 
 exports.createPages = async ({ graphql, actions }) => {
-  const { createPage } = actions;
+  const { createPage } = actions
 
   // Get the single post layout file
-  const blogPost = path.resolve(`./src/templates/blog-post.js`);
+  const blogPost = path.resolve(`./src/templates/blog-post.js`)
   // Query the GraphQL to get our posts
   const result = await graphql(
     `
@@ -73,14 +73,14 @@ exports.createPages = async ({ graphql, actions }) => {
         }
       }
     `
-  );
+  )
 
   if (result.errors) {
-    throw result.errors;
+    throw result.errors
   }
 
   // Create blog posts pages.
-  const posts = result.data.allCosmicjsPosts.edges;
+  const posts = result.data.allCosmicjsPosts.edges
 
   // For each post in posts create a separate page
   posts.forEach((post, index) => {
@@ -88,11 +88,11 @@ exports.createPages = async ({ graphql, actions }) => {
       path: post.node.slug,
       component: blogPost,
       context: {
-        slug: post.node.slug,
-      },
-    });
-  });
-};
+        slug: post.node.slug
+      }
+    })
+  })
+}
 ```
 
 ### 5. Create `blog-post.js` in `src/templates/` directory and add following code
@@ -100,11 +100,11 @@ exports.createPages = async ({ graphql, actions }) => {
 This is the layout for a single blog post page which we used in `gatsby-node.js`
 
 ```javascript
-import React from "react";
-import { graphql } from "gatsby";
+import React from 'react'
+import { graphql } from 'gatsby'
 
 const BlogPostTemplate = ({ data }) => {
-  const post = data.cosmicjsPosts; // get the post data from query
+  const post = data.cosmicjsPosts // get the post data from query
 
   // Render the post data
   return (
@@ -116,10 +116,10 @@ const BlogPostTemplate = ({ data }) => {
       </div>
       <section dangerouslySetInnerHTML={{ __html: post.content }} />
     </article>
-  );
-};
+  )
+}
 
-export default BlogPostTemplate;
+export default BlogPostTemplate
 
 // Query to get single Post where slug is equal
 export const pageQuery = graphql`
@@ -136,17 +136,17 @@ export const pageQuery = graphql`
       created(formatString: "MMMM DD, YYYY")
     }
   }
-`;
+`
 ```
 
 ### 6. Edit `index.js` file in `src/pages/` directory and add following code
 
 ```javascript
-import React from "react";
-import { Link, graphql } from "gatsby";
+import React from 'react'
+import { Link, graphql } from 'gatsby'
 
 const BlogIndex = ({ data }) => {
-  const posts = data.allCosmicjsPosts.edges; // getting all posts from query
+  const posts = data.allCosmicjsPosts.edges // getting all posts from query
 
   // Rendering list of posts with link to their url
   return (
@@ -159,13 +159,13 @@ const BlogIndex = ({ data }) => {
               <img alt="" src={`${node.metadata.hero.imgix_url}?w=400`} />
             </Link>
           </div>
-        );
+        )
       })}
     </div>
-  );
-};
+  )
+}
 
-export default BlogIndex;
+export default BlogIndex
 
 // Query all posts from GraphQL
 export const pageQuery = graphql`
@@ -185,7 +185,7 @@ export const pageQuery = graphql`
       }
     }
   }
-`;
+`
 ```
 
 ### 7. Start your app

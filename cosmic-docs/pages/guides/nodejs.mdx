@@ -22,35 +22,35 @@ Find your Bucket slug and API read key in <i>Your Bucket > Settings > API Access
 
 ```javascript
 // index.js
-const express = require("express");
-const app = express();
-const Cosmic = require("cosmicjs");
-const api = Cosmic();
-const PORT = process.env.PORT || 3000;
+const express = require('express')
+const app = express()
+const Cosmic = require('cosmicjs')
+const api = Cosmic()
+const PORT = process.env.PORT || 3000
 // Set these values, found in Bucket > Settings after logging in at https://app.cosmicjs.com/login
 const bucket = api.bucket({
-  slug: "YOUR_BUCKET_SLUG",
-  read_key: "YOUR_BUCKET_READ_KEY",
-});
-app.get("*", async (req, res) => {
+  slug: 'YOUR_BUCKET_SLUG',
+  read_key: 'YOUR_BUCKET_READ_KEY'
+})
+app.get('*', async (req, res) => {
   const data = await bucket.getObjects({
-    type: "posts",
-    props: "slug,title,content,metadata", // Limit the API response data by props
-  });
-  const posts = data.objects;
-  let markup = ``;
-  posts.map((post) => {
+    type: 'posts',
+    props: 'slug,title,content,metadata' // Limit the API response data by props
+  })
+  const posts = data.objects
+  let markup = ``
+  posts.map(post => {
     markup += `<div style="margin-bottom: 20px">
     <div><img alt="" src="${post.metadata.hero.imgix_url}?w=400"/></div>
     <div>${post.title}</div>
-    </div>`;
-  });
-  res.set("Content-Type", "text/html");
-  res.send(markup);
-});
+    </div>`
+  })
+  res.set('Content-Type', 'text/html')
+  res.send(markup)
+})
 app.listen(PORT, () => {
-  console.log("Your Cosmic app is running at http://localhost:" + PORT);
-});
+  console.log('Your Cosmic app is running at http://localhost:' + PORT)
+})
 ```
 
 ### 4. Start your app

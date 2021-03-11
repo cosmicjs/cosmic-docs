@@ -1,7 +1,7 @@
 .guides {
   display: flex;
   flex-wrap: wrap;
-  margin: 1.5rem -.5rem 3rem;
+  margin: 1.5rem -0.5rem 3rem;
 }
 
 .guide {
@@ -19,11 +19,11 @@
   padding-top: 40px;
   text-decoration: none;
   background: #fff;
-  transition-property: transform,box-shadow,border-color;
-  transition-duration: .15s;
+  transition-property: transform, box-shadow, border-color;
+  transition-duration: 0.15s;
   transition-timing-function: ease-out;
 }
-.guide a:hover{
+.guide a:hover {
   box-shadow: 0 1px 20px rgb(0 0 0 / 17%);
 }
 .guide svg {

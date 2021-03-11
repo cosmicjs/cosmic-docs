@@ -1,5 +1,5 @@
-import Callout from "nextra-theme-docs/callout";
-import Tabs from "../../components/tabs";
+import Callout from 'nextra-theme-docs/callout'
+import Tabs from '../../components/tabs'
 
 # Authentication
 
@@ -10,10 +10,10 @@ You can get your authentication token in your user account settings located in <
 Send your `email` and `password` to receive your access token. Your access token will be used to add Buckets to your account as well as other account-related access.
 
 <Callout emoji="⚠">
-	**Note**
-	<br />
-	You do not need to use the token to access your Bucket content. Your Bucket
-	has its own read and write keys for restricted access.
+  **Note**
+  <br />
+  You do not need to use the token to access your Bucket content. Your Bucket
+  has its own read and write keys for restricted access.
 </Callout>
 
 | Parameter | Required |  Type  | Description                |
@@ -39,17 +39,17 @@ Cosmic.authenticate()
 **Example Request**
 
 ```javascript
-const Cosmic = require("cosmicjs")(); // double parentheses to init function without token
+const Cosmic = require('cosmicjs')() // double parentheses to init function without token
 Cosmic.authenticate({
-	email: "you@youremail.com",
-	password: "yourpassword",
+  email: 'you@youremail.com',
+  password: 'yourpassword'
 })
-	.then((data) => {
-		console.log(data);
-	})
-	.catch((err) => {
-		console.log(err);
-	});
+  .then(data => {
+    console.log(data)
+  })
+  .catch(err => {
+    console.log(err)
+  })
 ```
 
 </div>
@@ -79,8 +79,8 @@ Authenticated
 
 ```json
 {
-	"email": "you@youremail.com",
-	"password": "yourpassword"
+  "email": "you@youremail.com",
+  "password": "yourpassword"
 }
 ```
 
@@ -88,7 +88,7 @@ Authenticated
 
 ```json
 {
-	"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXV.eyJlbWFpbCI6InNwaXJvbnl..."
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXV.eyJlbWFpbCI6InNwaXJvbnl..."
 }
 ```
 
@@ -99,9 +99,9 @@ You can use the Authentication token using REST requests to the API
 **Example -> Get Buckets**
 
 <Callout emoji="⚠">
-	**Required**
-	<br />
-	`token` must be passed as `Authorization Bearer` in the header of the request.
+  **Required**
+  <br />
+  `token` must be passed as `Authorization Bearer` in the header of the request.
 </Callout>
 
 **Methods**
@@ -117,7 +117,7 @@ GET $BASE_URL/buckets
 
 ```json
 {
-	"Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXV.eyJlbWFpbCI6InNwaXJvbnl..."
+  "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXV.eyJlbWFpbCI6InNwaXJvbnl..."
 }
 ```
 
@@ -131,16 +131,16 @@ Cosmic.getBuckets()
 **Example Request**
 
 ```javascript
-const Cosmic = require("cosmicjs")({
-	token: "your-token-from-auth-request", // optional
-});
+const Cosmic = require('cosmicjs')({
+  token: 'your-token-from-auth-request' // optional
+})
 Cosmic.getBuckets()
-	.then((data) => {
-		console.log(data);
-	})
-	.catch((err) => {
-		console.log(err);
-	});
+  .then(data => {
+    console.log(data)
+  })
+  .catch(err => {
+    console.log(err)
+  })
 ```
 
 </div>
@@ -153,7 +153,7 @@ getBuckets()
 
 ```json
 {
-	"Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXV.eyJlbWFpbCI6InNwaXJvbnl..."
+  "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXV.eyJlbWFpbCI6InNwaXJvbnl..."
 }
 ```
 

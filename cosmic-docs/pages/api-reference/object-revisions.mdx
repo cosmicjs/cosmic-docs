@@ -1,16 +1,16 @@
-import Callout from "nextra-theme-docs/callout";
-import Tabs from "../../components/tabs";
+import Callout from 'nextra-theme-docs/callout'
+import Tabs from '../../components/tabs'
 
 # Object Revisions
 
 The following endpoints allow you to get Revision of your Object in your Bucket.
 
 <Callout emoji="✅">
-	**Quick Tip**
-	<br />
-	Your `read` and `write` keys will be required to perform the following
-	requests. These can be found in <i>Your Bucket > Settings > API Access</i> in
-	your [Bucket Dashboard ](https://app.cosmicjs.com/login).
+  **Quick Tip**
+  <br />
+  Your `read` and `write` keys will be required to perform the following
+  requests. These can be found in <i>Your Bucket > Settings > API Access</i> in
+  your [Bucket Dashboard ](https://app.cosmicjs.com/login).
 </Callout>
 
 ## Get Object Revisions
@@ -46,18 +46,18 @@ bucket.getObjectRevisions()
 **Example Request**
 
 ```javascript
-const Cosmic = require("cosmicjs");
-const api = Cosmic();
+const Cosmic = require('cosmicjs')
+const api = Cosmic()
 const bucket = api.bucket({
-	slug: "your-bucket-slug",
-	read_key: "your-read-key-found-in-bucket-settings",
-});
+  slug: 'your-bucket-slug',
+  read_key: 'your-read-key-found-in-bucket-settings'
+})
 
 bucket.getObjectRevisions({
-	id: "5ff75368c2dfa81a91695cec",
-	props: "slug,title,created_at",
-	limit: 10,
-});
+  id: '5ff75368c2dfa81a91695cec',
+  props: 'slug,title,created_at',
+  limit: 10
+})
 ```
 
 </div>
@@ -86,38 +86,38 @@ Add this with your variable values to "Query Variables".
 
 ```json
 {
-	"revisions": [
-		{
-			"id": "5ff75368c2dfa81a91695cec",
-			"slug": "title-of-the-post",
-			"title": "Title of the Post",
-			"content": "",
-			"bucket": "5f7357124b331d76c08de989",
-			"created_at": "2021-01-07T18:31:04.005Z",
-			"modified_at": "2021-01-07T18:31:04.005Z",
-			"status": "published",
-			"published_at": "2021-01-07T18:31:04.005Z",
-			"object_id": "5ff75368c2dfa81a91695cec",
-			"type": "posts",
-			"metadata": null
-		},
-		{
-			"id": "5ff754491a90d61b34aacdbe",
-			"slug": "title-of-the-post",
-			"title": "This is updated Title",
-			"content": "",
-			"bucket": "5f7357124b331d76c08de989",
-			"created_at": "2021-01-07T18:34:49.828Z",
-			"modified_at": "2021-01-07T18:34:49.828Z",
-			"status": "published",
-			"published_at": "2021-01-07T18:31:04.005Z",
-			"object_id": "5ff75368c2dfa81a91695cec",
-			"type": "posts",
-			"metadata": null
-		}
-	],
-	"total": 4,
-	"limit": 2
+  "revisions": [
+    {
+      "id": "5ff75368c2dfa81a91695cec",
+      "slug": "title-of-the-post",
+      "title": "Title of the Post",
+      "content": "",
+      "bucket": "5f7357124b331d76c08de989",
+      "created_at": "2021-01-07T18:31:04.005Z",
+      "modified_at": "2021-01-07T18:31:04.005Z",
+      "status": "published",
+      "published_at": "2021-01-07T18:31:04.005Z",
+      "object_id": "5ff75368c2dfa81a91695cec",
+      "type": "posts",
+      "metadata": null
+    },
+    {
+      "id": "5ff754491a90d61b34aacdbe",
+      "slug": "title-of-the-post",
+      "title": "This is updated Title",
+      "content": "",
+      "bucket": "5f7357124b331d76c08de989",
+      "created_at": "2021-01-07T18:34:49.828Z",
+      "modified_at": "2021-01-07T18:34:49.828Z",
+      "status": "published",
+      "published_at": "2021-01-07T18:31:04.005Z",
+      "object_id": "5ff75368c2dfa81a91695cec",
+      "type": "posts",
+      "metadata": null
+    }
+  ],
+  "total": 4,
+  "limit": 2
 }
 ```
 
@@ -142,19 +142,19 @@ GET $BASE_URL/buckets/${bucket_slug}/objects/${object_id}/revisions/${revision_i
 
 ```json
 {
-	"revision": {
-		"id": "5ff75368c2dfa81a91695cec",
-		"slug": "title-of-the-post",
-		"title": "Title of the Post",
-		"content": "",
-		"bucket": "5f7357124b331d76c08de989",
-		"created_at": "2021-01-07T18:31:04.005Z",
-		"modified_at": "2021-01-07T18:31:04.005Z",
-		"status": "published",
-		"published_at": "2021-01-07T18:31:04.005Z",
-		"object_id": "5ff75368c2dfa81a91695cec",
-		"type": "posts",
-		"metadata": null
-	}
+  "revision": {
+    "id": "5ff75368c2dfa81a91695cec",
+    "slug": "title-of-the-post",
+    "title": "Title of the Post",
+    "content": "",
+    "bucket": "5f7357124b331d76c08de989",
+    "created_at": "2021-01-07T18:31:04.005Z",
+    "modified_at": "2021-01-07T18:31:04.005Z",
+    "status": "published",
+    "published_at": "2021-01-07T18:31:04.005Z",
+    "object_id": "5ff75368c2dfa81a91695cec",
+    "type": "posts",
+    "metadata": null
+  }
 }
 ```
