@@ -183,9 +183,11 @@ function File({ item, anchors }) {
         <Link href={item.route}>
           <a>{title}</a>
         </Link>
-        {/* <div className="absolute right-0 top-0 mt-2 mr-2">
-          {active ? <ChevronDown /> : <ChevronRight />}
-        </div> */}
+        {item.route === '/' && (
+          <div className="absolute right-0 top-0 mt-2 mr-2">
+            {active ? <ChevronDown /> : <ChevronRight />}
+          </div>
+        )}
       </div>
     </li>
   )
