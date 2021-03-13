@@ -554,7 +554,13 @@ video {
   top: 10px;
 }
 .search-slash {
-  position: absolute;
-  right: 15px;
-  top: 13px;
+	position: absolute;
+	right: 8px;
+	top: 6px;
+	padding: 7px;
+	background: #EEF2F7;
+	border-radius: 4px;
+}
+.dark .search-slash {
+	background: #090D20;
 }
