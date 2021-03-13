@@ -155,7 +155,7 @@ export default {
       <br />
       <br />
       <span className="text-sm">
-        Looking for the <a href="https://docs.cosmicjs.com">v1 docs</a>?
+        Looking for the <a href="https://docs-v1.cosmicjs.com">v1 docs</a>?
       </span>
     </span>
   )
