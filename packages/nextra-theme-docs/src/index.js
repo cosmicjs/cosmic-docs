@@ -84,9 +84,9 @@ const ChevronRight = () => (
 
 function Folder({ item, anchors }) {
   const { asPath, locale } = useRouter()
-  const route = getFSRoute(asPath, locale) + '/'
-  const active = route === item.route + '/'
-  const open = TreeState[item.route] ?? true
+  const route = getFSRoute(asPath, locale)
+  const active = route.split('/')[1] === item.route.split('/')[1]
+  const [isOpen, setOpen] = useState(active)
   const [_, render] = useState(false)
 
   useEffect(() => {
@@ -96,20 +96,23 @@ function Folder({ item, anchors }) {
   }, [active])
 
   return (
-    <li className={open ? 'active' : ''}>
+    <li className={isOpen ? 'active' : ''}>
       <button
+        className={isOpen ? 'bg-gray-300 dark:bg-gray-800' : ''}
+        type="button"
         onClick={() => {
           if (active) return
-          TreeState[item.route] = !open
+          TreeState[item.route] = !isOpen
+          setOpen(!isOpen)
           render(x => !x)
         }}
       >
         <div className="float-left">{item.title}</div>
-        {open ? <ChevronDown /> : <ChevronRight />}
+        {isOpen ? <ChevronDown /> : <ChevronRight />}
       </button>
       <div
         style={{
-          display: open ? 'initial' : 'none'
+          display: isOpen ? 'initial' : 'none'
         }}
       >
         <Menu dir={item.children} base={item.route} anchors={anchors} />
@@ -121,8 +124,8 @@ function Folder({ item, anchors }) {
 function File({ item, anchors }) {
   const { setMenu } = useContext(MenuContext)
   const { asPath, locale } = useRouter()
-  const route = getFSRoute(asPath, locale) + '/'
-  const active = route === item.route + '/'
+  const route = getFSRoute(asPath, locale)
+  const active = route === item.route
   const slugger = new Slugger()
   const activeAnchor = useActiveAnchor()
 
@@ -143,7 +146,11 @@ function File({ item, anchors }) {
 
       return (
         <li className={active ? 'active' : ''}>
-          <div className="relative">
+          <div
+            className={`relative ${
+              active ? 'bg-gray-300 dark:bg-gray-800' : ''
+            }`}
+          >
             <Link href={item.route}>
               <a>{title}</a>
             </Link>
@@ -179,7 +186,9 @@ function File({ item, anchors }) {
 
   return (
     <li className={active ? 'active' : ''}>
-      <div className="relative">
+      <div
+        className={`relative ${active ? 'bg-gray-300 dark:bg-gray-800' : ''}`}
+      >
         <Link href={item.route}>
           <a>{title}</a>
         </Link>

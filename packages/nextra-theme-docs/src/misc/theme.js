@@ -2,6 +2,7 @@ import { MDXProvider } from '@mdx-js/react'
 import Slugger from 'github-slugger'
 import Link from 'next/link'
 import React from 'react'
+import { CopyToClipboard } from 'react-copy-to-clipboard'
 import innerText from 'react-innertext'
 import Highlight, { defaultProps } from 'prism-react-renderer'
 import 'intersection-observer'
@@ -52,24 +53,34 @@ const THEME = {
 
 // Anchor links
 
-const HeaderLink = ({ tag: Tag, children, slugger, withObserver, ...props }) => {
+const HeaderLink = ({
+  tag: Tag,
+  children,
+  slugger,
+  withObserver,
+  ...props
+}) => {
   const setActiveAnchor = useActiveAnchorSet()
 
   const slug = slugger.slug(innerText(children) || '')
   const anchor = <span className="subheading-anchor" id={slug} />
-  const anchorWithObserver = withObserver
-    ? <Observer
-        onChange={e => {
-          // if the element is above the 70% of height of the viewport
-          // we don't use e.isIntersecting
-          const isAboveViewport = e.boundingClientRect.y + e.boundingClientRect.height <= e.rootBounds.y + e.rootBounds.height
-          setActiveAnchor(f => ({ ...f, [slug]: isAboveViewport }))
-        }}
-        rootMargin="1000% 0% -70%"
-        threshold={[0, 1]}
-        children={anchor}
-      />
-    : anchor;
+  const anchorWithObserver = withObserver ? (
+    <Observer
+      onChange={e => {
+        // if the element is above the 70% of height of the viewport
+        // we don't use e.isIntersecting
+        const isAboveViewport =
+          e.boundingClientRect.y + e.boundingClientRect.height <=
+          e.rootBounds.y + e.rootBounds.height
+        setActiveAnchor(f => ({ ...f, [slug]: isAboveViewport }))
+      }}
+      rootMargin="1000% 0% -70%"
+      threshold={[0, 1]}
+      children={anchor}
+    />
+  ) : (
+    anchor
+  )
 
   return (
     <Tag {...props}>
@@ -148,36 +159,56 @@ const Code = ({ children, className, highlight, ...props }) => {
   // https://mdxjs.com/guides/syntax-highlighting#all-together
   const language = className.replace(/language-/, '')
   return (
-    <Highlight
-      {...defaultProps}
-      code={children.trim()}
-      language={language}
-      theme={THEME}
-    >
-      {({ className, style, tokens, getLineProps, getTokenProps }) => (
-        <code className={className} style={{ ...style }}>
-          {tokens.map((line, i) => (
-            <div
-              key={i}
-              {...getLineProps({ line, key: i })}
-              style={
-                highlightedLines.includes(i + 1)
-                  ? {
-                      background: 'var(--c-highlight)',
-                      margin: '0 -1rem',
-                      padding: '0 1rem'
-                    }
-                  : null
-              }
-            >
-              {line.map((token, key) => (
-                <span key={key} {...getTokenProps({ token, key })} />
+    <CopyToClipboard text={children.trim()}>
+      <div className="relative">
+        <Highlight
+          {...defaultProps}
+          code={children.trim()}
+          language={language}
+          theme={THEME}
+        >
+          {({ className, style, tokens, getLineProps, getTokenProps }) => (
+            <code className={className} style={{ ...style }}>
+              {tokens.map((line, i) => (
+                <div
+                  key={i}
+                  {...getLineProps({ line, key: i })}
+                  style={
+                    highlightedLines.includes(i + 1)
+                      ? {
+                          background: 'var(--c-highlight)',
+                          margin: '0 -1rem',
+                          padding: '0 1rem'
+                        }
+                      : null
+                  }
+                >
+                  {line.map((token, key) => (
+                    <span key={key} {...getTokenProps({ token, key })} />
+                  ))}
+                </div>
               ))}
-            </div>
-          ))}
-        </code>
-      )}
-    </Highlight>
+            </code>
+          )}
+        </Highlight>
+        <button type="button" className="absolute bottom-0 right-0">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
+            <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1" />
+          </svg>
+        </button>
+      </div>
+    </CopyToClipboard>
   )
 }
 

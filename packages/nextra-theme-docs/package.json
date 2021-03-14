@@ -34,6 +34,7 @@
     "match-sorter": "^4.2.0",
     "next-themes": "^0.0.8",
     "prism-react-renderer": "^1.1.1",
+    "react-copy-to-clipboard": "^5.0.3",
     "react-innertext": "^1.1.5",
     "title": "^3.4.2"
   },
