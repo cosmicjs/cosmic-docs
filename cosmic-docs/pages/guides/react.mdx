@@ -39,7 +39,9 @@ const bucket = api.bucket({
 })
 const fetchPosts = async () => {
   const data = await bucket.getObjects({
-    type: 'posts',
+    query: {
+      type: 'posts'
+    },
     props: 'slug,title,metadata' // Limit the API response data by props
   })
   return data

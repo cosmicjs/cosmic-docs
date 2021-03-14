@@ -65,7 +65,9 @@ export default {
       this.error = this.post = null
       this.loading = true
       bucket.getObjects({
-        type: 'posts',
+        query: {
+          type: 'posts'
+        },
         props: 'slug,title,content,metadata' // Limit the API response data by props
       }).then(data => {
         const posts = data.objects

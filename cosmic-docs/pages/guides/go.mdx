@@ -100,8 +100,8 @@ func indexHandler(w http.ResponseWriter, r *http.Request) {
 
   bucketSlug := os.Getenv("BUCKET_SLUG")
 
-  apiURL := "https://api.cosmicjs.com/v1/"
-  url := apiURL + bucketSlug + "/objects?&hide_metafields=true&type=posts&props=slug,title,content,metadata" + readKey
+  apiURL := "https://api.cosmicjs.com/v2/"
+  url := apiURL + bucketSlug + '/objects?query=%7B"type":"posts"%7D&props=slug,title,content,metadata' + readKey
 
   res, err := http.Get(url)
   var data Data

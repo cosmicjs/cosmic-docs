@@ -54,7 +54,9 @@ function Blog({ posts }) {
 }
 export async function getStaticProps() {
   const data = await bucket.getObjects({
-    type: 'posts',
+    query: {
+      type: 'posts'
+    },
     props: 'slug,title,content,metadata' // Limit the API response data by props
   })
   const posts = await data.objects

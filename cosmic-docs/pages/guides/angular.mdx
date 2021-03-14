@@ -65,7 +65,9 @@ export class AppComponent implements OnInit {
 
     await this.bucket
       .getObjects({
-        type: 'posts',
+        query: {
+          type: 'posts'
+        },
         props: 'slug,title,content,metadata' // Limit the API response data by props
       })
       .then(response => {
