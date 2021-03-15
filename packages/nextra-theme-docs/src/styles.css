@@ -586,21 +586,6 @@ video {
 }
 .copied_hint {
   position: absolute;
-  top: 20px;
-  left: 0;
-  transform: translate(-50%, 0);
-  animation: copying 700ms linear;
-}
-@keyframes copying {
-  0% {
-    opacity: 0;
-    transform: translate(-50%, 0);
-  }
-  50% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0;
-    transform: translate(-50%, 30px);
-  }
+  top: -2px;
+  right: 30px;
 }

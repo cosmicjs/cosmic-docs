@@ -56,13 +56,13 @@ const CopyButton = ({ content, children }) => {
 
   const onCopyContent = () => {
     setCopied(true)
-    setTimeout(() => setCopied(false), 400)
+    setTimeout(() => setCopied(false), 500)
   }
 
   return (
     <CopyToClipboard text={content} onCopy={onCopyContent}>
       <div className="relative inline-block cursor-pointer">
-        {copied && <div className="copied_hint">Copied</div>}
+        {copied && <div className="copied_hint">Copied!</div>}
         {children}
       </div>
     </CopyToClipboard>
@@ -186,7 +186,7 @@ const Code = ({ children, className, highlight, ...props }) => {
     >
       {({ className, style, tokens, getLineProps, getTokenProps }) => (
         <Fragment>
-          <div className="absolute bottom-8 right-5">
+          <div className="absolute top-4 right-5">
             <CopyButton content={children.trim()}>
               <button type="button">
                 <svg
