@@ -98,7 +98,7 @@ function Folder({ item, anchors }) {
   return (
     <li className={isOpen ? 'active' : ''}>
       <button
-        className={isOpen ? 'bg-gray-300 dark:bg-gray-800' : ''}
+        className={isOpen ? 'bg-gray-100 dark:bg-gray-900' : ''}
         type="button"
         onClick={() => {
           if (active) return
@@ -148,7 +148,7 @@ function File({ item, anchors }) {
         <li className={active ? 'active' : ''}>
           <div
             className={`relative ${
-              active ? 'bg-gray-300 dark:bg-gray-800' : ''
+              active ? 'bg-gray-100 dark:bg-gray-900' : ''
             }`}
           >
             <Link href={item.route}>
@@ -187,7 +187,7 @@ function File({ item, anchors }) {
   return (
     <li className={active ? 'active' : ''}>
       <div
-        className={`relative ${active ? 'bg-gray-300 dark:bg-gray-800' : ''}`}
+        className={`relative ${active ? 'bg-gray-100 dark:bg-gray-900' : ''}`}
       >
         <Link href={item.route}>
           <a>{title}</a>

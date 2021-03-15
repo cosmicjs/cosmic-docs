@@ -1,7 +1,7 @@
 import { MDXProvider } from '@mdx-js/react'
 import Slugger from 'github-slugger'
 import Link from 'next/link'
-import React from 'react'
+import React, { Fragment, useState } from 'react'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
 import innerText from 'react-innertext'
 import Highlight, { defaultProps } from 'prism-react-renderer'
@@ -49,6 +49,24 @@ const THEME = {
       }
     }
   ]
+}
+
+const CopyButton = ({ content, children }) => {
+  const [copied, setCopied] = useState(false)
+
+  const onCopyContent = () => {
+    setCopied(true)
+    setTimeout(() => setCopied(false), 400)
+  }
+
+  return (
+    <CopyToClipboard text={content} onCopy={onCopyContent}>
+      <div className="relative inline-block cursor-pointer">
+        {copied && <div className="copied_hint">Copied</div>}
+        {children}
+      </div>
+    </CopyToClipboard>
+  )
 }
 
 // Anchor links
@@ -158,57 +176,60 @@ const Code = ({ children, className, highlight, ...props }) => {
 
   // https://mdxjs.com/guides/syntax-highlighting#all-together
   const language = className.replace(/language-/, '')
+
   return (
-    <CopyToClipboard text={children.trim()}>
-      <div className="relative">
-        <Highlight
-          {...defaultProps}
-          code={children.trim()}
-          language={language}
-          theme={THEME}
-        >
-          {({ className, style, tokens, getLineProps, getTokenProps }) => (
-            <code className={className} style={{ ...style }}>
-              {tokens.map((line, i) => (
-                <div
-                  key={i}
-                  {...getLineProps({ line, key: i })}
-                  style={
-                    highlightedLines.includes(i + 1)
-                      ? {
-                          background: 'var(--c-highlight)',
-                          margin: '0 -1rem',
-                          padding: '0 1rem'
-                        }
-                      : null
-                  }
+    <Highlight
+      {...defaultProps}
+      code={children.trim()}
+      language={language}
+      theme={THEME}
+    >
+      {({ className, style, tokens, getLineProps, getTokenProps }) => (
+        <Fragment>
+          <div className="absolute bottom-8 right-5">
+            <CopyButton content={children.trim()}>
+              <button type="button">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                 >
-                  {line.map((token, key) => (
-                    <span key={key} {...getTokenProps({ token, key })} />
-                  ))}
-                </div>
-              ))}
-            </code>
-          )}
-        </Highlight>
-        <button type="button" className="absolute bottom-0 right-0">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="16"
-            height="16"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          >
-            <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
-            <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1" />
-          </svg>
-        </button>
-      </div>
-    </CopyToClipboard>
+                  <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
+                  <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1" />
+                </svg>
+              </button>
+            </CopyButton>
+          </div>
+          <code className={className} style={{ ...style }}>
+            {tokens.map((line, i) => (
+              <div
+                key={i}
+                {...getLineProps({ line, key: i })}
+                style={
+                  highlightedLines.includes(i + 1)
+                    ? {
+                        background: 'var(--c-highlight)',
+                        margin: '0 -1rem',
+                        padding: '0 1rem'
+                      }
+                    : null
+                }
+              >
+                {line.map((token, key) => (
+                  <span key={key} {...getTokenProps({ token, key })} />
+                ))}
+              </div>
+            ))}
+          </code>
+        </Fragment>
+      )}
+    </Highlight>
   )
 }
 

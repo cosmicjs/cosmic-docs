@@ -60,11 +60,31 @@ code {
   @apply text-gray-300 bg-gray-800;
 }
 pre {
-  @apply p-4 bg-gray-200 rounded-lg mt-6 mb-4 overflow-x-auto;
+  @apply p-4 bg-gray-200 rounded-lg mt-6 mb-4 overflow-x-auto relative;
   @apply dark:bg-gray-800;
+  grid-template-rows: max-content;
+  white-space: pre;
+  word-spacing: normal;
+  word-break: normal;
+  word-wrap: normal;
+  tab-size: 4;
+  hyphens: none;
+  display: inline-grid;
+  grid-template-rows: max-content;
+  width: 100%;
 }
 pre code {
-  @apply p-0 text-sm text-black bg-transparent rounded-none inline-block min-w-full;
+  @apply p-0 text-sm text-black bg-transparent rounded-none inline-block min-w-full overflow-x-auto;
+  grid-template-rows: max-content;
+  white-space: pre;
+  word-spacing: normal;
+  word-break: normal;
+  word-wrap: normal;
+  tab-size: 4;
+  hyphens: none;
+  display: inline-grid;
+  grid-template-rows: max-content;
+  width: 100%;
 }
 a code {
   @apply text-current no-underline;
@@ -563,4 +583,24 @@ video {
 }
 .dark .search-slash {
   background: #090d20;
+}
+.copied_hint {
+  position: absolute;
+  top: 20px;
+  left: 0;
+  transform: translate(-50%, 0);
+  animation: copying 700ms linear;
+}
+@keyframes copying {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, 0);
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, 30px);
+  }
 }
