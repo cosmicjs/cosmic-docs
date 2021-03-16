@@ -92,7 +92,7 @@ export default {
   logo: (
     <>
       <Logo height={32} classes="mt-1" />
-      <span className="mx-2 mt-1 ml-5 mr-1 font-extrabold hidden md:inline">
+      <span className="mx-2 mt-1 ml-2 mr-2 font-extrabold hidden md:inline">
         Docs
       </span>
       <span className="text-gray-600 mt-1 font-normal hidden md:inline whitespace-no-wrap">
