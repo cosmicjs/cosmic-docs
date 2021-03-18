@@ -17,7 +17,7 @@ export default function Custom404() {
           </a>
         </Link>
         <h1 className="mb-8">404 - Page Not Found</h1>
-        <div className="mb-8">
+        <div className="mb-8 text-gray-600">
           Looking for something specific? Try searching below:
         </div>
         <div className="sm:w-1/2 md:w-1/6 block mx-auto my-0 mb-8">
