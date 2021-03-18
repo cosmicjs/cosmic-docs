@@ -140,7 +140,7 @@ export default {
   footer: true,
   footerEditOnGitHubLink: true,
   footerText: (
-    <span>
+    <span className="block">
       <a
         href="https://cosmicjs.com/?utm_source=docs"
         target="_blank"

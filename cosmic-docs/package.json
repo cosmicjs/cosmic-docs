@@ -20,5 +20,10 @@
     "react": "17",
     "react-dom": "17",
     "react-tabs": "^3.2.1"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.2.5",
+    "postcss": "^8.2.8",
+    "tailwindcss": "^2.0.4"
   }
 }

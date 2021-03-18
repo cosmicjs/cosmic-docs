@@ -1,13 +1,14 @@
+import '../styles/global.css'
 import 'nextra-theme-docs/style.css'
-import FourOhFour from "./_404"
+import Custom404 from '../components/custom404'
 
 export default function Nextra({ Component, pageProps }) {
   if (pageProps.statusCode === 404) {
-    return <FourOhFour />
+    return <Custom404 />
   }
   return (
     <>
       <Component {...pageProps} />
     </>
-  );
+  )
 }
