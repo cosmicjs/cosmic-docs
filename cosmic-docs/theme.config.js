@@ -147,10 +147,10 @@ export default {
         rel="noopener"
         className="inline-flex items-center no-underline text-current font-semibold"
       >
-        <span className="mr-3">Powered by</span>
-        <span>
+        <div className="float-left mr-3">Powered by</div>
+        <div className="float-left">
           <Logo />
-        </span>
+        </div>
       </a>
       <br />
       <br />
