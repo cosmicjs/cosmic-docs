@@ -589,3 +589,7 @@ video {
   top: -2px;
   right: 30px;
 }
+
+.algolia-autocomplete pre {
+	display: none;
+}

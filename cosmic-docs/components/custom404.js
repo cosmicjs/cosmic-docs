@@ -10,7 +10,7 @@ export default function Custom404() {
         <title>404</title>
         {Theme.head}
       </Head>
-      <div className="text-center mt-5">
+      <div className="text-center mt-5 p-1">
         <Link href="/">
           <a>
             <Logo height={60} classes="block mx-auto my-0 mb-8" />
@@ -20,7 +20,7 @@ export default function Custom404() {
         <div className="mb-8">
           Looking for something specific? Try searching below:
         </div>
-        <div className="w-1/6 block mx-auto my-0 mb-8">
+        <div className="sm:w-1/2 md:w-1/6 block mx-auto my-0 mb-8">
           <DocSearch />
         </div>
         <div className="mb-8">
@@ -28,7 +28,7 @@ export default function Custom404() {
             <a>← Go back home</a>
           </Link>
         </div>
-        <div className="mt-8">{Theme.footerText}</div>
+        <div className="mt-8 mx-auto my-0 text-gray-600">{Theme.footerText}</div>
       </div>
     </>
   )
