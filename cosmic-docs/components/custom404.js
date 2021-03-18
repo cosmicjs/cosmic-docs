@@ -1,15 +1,10 @@
 import Link from 'next/link'
-import Theme, { Logo } from '../theme.config.js'
+import { Logo } from '../theme.config.js'
 import DocSearch from '../components/docsearch'
-import Head from 'next/head'
 
 export default function Custom404() {
   return (
     <>
-      <Head>
-        <title>404</title>
-        {Theme.head}
-      </Head>
       <div className="text-center mt-5">
         <Link href="/">
           <a>
@@ -28,7 +23,6 @@ export default function Custom404() {
             <a>← Go back home</a>
           </Link>
         </div>
-        <div className="mt-8">{Theme.footerText}</div>
       </div>
     </>
   )

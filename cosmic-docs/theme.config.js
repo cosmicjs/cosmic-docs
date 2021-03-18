@@ -139,24 +139,4 @@ export default {
   nextLinks: true,
   footer: true,
   footerEditOnGitHubLink: true,
-  footerText: (
-    <span>
-      <a
-        href="https://cosmicjs.com/?utm_source=docs"
-        target="_blank"
-        rel="noopener"
-        className="inline-flex items-center no-underline text-current font-semibold"
-      >
-        <div className="float-left mr-3">Powered by</div>
-        <div className="float-left">
-          <Logo />
-        </div>
-      </a>
-      <br />
-      <br />
-      <span className="text-sm">
-        Looking for the <a href="https://docs-v1.cosmicjs.com">v1 docs</a>?
-      </span>
-    </span>
-  )
 }
