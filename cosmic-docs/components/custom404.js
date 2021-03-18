@@ -1,10 +1,9 @@
-// 404.js
 import Link from 'next/link'
 import Theme, { Logo } from '../theme.config.js'
 import DocSearch from '../components/docsearch'
 import Head from 'next/head'
 
-export default function FourOhFour() {
+export default function Custom404() {
   return (
     <>
       <Head>
