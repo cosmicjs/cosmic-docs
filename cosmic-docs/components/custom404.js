@@ -28,7 +28,24 @@ export default function Custom404() {
             <a>← Go back home</a>
           </Link>
         </div>
-        <div className="mt-8 mx-auto my-0 text-gray-600">{Theme.footerText}</div>
+        <div className="mt-8 mx-auto my-0 text-gray-600">
+          <a
+            href="https://cosmicjs.com/?utm_source=docs"
+            target="_blank"
+            rel="noopener"
+            className="inline-flex items-center no-underline text-current font-semibold"
+          >
+            <div className="float-left mr-3">Powered by</div>
+            <div className="float-left">
+              <Logo />
+            </div>
+          </a>
+          <br />
+          <br />
+          <span className="text-sm">
+            Looking for the <a href="https://docs-v1.cosmicjs.com">v1 docs</a>?
+          </span>
+        </div>
       </div>
     </>
   )
