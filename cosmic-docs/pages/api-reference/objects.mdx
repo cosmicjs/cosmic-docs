@@ -576,6 +576,7 @@ Add a new Object to your Bucket.
 | options.content_editor |          |     Boolean      | Set to false to hide the content editor                                                           |
 | locale                 |          |      String      | Add localization to the Object                                                                    |
 | thumbnail              |          |      String      | Media `name`. Media must be available in Bucket. See [Media](/api-reference/media).               |
+| trigger_webhook        |          |     Boolean      | Triggers corresponding Object action Webhook ([See Webhooks](/dashboard/webhooks)).               |
 | pretty                 |          |       Enum       | true, Makes the response more reader-friendly                                                     |
 
 **Methods**
@@ -735,6 +736,7 @@ Edit an existing Object by `id` in your Bucket.
 | options.content_editor |     Boolean      | Set to false to hide the content editor                                                           |
 | locale                 |      String      | Add localization to the Object                                                                    |
 | thumbnail              |      String      | Media `name`. Media must be available in Bucket. See [Media](/api-reference/media).               |
+| trigger_webhook        |     Boolean      | Triggers corresponding Object action Webhook ([See Webhooks](/dashboard/webhooks)).               |
 | pretty                 |       Enum       | true, Makes the response more reader-friendly                                                     |
 
 _**Note:** At least one of the Parameters is required to process the request._
@@ -865,12 +867,16 @@ Delete an existing Object by `id` from your Bucket.
   request.
 </Callout>
 
+| Query Parameter |  Type   | Description                                                                         |
+| :-------------- | :-----: | :---------------------------------------------------------------------------------- |
+| trigger_webhook | Boolean | Triggers corresponding Object action Webhook ([See Webhooks](/dashboard/webhooks)). |
+
 **Methods**
 
 <Tabs>
 <div label="REST">
 ```bash
-DELETE $BASE_URL/buckets/${bucket_slug}/objects/${object_id}
+DELETE $BASE_URL/buckets/${bucket_slug}/objects/${object_id}?trigger_webhook=true
 ```
 **Header**
 
