@@ -188,6 +188,7 @@ Add a new Object Type to your Bucket.
 | locales                | required if localization is true | Array of String  | Array of active locales in the Object Type. Check the [available locale codes](/api-reference/localization).                                       |
 | priority_locale        |                                  |      String      | Default locale code for Objects in Object Type. Check the [available locale codes](/api-reference/localization)                                    |
 | emoji                  |                                  |      String      | Valid Unicode emoji                                                                                                                                |
+| singleton              |                                  |     Boolean      | Single or Multiple Objects                                                                                                                         |
 | pretty                 |                                  |       Enum       | true, Makes the response more reader-friendly                                                                                                      |
 
 **Methods**
@@ -331,6 +332,7 @@ Edit an existing Object Type by `type_slug` in your Bucket.
 | locales                | required if localization is true | Array of String  | Array of active locales in the Object Type. Check the [available locale codes](/api-reference/localization).                                       |
 | priority_locale        |                                  |      String      | Default locale code for Objects in Object Type. Check the [available locale codes](/api-reference/localization)                                    |
 | emoji                  |                                  |      String      | Valid Unicode emoji                                                                                                                                |
+| singleton              |                                  |     Boolean      | Single or Multiple Objects                                                                                                                         |
 | pretty                 |                                  |       Enum       | true, Makes the response more reader-friendly                                                                                                      |
 
 _**Note:** At least one of the Parameters is required to process the request._
