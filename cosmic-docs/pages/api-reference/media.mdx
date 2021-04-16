@@ -25,7 +25,7 @@ Get Media List in your Bucket.
 | limit     |          | Number | 1000     | The number of Media to return                                                                                                                                  |
 | skip      |          | Number | 0        | The number of Media to skip                                                                                                                                    |
 | pretty    |          |  Enum  | false    | true, Makes the response more reader-friendly                                                                                                                  |
-| query     |          |  JSON  |          | COMING SOON! A JSON string to perform media search and filtering. See [Queries section](/api-reference/queries) for more detail.                               |
+| query     |          |  JSON  |          | A JSON string to perform media search and filtering. See [Queries section](/api-reference/queries) for more detail.                                            |
 
 **Methods**
 
@@ -232,11 +232,12 @@ The only required post value is the `media` object. You can also add optional `f
 https://upload.cosmicjs.com/v2
 ```
 
-| Parameter | Required | Type                     | Description                           |
-| --------- | -------- | ------------------------ | ------------------------------------- |
-| media     | required | Media Object (see below) | Media object with specific properties |
-| folder    |          | String                   | Media folder slug                     |
-| metadata  |          | Object                   | Key / value data store                |
+| Parameter       | Required | Type                     | Description                                                                        |
+| --------------- | -------- | ------------------------ | ---------------------------------------------------------------------------------- |
+| media           | required | Media Object (see below) | Media object with specific properties                                              |
+| folder          |          | String                   | Media folder slug                                                                  |
+| metadata        |          | Object                   | Key / value data store                                                             |
+| trigger_webhook |          | Boolean                  | Triggers corresponding Media action Webhook ([See Webhooks](/dashboard/webhooks)). |
 
 ### Media Object
 
@@ -442,10 +443,11 @@ Edit an existing Media by `id` in your Bucket.
   request.
 </Callout>
 
-| Parameter |  Type  | Description                                           |
-| :-------- | :----: | :---------------------------------------------------- |
-| folder    | String | Slug of the `folder` where you want to move the media |
-| metadata  | Object | JSON object                                           |
+| Parameter       |  Type   | Description                                                                        |
+| :-------------- | :-----: | :--------------------------------------------------------------------------------- |
+| folder          | String  | Slug of the `folder` where you want to move the media                              |
+| metadata        | Object  | JSON object                                                                        |
+| trigger_webhook | Boolean | Triggers corresponding Media action Webhook ([See Webhooks](/dashboard/webhooks)). |
 
 _**Note:** At least one of the Parameters is required to process the request._
 
@@ -492,12 +494,16 @@ Delete an existing Media by `id` from your Bucket.
   request.
 </Callout>
 
+| Query Parameter |  Type   | Description                                                                        |
+| :-------------- | :-----: | :--------------------------------------------------------------------------------- |
+| trigger_webhook | Boolean | Triggers corresponding Media action Webhook ([See Webhooks](/dashboard/webhooks)). |
+
 **Methods**
 
 <Tabs>
 <div label="REST">
 ```bash
-DELETE $BASE_URL/buckets/${bucket_slug}/media/${media_id}
+DELETE $BASE_URL/buckets/${bucket_slug}/media/${media_id}?trigger_webhook=true
 ```
 **Header**
 
