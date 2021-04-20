@@ -158,3 +158,147 @@ GET $BASE_URL/buckets/${bucket_slug}/objects/${object_id}/revisions/${revision_i
   }
 }
 ```
+
+## Add Object Revision
+
+Add a new Revision to your Object.
+
+<Callout emoji="⚠">
+  **Required**
+  <br />
+  `write_key` must be passed as `Authorization Bearer` in the header of the
+  request.
+</Callout>
+
+| Parameter              | Required |       Type       | Description                                                                                       |
+| :--------------------- | :------: | :--------------: | :------------------------------------------------------------------------------------------------ |
+| title                  | required |      String      | Your Object title                                                                                 |
+| slug                   |          |      String      | Unique identifier for your Object                                                                 |
+| content                |          |      String      | Add Content to your Object                                                                        |
+| status                 |          |       Enum       | draft, published, defaults to published                                                           |
+| metafields             |          | Array of Objects | Add Metafields to your Object. See [Metafields Model](/api-reference/getting-started/metafields). |
+| created_by             |          |      String      | Author User Id                                                                                    |
+| publish_at             |          |      Number      | UNIX millisecond timestamp. Publish automatically at a later time.                                |
+| options.slug_field     |          |     Boolean      | Set to false to hide the slug field                                                               |
+| options.content_editor |          |     Boolean      | Set to false to hide the content editor                                                           |
+| locale                 |          |      String      | Add localization to the Object                                                                    |
+| thumbnail              |          |      String      | Media `name`. Media must be available in Bucket. See [Media](/api-reference/media).               |
+| trigger_webhook        |          |     Boolean      | Triggers corresponding Object action Webhook ([See Webhooks](/dashboard/webhooks)).               |
+| pretty                 |          |       Enum       | true, Makes the response more reader-friendly                                                     |
+
+**Methods**
+
+<Tabs>
+<div label="REST">
+```bash
+POST $BASE_URL/buckets/${bucket_slug}/objects/${object_id}/revisions
+```
+**Header**
+
+```json
+{
+  "Authorization": "Bearer n5MbD59UPBoVpyqi6B6DnOzAvZ..."
+}
+```
+
+**Example Body (JSON)**
+
+```json
+{
+  "title": "New Title of the Post",
+  "slug": "new-title-of-the-post"
+}
+```
+
+**Example Response**
+
+```json
+{
+  "revision": {
+    "id": "5ff75368c2dfa81a91695cec",
+    "slug": "title-of-the-post",
+    "title": "Title of the Post",
+    "content": "",
+    "metafields": [],
+    "bucket": "5f7357124b331d76c08de989",
+    "created_at": "2021-01-07T18:31:04.005Z",
+    "modified_at": "2021-01-07T18:31:04.005Z",
+    "status": "published",
+    "published_at": "2021-01-07T18:31:04.005Z",
+    "type": "posts"
+  }
+}
+```
+
+</div>
+
+<div label="Node.js">
+```javascript
+bucket.addObjectRevision()
+```
+
+**Example Request**
+
+```javascript
+const bucket = Cosmic.bucket({
+  slug: 'bucket-slug',
+  write_key: 'your-write-key-found-in-bucket-settings'
+})
+const params = {
+  id: '5ff75368c2dfa81a91695cec',
+  title: 'New Title of the Post',
+  slug: 'new-title-of-the-post'
+}
+bucket
+  .addObjectRevision(params)
+  .then(data => {
+    console.log(data)
+  })
+  .catch(err => {
+    console.log(err)
+  })
+```
+
+</div>
+
+<div label="GraphQL">
+```javascript
+addObjectRevision(bucket_slug, input)
+```
+**Header**
+
+```json
+{
+  "Authorization": "Bearer n5MbD59UPBoVpyqi6B6DnOzAvZ..."
+}
+```
+
+**Variables**
+
+Add this with your variable values to "Query Variables".
+
+```
+{
+  "bucket_slug": "{{bucket_slug}}"
+}
+```
+
+  <a href="https://cosmic-graphql-playground.netlify.app/?endpoint=https%3A%2F%2Fgraphql.cosmicjs.com%2Fv3&query=mutation%20%28%24bucket_slug%3A%20String%21%29%20%7B%0A%20%20addObjectRevision%28%0A%20%20%20%20bucket_slug%3A%20%24bucket_slug%0A%20%20%20%20object_id%3A%20%2260105b2ed026d40008d745e5%22%0A%20%20%20%20input%3A%20%7B%20%0A%20%20%20%20%20%20title%3A%20%22New%20TEST%20Post%20Title%22%0A%20%20%20%20%20%20content%3A%20%22This%20is%20test%20post%20content%22%2C%0A%20%20%20%20%20%20metafields%3A%20%5B%0A%20%20%20%20%20%20%20%20%7B%0A%20%20%20%20%20%20%20%20%20%20type%3A%20text%2C%0A%20%20%20%20%20%20%20%20%20%20key%3A%20%22test%22%2C%0A%20%20%20%20%20%20%20%20%20%20title%3A%20%22Test%22%2C%0A%20%20%20%20%20%20%20%20%20%20value%3A%20%22test%20value%22%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%5D%0A%20%20%20%20%7D%0A%20%20%29%20%7B%0A%20%20%20%20title%0A%20%20%7D%0A%7D">
+    Full screen
+  </a>
+  <iframe
+    src="https://cosmic-graphql-playground.netlify.app/?endpoint=https%3A%2F%2Fgraphql.cosmicjs.com%2Fv3&query=mutation%20%28%24bucket_slug%3A%20String%21%29%20%7B%0A%20%20addObjectRevision%28%0A%20%20%20%20bucket_slug%3A%20%24bucket_slug%0A%20%20%20%20object_id%3A%20%2260105b2ed026d40008d745e5%22%0A%20%20%20%20input%3A%20%7B%20%0A%20%20%20%20%20%20title%3A%20%22New%20TEST%20Post%20Title%22%0A%20%20%20%20%20%20content%3A%20%22This%20is%20test%20post%20content%22%2C%0A%20%20%20%20%20%20metafields%3A%20%5B%0A%20%20%20%20%20%20%20%20%7B%0A%20%20%20%20%20%20%20%20%20%20type%3A%20text%2C%0A%20%20%20%20%20%20%20%20%20%20key%3A%20%22test%22%2C%0A%20%20%20%20%20%20%20%20%20%20title%3A%20%22Test%22%2C%0A%20%20%20%20%20%20%20%20%20%20value%3A%20%22test%20value%22%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%5D%0A%20%20%20%20%7D%0A%20%20%29%20%7B%0A%20%20%20%20title%0A%20%20%7D%0A%7D"
+    frameBorder="0"
+    style={{ width: "100%", height: "470px" }}
+  ></iframe>
+</div>
+<div label="CLI">
+```bash
+cosmic add-object-revision
+```
+**Example Request**
+```bash
+cosmic add-object-revision --id object-id --title "New Title of the Post" --slug "new-title-of-the-post"
+```
+</div>
+</Tabs>
