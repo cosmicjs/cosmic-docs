@@ -178,7 +178,8 @@ cosmic get-objects --limit 10 --query '{"type":"posts"}'
   **Quick Tip**
   <br />
   Use `props` to limit the payload size and get only the data you need. Metadata
-  can be nested as far as you need. There is no depth limit.
+  can be nested as far as you need. There is no depth limit except to prevent
+  infinite recursion.
 </Callout>
 
 **Example Request with Props**
@@ -443,7 +444,8 @@ cosmic get-object --id 5ff75368c2dfa81a91695cec
   **Quick Tip**
   <br />
   Use `props` to limit the payload size and get only the data you need. Metadata
-  can be nested as far as you need. There is no depth limit.
+  can be nested as far as you need. There is no depth limit except to prevent
+  infinite recursion.
 </Callout>
 
 **Example Request with Props**
