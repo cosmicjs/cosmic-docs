@@ -53,7 +53,9 @@ const bucket = api.bucket({
 });
 
 bucket.getMedia({
-  folder: 'groomsmen',
+  query: {
+    folder: 'groomsmen' // Get media in folder
+  },
   props: 'imgix_url' // get only what you need
   limit: 3
 }).then(data => {
