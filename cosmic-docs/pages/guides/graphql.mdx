@@ -19,9 +19,11 @@ axios
   .post('https://graphql.cosmicjs.com/v3', {
     query: `{ 
     getObjects(
-      bucket_slug: "simple-react-blog",
-      input: { limit: 2 },
-      query: { type: "posts" }
+      bucket_slug: "simple-react-blog"
+      input: {
+				limit: 2
+				query: { type: "posts" }
+			}
     ){
       objects {
         title
@@ -72,8 +74,7 @@ client
       {
         getObjects(
           bucket_slug: "simple-react-blog"
-          input: { limit: 2 }
-          query: { type: "posts" }
+          input: { limit: 2, query: { type: "posts" } }
         ) {
           objects {
             title
