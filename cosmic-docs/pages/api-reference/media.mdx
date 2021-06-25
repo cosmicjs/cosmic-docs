@@ -45,7 +45,7 @@ Cosmic.getMedia()
 **Example Request**
 
 ```javascript
-const Cosmic = require("cosmicjs");
+const Cosmic = require('cosmicjs');
 const api = Cosmic();
 const bucket = api.bucket({
   slug: "your-bucket-slug",
@@ -283,11 +283,12 @@ Cosmic.addMedia()
 **Example Request**
 
 ```javascript
-const bucket = Cosmic.bucket({
+const Cosmic = require('cosmicjs')
+const api = Cosmic()
+const bucket = api.bucket({
   slug: 'bucket-slug',
   write_key: 'your-write-key-found-in-bucket-settings'
 })
-
 const media_object = req.files[0] // Using Multer
 // OR:
 // const media_object = { originalname: filename, buffer: filedata } // Not using Multer
@@ -389,11 +390,12 @@ This application uses Express and Multer to create a route `POST http://localhos
 ```javascript
 // index.js
 const fs = require('fs')
-const Cosmic = require('cosmicjs')()
+const Cosmic = require('cosmicjs')
+const api = Cosmic()
 const multer = require('multer')
 const express = require('express')
 var app = express()
-const bucket = Cosmic.bucket({
+const bucket = api.bucket({
   slug: 'your-bucket-slug',
   write_key: 'your-write-key-found-in-bucket-settings'
 })

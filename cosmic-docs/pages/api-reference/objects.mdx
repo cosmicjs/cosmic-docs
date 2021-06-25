@@ -124,8 +124,9 @@ bucket.getObjects()
 ```
 **Example Request**
 ```javascript
-const Cosmic = require("cosmicjs");
-const bucket = Cosmic.bucket({
+const Cosmic = require('cosmicjs');
+const api = Cosmic();
+const bucket = api.bucket({
   slug: "bucket-slug",
   read_key: "your-read-key-found-in-bucket-settings",
 });
@@ -236,8 +237,9 @@ bucket.getObjects()
 ```
 **Example Request**
 ```javascript
-const Cosmic = require('cosmicjs')
-const bucket = Cosmic.bucket({
+const Cosmic= require('cosmicjs');
+const api = Cosmic();
+const bucket = api.bucket({
   slug: "bucket-slug",
   read_key: "your-read-key-found-in-bucket-settings",
 });
@@ -388,15 +390,15 @@ bucket.getObject()
 ```
 **Example Request**
 ```javascript
-const Cosmic = require('cosmicjs')
-const api = Cosmic()
+const Cosmic = require('cosmicjs');
+const api = Cosmic();
 const bucket = api.bucket({
   slug: 'your-bucket-slug',
   read_key: 'your-read-key-found-in-bucket-settings'
-})
+});
 bucket.getObject({
   id: '5e4d7eb92850c717ea93dba1'
-})
+});
 ```
 
 </div>
@@ -494,8 +496,8 @@ bucket.getObject()
 ```
 **Example Request**
 ```javascript
-const Cosmic = require('cosmicjs')
-const api = Cosmic()
+const Cosmic = require('cosmicjs');
+const api = Cosmic();
 const bucket = api.bucket({
   slug: 'your-bucket-slug',
   read_key: 'your-read-key-found-in-bucket-settings'
@@ -635,7 +637,9 @@ bucket.addObject()
 **Example Request**
 
 ```javascript
-const bucket = Cosmic.bucket({
+const Cosmic = require('cosmicjs')
+const api = Cosmic()
+const bucket = api.bucket({
   slug: 'bucket-slug',
   write_key: 'your-write-key-found-in-bucket-settings'
 })
@@ -797,7 +801,8 @@ bucket.editObject()
 
 ```javascript
 const Cosmic = require('cosmicjs')
-const bucket = Cosmic.bucket({
+const api = Cosmic()
+const bucket = api.bucket({
   slug: 'bucket-slug',
   write_key: 'your-write-key-found-in-bucket-settings'
 })
@@ -907,7 +912,8 @@ bucket.deleteObject()
 
 ```javascript
 const Cosmic = require('cosmicjs')
-const bucket = Cosmic.bucket({
+const api = Cosmic()
+const bucket = api.bucket({
   slug: 'bucket-slug',
   write_key: 'your-write-key-found-in-bucket-settings'
 })
@@ -1005,8 +1011,9 @@ bucket.getMergeRequestObjects()
 ```
 **Example Request**
 ```javascript
-const Cosmic = require("cosmicjs");
-const bucket = Cosmic.bucket({
+const Cosmic = require('cosmicjs');
+const api = Cosmic();
+const bucket = api.bucket({
   slug: "bucket-slug",
   read_key: "your-read-key-found-in-bucket-settings"
 });

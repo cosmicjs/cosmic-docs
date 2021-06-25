@@ -240,7 +240,9 @@ bucket.addObjectRevision()
 **Example Request**
 
 ```javascript
-const bucket = Cosmic.bucket({
+const Cosmic = require('cosmicjs')
+const api = Cosmic()
+const bucket = api.bucket({
   slug: 'bucket-slug',
   write_key: 'your-write-key-found-in-bucket-settings'
 })

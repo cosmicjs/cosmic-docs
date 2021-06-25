@@ -196,8 +196,9 @@ bucket.editMetafield()
 ```
 **Example Request**
 ```javascript
-const Cosmic = require("cosmicjs");
-const bucket = Cosmic.bucket({
+const Cosmic = require('cosmicjs');
+const api = Cosmic();
+const bucket = api.bucket({
   slug: "bucket-slug",
   read_key: "your-read-key-found-in-bucket-settings",
 });

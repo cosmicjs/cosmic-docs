@@ -38,8 +38,9 @@ bucket.getObjectTypes()
 ```
 **Example Request**
 ```javascript
-const Cosmic = require("cosmicjs");
-const bucket = Cosmic.bucket({
+const Cosmic = require('cosmicjs');
+const api = Cosmic();
+const bucket = api.bucket({
   slug: "bucket-slug",
   read_key: "your-read-key-found-in-bucket-settings",
 });
@@ -130,7 +131,7 @@ cosmic get-object-types
 
 ## Get Object Type
 
-Get Object Type by `type_slug` from your Bucket.
+Get Object Type by `slug` from your Bucket.
 
 | Parameter | Required |  Type  | Description                                   |
 | :-------- | :------: | :----: | :-------------------------------------------- |
@@ -140,7 +141,7 @@ Get Object Type by `type_slug` from your Bucket.
 **Definition**
 
 ```bash
-GET $BASE_URL/buckets/${bucket_slug}/object-types/${type_slug}
+GET $BASE_URL/buckets/${bucket_slug}/object-types/${slug}
 ```
 
 **Example Response**
@@ -214,8 +215,9 @@ bucket.addObjectType()
 ```
 **Example Request**
 ```javascript
-const Cosmic = require("cosmicjs");
-const bucket = Cosmic.bucket({
+const Cosmic = require('cosmicjs');
+const api = Cosmic();
+const bucket = api.bucket({
   slug: "bucket-slug",
   read_key: "your-read-key-found-in-bucket-settings",
 });
@@ -360,8 +362,9 @@ bucket.editObjectType()
 ```
 **Example Request**
 ```javascript
-const Cosmic = require("cosmicjs");
-const bucket = Cosmic.bucket({
+const Cosmic = require('cosmicjs');
+const api = Cosmic();
+const bucket = api.bucket({
   slug: 'bucket-slug',
   write_key: 'your-write-key-found-in-bucket-settings'
 })
@@ -474,8 +477,9 @@ bucket.deleteObjectType()
 ```
 **Example Request**
 ```javascript
-const Cosmic = require("cosmicjs");
-const bucket = Cosmic.bucket({
+const Cosmic = require('cosmicjs');
+const api = Cosmic();
+const bucket = api.bucket({
   slug: 'bucket-slug',
   write_key: 'your-write-key-found-in-bucket-settings'
 })

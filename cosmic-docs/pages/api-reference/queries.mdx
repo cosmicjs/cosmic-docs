@@ -30,8 +30,9 @@ bucket.getObjects()
 ```
 **Configure Bucket**
 ```javascript
-const Cosmic = require("cosmicjs");
-const bucket = Cosmic.bucket({
+const Cosmic = require('cosmicjs');
+const api = Cosmic();
+const bucket = api.bucket({
   slug: "bucket-slug",
   read_key: "your-read-key-found-in-bucket-settings",
 });
@@ -43,28 +44,26 @@ const bucket = Cosmic.bucket({
 
 ```javascript
 const query = {
-  type: "products",
-  {
-    "metadata.price": {
-      "$gte": 100
-    }
+  type: 'products',
+  'metadata.price': {
+    $gte: 100
   }
 }
 bucket.getObjects({
   query,
   limit: 10
-});
+})
 ```
 
 **Get Single Object**
 
 ```javascript
 const query = {
-  slug: 'home',
-  props: 'title,content'
+  slug: 'home'
 }
-const objects = bucket.getObjects({
-  query
+const objects = await bucket.getObjects({
+  query,
+  props: 'title,content'
 })
 const home = objects[0]
 ```
@@ -103,7 +102,7 @@ cosmic get-objects --query
 ```
 **Example Request**
 ```bash
-cosmic get-objects --query '{"type":"products",{"metadata.price":{"$gte":100}}}'
+cosmic get-objects --query '{"type":"products","metadata.price":{"$gte":100}}'
 ```
 </div>
 </Tabs>
