@@ -192,7 +192,7 @@ PATCH $BASE_URL/buckets/${bucket_slug}/objects/${object_id}/metafields/${metafie
 </div>
 <div label="Node.js">
 ```javascript
-bucket.editMetafield()
+bucket.editObjectMetafield()
 ```
 **Example Request**
 ```javascript
@@ -207,7 +207,7 @@ const params = {
   key: `number`,
   value: 9876543210
 };
-bucket.editMetafield(params);
+bucket.editObjectMetafield(params);
 ```
 </div>
 </Tabs>
