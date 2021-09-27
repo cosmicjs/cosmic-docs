@@ -42,6 +42,10 @@ All requests to your endpoint are sent via `POST` with Header and Body informati
 }
 ```
 
+## Payload limits
+
+The payload limit is 6MB. You can disable the data payload or set comma-separated `props` to minimize the payload size. See [props](/api-reference/objects#using-props) for more information. (Excludes delete events. Using props returns first level props only.)
+
 ## Events
 
 This is a list of available events. We will add to this list as more features become available.
