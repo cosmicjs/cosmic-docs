@@ -141,13 +141,13 @@ cosmic get-objects --query '{"type":"products","metadata.price":{"$gte":100}}'
 
 ## Logic Operators
 
-| Parameter | Description                                                                                          |
-| --------- | ---------------------------------------------------------------------------------------------------- |
-| $and      | Returns Objects that match all conditions.                                                           |
-| $not      | Inverts the effect of a query expression and returns Objects that do not match the query expression. |
-| $all      | Equivalent to $and.                                                                                  |
-| $or       | Returns Objects that match any conditions.                                                           |
-| $nor      | Returns all Objects that fail to match both clauses.                                                 |
+| Parameter | Description                                                         |
+| --------- | ------------------------------------------------------------------- |
+| $and      | Returns Objects that match all of the query conditions.             |
+| $not      | Returns Objects that do not match the query expression.             |
+| $all      | Equivalent to $and.                                                 |
+| $or       | Returns Objects that match any of the specified conditions.         |
+| $nor      | Returns Objects that fail to match any of the specified conditions. |
 
 ## Example Queries
 
