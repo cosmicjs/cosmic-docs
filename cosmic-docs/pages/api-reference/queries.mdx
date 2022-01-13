@@ -137,15 +137,17 @@ cosmic get-objects --query '{"type":"products","metadata.price":{"$gte":100}}'
 | $in              | Matches any of the values specified in an array.                                          |
 | $ne              | Matches all values that are not equal to a specified value.                               |
 | $nin             | Matches none of the values specified in an array.                                         |
-| $regex, $options | Search for string, use `$options: "i"` for case insensitive matches                       |
+| $regex, $options | Search for string, use `$options: "i"` for case insensitive matches.                      |
 
 ## Logic Operators
 
-| Parameter | Description                               |
-| --------- | ----------------------------------------- |
-| $and      | Returns Objects that match all conditions |
-| $all      | Equivalent to $and                        |
-| $or       | Returns Objects that match any conditions |
+| Parameter | Description                                                                                          |
+| --------- | ---------------------------------------------------------------------------------------------------- |
+| $and      | Returns Objects that match all conditions.                                                           |
+| $not      | Inverts the effect of a query expression and returns Objects that do not match the query expression. |
+| $all      | Equivalent to $and.                                                                                  |
+| $or       | Returns Objects that match any conditions.                                                           |
+| $nor      | Returns all Objects that fail to match both clauses.                                                 |
 
 ## Example Queries
 
