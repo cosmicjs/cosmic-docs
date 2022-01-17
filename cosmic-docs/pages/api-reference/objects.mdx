@@ -141,7 +141,7 @@ bucket.getObjects({
 
 <div label="GraphQL">
 ```javascript
-getObjects(bucket_slug, input)
+getObjects(bucket_slug, read_key, input)
 ```
 
 **Variables**
@@ -150,10 +150,13 @@ Add this with your variable values to "Query Variables".
 
 ```
 {
-  "bucket_slug": "{{bucket_slug}}",
-  "read_key": "{{read_key}}",
-  "query": {
-    "type": "posts"
+  bucket_slug: "{{bucket_slug}}",
+  read_key: "{{read_key}}",
+  input: {
+    query: {
+      type: "posts"
+      props: "slug,title,metadata.hero.url"
+    }
   }
 }
 ```
@@ -260,19 +263,20 @@ bucket.getObjects({
 </div>
 <div label="GraphQL">
 ```javascript
-getObjects(bucket_slug, input)
+getObjects(bucket_slug, read_key, input)
 ```
 
 **Variables**
 
-Add this with your variable values to "Query Variables".
-
 ```
 {
-  "bucket_slug": "{{bucket_slug}}",
-  "read_key": "{{read_key}}",
-  "query": {
-    "type": "posts"
+  bucket_slug: "{{bucket_slug}}",
+  read_key: "{{read_key}}",
+  input: {
+    query: {
+      type: "posts",
+      props: "slug,title,content,metadata"
+    }
   }
 }
 ```
@@ -405,7 +409,7 @@ bucket.getObject({
 
 <div label="GraphQL">
 ```javascript
-getObject(bucket_slug, input)
+getObject(bucket_slug, read_key, input)
 ```
 **Variables**
 
@@ -413,8 +417,8 @@ Add this with your variable values to "Query Variables".
 
 ```
 {
-  "bucket_slug": "{{bucket_slug}}",
-  "read_key": "{{read_key}}"
+  bucket_slug: "{{bucket_slug}}",
+  read_key: "{{read_key}}"
 }
 ```
 
@@ -520,7 +524,7 @@ bucket.getObject({
 **Note:**  Using props with the GraphQL API may optimize server response time.
 
 ```javascript
-getObject(bucket_slug, input)
+getObject(bucket_slug, read_key, input)
 ```
 
 **Variables**
@@ -529,8 +533,12 @@ Add this with your variable values to "Query Variables".
 
 ```
 {
-  "bucket_slug": "{{bucket_slug}}",
-  "read_key": "{{read_key}}"
+  bucket_slug: "{{bucket_slug}}",
+  read_key: "{{read_key}}",
+  object_id: "{{object_id}}",
+  input: {
+    props: "slug,title,metadata"
+  }
 }
 ```
 
@@ -635,7 +643,7 @@ bucket.getObjects({
 **Note:**  Using props with the GraphQL API may optimize server response time.
 
 ```javascript
-getObjects(bucket_slug, input)
+getObjects(bucket_slug, read_key, input)
 ```
 
 **Variables**
