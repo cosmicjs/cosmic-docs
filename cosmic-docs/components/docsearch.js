@@ -1,4 +1,4 @@
-import { useRef, useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 
 const docsearch = function () {
   const input = useRef(null)
@@ -23,7 +23,10 @@ const docsearch = function () {
   }, [])
 
   useEffect(() => {
-    if (window.docsearch) {
+    const initDocSearch = () => {
+      // If there's no docsearch, retry after 500ms
+      if (!window.docsearch) return setTimeout(initDocSearch, 500)
+      // If there's docsearch, intialize it
       window.docsearch({
         apiKey: '2cdadd5ab16751ea3a49a13854e5b052',
         indexName: 'cosmicjs',
@@ -33,6 +36,8 @@ const docsearch = function () {
         }
       })
     }
+    // Call initDocSearch (one time after mount)
+    initDocSearch()
   }, [])
 
   return (
