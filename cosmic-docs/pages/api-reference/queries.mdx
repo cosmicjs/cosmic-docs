@@ -19,7 +19,7 @@ encoder tool may help](https://meyerweb.com/eric/tools/dencoder/).
 <Tabs>
 <div label="REST">
 ```bash
-GET $BASE_URL/buckets/${bucket_slug}/objects?read_key=${read_key}&query=${query}
+GET $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/objects?read_key=${YOUR_BUCKET_READ_KEY}&query=${query}
 ```
 
 </div>
@@ -82,8 +82,8 @@ Some queries will require a separate variable. Add this to the Query Variables a
 
 ```json
 {
-  "bucket_slug": "{{bucket_slug}}",
-  "read_key": "{{read_key}}",
+  "bucket_slug": "YOUR_BUCKET_SLUG",
+  "read_key": "YOUR_BUCKET_READ_KEY",
   "query": {
     "title": {
       "$regex": "another",
@@ -127,22 +127,23 @@ cosmic get-objects --query '{"type":"products","metadata.price":{"$gte":100}}'
 
 ## Query Selectors
 
-| Parameter        | Description                                                                               |
-| ---------------- | ----------------------------------------------------------------------------------------- |
-| $eq              | Matches values that are equal to a specified value. Equivalent to direct key/value query. |
-| $gt              | Matches values that are greater than a specified value.                                   |
-| $gte             | Matches values that are greater than or equal to a specified value.                       |
-| $lt              | Matches values that are less than a specified value.                                      |
-| $lte             | Matches values that are less than or equal to a specified value.                          |
-| $in              | Matches **any** of the values specified in an array.                                      |
-| $all             | Matches **all** of the values specified in an array.                                      |
-| $ne              | Matches all values that are not equal to a specified value.                               |
-| $nin             | Matches none of the values specified in an array.                                         |
+| Parameter | Description                                                                               |
+| --------- | ----------------------------------------------------------------------------------------- |
+| $eq       | Matches values that are equal to a specified value. Equivalent to direct key/value query. |
+| $gt       | Matches values that are greater than a specified value.                                   |
+| $gte      | Matches values that are greater than or equal to a specified value.                       |
+| $lt       | Matches values that are less than a specified value.                                      |
+| $lte      | Matches values that are less than or equal to a specified value.                          |
+| $in       | Matches **any** of the values specified in an array.                                      |
+| $all      | Matches **all** of the values specified in an array.                                      |
+| $ne       | Matches all values that are not equal to a specified value.                               |
+| $nin      | Matches none of the values specified in an array.                                         |
 
 ## Evaluation
-| Parameter        | Description                                                                               |
-| ---------------- | ----------------------------------------------------------------------------------------- |
-| $regex, $options | Search for string, use `$options: "i"` for case insensitive matches.                      |
+
+| Parameter        | Description                                                          |
+| ---------------- | -------------------------------------------------------------------- |
+| $regex, $options | Search for string, use `$options: "i"` for case insensitive matches. |
 
 ## Logic Operators
 
@@ -160,7 +161,7 @@ cosmic get-objects --query '{"type":"products","metadata.price":{"$gte":100}}'
 To keep examples concise, the following base path is used:
 
 ```bash
-endpoint = "$BASE_URL/buckets/${bucket_slug}/objects?read_key=${read_key}&props=title,slug,metadata"
+endpoint = "$BASE_URL/buckets/${YOUR_BUCKET_SLUG}/objects?read_key=${YOUR_BUCKET_READ_KEY}&props=title,slug,metadata"
 ```
 
 Matches Objects with exact Object Type

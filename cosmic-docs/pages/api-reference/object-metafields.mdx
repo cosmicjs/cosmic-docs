@@ -25,7 +25,7 @@ Get Metafields in your Object.
 **Definition**
 
 ```bash
-GET $BASE_URL/buckets/${bucket_slug}/objects/${object_id}/metafields
+GET $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/objects/${object_id}/metafields?read_key=${YOUR_BUCKET_READ_KEY}
 ```
 
 **Example Response**
@@ -74,7 +74,7 @@ Returns a single Metafield by `key` from your Object.
 **Definition**
 
 ```bash
-GET $BASE_URL/buckets/${bucket_slug}/objects/${object_id}/metafields/${metafield_key}
+GET $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/objects/${object_id}/metafields/${metafield_key}?read_key=${YOUR_BUCKET_READ_KEY}
 ```
 
 **Example Response**
@@ -116,14 +116,14 @@ Take a look at [Metafield Model](/api-reference/getting-started/metafields) for 
 **Definition**
 
 ```bash
-POST $BASE_URL/buckets/${bucket_slug}/objects/${object_id}/metafields
+POST $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/objects/${object_id}/metafields
 ```
 
 **Header**
 
 ```json
 {
-  "Authorization": "Bearer n5MbD59UPBoVpyqi6B6DnOzAvZ..."
+  "Authorization": "Bearer YOUR_BUCKET_WRITE_KEY"
 }
 ```
 
@@ -164,14 +164,14 @@ _**Note:** At least one of the Parameters is required to process the request._
 **Definition**
 
 ```bash
-PATCH $BASE_URL/buckets/${bucket_slug}/objects/${object_id}/metafields/${metafield_key}
+PATCH $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/objects/${object_id}/metafields/${metafield_key}
 ```
 
 **Header**
 
 ```json
 {
-  "Authorization": "Bearer n5MbD59UPBoVpyqi6B6DnOzAvZ..."
+  "Authorization": "Bearer YOUR_BUCKET_WRITE_KEY"
 }
 ```
 
@@ -187,7 +187,7 @@ PATCH $BASE_URL/buckets/${bucket_slug}/objects/${object_id}/metafields/${metafie
 ```
 **Endpoint**
 ```bash
-PATCH $BASE_URL/buckets/${bucket_slug}/objects/${object_id}/metafields/${metafield_key}
+PATCH $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/objects/${object_id}/metafields/${metafield_key}
 ```
 </div>
 <div label="Node.js">
@@ -239,14 +239,14 @@ Delete an existing Metafield by `key` from your Object.
 **Definition**
 
 ```bash
-DELETE $BASE_URL/buckets/${bucket_slug}/objects/${object_id}/metafields/${metafield_key}
+DELETE $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/objects/${object_id}/metafields/${metafield_key}
 ```
 
 **Header**
 
 ```json
 {
-  "Authorization": "Bearer n5MbD59UPBoVpyqi6B6DnOzAvZ..."
+  "Authorization": "Bearer YOUR_BUCKET_WRITE_KEY"
 }
 ```
 

@@ -27,7 +27,7 @@ Get all Object Types in your Bucket.
 <Tabs>
 <div label="REST">
 ```bash
-GET $BASE_URL/buckets/${bucket_slug}/object-types
+GET $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/object-types
 ```
 
 </div>
@@ -141,7 +141,7 @@ Get Object Type by `slug` from your Bucket.
 **Definition**
 
 ```bash
-GET $BASE_URL/buckets/${bucket_slug}/object-types/${slug}
+GET $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/object-types/${slug}
 ```
 
 **Example Response**
@@ -197,13 +197,13 @@ Add a new Object Type to your Bucket.
 <Tabs>
 <div label="REST">
 ```bash
-POST $BASE_URL/buckets/${bucket_slug}/object-types
+POST $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/object-types
 ```
 **Header**
 
 ```json
 {
-  "Authorization": "Bearer n5MbD59UPBoVpyqi6B6DnOzAvZ..."
+  "Authorization": "Bearer YOUR_BUCKET_WRITE_KEY"
 }
 ```
 
@@ -260,7 +260,7 @@ addObjectType(bucket_slug, input)
 
 ```json
 {
-  "Authorization": "Bearer n5MbD59UPBoVpyqi6B6DnOzAvZ..."
+  "Authorization": "Bearer YOUR_BUCKET_WRITE_KEY"
 }
 ```
 
@@ -268,7 +268,7 @@ addObjectType(bucket_slug, input)
 
 ```json
 {
-  "bucket_slug": "{{bucket_slug}}"
+  "bucket_slug": "YOUR_BUCKET_SLUG"
 }
 ```
 
@@ -344,13 +344,13 @@ _**Note:** At least one of the Parameters is required to process the request._
 <Tabs>
 <div label="REST">
 ```bash
-PATCH $BASE_URL/buckets/${bucket_slug}/object-types/${type_slug}
+PATCH $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/object-types/${type_slug}
 ```
 **Header**
 
 ```json
 {
-  "Authorization": "Bearer n5MbD59UPBoVpyqi6B6DnOzAvZ..."
+  "Authorization": "Bearer YOUR_BUCKET_WRITE_KEY"
 }
 ```
 
@@ -389,7 +389,7 @@ editObjectType(bucket_slug)
 
 ```json
 {
-  "Authorization": "Bearer n5MbD59UPBoVpyqi6B6DnOzAvZ..."
+  "Authorization": "Bearer YOUR_BUCKET_WRITE_KEY"
 }
 ```
 
@@ -397,7 +397,7 @@ editObjectType(bucket_slug)
 
 ```json
 {
-  "bucket_slug": "{{bucket_slug}}"
+  "bucket_slug": "YOUR_BUCKET_SLUG"
 }
 ```
 
@@ -459,13 +459,13 @@ _**Note:** This does not delete Objects in this Object Type._
 <Tabs>
 <div label="REST">
 ```bash
-DELETE $BASE_URL/buckets/${bucket_slug}/object-types/${type_slug}
+DELETE $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/object-types/${type_slug}
 ```
 **Header**
 
 ```json
 {
-  "Authorization": "Bearer n5MbD59UPBoVpyqi6B6DnOzAvZ..."
+  "Authorization": "Bearer YOUR_BUCKET_WRITE_KEY"
 }
 ```
 
@@ -503,7 +503,7 @@ deleteObjectType(bucket_slug, type_slug)
 
 ```json
 {
-  "Authorization": "Bearer n5MbD59UPBoVpyqi6B6DnOzAvZ..."
+  "Authorization": "Bearer YOUR_BUCKET_WRITE_KEY"
 }
 ```
 
@@ -511,7 +511,7 @@ deleteObjectType(bucket_slug, type_slug)
 
 ```json
 {
-  "bucket_slug": "{{bucket_slug}}"
+  "bucket_slug": "YOUR_BUCKET_SLUG"
 }
 ```
 

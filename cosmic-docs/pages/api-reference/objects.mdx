@@ -42,7 +42,7 @@ const query = {
 ```
 **Endpoint**
 ```bash
-GET $BASE_URL/buckets/${bucket_slug}/objects?query=${query}&limit=1
+GET $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/objects?read_key=${YOUR_BUCKET_READ_KEY}&query=${query}&limit=1
 ```
 
 **Example Full Response**
@@ -150,8 +150,8 @@ Add this with your variable values to "Query Variables".
 
 ```
 {
-  bucket_slug: "{{bucket_slug}}",
-  read_key: "{{read_key}}",
+  bucket_slug: "YOUR_BUCKET_SLUG",
+  read_key: "YOUR_BUCKET_READ_KEY",
   input: {
     query: {
       type: "posts"
@@ -203,7 +203,7 @@ const props = `
 ```
 **Endpoint**
 ```bash
-GET $BASE_URL/buckets/${bucket_slug}/objects?query=${query}&props=${props}&limit=1
+GET $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/objects?read_key=${YOUR_BUCKET_READ_KEY}&query=${query}&props=${props}&limit=1
 ```
 
 **Example Response with Props**
@@ -270,8 +270,8 @@ getObjects(bucket_slug, read_key, input)
 
 ```
 {
-  bucket_slug: "{{bucket_slug}}",
-  read_key: "{{read_key}}",
+  bucket_slug: "YOUR_BUCKET_SLUG",
+  read_key: "YOUR_BUCKET_READ_KEY",
   input: {
     query: {
       type: "posts"
@@ -315,7 +315,7 @@ Returns a single Object by `id` from your Bucket.
 <Tabs>
   <div label="REST">
 ```bash
-GET $BASE_URL/buckets/${bucket_slug}/objects/${object_id}
+GET $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/objects/${object_id}?read_key=${YOUR_BUCKET_READ_KEY}
 ```
 
 **Example Full Response**
@@ -417,8 +417,8 @@ Add this with your variable values to "Query Variables".
 
 ```
 {
-  bucket_slug: "{{bucket_slug}}",
-  read_key: "{{read_key}}"
+  bucket_slug: "YOUR_BUCKET_SLUG",
+  read_key: "YOUR_BUCKET_READ_KEY"
 }
 ```
 
@@ -468,7 +468,7 @@ const props = `
 ```
 
 ```bash
-GET $BASE_URL/buckets/${bucket_slug}/objects/${object_id}?props=${props}
+GET $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/objects/${object_id}?read_key=${YOUR_BUCKET_READ_KEY}&props=${props}
 ```
 
 **Example Response with Props**
@@ -533,8 +533,8 @@ Add this with your variable values to "Query Variables".
 
 ```
 {
-  bucket_slug: "{{bucket_slug}}",
-  read_key: "{{read_key}}",
+  bucket_slug: "YOUR_BUCKET_SLUG",
+  read_key: "YOUR_BUCKET_READ_KEY",
   object_id: "{{object_id}}",
   input: {
     props: "slug,title,metadata"
@@ -582,7 +582,7 @@ const props = `
 ```
 
 ```bash
-GET $BASE_URL/buckets/${bucket_slug}/objects/?query={"slug":"object-slug"}&props=${props}
+GET $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/objects/?read_key=${YOUR_BUCKET_READ_KEY}&query={"slug":"object-slug"}&props=${props}
 ```
 
 **Example Response with Props**
@@ -652,8 +652,8 @@ Add this with your variable values to "Query Variables".
 
 ```
 {
-  "bucket_slug": "{{bucket_slug}}",
-  "read_key": "{{read_key}}"
+  "bucket_slug": "YOUR_BUCKET_SLUG",
+  "read_key": "YOUR_BUCKET_READ_KEY"
 }
 ```
 
@@ -712,13 +712,13 @@ Add a new Object to your Bucket.
 <Tabs>
 <div label="REST">
 ```bash
-POST $BASE_URL/buckets/${bucket_slug}/objects
+POST $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/objects
 ```
 **Header**
 
 ```json
 {
-  "Authorization": "Bearer n5MbD59UPBoVpyqi6B6DnOzAvZ..."
+  "Authorization": "Bearer YOUR_BUCKET_WRITE_KEY"
 }
 ```
 
@@ -809,7 +809,7 @@ addObject(bucket_slug, input)
 
 ```json
 {
-  "Authorization": "Bearer n5MbD59UPBoVpyqi6B6DnOzAvZ..."
+  "Authorization": "Bearer YOUR_BUCKET_WRITE_KEY"
 }
 ```
 
@@ -819,7 +819,7 @@ Add this with your variable values to "Query Variables".
 
 ```
 {
-  "bucket_slug": "{{bucket_slug}}"
+  "bucket_slug": "YOUR_BUCKET_SLUG"
 }
 ```
 
@@ -876,13 +876,13 @@ _**Note:** At least one of the Parameters is required to process the request._
 <Tabs>
 <div label="REST">
 ```bash
-PATCH $BASE_URL/buckets/${bucket_slug}/objects/${object_id}
+PATCH $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/objects/${object_id}
 ```
 **Header**
 
 ```json
 {
-  "Authorization": "Bearer n5MbD59UPBoVpyqi6B6DnOzAvZ..."
+  "Authorization": "Bearer YOUR_BUCKET_WRITE_KEY"
 }
 ```
 
@@ -953,7 +953,7 @@ editObject(bucket_slug, input)
 
 ```json
 {
-  "Authorization": "Bearer n5MbD59UPBoVpyqi6B6DnOzAvZ..."
+  "Authorization": "Bearer YOUR_BUCKET_WRITE_KEY"
 }
 ```
 
@@ -963,7 +963,7 @@ Add this with your variable values to "Query Variables".
 
 ```
 {
-  "bucket_slug": "{{bucket_slug}}"
+  "bucket_slug": "YOUR_BUCKET_SLUG"
 }
 ```
 
@@ -1007,13 +1007,13 @@ Delete an existing Object by `id` from your Bucket.
 <Tabs>
 <div label="REST">
 ```bash
-DELETE $BASE_URL/buckets/${bucket_slug}/objects/${object_id}?trigger_webhook=true
+DELETE $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/objects/${object_id}?trigger_webhook=true
 ```
 **Header**
 
 ```json
 {
-  "Authorization": "Bearer n5MbD59UPBoVpyqi6B6DnOzAvZ..."
+  "Authorization": "Bearer YOUR_BUCKET_WRITE_KEY"
 }
 ```
 
@@ -1063,7 +1063,7 @@ deleteObject(bucket_slug, input)
 
 ```json
 {
-  "Authorization": "Bearer n5MbD59UPBoVpyqi6B6DnOzAvZ..."
+  "Authorization": "Bearer YOUR_BUCKET_WRITE_KEY"
 }
 ```
 
@@ -1072,7 +1072,7 @@ Add this with your variable values to "Query Variables".
 
 ```
 {
-  "bucket_slug": "{{bucket_slug}}"
+  "bucket_slug": "YOUR_BUCKET_SLUG"
 }
 ```
 
@@ -1112,7 +1112,7 @@ const query = {
 ```
 **Endpoint**
 ```bash
-GET $BASE_URL/buckets/${bucket_slug}/merge-requests/${merge_request_id}/objects?query=${query}&props=title,slug
+GET $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/merge-requests/${merge_request_id}/objects?query=${query}&props=title,slug
 ```
 
 **Example Response**
@@ -1163,8 +1163,8 @@ Add this with your variable values to "Query Variables".
 
 ```
 {
-  "bucket_slug": "{{bucket_slug}}",
-  "read_key": "{{read_key}}",
+  "bucket_slug": "YOUR_BUCKET_SLUG",
+  "read_key": "YOUR_BUCKET_READ_KEY",
   "merge_request_id": "merge-request-id",
   "query": {
     "slug": "new-post-in-merge-request",

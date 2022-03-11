@@ -33,7 +33,7 @@ Get Object Revisions of Object with `id` in your Bucket.
 <Tabs>
 <div label="REST">
 ```bash
-GET $BASE_URL/buckets/${bucket_slug}/objects/${object_id}/revisions
+GET $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/objects/${object_id}/revisions?read_key=${YOUR_BUCKET_READ_KEY}
 ```
 
 </div>
@@ -72,8 +72,8 @@ Add this with your variable values to "Query Variables".
 
 ```
 {
-  "bucket_slug": "{{bucket_slug}}",
-  "read_key": "{{read_key}}"
+  "bucket_slug": "YOUR_BUCKET_SLUG",
+  "read_key": "YOUR_BUCKET_READ_KEY"
 }
 ```
 
@@ -135,7 +135,7 @@ Returns a single Revision by `id` from your Object.
 **Definition**
 
 ```bash
-GET $BASE_URL/buckets/${bucket_slug}/objects/${object_id}/revisions/${revision_id}
+GET $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/objects/${object_id}/revisions/${revision_id}?read_key=${YOUR_BUCKET_READ_KEY}
 ```
 
 **Example Response**
@@ -191,13 +191,13 @@ Add a new Revision to your Object.
 <Tabs>
 <div label="REST">
 ```bash
-POST $BASE_URL/buckets/${bucket_slug}/objects/${object_id}/revisions
+POST $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/objects/${object_id}/revisions
 ```
 **Header**
 
 ```json
 {
-  "Authorization": "Bearer n5MbD59UPBoVpyqi6B6DnOzAvZ..."
+  "Authorization": "Bearer YOUR_BUCKET_WRITE_KEY"
 }
 ```
 
@@ -271,7 +271,7 @@ addObjectRevision(bucket_slug, input)
 
 ```json
 {
-  "Authorization": "Bearer n5MbD59UPBoVpyqi6B6DnOzAvZ..."
+  "Authorization": "Bearer YOUR_BUCKET_WRITE_KEY"
 }
 ```
 
@@ -281,7 +281,7 @@ Add this with your variable values to "Query Variables".
 
 ```
 {
-  "bucket_slug": "{{bucket_slug}}"
+  "bucket_slug": "YOUR_BUCKET_SLUG"
 }
 ```
 

@@ -24,7 +24,7 @@ Get Media Folders in your Bucket.
 **Definition**
 
 ```bash
-GET $BASE_URL/buckets/${bucket_slug}/media-folders
+GET $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/media-folders
 ```
 
 **Example Response**
@@ -61,7 +61,7 @@ Returns list of media in Folder by `slug` from your Bucket.
 **Definition**
 
 ```bash
-GET $BASE_URL/buckets/${bucket_slug}/media-folders/${media_folder_slug}/media
+GET $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/media-folders/${media_folder_slug}/media
 ```
 
 **Example Response**
@@ -122,14 +122,14 @@ Add a new Media Folder to your Bucket.
 **Definition**
 
 ```bash
-POST $BASE_URL/buckets/${bucket_slug}/media-folders/
+POST $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/media-folders/
 ```
 
 **Header**
 
 ```json
 {
-  "Authorization": "Bearer n5MbD59UPBoVpyqi6B6DnOzAvZ..."
+  "Authorization": "Bearer YOUR_BUCKET_WRITE_KEY"
 }
 ```
 
@@ -172,14 +172,14 @@ _**Note:** At least one of the Parameters is required to process the request._
 **Definition**
 
 ```bash
-PATCH $BASE_URL/buckets/${bucket_slug}/media-folders/${media_folder_slug}
+PATCH $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/media-folders/${media_folder_slug}
 ```
 
 **Header**
 
 ```json
 {
-  "Authorization": "Bearer n5MbD59UPBoVpyqi6B6DnOzAvZ..."
+  "Authorization": "Bearer YOUR_BUCKET_WRITE_KEY"
 }
 ```
 
@@ -216,14 +216,14 @@ Delete an existing Media Folder by `slug` from your Bucket.
 **Definition**
 
 ```bash
-DELETE $BASE_URL/buckets/${bucket_slug}/media-folders/${media_folder_slug}
+DELETE $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/media-folders/${media_folder_slug}
 ```
 
 **Header**
 
 ```json
 {
-  "Authorization": "Bearer n5MbD59UPBoVpyqi6B6DnOzAvZ..."
+  "Authorization": "Bearer YOUR_BUCKET_WRITE_KEY"
 }
 ```
 

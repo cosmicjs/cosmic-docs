@@ -137,7 +137,7 @@ Returns bucket by `slug` connected to your Bucket.
 <Tabs>
 <div label="REST">
 ```bash
-GET $BASE_URL/buckets/${bucket_slug}
+GET $BASE_URL/buckets/${YOUR_BUCKET_SLUG}
 ```
 
 </div>
@@ -180,7 +180,7 @@ getBucket(bucket_slug)
 
 ```json
 {
-  "bucket_slug": "{{bucket_slug}}"
+  "bucket_slug": "YOUR_BUCKET_SLUG"
 }
 ```
 
@@ -349,7 +349,7 @@ _**Note:** At least one of the Parameters is required to process the request._
 **Definition**
 
 ```bash
-PATCH $BASE_URL/buckets/${bucket_slug}
+PATCH $BASE_URL/buckets/${YOUR_BUCKET_SLUG}
 ```
 
 **Example Body (JSON)**
@@ -401,7 +401,7 @@ Delete an existing bucket by `slug` from your account.
 <Tabs>
 <div label="REST">
 ```bash
-DELETE $BASE_URL/buckets/${bucket_slug}
+DELETE $BASE_URL/buckets/${YOUR_BUCKET_SLUG}
 ```
 
 </div>
@@ -447,7 +447,7 @@ deleteBucket(bucket_id)
 
 ```json
 {
-  "bucket_slug": "{{bucket_slug}}"
+  "bucket_slug": "YOUR_BUCKET_SLUG"
 }
 ```
 
@@ -474,6 +474,6 @@ cosmic delete-bucket
 
 ```json
 {
-  "message": "Bucket with slug: '${bucket_slug}' deleted successfully.'"
+  "message": "Bucket with slug: '${YOUR_BUCKET_SLUG}' deleted successfully.'"
 }
 ```

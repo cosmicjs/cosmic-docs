@@ -32,7 +32,7 @@ Get Media List in your Bucket.
 <Tabs>
 <div label="REST">
 ```bash
-GET $BASE_URL/buckets/${bucket_slug}/media
+GET $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/media
 ```
 
 </div>
@@ -76,8 +76,8 @@ getMedia(bucket_slug, input)
 
 ```
 {
-  "bucket_slug": "{{bucket_slug}}",
-  "read_key": "{{read_key}}"
+  "bucket_slug": "YOUR_BUCKET_SLUG",
+  "read_key": "YOUR_BUCKET_READ_KEY"
 }
 ```
 
@@ -147,7 +147,7 @@ Returns a single Media by `id` from your Bucket.
 <Tabs>
 <div label="REST">
 ```bash
-GET $BASE_URL/buckets/${bucket_slug}/media/${media_id}
+GET $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/media/${media_id}
 ```
 
 </div>
@@ -269,7 +269,7 @@ curl --form "folder=folder-name" --form "media=@test.png" -H "Authorization: Bea
 
 ```json
 {
-  "Authorization": "Bearer n5MbD59UPBoVpyqi6B6DnOzAvZ..."
+  "Authorization": "Bearer YOUR_BUCKET_WRITE_KEY"
 }
 ```
 
@@ -458,14 +458,14 @@ _**Note:** At least one of the Parameters is required to process the request._
 **Definition**
 
 ```bash
-PATCH $BASE_URL/buckets/${bucket_slug}/media/${media_id}
+PATCH $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/media/${media_id}
 ```
 
 **Header**
 
 ```json
 {
-  "Authorization": "Bearer n5MbD59UPBoVpyqi6B6DnOzAvZ..."
+  "Authorization": "Bearer YOUR_BUCKET_WRITE_KEY"
 }
 ```
 
@@ -507,13 +507,13 @@ Delete an existing Media by `id` from your Bucket.
 <Tabs>
 <div label="REST">
 ```bash
-DELETE $BASE_URL/buckets/${bucket_slug}/media/${media_id}?trigger_webhook=true
+DELETE $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/media/${media_id}?trigger_webhook=true
 ```
 **Header**
 
 ```json
 {
-  "Authorization": "Bearer n5MbD59UPBoVpyqi6B6DnOzAvZ..."
+  "Authorization": "Bearer YOUR_BUCKET_WRITE_KEY"
 }
 ```
 
@@ -555,7 +555,7 @@ deleteMedia(bucket_slug, media_id)
 
 ```json
 {
-  "Authorization": "Bearer n5MbD59UPBoVpyqi6B6DnOzAvZ..."
+  "Authorization": "Bearer YOUR_BUCKET_WRITE_KEY"
 }
 ```
 
@@ -563,7 +563,7 @@ deleteMedia(bucket_slug, media_id)
 
 ```
 {
-  "bucket_slug": "{{bucket_slug}}"
+  "bucket_slug": "YOUR_BUCKET_SLUG"
 }
 ```
 

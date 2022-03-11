@@ -35,7 +35,7 @@ Gets all users in your bucket.
 <Tabs>
 <div label="REST">
 ```bash
-GET $BASE_URL/buckets/${bucket_slug}/users
+GET $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/users
 ```
 
 </div>
@@ -78,7 +78,7 @@ getUsers(bucket_slug)
 
 ```
 {
-  "bucket_slug": "{{bucket_slug}}"
+  "bucket_slug": "YOUR_BUCKET_SLUG"
 }
 ```
 
@@ -134,7 +134,7 @@ Gets user by `id` in your bucket.
 <Tabs>
 <div label="REST">
 ```bash
-GET $BASE_URL/buckets/${bucket_slug}/users/${user_id}
+GET $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/users/${user_id}
 ```
 
 </div>
@@ -180,7 +180,7 @@ getUser(bucket_slug, user_id)
 
 ```
 {
-  "bucket_slug": "{{bucket_slug}}",
+  "bucket_slug": "YOUR_BUCKET_SLUG",
   "user_id": "{{user_id}}"
 }
 ```
@@ -230,7 +230,7 @@ Add user to your bucket.
 <Tabs>
 <div label="REST">
 ```bash
-POST $BASE_URL/buckets/${bucket_slug}/users
+POST $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/users
 ```
 **Example Body (JSON)**
 
@@ -320,7 +320,7 @@ Edit user by `id` in your bucket.
 **Definition**
 
 ```bash
-PATCH $BASE_URL/buckets/${bucket_slug}/users/${user_id}
+PATCH $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/users/${user_id}
 ```
 
 **Example Body (JSON)**
@@ -353,7 +353,7 @@ Delete user by `id` from your bucket.
 **Definition**
 
 ```bash
-DELETE $BASE_URL/buckets/${bucket_slug}/users/${user_id}
+DELETE $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/users/${user_id}
 ```
 
 **Example Response**
