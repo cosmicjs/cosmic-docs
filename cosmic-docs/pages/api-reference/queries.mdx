@@ -164,32 +164,10 @@ To keep examples concise, the following base path is used:
 endpoint = "$BASE_URL/buckets/${YOUR_BUCKET_SLUG}/objects?read_key=${YOUR_BUCKET_READ_KEY}&props=title,slug,metadata"
 ```
 
-The accompanying ES6 examples will use the following import and Cosmic object setup:
-
-```js
-import Cosmic from 'cosmicjs'
-
-const api = Cosmic()
-
-const bucket = api.bucket({
-  slug: process.env.BUCKET_SLUG,
-  read_key: process.env.READ_KEY,
-  write_key: process.env.WRITE_KEY,
-})
-```
-
 Matches Objects with exact Object Type
 
 ```bash
 curl '$endpoint&query={"type":"posts"}'
-```
-
-```js
-bucket.getObjects({
-    query: {
-      type: "posts",
-    },
-  })
 ```
 
 Matches Objects with exact title
@@ -198,26 +176,10 @@ Matches Objects with exact title
 curl '$endpoint&query={"title":"Post 1"}'
 ```
 
-```js
-bucket.getObjects({
-    query: {
-      title: "Post 1",
-    },
-  })
-```
-
 Matches Objects with exact id
 
 ```bash
 curl '$endpoint&query={"id":"valid_object_id"}'
-```
-
-```js
-bucket.getObjects({
-    query: {
-      id: "valid_object_id",
-    },
-  })
 ```
 
 Matches Objects with any ids

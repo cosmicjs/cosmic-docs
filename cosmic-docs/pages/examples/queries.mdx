@@ -1,0 +1,59 @@
+# Advanced Queries
+
+There will be times when you need to retrieve data from Cosmic in more complex ways than simply querying a record by its slug or ID. For example, you might have an app that collects user information for an online store.
+
+There will be times you need to fetch a list of users that have ordered a specific item or you need to decide who your super-users are based on them not purchasing at a certain time of day. 
+
+We'll walk through a few of these scenarios and the code you can run to execute similiar queries.
+
+## Some Code Set Up
+
+The accompanying ES6 examples will use the following import and Cosmic object setup:
+
+```js
+import Cosmic from 'cosmicjs'
+
+const api = Cosmic()
+
+const bucket = api.bucket({
+  slug: process.env.BUCKET_SLUG,
+  read_key: process.env.READ_KEY,
+  write_key: process.env.WRITE_KEY,
+})
+```
+
+### Get objects with the exact object type
+
+You may need to retrieve all of the items you have available in your store and you can use the following code snippets to do so.
+
+```js
+bucket.getObjects({
+    query: {
+      type: "items",
+    },
+  })
+```
+
+### Get objects with the exact object title
+
+There might be a certain product you need to look at and you have the title available from your front-end.
+
+```js
+bucket.getObjects({
+    query: {
+      title: "Mango Nation Hat",
+    },
+  })
+```
+
+### Get objects with the exact ID
+
+You may need to get an object based on its ID that was hidden in a form.
+
+```js
+bucket.getObjects({
+    query: {
+      id: "item_id",
+    },
+  })
+```
