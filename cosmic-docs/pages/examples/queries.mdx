@@ -28,6 +28,9 @@ You may need to retrieve all of the items you have available in your store and y
 
 <Tabs>
   <div label="REST">
+    ```bash
+    GET $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/objects?read_key=${YOUR_BUCKET_READ_KEY}&query={"type":"items"}
+    ```
   </div>
   <div label="Node.js">
     ```javascript
@@ -39,8 +42,31 @@ You may need to retrieve all of the items you have available in your store and y
     ```
   </div>
   <div label="GraphQL">
+    ```javascript
+    query ($bucket_slug: String!, $read_key: String, $query: JSON) {
+      getObjects(
+        bucket_slug: $bucket_slug
+        read_key: $read_key
+        input: {
+          query: {
+            type: "items",
+          }
+        }
+      ) {
+        objects {
+          id
+          title
+          slug
+        }
+        total
+      }
+    }
+    ```
   </div>
   <div label="CLI">
+    ```bash
+    cosmic get-objects --query '{"type":"items"}'
+    ```
   </div>
 </Tabs>
 
@@ -50,6 +76,9 @@ There might be a certain product you need to look at and you have the title avai
 
 <Tabs>
   <div label="REST">
+    ```bash
+    GET $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/objects?read_key=${YOUR_BUCKET_READ_KEY}&query={"title":"Mango Nation Hat"}
+    ```
   </div>
   <div label="Node.js">
     ```javascript
@@ -61,8 +90,31 @@ There might be a certain product you need to look at and you have the title avai
     ```
   </div>
   <div label="GraphQL">
+    ```javascript
+    query ($bucket_slug: String!, $read_key: String, $query: JSON) {
+      getObjects(
+        bucket_slug: $bucket_slug
+        read_key: $read_key
+        input: {
+          query: {
+            title: "Mango Nation Hat",
+          }
+        }
+      ) {
+        objects {
+          id
+          title
+          slug
+        }
+        total
+      }
+    }
+    ```
   </div>
   <div label="CLI">
+    ```bash
+    cosmic get-objects --query '{"title":"Mango Nation Hat"}'
+    ```
   </div>
 </Tabs>
 
@@ -72,6 +124,9 @@ You may need to get an object based on its ID that was hidden in a form.
 
 <Tabs>
   <div label="REST">
+    ```bash
+    GET $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/objects?read_key=${YOUR_BUCKET_READ_KEY}&query={"id":"item_id"}
+    ```
   </div>
   <div label="Node.js">
     ```javascript
@@ -83,8 +138,31 @@ You may need to get an object based on its ID that was hidden in a form.
     ```
   </div>
   <div label="GraphQL">
+    ```javascript
+    query ($bucket_slug: String!, $read_key: String, $query: JSON) {
+      getObjects(
+        bucket_slug: $bucket_slug
+        read_key: $read_key
+        input: {
+          query: {
+            id: "item_id",
+          }
+        }
+      ) {
+        objects {
+          id
+          title
+          slug
+        }
+        total
+      }
+    }
+    ```
   </div>
   <div label="CLI">
+    ```bash
+    cosmic get-objects --query '{"id":"item_id"}'
+    ```
   </div>
 </Tabs>
 
@@ -94,6 +172,9 @@ You may need to get a some specific objects based on individual IDs.
 
 <Tabs>
   <div label="REST">
+    ```bash
+    GET $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/objects?read_key=${YOUR_BUCKET_READ_KEY}&query={"id":["item_id_1","item_id_2"]}
+    ```
   </div>
   <div label="Node.js">
     ```javascript
@@ -105,8 +186,31 @@ You may need to get a some specific objects based on individual IDs.
     ```
   </div>
   <div label="GraphQL">
+    ```javascript
+    query ($bucket_slug: String!, $read_key: String, $query: JSON) {
+      getObjects(
+        bucket_slug: $bucket_slug
+        read_key: $read_key
+        input: {
+          query: {
+            id: ["item_id_1","item_id_2"],
+          }
+        }
+      ) {
+        objects {
+          id
+          title
+          slug
+        }
+        total
+      }
+    }
+    ```
   </div>
   <div label="CLI">
+    ```bash
+    cosmic get-objects --query '{"id":["item_id_1","item_id_2"]}'
+    ```
   </div>
 </Tabs>
 
@@ -116,6 +220,9 @@ You may need to filter objects based on the IDs not having a specific value.
 
 <Tabs>
   <div label="REST">
+    ```bash
+    GET $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/objects?read_key=${YOUR_BUCKET_READ_KEY}&query={"id":{"$ne":"item_id_1"}}
+    ```
   </div>
   <div label="Node.js">
     ```javascript
@@ -129,8 +236,33 @@ You may need to filter objects based on the IDs not having a specific value.
     ```
   </div>
   <div label="GraphQL">
+    ```javascript
+    query ($bucket_slug: String!, $read_key: String, $query: JSON) {
+      getObjects(
+        bucket_slug: $bucket_slug
+        read_key: $read_key
+        input: {
+          query: {
+            id: {
+              "$ne":"item_id_1"
+            },
+          }
+        }
+      ) {
+        objects {
+          id
+          title
+          slug
+        }
+        total
+      }
+    }
+    ```
   </div>
   <div label="CLI">
+    ```bash
+    cosmic get-objects --query '{"id":{"$ne":"item_id_1"}}'
+    ```
   </div>
 </Tabs>
 
@@ -140,6 +272,9 @@ You may have a set of objects you have on a separate list that you want to keep 
 
 <Tabs>
   <div label="REST">
+    ```bash
+    GET $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/objects?read_key=${YOUR_BUCKET_READ_KEY}&query={"id":{"$nin":["item_id_1","item_id_2"]}}
+    ```
   </div>
   <div label="Node.js">
     ```javascript
@@ -153,8 +288,33 @@ You may have a set of objects you have on a separate list that you want to keep 
     ```
   </div>
   <div label="GraphQL">
+    ```javascript
+    query ($bucket_slug: String!, $read_key: String, $query: JSON) {
+      getObjects(
+        bucket_slug: $bucket_slug
+        read_key: $read_key
+        input: {
+          query: {
+            id: {
+              "$nin":["item_id_1","item_id_2"]
+            },
+          }
+        }
+      ) {
+        objects {
+          id
+          title
+          slug
+        }
+        total
+      }
+    }
+    ```
   </div>
   <div label="CLI">
+    ```bash
+    cosmic get-objects --query '{"id":{"$nin":["item_id_1","item_id_2"]}}'
+    ```
   </div>
 </Tabs>
 
@@ -164,6 +324,9 @@ You may have a set of objects you have on a separate list that you want to keep 
 
 <Tabs>
   <div label="REST">
+    ```bash
+    GET $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/objects?read_key=${YOUR_BUCKET_READ_KEY}&query={"slug":"user_1"}
+    ```
   </div>
   <div label="Node.js">
     ```javascript
@@ -175,8 +338,80 @@ You may have a set of objects you have on a separate list that you want to keep 
     ```
   </div>
   <div label="GraphQL">
+    ```javascript
+    query ($bucket_slug: String!, $read_key: String, $query: JSON) {
+      getObjects(
+        bucket_slug: $bucket_slug
+        read_key: $read_key
+        input: {
+          query: {
+            slug:"user_1",
+          }
+        }
+      ) {
+        objects {
+          id
+          title
+          slug
+        }
+        total
+      }
+    }
+    ```
   </div>
   <div label="CLI">
+    ```bash
+    cosmic get-objects --query '{"slug":"user_1"}'
+    ```
+  </div>
+</Tabs>
+
+### Get objects with any slug values
+
+You may have a set of objects you have on a separate list that you want to keep out of the objects you return.
+
+<Tabs>
+  <div label="REST">
+    ```bash
+    GET $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/objects?read_key=${YOUR_BUCKET_READ_KEY}&query={"$or":[{"slug":"post-1"},{"slug":"post-2"}]}
+    ```
+  </div>
+  <div label="Node.js">
+    ```javascript
+    bucket.getObjects({
+        query: {
+            "$or": [{"slug":"post-1"},{"slug":"post-2"}]
+          },
+        },
+      })
+    ```
+  </div>
+  <div label="GraphQL">
+    ```javascript
+    query ($bucket_slug: String!, $read_key: String, $query: JSON) {
+      getObjects(
+        bucket_slug: $bucket_slug
+        read_key: $read_key
+        input: {
+          query: {
+            "$or": [{"slug":"post-1"},{"slug":"post-2"}]
+          }
+        }
+      ) {
+        objects {
+          id
+          title
+          slug
+        }
+        total
+      }
+    }
+    ```
+  </div>
+  <div label="CLI">
+    ```bash
+    cosmic get-objects --query '{"$or":[{"slug":"post-1"},{"slug":"post-2"}]}'
+    ```
   </div>
 </Tabs>
 
@@ -188,6 +423,9 @@ You can also specify a few different options, like in this example, making the s
 
 <Tabs>
   <div label="REST">
+    ```bash
+    GET $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/objects?read_key=${YOUR_BUCKET_READ_KEY}&query={"content":{"$regex":"the moist pork","$options":"i"}}
+    ```
   </div>
   <div label="Node.js">
     ```javascript
@@ -202,7 +440,587 @@ You can also specify a few different options, like in this example, making the s
     ```
   </div>
   <div label="GraphQL">
+    ```javascript
+    query ($bucket_slug: String!, $read_key: String, $query: JSON) {
+      getObjects(
+        bucket_slug: $bucket_slug
+        read_key: $read_key
+        input: {
+          query: {
+            content: {
+              "$regex": "the moist pork",
+              "$options": "i",
+            }
+          }
+        }
+      ) {
+        objects {
+          id
+          title
+          slug
+        }
+        total
+      }
+    }
+    ```
   </div>
   <div label="CLI">
+    ```bash
+    cosmic get-objects --query '{"content":{"$regex":"the moist pork","$options":"i"}}'
+    ```
+  </div>
+</Tabs>
+
+### Get objects with a numeric metadata value
+
+
+<Tabs>
+  <div label="REST">
+    ```bash
+    GET $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/objects?read_key=${YOUR_BUCKET_READ_KEY}&query={"metadata.price":9.99}
+    ```
+  </div>
+  <div label="Node.js">
+    ```javascript
+    bucket.getObjects({
+        query: {
+            "metadata.price": 9.99
+          },
+        },
+      })
+    ```
+  </div>
+  <div label="GraphQL">
+    ```javascript
+    query ($bucket_slug: String!, $read_key: String, $query: JSON) {
+      getObjects(
+        bucket_slug: $bucket_slug
+        read_key: $read_key
+        input: {
+          query: {
+            "metadata.price": 9.99
+          }
+        }
+      ) {
+        objects {
+          id
+          title
+          slug
+        }
+        total
+      }
+    }
+    ```
+  </div>
+  <div label="CLI">
+    ```bash
+    cosmic get-objects --query '{"metadata.price":9.99}'
+    ```
+  </div>
+</Tabs>
+
+### Get objects with any metadata values
+
+
+<Tabs>
+  <div label="REST">
+    ```bash
+    GET $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/objects?read_key=${YOUR_BUCKET_READ_KEY}&query={"$or":[{"metadata.grade":"A"},{"metadata.grade":"B"}]}
+    ```
+  </div>
+  <div label="Node.js">
+    ```javascript
+    bucket.getObjects({
+        query: {
+            "$or":[{"metadata.grade":"A"},{"metadata.grade":"B"}]
+          },
+        },
+      })
+    ```
+  </div>
+  <div label="GraphQL">
+    ```javascript
+    query ($bucket_slug: String!, $read_key: String, $query: JSON) {
+      getObjects(
+        bucket_slug: $bucket_slug
+        read_key: $read_key
+        input: {
+          query: {
+            "$or":[{"metadata.grade":"A"},{"metadata.grade":"B"}]
+          }
+        }
+      ) {
+        objects {
+          id
+          title
+          slug
+        }
+        total
+      }
+    }
+    ```
+  </div>
+  <div label="CLI">
+    ```bash
+    cosmic get-objects --query '{"$or":[{"metadata.grade":"A"},{"metadata.grade":"B"}]}'
+    ```
+  </div>
+</Tabs>
+
+### Get objects with all metadata values
+
+
+<Tabs>
+  <div label="REST">
+    ```bash
+    GET $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/objects?read_key=${YOUR_BUCKET_READ_KEY}&query={"$and":[{"metadata.grade":"A"},{"metadata.price":{"$lt":10}}]}
+    ```
+  </div>
+  <div label="Node.js">
+    ```javascript
+    bucket.getObjects({
+        query: {
+            "$and":[{"metadata.grade":"A"},{"metadata.price":{"$lt":10}}]
+          },
+        },
+      })
+    ```
+  </div>
+  <div label="GraphQL">
+    ```javascript
+    query ($bucket_slug: String!, $read_key: String, $query: JSON) {
+      getObjects(
+        bucket_slug: $bucket_slug
+        read_key: $read_key
+        input: {
+          query: {
+            "$and":[{"metadata.grade":"A"},{"metadata.price":{"$lt":10}}]
+          }
+        }
+      ) {
+        objects {
+          id
+          title
+          slug
+        }
+        total
+      }
+    }
+    ```
+  </div>
+  <div label="CLI">
+    ```bash
+    cosmic get-objects --query '{"$and":[{"metadata.grade":"A"},{"metadata.price":{"$lt":10}}]}'
+    ```
+  </div>
+</Tabs>
+
+### Get objects with a value greater than or equal to a metadata value
+
+
+<Tabs>
+  <div label="REST">
+    ```bash
+    GET $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/objects?read_key=${YOUR_BUCKET_READ_KEY}&query={"metadata.price":{"$gte":9.99}}
+    ```
+  </div>
+  <div label="Node.js">
+    ```javascript
+    bucket.getObjects({
+        query: {
+            "metadata.price":{
+              "$gte":9.99
+            }
+          },
+        },
+      })
+    ```
+  </div>
+  <div label="GraphQL">
+    ```javascript
+    query ($bucket_slug: String!, $read_key: String, $query: JSON) {
+      getObjects(
+        bucket_slug: $bucket_slug
+        read_key: $read_key
+        input: {
+          query: {
+            "metadata.price":{
+              "$gte":9.99
+            }
+          }
+        }
+      ) {
+        objects {
+          id
+          title
+          slug
+        }
+        total
+      }
+    }
+    ```
+  </div>
+  <div label="CLI">
+    ```bash
+    cosmic get-objects --query '{"metadata.price":{"$gte":9.99}}'
+    ```
+  </div>
+</Tabs>
+
+### Get objects with an exact metadata value
+
+
+<Tabs>
+  <div label="REST">
+    ```bash
+    GET $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/objects?read_key=${YOUR_BUCKET_READ_KEY}&query={"metadata.is_featured":true}
+    ```
+  </div>
+  <div label="Node.js">
+    ```javascript
+    bucket.getObjects({
+        query: {
+            "metadata.is_featured": true
+          },
+        },
+      })
+    ```
+  </div>
+  <div label="GraphQL">
+    ```javascript
+    query ($bucket_slug: String!, $read_key: String, $query: JSON) {
+      getObjects(
+        bucket_slug: $bucket_slug
+        read_key: $read_key
+        input: {
+          query: {
+            "metadata.is_featured": true
+          }
+        }
+      ) {
+        objects {
+          id
+          title
+          slug
+        }
+        total
+      }
+    }
+    ```
+  </div>
+  <div label="CLI">
+    ```bash
+    cosmic get-objects --query '{"metadata.is_featured":true}'
+    ```
+  </div>
+</Tabs>
+
+### Get objects with a nested JSON metadata value
+
+
+<Tabs>
+  <div label="REST">
+    ```bash
+    GET $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/objects?read_key=${YOUR_BUCKET_READ_KEY}&query={"metadata.json_data":{"is_awesome":true,"other_data":{"nested":"yep"}}}
+    ```
+  </div>
+  <div label="Node.js">
+    ```javascript
+    bucket.getObjects({
+        query: {
+            "metadata.json_data":{
+              "is_awesome": true,
+              "other_data": {
+                "nested":"yep"
+              }
+            }
+          },
+        },
+      })
+    ```
+  </div>
+  <div label="GraphQL">
+    ```javascript
+    query ($bucket_slug: String!, $read_key: String, $query: JSON) {
+      getObjects(
+        bucket_slug: $bucket_slug
+        read_key: $read_key
+        input: {
+          query: {
+            "metadata.json_data":{
+              "is_awesome": true,
+              "other_data": {
+                "nested":"yep"
+              }
+            }
+          }
+        }
+      ) {
+        objects {
+          id
+          title
+          slug
+        }
+        total
+      }
+    }
+    ```
+  </div>
+  <div label="CLI">
+    ```bash
+    cosmic get-objects --query '{"metadata.json_data":{"is_awesome":true,"other_data":{"nested":"yep"}}}'
+    ```
+  </div>
+</Tabs>
+
+### Get objects with a value equal to a single object metafield value
+
+
+<Tabs>
+  <div label="REST">
+    ```bash
+    GET $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/objects?read_key=${YOUR_BUCKET_READ_KEY}&query={"metadata.category":"category_id-1"}
+    ```
+  </div>
+  <div label="Node.js">
+    ```javascript
+    bucket.getObjects({
+        query: {
+            "metadata.category": "category_id-1"
+          },
+        },
+      })
+    ```
+  </div>
+  <div label="GraphQL">
+    ```javascript
+    query ($bucket_slug: String!, $read_key: String, $query: JSON) {
+      getObjects(
+        bucket_slug: $bucket_slug
+        read_key: $read_key
+        input: {
+          query: {
+            "metadata.category": "category_id-1"
+          }
+        }
+      ) {
+        objects {
+          id
+          title
+          slug
+        }
+        total
+      }
+    }
+    ```
+  </div>
+  <div label="CLI">
+    ```bash
+    cosmic get-objects --query '{"metadata.category":"category_id-1"}'
+    ```
+  </div>
+</Tabs>
+
+### Get objects with a value not equal to a single object metafield value
+
+
+<Tabs>
+  <div label="REST">
+    ```bash
+    GET $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/objects?read_key=${YOUR_BUCKET_READ_KEY}&query={"metadata.category":{"$ne":"category_id-1"}}
+    ```
+  </div>
+  <div label="Node.js">
+    ```javascript
+    bucket.getObjects({
+        query: {
+            "metadata.category": {
+              "$ne": "category_id-1"
+            }
+          },
+        },
+      })
+    ```
+  </div>
+  <div label="GraphQL">
+    ```javascript
+    query ($bucket_slug: String!, $read_key: String, $query: JSON) {
+      getObjects(
+        bucket_slug: $bucket_slug
+        read_key: $read_key
+        input: {
+          query: {
+            "metadata.category": {
+              "$ne": "category_id-1"
+            }
+          }
+        }
+      ) {
+        objects {
+          id
+          title
+          slug
+        }
+        total
+      }
+    }
+    ```
+  </div>
+  <div label="CLI">
+    ```bash
+    cosmic get-objects --query '{"metadata.category":{"$ne":"category_id-1"}}'
+    ```
+  </div>
+</Tabs>
+
+### Get objects with a value that matches all multiple object metafield values
+
+
+<Tabs>
+  <div label="REST">
+    ```bash
+    GET $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/objects?read_key=${YOUR_BUCKET_READ_KEY}&query={"metadata.categories":["category_id-1","category_id-2"]}
+    ```
+  </div>
+  <div label="Node.js">
+    ```javascript
+    bucket.getObjects({
+        query: {
+            "metadata.categories": ["category_id-1","category_id-2"]
+          },
+        },
+      })
+    ```
+  </div>
+  <div label="GraphQL">
+    ```javascript
+    query ($bucket_slug: String!, $read_key: String, $query: JSON) {
+      getObjects(
+        bucket_slug: $bucket_slug
+        read_key: $read_key
+        input: {
+          query: {
+            "metadata.categories": ["category_id-1","category_id-2"]
+          }
+        }
+      ) {
+        objects {
+          id
+          title
+          slug
+        }
+        total
+      }
+    }
+    ```
+  </div>
+  <div label="CLI">
+    ```bash
+    cosmic get-objects --query '{"metadata.categories":["category_id-1","category_id-2"]}'
+    ```
+  </div>
+</Tabs>
+
+### Get objects with a value that matches any multiple object metafield values
+
+
+<Tabs>
+  <div label="REST">
+    ```bash
+    GET $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/objects?read_key=${YOUR_BUCKET_READ_KEY}&query={"metadata.categories":{"$in":["category_id-1","category_id-2"]}}
+    ```
+  </div>
+  <div label="Node.js">
+    ```javascript
+    bucket.getObjects({
+        query: {
+            "metadata.categories": {
+              "$in":["category_id-1","category_id-2"]
+            }
+          },
+        },
+      })
+    ```
+  </div>
+  <div label="GraphQL">
+    ```javascript
+    query ($bucket_slug: String!, $read_key: String, $query: JSON) {
+      getObjects(
+        bucket_slug: $bucket_slug
+        read_key: $read_key
+        input: {
+          query: {
+            "metadata.categories": {
+              "$in":["category_id-1","category_id-2"]
+            }
+          }
+        }
+      ) {
+        objects {
+          id
+          title
+          slug
+        }
+        total
+      }
+    }
+    ```
+  </div>
+  <div label="CLI">
+    ```bash
+    cosmic get-objects --query '{"metadata.categories":{"$in":["category_id-1","category_id-2"]}}'
+    ```
+  </div>
+</Tabs>
+
+### Get objects that don't have any multiple object metafield values
+
+
+<Tabs>
+  <div label="REST">
+    ```bash
+    GET $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/objects?read_key=${YOUR_BUCKET_READ_KEY}&query={"metadata.categories":{"$nin":["category_id-1","category_id-2"]}}
+    ```
+  </div>
+  <div label="Node.js">
+    ```javascript
+    bucket.getObjects({
+        query: {
+            "metadata.categories": {
+              "$nin":["category_id-1","category_id-2"]
+            }
+          },
+        },
+      })
+    ```
+  </div>
+  <div label="GraphQL">
+    ```javascript
+    query ($bucket_slug: String!, $read_key: String, $query: JSON) {
+      getObjects(
+        bucket_slug: $bucket_slug
+        read_key: $read_key
+        input: {
+          query: {
+            "metadata.categories": {
+              "$nin":["category_id-1","category_id-2"]
+            }
+          }
+        }
+      ) {
+        objects {
+          id
+          title
+          slug
+        }
+        total
+      }
+    }
+    ```
+  </div>
+  <div label="CLI">
+    ```bash
+    cosmic get-objects --query '{"metadata.categories":{"$nin":["category_id-1","category_id-2"]}}'
+    ```
   </div>
 </Tabs>
