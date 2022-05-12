@@ -4,25 +4,19 @@ import Tabs from '../../components/tabs'
 
 There will be times when you need to retrieve data from Cosmic in more complex ways than simply querying a record by its slug or ID. For example, you might have an app that collects user information for an online store.
 
-There will be times you need to fetch a list of users that have ordered a specific item or you need to decide who your super-users are based on them not purchasing at a certain time of day. 
+To show off some of these advanced queries, we're going to show how they can be used in a real Cosmic app. We'll use the [non-profit Next.js template](https://github.com/cosmicjs/nextjs-non-profit-website) as our starting point and fetch the data with a number of different queries.
 
-We'll walk through a few of these scenarios and the code you can run to execute similiar queries.
+## Set Up the Next/Cosmic Project
 
-## Some Code Set Up
+If you're following along, clone or fork the repo above and install all of the dependencies with the following command:
 
-The accompanying ES6 examples will use the following import and Cosmic object setup:
-
-```js
-import Cosmic from 'cosmicjs'
-
-const api = Cosmic()
-
-const bucket = api.bucket({
-  slug: process.env.BUCKET_SLUG,
-  read_key: process.env.READ_KEY,
-  write_key: process.env.WRITE_KEY,
-})
+```bash
+$ yarn
 ```
+
+Then copy the `.env.example` file and name it `.env`. You'll need to update the keys with the correct values for your app. If you want more info on how to set up all of the services, check out [this blog post](https://www.cosmicjs.com/articles/build-a-non-profit-app-with-next-and-cosmic).
+
+Now that you have the app connected to everything and running, let's look at how we can query the data stored in Cosmic.
 
 ### Get objects with the exact object type
 
