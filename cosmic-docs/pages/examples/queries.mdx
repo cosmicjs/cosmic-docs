@@ -31,8 +31,7 @@ You may need to retrieve all of the items you have available in your store and y
 <Tabs>
   <div label="REST">
     ```bash
-    GET $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/objects?read_key=${YOUR_BUCKET_READ_KEY}&query={"type":"items"}
-    ```
+    GET $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/objects?read_key=${YOUR_BUCKET_READ_KEY}&query={"type":"items"}```
   </div>
   <div label="Node.js">
     ```javascript
@@ -40,8 +39,7 @@ You may need to retrieve all of the items you have available in your store and y
         query: {
           type: "items",
         },
-      })
-    ```
+      })```
   </div>
   <div label="GraphQL">
     ```javascript
@@ -62,13 +60,11 @@ You may need to retrieve all of the items you have available in your store and y
         }
         total
       }
-    }
-    ```
+    }```
   </div>
   <div label="CLI">
     ```bash
-    cosmic get-objects --query '{"type":"items"}'
-    ```
+    cosmic get-objects --query '{"type":"items"}'```
   </div>
 </Tabs>
 
