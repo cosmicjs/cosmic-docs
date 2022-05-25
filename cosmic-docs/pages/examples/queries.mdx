@@ -175,48 +175,53 @@ The response will look like:
 There might be a certain product you need to look at and you have the title available from your front-end.
 
 <Tabs>
-  <div label="REST">
-    ```bash
-    GET ${BASE_URL}/buckets/${YOUR_BUCKET_SLUG}/objects?read_key=${YOUR_BUCKET_READ_KEY}&query={"title":"Cupboard"}
-    ```
-  </div>
-  <div label="Node.js">
-    ```javascript
-    bucket.getObjects({
+<div label="REST">
+  ```bash
+  GET ${BASE_URL}/buckets/${YOUR_BUCKET_SLUG}/objects?read_key=${YOUR_BUCKET_READ_KEY}&query={"title":"Cupboard"}
+
+````
+</div>
+<div label="Node.js">
+```javascript
+bucket.getObjects({
+    query: {
+      title: "Cupboard",
+    },
+  })
+
+````
+
+</div>
+<div label="GraphQL">
+  ```javascript
+  query ($bucket_slug: String!, $read_key: String, $query: JSON) {
+    getObjects(
+      bucket_slug: $bucket_slug
+      read_key: $read_key
+      input: {
         query: {
           title: "Cupboard",
-        },
-      })
-    ```
-  </div>
-  <div label="GraphQL">
-    ```javascript
-    query ($bucket_slug: String!, $read_key: String, $query: JSON) {
-      getObjects(
-        bucket_slug: $bucket_slug
-        read_key: $read_key
-        input: {
-          query: {
-            title: "Cupboard",
-          }
         }
-      ) {
-        objects {
-          id
-          title
-          slug
-          metadata
-        }
-        total
       }
+    ) {
+      objects {
+        id
+        title
+        slug
+        metadata
+      }
+      total
     }
-    ```
-  </div>
-  <div label="CLI">
-    ```bash
-    cosmic get-objects --query '{"title":"Mango Nation Hat"}'
-    ```
-  </div>
+  }
+
+````
+</div>
+<div label="CLI">
+```bash
+cosmic get-objects --query '{"title":"Mango Nation Hat"}'
+````
+
+</div>
 </Tabs>
 
 The response for this query would look like:
@@ -268,48 +273,52 @@ The response for this query would look like:
 You may need to get a product based on its ID that gets submitted via a hidden field in a form.
 
 <Tabs>
-  <div label="REST">
-    ```bash
-    GET ${BASE_URL}/buckets/${YOUR_BUCKET_SLUG}/objects?read_key=${YOUR_BUCKET_READ_KEY}&query={"id":"6283bc5a0c164700097679ff"}
-    ```
-  </div>
-  <div label="Node.js">
-    ```javascript
-    bucket.getObjects({
+<div label="REST">
+  ```bash
+  GET ${BASE_URL}/buckets/${YOUR_BUCKET_SLUG}/objects?read_key=${YOUR_BUCKET_READ_KEY}&query={"id":"6283bc5a0c164700097679ff"}
+  ```
+
+</div>
+<div label="Node.js">
+  ```javascript
+  bucket.getObjects({
+      query: {
+        id: "6283bc5a0c164700097679ff",
+      },
+    })
+  ```
+
+</div>
+<div label="GraphQL">
+  ```javascript
+  query ($bucket_slug: String!, $read_key: String, $query: JSON) {
+    getObjects(
+      bucket_slug: $bucket_slug
+      read_key: $read_key
+      input: {
         query: {
           id: "6283bc5a0c164700097679ff",
-        },
-      })
-    ```
-  </div>
-  <div label="GraphQL">
-    ```javascript
-    query ($bucket_slug: String!, $read_key: String, $query: JSON) {
-      getObjects(
-        bucket_slug: $bucket_slug
-        read_key: $read_key
-        input: {
-          query: {
-            id: "6283bc5a0c164700097679ff",
-          }
         }
-      ) {
-        objects {
-          id
-          title
-          slug
-          metadata
-        }
-        total
       }
+    ) {
+      objects {
+        id
+        title
+        slug
+        metadata
+      }
+      total
     }
-    ```
-  </div>
-  <div label="CLI">
-    ```bash
-    cosmic get-objects --query '{"id":"6283bc5a0c164700097679ff"}'
-    ```
-  </div>
+  }
+  ```
+
+</div>
+<div label="CLI">
+  ```bash
+  cosmic get-objects --query '{"id":"6283bc5a0c164700097679ff"}'
+  ```
+  
+</div>
 </Tabs>
 
 The response will look like:
@@ -363,48 +372,52 @@ The response will look like:
 Now you may need to get a few different products based on their IDs that get submitted when a user places an order.
 
 <Tabs>
-  <div label="REST">
-    ```bash
-    GET ${BASE_URL}/buckets/${YOUR_BUCKET_SLUG}/objects?read_key=${YOUR_BUCKET_READ_KEY}&query={"id":["6283c5a330b2e10009e43610","6283e0235882c30009b49e5f"]}
-    ```
-  </div>
-  <div label="Node.js">
-    ```javascript
-    bucket.getObjects({
+<div label="REST">
+  ```bash
+  GET ${BASE_URL}/buckets/${YOUR_BUCKET_SLUG}/objects?read_key=${YOUR_BUCKET_READ_KEY}&query={"id":["6283c5a330b2e10009e43610","6283e0235882c30009b49e5f"]}
+  ```
+
+</div>
+<div label="Node.js">
+  ```javascript
+  bucket.getObjects({
+      query: {
+        id: ["6283c5a330b2e10009e43610","6283e0235882c30009b49e5f"],
+      },
+    })
+  ```
+
+</div>
+<div label="GraphQL">
+  ```javascript
+  query ($bucket_slug: String!, $read_key: String, $query: JSON) {
+    getObjects(
+      bucket_slug: $bucket_slug
+      read_key: $read_key
+      input: {
         query: {
           id: ["6283c5a330b2e10009e43610","6283e0235882c30009b49e5f"],
-        },
-      })
-    ```
-  </div>
-  <div label="GraphQL">
-    ```javascript
-    query ($bucket_slug: String!, $read_key: String, $query: JSON) {
-      getObjects(
-        bucket_slug: $bucket_slug
-        read_key: $read_key
-        input: {
-          query: {
-            id: ["6283c5a330b2e10009e43610","6283e0235882c30009b49e5f"],
-          }
         }
-      ) {
-        objects {
-          id
-          title
-          slug
-          metadata
-        }
-        total
       }
+    ) {
+      objects {
+        id
+        title
+        slug
+        metadata
+      }
+      total
     }
-    ```
-  </div>
-  <div label="CLI">
-    ```bash
-    cosmic get-objects --query '{"id":["6283c5a330b2e10009e43610","6283e0235882c30009b49e5f"]}'
-    ```
-  </div>
+  }
+  ```
+
+</div>
+<div label="CLI">
+  ```bash
+  cosmic get-objects --query '{"id":["6283c5a330b2e10009e43610","6283e0235882c30009b49e5f"]}'
+  ```
+  
+</div>
 </Tabs>
 
 The response will look like:
@@ -490,52 +503,56 @@ The response will look like:
 You may need to filter products based on the IDs of items that have been sold out or something. In this case, we're filtering out the `Blouse` product because it's not available in certain sizes. This query will give us all of the products _except_ for the `Blouse`.
 
 <Tabs>
-  <div label="REST">
-    ```bash
-    GET ${BASE_URL}/buckets/${YOUR_BUCKET_SLUG}/objects?read_key=${YOUR_BUCKET_READ_KEY}&query={"id":{"$ne":"6283df2391f3660009da194b"}}
-    ```
-  </div>
-  <div label="Node.js">
-    ```javascript
-    bucket.getObjects({
+<div label="REST">
+  ```bash
+  GET ${BASE_URL}/buckets/${YOUR_BUCKET_SLUG}/objects?read_key=${YOUR_BUCKET_READ_KEY}&query={"id":{"$ne":"6283df2391f3660009da194b"}}
+  ```
+
+</div>
+<div label="Node.js">
+  ```javascript
+  bucket.getObjects({
+      query: {
+        id: {
+          "$ne":"6283df2391f3660009da194b"
+        },
+      },
+    })
+  ```
+
+</div>
+<div label="GraphQL">
+  ```javascript
+  query ($bucket_slug: String!, $read_key: String, $query: JSON) {
+    getObjects(
+      bucket_slug: $bucket_slug
+      read_key: $read_key
+      input: {
         query: {
           id: {
             "$ne":"6283df2391f3660009da194b"
           },
-        },
-      })
-    ```
-  </div>
-  <div label="GraphQL">
-    ```javascript
-    query ($bucket_slug: String!, $read_key: String, $query: JSON) {
-      getObjects(
-        bucket_slug: $bucket_slug
-        read_key: $read_key
-        input: {
-          query: {
-            id: {
-              "$ne":"6283df2391f3660009da194b"
-            },
-          }
         }
-      ) {
-        objects {
-          id
-          title
-          slug
-          metadata
-        }
-        total
       }
+    ) {
+      objects {
+        id
+        title
+        slug
+        metadata
+      }
+      total
     }
-    ```
-  </div>
-  <div label="CLI">
-    ```bash
-    cosmic get-objects --query '{"id":{"$ne":"6283df2391f3660009da194b"}}'
-    ```
-  </div>
+  }
+  ```
+
+</div>
+<div label="CLI">
+  ```bash
+  cosmic get-objects --query '{"id":{"$ne":"6283df2391f3660009da194b"}}'
+  ```
+  
+</div>
 </Tabs>
 
 The response will look like:
@@ -660,52 +677,56 @@ You may have a set of products you have on sale and you don't want them to show 
 In this example, we have the IDs of `Sandwich`, `Extension Cord`, and `Pineapple` in the request. So we will get a list of all of the products, excluding these 3.
 
 <Tabs>
-  <div label="REST">
-    ```bash
-    GET ${BASE_URL}/buckets/${YOUR_BUCKET_SLUG}/objects?read_key=${YOUR_BUCKET_READ_KEY}&query={"id":{"$nin":["6283dd60803a1a0009112e32","6283de686605090009c58739", "6283dddc6605090009c58736"]}}
-    ```
-  </div>
-  <div label="Node.js">
-    ```javascript
-    bucket.getObjects({
+<div label="REST">
+  ```bash
+  GET ${BASE_URL}/buckets/${YOUR_BUCKET_SLUG}/objects?read_key=${YOUR_BUCKET_READ_KEY}&query={"id":{"$nin":["6283dd60803a1a0009112e32","6283de686605090009c58739", "6283dddc6605090009c58736"]}}
+  ```
+
+</div>
+<div label="Node.js">
+  ```javascript
+  bucket.getObjects({
+      query: {
+        id: {
+          "$nin":["6283dd60803a1a0009112e32","6283de686605090009c58739", "6283dddc6605090009c58736"]
+        },
+      },
+    })
+  ```
+  
+</div>
+<div label="GraphQL">
+  ```javascript
+  query ($bucket_slug: String!, $read_key: String, $query: JSON) {
+    getObjects(
+      bucket_slug: $bucket_slug
+      read_key: $read_key
+      input: {
         query: {
           id: {
             "$nin":["6283dd60803a1a0009112e32","6283de686605090009c58739", "6283dddc6605090009c58736"]
           },
-        },
-      })
-    ```
-  </div>
-  <div label="GraphQL">
-    ```javascript
-    query ($bucket_slug: String!, $read_key: String, $query: JSON) {
-      getObjects(
-        bucket_slug: $bucket_slug
-        read_key: $read_key
-        input: {
-          query: {
-            id: {
-              "$nin":["6283dd60803a1a0009112e32","6283de686605090009c58739", "6283dddc6605090009c58736"]
-            },
-          }
         }
-      ) {
-        objects {
-          id
-          title
-          slug
-          metadata
-        }
-        total
       }
+    ) {
+      objects {
+        id
+        title
+        slug
+        metadata
+      }
+      total
     }
-    ```
-  </div>
-  <div label="CLI">
-    ```bash
-    cosmic get-objects --query '{"id":{"$nin":["6283dd60803a1a0009112e32","6283de686605090009c58739", "6283dddc6605090009c58736"]}}'
-    ```
-  </div>
+  }
+  ```
+
+</div>
+<div label="CLI">
+  ```bash
+  cosmic get-objects --query '{"id":{"$nin":["6283dd60803a1a0009112e32","6283de686605090009c58739", "6283dddc6605090009c58736"]}}'
+  ```
+  
+</div>
 </Tabs>
 
 The response will look like:
@@ -827,48 +848,52 @@ The response will look like:
 You might use a product slug in the URL of your application depending on how you set things up. In this case, you can fetch the product with that slug value.
 
 <Tabs>
-  <div label="REST">
-    ```bash
-    GET $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/objects?read_key=${YOUR_BUCKET_READ_KEY}&query={"slug":"hot-pot"}
-    ```
-  </div>
-  <div label="Node.js">
-    ```javascript
-    bucket.getObjects({
+<div label="REST">
+  ```bash
+  GET $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/objects?read_key=${YOUR_BUCKET_READ_KEY}&query={"slug":"hot-pot"}
+  ```
+
+</div>
+<div label="Node.js">
+  ```javascript
+  bucket.getObjects({
+      query: {
+        slug:"hot-pot",
+      },
+    })
+  ```
+
+</div>
+<div label="GraphQL">
+  ```javascript
+  query ($bucket_slug: String!, $read_key: String, $query: JSON) {
+    getObjects(
+      bucket_slug: $bucket_slug
+      read_key: $read_key
+      input: {
         query: {
           slug:"hot-pot",
-        },
-      })
-    ```
-  </div>
-  <div label="GraphQL">
-    ```javascript
-    query ($bucket_slug: String!, $read_key: String, $query: JSON) {
-      getObjects(
-        bucket_slug: $bucket_slug
-        read_key: $read_key
-        input: {
-          query: {
-            slug:"hot-pot",
-          }
         }
-      ) {
-        objects {
-          id
-          title
-          slug
-          metadata
-        }
-        total
       }
+    ) {
+      objects {
+        id
+        title
+        slug
+        metadata
+      }
+      total
     }
-    ```
-  </div>
-  <div label="CLI">
-    ```bash
-    cosmic get-objects --query '{"slug":"user_1"}'
-    ```
-  </div>
+  }
+  ```
+
+</div>
+<div label="CLI">
+  ```bash
+  cosmic get-objects --query '{"slug":"user_1"}'
+  ```
+  
+</div>
 </Tabs>
 
 The response will look like:
@@ -920,49 +945,53 @@ The response will look like:
 You may have some products you want to get specifically based on the products a customer has viewed. Maybe the slugs are stored in the local storage for data analytics and you want to look at a list of products based on these slugs.
 
 <Tabs>
-  <div label="REST">
-    ```bash
-    GET $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/objects?read_key=${YOUR_BUCKET_READ_KEY}&query={"$or":[{"slug":"pasta"},{"slug":"drill"}]}
-    ```
-  </div>
-  <div label="Node.js">
-    ```javascript
-    bucket.getObjects({
-        query: {
-            "$or": [{"slug":"pasta"},{"slug":"drill"}]
-          },
+<div label="REST">
+  ```bash
+  GET $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/objects?read_key=${YOUR_BUCKET_READ_KEY}&query={"$or":[{"slug":"pasta"},{"slug":"drill"}]}
+  ```
+
+</div>
+<div label="Node.js">
+  ```javascript
+  bucket.getObjects({
+      query: {
+          "$or": [{"slug":"pasta"},{"slug":"drill"}]
         },
-      })
-    ```
-  </div>
-  <div label="GraphQL">
-    ```javascript
-    query ($bucket_slug: String!, $read_key: String, $query: JSON) {
-      getObjects(
-        bucket_slug: $bucket_slug
-        read_key: $read_key
-        input: {
-          query: {
-            "$or": [{"slug":"pasta"},{"slug":"drill"}]
-          }
+      },
+    })
+  ```
+  
+</div>
+<div label="GraphQL">
+  ```javascript
+  query ($bucket_slug: String!, $read_key: String, $query: JSON) {
+    getObjects(
+      bucket_slug: $bucket_slug
+      read_key: $read_key
+      input: {
+        query: {
+          "$or": [{"slug":"pasta"},{"slug":"drill"}]
         }
-      ) {
-        objects {
-          id
-          title
-          slug
-          metadata
-        }
-        total
       }
+    ) {
+      objects {
+        id
+        title
+        slug
+        metadata
+      }
+      total
     }
-    ```
-  </div>
-  <div label="CLI">
-    ```bash
-    cosmic get-objects --query '{"$or":[{"slug":"pasta"},{"slug":"drill"}]}'
-    ```
-  </div>
+  }
+  ```
+
+</div>
+<div label="CLI">
+  ```bash
+  cosmic get-objects --query '{"$or":[{"slug":"pasta"},{"slug":"drill"}]}'
+  ```
+  
+</div>
 </Tabs>
 
 The response will look like:
@@ -1016,54 +1045,58 @@ The `content` value can be any string, but for our products, we'll consider it t
 You can also specify a few different options, like in this example, making the search case-insensitive with `$options`.
 
 <Tabs>
-  <div label="REST">
-    ```bash
-    GET $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/objects?read_key=${YOUR_BUCKET_READ_KEY}&query={"content":{"$regex":"is","$options":"i"}}
-    ```
-  </div>
-  <div label="Node.js">
-    ```javascript
-    bucket.getObjects({
+<div label="REST">
+  ```bash
+  GET $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/objects?read_key=${YOUR_BUCKET_READ_KEY}&query={"content":{"$regex":"is","$options":"i"}}
+  ```
+
+</div>
+<div label="Node.js">
+  ```javascript
+  bucket.getObjects({
+      query: {
+        content: {
+          "$regex": "is",
+          "$options": "i",
+        },
+      },
+    })
+  ```
+
+</div>
+<div label="GraphQL">
+  ```javascript
+  query ($bucket_slug: String!, $read_key: String, $query: JSON) {
+    getObjects(
+      bucket_slug: $bucket_slug
+      read_key: $read_key
+      input: {
         query: {
           content: {
             "$regex": "is",
             "$options": "i",
-          },
-        },
-      })
-    ```
-  </div>
-  <div label="GraphQL">
-    ```javascript
-    query ($bucket_slug: String!, $read_key: String, $query: JSON) {
-      getObjects(
-        bucket_slug: $bucket_slug
-        read_key: $read_key
-        input: {
-          query: {
-            content: {
-              "$regex": "is",
-              "$options": "i",
-            }
           }
         }
-      ) {
-        objects {
-          id
-          title
-          slug
-          metadata
-        }
-        total
       }
+    ) {
+      objects {
+        id
+        title
+        slug
+        metadata
+      }
+      total
     }
-    ```
-  </div>
-  <div label="CLI">
-    ```bash
-    cosmic get-objects --query '{"content":{"$regex":"is","$options":"i"}}'
-    ```
-  </div>
+  }
+  ```
+
+</div>
+<div label="CLI">
+  ```bash
+  cosmic get-objects --query '{"content":{"$regex":"is","$options":"i"}}'
+  ```
+  
+</div>
 </Tabs>
 
 The response will look like:
@@ -1223,51 +1256,55 @@ The metadata values are the ones you defined for your product object in Cosmic. 
 Customers will often want to sort and filter products by price and you'll be able to return the exact products they are looking for.
 
 <Tabs>
-  <div label="REST">
-    ```bash
-    GET $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/objects?read_key=${YOUR_BUCKET_READ_KEY}&query={"type":"products","metadata.price":19.99}
-    ```
-  </div>
-  <div label="Node.js">
-    ```javascript
-    bucket.getObjects({
-        query: {
-            "type":"products",
-            "metadata.price": 19.99
-          },
+<div label="REST">
+  ```bash
+  GET $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/objects?read_key=${YOUR_BUCKET_READ_KEY}&query={"type":"products","metadata.price":19.99}
+  ```
+
+</div>
+<div label="Node.js">
+  ```javascript
+  bucket.getObjects({
+      query: {
+          "type":"products",
+          "metadata.price": 19.99
         },
-      })
-    ```
-  </div>
-  <div label="GraphQL">
-    ```javascript
-    query ($bucket_slug: String!, $read_key: String, $query: JSON) {
-      getObjects(
-        bucket_slug: $bucket_slug
-        read_key: $read_key
-        input: {
-          query: {
-            "type":"products",
-            "metadata.price": 19.99
-          }
+      },
+    })
+  ```
+  
+</div>
+<div label="GraphQL">
+  ```javascript
+  query ($bucket_slug: String!, $read_key: String, $query: JSON) {
+    getObjects(
+      bucket_slug: $bucket_slug
+      read_key: $read_key
+      input: {
+        query: {
+          "type":"products",
+          "metadata.price": 19.99
         }
-      ) {
-        objects {
-          id
-          title
-          slug
-          metadata
-        }
-        total
       }
+    ) {
+      objects {
+        id
+        title
+        slug
+        metadata
+      }
+      total
     }
-    ```
-  </div>
-  <div label="CLI">
-    ```bash
-    cosmic get-objects --query '{"type":"products","metadata.price":19.99}'
-    ```
-  </div>
+  }
+  ```
+
+</div>
+<div label="CLI">
+  ```bash
+  cosmic get-objects --query '{"type":"products","metadata.price":19.99}'
+  ```
+  
+</div>
 </Tabs>
 
 The response will look like:
@@ -1319,51 +1356,55 @@ The response will look like:
 Again, customers like to sort and filter products based on what they're looking for. This query will return a list of products that are either in the `Electronics` category or that offer free shipping on products.
 
 <Tabs>
-  <div label="REST">
-    ```bash
-    GET $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/objects?read_key=${YOUR_BUCKET_READ_KEY}&query={"type": "products","$or":[{"metadata.category":"Electronics"},{"metadata.free_shipping":true}]}
-    ```
-  </div>
-  <div label="Node.js">
-    ```javascript
-    bucket.getObjects({
-        query: {
-            type: "products",
-            "$or":[{"metadata.category":"Electronics"},{"metadata.free_shipping":true}]
-          },
+<div label="REST">
+  ```bash
+  GET $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/objects?read_key=${YOUR_BUCKET_READ_KEY}&query={"type": "products","$or":[{"metadata.category":"Electronics"},{"metadata.free_shipping":true}]}
+  ```
+
+</div>
+<div label="Node.js">
+  ```javascript
+  bucket.getObjects({
+      query: {
+          type: "products",
+          "$or":[{"metadata.category":"Electronics"},{"metadata.free_shipping":true}]
         },
-      })
-    ```
-  </div>
-  <div label="GraphQL">
-    ```javascript
-    query ($bucket_slug: String!, $read_key: String, $query: JSON) {
-      getObjects(
-        bucket_slug: $bucket_slug
-        read_key: $read_key
-        input: {
-          query: {
-            type: "products",
-            "$or":[{"metadata.category":"Electronics"},{"metadata.free_shipping":true}]
-          }
+      },
+    })
+  ```
+
+</div>
+<div label="GraphQL">
+  ```javascript
+  query ($bucket_slug: String!, $read_key: String, $query: JSON) {
+    getObjects(
+      bucket_slug: $bucket_slug
+      read_key: $read_key
+      input: {
+        query: {
+          type: "products",
+          "$or":[{"metadata.category":"Electronics"},{"metadata.free_shipping":true}]
         }
-      ) {
-        objects {
-          id
-          title
-          slug
-          metadata
-        }
-        total
       }
+    ) {
+      objects {
+        id
+        title
+        slug
+        metadata
+      }
+      total
     }
-    ```
-  </div>
-  <div label="CLI">
-    ```bash
-    cosmic get-objects --query '{type: "products","$or":[{"metadata.category":"Electronics"},{"metadata.free_shipping":true}]}'
-    ```
-  </div>
+  }
+  ```
+
+</div>
+<div label="CLI">
+  ```bash
+  cosmic get-objects --query '{type: "products","$or":[{"metadata.category":"Electronics"},{"metadata.free_shipping":true}]}'
+  ```
+  
+</div>
 </Tabs>
 
 The response will look like:
@@ -1452,51 +1493,55 @@ The response will look like:
 Similar to the query above, this will let customers filter products and return very specific results. In this example, we will only return products that have less than 50 in stock _and_ have a `price` under $79.99.
 
 <Tabs>
-  <div label="REST">
-    ```bash
-    GET $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/objects?read_key=${YOUR_BUCKET_READ_KEY}&query={"type": "products","$and":[{"metadata.quantity":{"$lt":50}},{"metadata.price":{"$lt":79.99}}]}
-    ```
-  </div>
-  <div label="Node.js">
-    ```javascript
-    bucket.getObjects({
-        query: {
-            type: "products",
-            "$and":[{"metadata.quantity":{"$lt":50}},{"metadata.price":{"$lt":79.99}}]
-          },
+<div label="REST">
+  ```bash
+  GET $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/objects?read_key=${YOUR_BUCKET_READ_KEY}&query={"type": "products","$and":[{"metadata.quantity":{"$lt":50}},{"metadata.price":{"$lt":79.99}}]}
+  ```
+
+</div>
+<div label="Node.js">
+  ```javascript
+  bucket.getObjects({
+      query: {
+          type: "products",
+          "$and":[{"metadata.quantity":{"$lt":50}},{"metadata.price":{"$lt":79.99}}]
         },
-      })
-    ```
-  </div>
-  <div label="GraphQL">
-    ```javascript
-    query ($bucket_slug: String!, $read_key: String, $query: JSON) {
-      getObjects(
-        bucket_slug: $bucket_slug
-        read_key: $read_key
-        input: {
-          query: {
-            type: "products",
-            "$and":[{"metadata.quantity":{"$lt":50}},{"metadata.price":{"$lt":79.99}}]
-          }
+      },
+    })
+  ```
+
+</div>
+<div label="GraphQL">
+  ```javascript
+  query ($bucket_slug: String!, $read_key: String, $query: JSON) {
+    getObjects(
+      bucket_slug: $bucket_slug
+      read_key: $read_key
+      input: {
+        query: {
+          type: "products",
+          "$and":[{"metadata.quantity":{"$lt":50}},{"metadata.price":{"$lt":79.99}}]
         }
-      ) {
-        objects {
-          id
-          title
-          slug
-          metadata
-        }
-        total
       }
+    ) {
+      objects {
+        id
+        title
+        slug
+        metadata
+      }
+      total
     }
-    ```
-  </div>
-  <div label="CLI">
-    ```bash
-    cosmic get-objects --query '{type: "products","$and":[{"metadata.quantity":{"$lt":50}},{"metadata.price":{"$lt":79.99}}]}'
-    ```
-  </div>
+  }
+  ```
+
+</div>
+<div label="CLI">
+  ```bash
+  cosmic get-objects --query '{type: "products","$and":[{"metadata.quantity":{"$lt":50}},{"metadata.price":{"$lt":79.99}}]}'
+  ```
+  
+</div>
 </Tabs>
 
 The response will look like:
@@ -1617,55 +1662,59 @@ The response will look like:
 When customers are shopping, they might want to see what the higher end products you have are. For example, maybe they want to see all of the products that cost over $100.
 
 <Tabs>
-  <div label="REST">
-    ```bash
-    GET $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/objects?read_key=${YOUR_BUCKET_READ_KEY}&query={"type": "products","metadata.price":{"$gte":100}}
-    ```
-  </div>
-  <div label="Node.js">
-    ```javascript
-    bucket.getObjects({
-        query: {
-            type: "products",
-            "metadata.price":{
-              "$gte":100
-            }
-          },
+<div label="REST">
+  ```bash
+  GET $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/objects?read_key=${YOUR_BUCKET_READ_KEY}&query={"type": "products","metadata.price":{"$gte":100}}
+  ```
+
+</div>
+<div label="Node.js">
+  ```javascript
+  bucket.getObjects({
+      query: {
+          type: "products",
+          "metadata.price":{
+            "$gte":100
+          }
         },
-      })
-    ```
-  </div>
-  <div label="GraphQL">
-    ```javascript
-    query ($bucket_slug: String!, $read_key: String, $query: JSON) {
-      getObjects(
-        bucket_slug: $bucket_slug
-        read_key: $read_key
-        input: {
-          query: {
-            type: "products",
-            "metadata.price":{
-              "$gte":100
-            }
+      },
+    })
+  ```
+
+</div>
+<div label="GraphQL">
+  ```javascript
+  query ($bucket_slug: String!, $read_key: String, $query: JSON) {
+    getObjects(
+      bucket_slug: $bucket_slug
+      read_key: $read_key
+      input: {
+        query: {
+          type: "products",
+          "metadata.price":{
+            "$gte":100
           }
         }
-      ) {
-        objects {
-          id
-          title
-          slug
-          metadata
-        }
-        total
       }
+    ) {
+      objects {
+        id
+        title
+        slug
+        metadata
+      }
+      total
     }
-    ```
-  </div>
-  <div label="CLI">
-    ```bash
-    cosmic get-objects --query '{type: "products","metadata.price":{"$gte":100}}'
-    ```
-  </div>
+  }
+  ```
+
+</div>
+<div label="CLI">
+  ```bash
+  cosmic get-objects --query '{type: "products","metadata.price":{"$gte":100}}'
+  ```
+  
+</div>
 </Tabs>
 
 The response will look like:
@@ -1788,51 +1837,55 @@ The response will look like:
 To get a list of products that particular match a category or an option, you can query based on the metadata values.
 
 <Tabs>
-  <div label="REST">
-    ```bash
-    GET $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/objects?read_key=${YOUR_BUCKET_READ_KEY}&query={"type": "products","metadata.category": "Food"}
-    ```
-  </div>
-  <div label="Node.js">
-    ```javascript
-    bucket.getObjects({
-        query: {
-            type: "products",
-            "metadata.category": "Food"
-          },
+<div label="REST">
+  ```bash
+  GET $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/objects?read_key=${YOUR_BUCKET_READ_KEY}&query={"type": "products","metadata.category": "Food"}
+  ```
+
+</div>
+<div label="Node.js">
+  ```javascript
+  bucket.getObjects({
+      query: {
+          type: "products",
+          "metadata.category": "Food"
         },
-      })
-    ```
-  </div>
-  <div label="GraphQL">
-    ```javascript
-    query ($bucket_slug: String!, $read_key: String, $query: JSON) {
-      getObjects(
-        bucket_slug: $bucket_slug
-        read_key: $read_key
-        input: {
-          query: {
-            type: "products",
-            "metadata.category": "Food"
-          }
+      },
+    })
+  ```
+
+</div>
+<div label="GraphQL">
+  ```javascript
+  query ($bucket_slug: String!, $read_key: String, $query: JSON) {
+    getObjects(
+      bucket_slug: $bucket_slug
+      read_key: $read_key
+      input: {
+        query: {
+          type: "products",
+          "metadata.category": "Food"
         }
-      ) {
-        objects {
-          id
-          title
-          slug
-          metadata
-        }
-        total
       }
+    ) {
+      objects {
+        id
+        title
+        slug
+        metadata
+      }
+      total
     }
-    ```
-  </div>
-  <div label="CLI">
-    ```bash
-    cosmic get-objects --query '{type: "products","metadata.category": "Food"}'
-    ```
-  </div>
+  }
+  ```
+
+</div>
+<div label="CLI">
+  ```bash
+  cosmic get-objects --query '{type: "products","metadata.category": "Food"}'
+  ```
+  
+</div>
 </Tabs>
 
 The response will look like:
@@ -1952,55 +2005,59 @@ The response will look like:
 Sometimes the product values that you work with on the front-end and back-end might vary a little. For example, with the `category`, you might need to distinguish your query based on the key value instead of the display name.
 
 <Tabs>
-  <div label="REST">
-    ```bash
-    GET $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/objects?read_key=${YOUR_BUCKET_READ_KEY}&query={"type": "products","metadata.details":{"brand":"Samsung"}}
-    ```
-  </div>
-  <div label="Node.js">
-    ```javascript
-    bucket.getObjects({
-        query: {
-            type: "products",
-            "metadata.details": {
-              "brand":"Samsung"
-            }
-          },
+<div label="REST">
+  ```bash
+  GET $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/objects?read_key=${YOUR_BUCKET_READ_KEY}&query={"type": "products","metadata.details":{"brand":"Samsung"}}
+  ```
+
+</div>
+<div label="Node.js">
+  ```javascript
+  bucket.getObjects({
+      query: {
+          type: "products",
+          "metadata.details": {
+            "brand":"Samsung"
+          }
         },
-      })
-    ```
-  </div>
-  <div label="GraphQL">
-    ```javascript
-    query ($bucket_slug: String!, $read_key: String, $query: JSON) {
-      getObjects(
-        bucket_slug: $bucket_slug
-        read_key: $read_key
-        input: {
-          query: {
-            type: "products",
-            "metadata.details":{
-              "brand":"Samsung"
-            }
+      },
+    })
+  ```
+
+</div>
+<div label="GraphQL">
+  ```javascript
+  query ($bucket_slug: String!, $read_key: String, $query: JSON) {
+    getObjects(
+      bucket_slug: $bucket_slug
+      read_key: $read_key
+      input: {
+        query: {
+          type: "products",
+          "metadata.details":{
+            "brand":"Samsung"
           }
         }
-      ) {
-        objects {
-          id
-          title
-          slug
-          metadata
-        }
-        total
       }
+    ) {
+      objects {
+        id
+        title
+        slug
+        metadata
+      }
+      total
     }
-    ```
-  </div>
-  <div label="CLI">
-    ```bash
-    cosmic get-objects --query '{type: "products","metadata.details":{"brand":"Samsung"}}'
-    ```
-  </div>
+  }
+  ```
+
+</div>
+<div label="CLI">
+  ```bash
+  cosmic get-objects --query '{type: "products","metadata.details":{"brand":"Samsung"}}'
+  ```
+  
+</div>
 </Tabs>
 
 The response will look like:
@@ -2054,55 +2111,59 @@ The response will look like:
 A customer might want to look at all of the products you offer _except_ for those in the `Electronics` category.
 
 <Tabs>
-  <div label="REST">
-    ```bash
-    GET $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/objects?read_key=${YOUR_BUCKET_READ_KEY}&query={"type": "products","metadata.category":{"$ne":"Electronics"}}
-    ```
-  </div>
-  <div label="Node.js">
-    ```javascript
-    bucket.getObjects({
-        query: {
-            type: "products",
-            "metadata.category": {
-              "$ne": "Electronics"
-            }
-          },
+<div label="REST">
+  ```bash
+  GET $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/objects?read_key=${YOUR_BUCKET_READ_KEY}&query={"type": "products","metadata.category":{"$ne":"Electronics"}}
+  ```
+
+</div>
+<div label="Node.js">
+  ```javascript
+  bucket.getObjects({
+      query: {
+          type: "products",
+          "metadata.category": {
+            "$ne": "Electronics"
+          }
         },
-      })
-    ```
-  </div>
-  <div label="GraphQL">
-    ```javascript
-    query ($bucket_slug: String!, $read_key: String, $query: JSON) {
-      getObjects(
-        bucket_slug: $bucket_slug
-        read_key: $read_key
-        input: {
-          query: {
-            type: "products",
-            "metadata.category": {
-              "$ne": "Electronics"
-            }
+      },
+    })
+  ```
+
+</div>
+<div label="GraphQL">
+  ```javascript
+  query ($bucket_slug: String!, $read_key: String, $query: JSON) {
+    getObjects(
+      bucket_slug: $bucket_slug
+      read_key: $read_key
+      input: {
+        query: {
+          type: "products",
+          "metadata.category": {
+            "$ne": "Electronics"
           }
         }
-      ) {
-        objects {
-          id
-          title
-          slug
-          metadata
-        }
-        total
       }
+    ) {
+      objects {
+        id
+        title
+        slug
+        metadata
+      }
+      total
     }
-    ```
-  </div>
-  <div label="CLI">
-    ```bash
-    cosmic get-objects --query '{type: "products","metadata.category":{"$ne":"Electronics"}}'
-    ```
-  </div>
+  }
+  ```
+
+</div>
+<div label="CLI">
+  ```bash
+  cosmic get-objects --query '{type: "products","metadata.category":{"$ne":"Electronics"}}'
+  ```
+  
+</div>
 </Tabs>
 
 The response will look like:
@@ -2223,51 +2284,55 @@ The response will look like:
 A customer might want to know if they can shop by color _and_ size can be expedited to them. So you could have a list of `options` on your products to make this search faster.
 
 <Tabs>
-  <div label="REST">
-    ```bash
-    GET $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/objects?read_key=${YOUR_BUCKET_READ_KEY}&query={"type": "products","metadata.options":["Color","Size"]}
-    ```
-  </div>
-  <div label="Node.js">
-    ```javascript
-    bucket.getObjects({
-        query: {
-            type: "products",
-            "metadata.options":["color","expedited"]
-          },
+<div label="REST">
+  ```bash
+  GET $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/objects?read_key=${YOUR_BUCKET_READ_KEY}&query={"type": "products","metadata.options":["Color","Size"]}
+  ```
+
+</div>
+<div label="Node.js">
+  ```javascript
+  bucket.getObjects({
+      query: {
+          type: "products",
+          "metadata.options":["color","expedited"]
         },
-      })
-    ```
-  </div>
-  <div label="GraphQL">
-    ```javascript
-    query ($bucket_slug: String!, $read_key: String, $query: JSON) {
-      getObjects(
-        bucket_slug: $bucket_slug
-        read_key: $read_key
-        input: {
-          query: {
-            type: "products",
-            "metadata.options":["color","expedited"]
-          }
+      },
+    })
+  ```
+
+</div>
+<div label="GraphQL">
+  ```javascript
+  query ($bucket_slug: String!, $read_key: String, $query: JSON) {
+    getObjects(
+      bucket_slug: $bucket_slug
+      read_key: $read_key
+      input: {
+        query: {
+          type: "products",
+          "metadata.options":["color","expedited"]
         }
-      ) {
-        objects {
-          id
-          title
-          slug
-          metadata
-        }
-        total
       }
+    ) {
+      objects {
+        id
+        title
+        slug
+        metadata
+      }
+      total
     }
-    ```
-  </div>
-  <div label="CLI">
-    ```bash
-    cosmic get-objects --query '{type: "products","metadata.options":["color","expedited"]}'
-    ```
-  </div>
+  }
+  ```
+
+</div>
+<div label="CLI">
+  ```bash
+  cosmic get-objects --query '{type: "products","metadata.options":["color","expedited"]}'
+  ```
+  
+</div>
 </Tabs>
 
 The response will look like:
@@ -2388,55 +2453,59 @@ The response will look like:
 When customers are evaluating products, they might want to look at all of the products that let them customize their `size` regardless of any other options available. So if a product has the `size` option enabled, then it will be return in a list.
 
 <Tabs>
-  <div label="REST">
-    ```bash
-    GET $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/objects?read_key=${YOUR_BUCKET_READ_KEY}&query={"type": "products","metadata.options":{"$in":["Size"]}}
-    ```
-  </div>
-  <div label="Node.js">
-    ```javascript
-    bucket.getObjects({
-        query: {
-            type: "products",
-            "metadata.options": {
-              "$in":["Size"]
-            }
-          },
+<div label="REST">
+  ```bash
+  GET $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/objects?read_key=${YOUR_BUCKET_READ_KEY}&query={"type": "products","metadata.options":{"$in":["Size"]}}
+  ```
+
+</div>
+<div label="Node.js">
+  ```javascript
+  bucket.getObjects({
+      query: {
+          type: "products",
+          "metadata.options": {
+            "$in":["Size"]
+          }
         },
-      })
-    ```
-  </div>
-  <div label="GraphQL">
-    ```javascript
-    query ($bucket_slug: String!, $read_key: String, $query: JSON) {
-      getObjects(
-        bucket_slug: $bucket_slug
-        read_key: $read_key
-        input: {
-          query: {
-            type: "products",
-            "metadata.options": {
-              "$in":["Size"]
-            }
+      },
+    })
+  ```
+
+</div>
+<div label="GraphQL">
+  ```javascript
+  query ($bucket_slug: String!, $read_key: String, $query: JSON) {
+    getObjects(
+      bucket_slug: $bucket_slug
+      read_key: $read_key
+      input: {
+        query: {
+          type: "products",
+          "metadata.options": {
+            "$in":["Size"]
           }
         }
-      ) {
-        objects {
-          id
-          title
-          slug
-          metadata
-        }
-        total
       }
+    ) {
+      objects {
+        id
+        title
+        slug
+        metadata
+      }
+      total
     }
-    ```
-  </div>
-  <div label="CLI">
-    ```bash
-    cosmic get-objects --query '{type: "products","metadata.options":{"$in":["Size"]}}'
-    ```
-  </div>
+  }
+  ```
+
+</div>
+<div label="CLI">
+  ```bash
+  cosmic get-objects --query '{type: "products","metadata.options":{"$in":["Size"]}}'
+  ```
+  
+</div>
 </Tabs>
 
 The response will look like:
@@ -2557,55 +2626,59 @@ The response will look like:
 Sometimes customers will want to see the products you have that don't meet certain requirements. Like, knowing which products don't have a `size` option might let customers know that they aren't looking at clothing.
 
 <Tabs>
-  <div label="REST">
-    ```bash
-    GET $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/objects?read_key=${YOUR_BUCKET_READ_KEY}&query={"type": "products","metadata.options":{"$nin":["Size"]}}
-    ```
-  </div>
-  <div label="Node.js">
-    ```javascript
-    bucket.getObjects({
-        query: {
-            type: "products",
-            "metadata.options": {
-              "$nin":["Size"]
-            }
-          },
+<div label="REST">
+  ```bash
+  GET $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/objects?read_key=${YOUR_BUCKET_READ_KEY}&query={"type": "products","metadata.options":{"$nin":["Size"]}}
+  ```
+
+</div>
+<div label="Node.js">
+  ```javascript
+  bucket.getObjects({
+      query: {
+          type: "products",
+          "metadata.options": {
+            "$nin":["Size"]
+          }
         },
-      })
-    ```
-  </div>
-  <div label="GraphQL">
-    ```javascript
-    query ($bucket_slug: String!, $read_key: String, $query: JSON) {
-      getObjects(
-        bucket_slug: $bucket_slug
-        read_key: $read_key
-        input: {
-          query: {
-            type: "products",
-            "metadata.options": {
-              "$nin":["Size"]
-            }
+      },
+    })
+  ```
+
+</div>
+<div label="GraphQL">
+  ```javascript
+  query ($bucket_slug: String!, $read_key: String, $query: JSON) {
+    getObjects(
+      bucket_slug: $bucket_slug
+      read_key: $read_key
+      input: {
+        query: {
+          type: "products",
+          "metadata.options": {
+            "$nin":["Size"]
           }
         }
-      ) {
-        objects {
-          id
-          title
-          slug
-          metadata
-        }
-        total
       }
+    ) {
+      objects {
+        id
+        title
+        slug
+        metadata
+      }
+      total
     }
-    ```
-  </div>
-  <div label="CLI">
-    ```bash
-    cosmic get-objects --query '{type: "products","metadata.options":{"$nin":["Size"]}}'
-    ```
-  </div>
+  }
+  ```
+
+</div>
+<div label="CLI">
+  ```bash
+  cosmic get-objects --query '{type: "products","metadata.options":{"$nin":["Size"]}}'
+  ```
+  
+</div>
 </Tabs>
 
 The response will look like:
