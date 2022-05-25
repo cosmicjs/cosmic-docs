@@ -221,31 +221,35 @@ The response for this query would look like:
     {
       "id": "6283bcffd4903800092ffeda",
       "slug": "cupboard",
-      "title": "cupboard",
+      "title": "Cupboard",
       "content": "<p>Sleek, integrated storage space.</p>",
       "bucket": "6283b64c9f8e3f00094504c4",
       "created_at": "2022-05-17T15:19:27.028Z",
       "created_by": "621e8a8f5930f70009316105",
-      "modified_at": "2022-05-17T15:19:27.028Z",
+      "modified_at": "2022-05-25T21:22:41.608Z",
       "created": "2022-05-17T15:19:27.028Z",
       "status": "published",
-      "thumbnail": "",
-      "published_at": "2022-05-17T15:19:27.028Z",
+      "thumbnail": "https://imgix.cosmicjs.com/b208cb20-d5f4-11ec-bb19-d9085ce408df-callum-hill-zILpNroX12o-unsplash.jpg",
+      "published_at": "2022-05-25T21:22:41.608Z",
+      "modified_by": "621e8a8f5930f70009316105",
+      "publish_at": null,
+      "unpublish_at": null,
       "type": "products",
       "metadata": {
         "category": {
           "key": "kitchen",
           "value": "Kitchen"
         },
-        "charge_taxes": false,
         "image": {
           "url": "https://cdn.cosmicjs.com/b208cb20-d5f4-11ec-bb19-d9085ce408df-callum-hill-zILpNroX12o-unsplash.jpg",
           "imgix_url": "https://imgix.cosmicjs.com/b208cb20-d5f4-11ec-bb19-d9085ce408df-callum-hill-zILpNroX12o-unsplash.jpg"
         },
-        "option": "",
         "price": 239.99,
         "quantity": 15,
-        "sku": "0012549"
+        "sku": "0012549",
+        "details": "",
+        "free_shipping": true,
+        "options": ["Color"]
       }
     }
   ],
@@ -310,31 +314,37 @@ The response will look like:
     {
       "id": "6283bc5a0c164700097679ff",
       "slug": "tire",
-      "title": "tire",
+      "title": "Tire",
       "content": "<p>Superb road grip, lifetime warranty.</p>",
       "bucket": "6283b64c9f8e3f00094504c4",
       "created_at": "2022-05-17T15:16:41.995Z",
       "created_by": "621e8a8f5930f70009316105",
-      "modified_at": "2022-05-17T15:16:41.995Z",
+      "modified_at": "2022-05-25T21:25:09.947Z",
       "created": "2022-05-17T15:16:41.995Z",
       "status": "published",
-      "thumbnail": "",
-      "published_at": "2022-05-17T15:16:41.995Z",
+      "thumbnail": "https://imgix.cosmicjs.com/4fb87d30-d5f4-11ec-bb19-d9085ce408df-robert-laursoo-WHPOFFzY9gU-unsplash.jpg",
+      "published_at": "2022-05-25T21:25:09.947Z",
+      "modified_by": "621e8a8f5930f70009316105",
+      "publish_at": null,
+      "unpublish_at": null,
       "type": "products",
       "metadata": {
         "category": {
           "key": "car",
           "value": "Car"
         },
-        "charge_taxes": true,
         "image": {
           "url": "https://cdn.cosmicjs.com/4fb87d30-d5f4-11ec-bb19-d9085ce408df-robert-laursoo-WHPOFFzY9gU-unsplash.jpg",
           "imgix_url": "https://imgix.cosmicjs.com/4fb87d30-d5f4-11ec-bb19-d9085ce408df-robert-laursoo-WHPOFFzY9gU-unsplash.jpg"
         },
-        "option": "continental",
         "price": 175.99,
         "quantity": 95,
-        "sku": "0018703"
+        "sku": "0018703",
+        "details": {
+          "brand": "Continental"
+        },
+        "free_shipping": true,
+        "options": ["Size"]
       }
     }
   ],
@@ -397,18 +407,52 @@ The response will look like:
 {
   "objects": [
     {
-      "id": "6283bc5a0c164700097679ff",
-      "slug": "tire",
-      "title": "Tire",
-      "content": "<p>Superb road grip, lifetime warranty.</p>",
+      "id": "6283e0235882c30009b49e5f",
+      "slug": "battery-charger",
+      "title": "Battery Charger",
+      "content": "<p>If your phone is dead, you need this brick.</p>",
       "bucket": "6283b64c9f8e3f00094504c4",
-      "created_at": "2022-05-17T15:16:41.995Z",
+      "created_at": "2022-05-17T17:49:23.855Z",
       "created_by": "621e8a8f5930f70009316105",
-      "modified_at": "2022-05-25T21:25:09.947Z",
-      "created": "2022-05-17T15:16:41.995Z",
+      "modified_at": "2022-05-25T20:41:13.842Z",
+      "created": "2022-05-17T17:49:23.855Z",
       "status": "published",
-      "thumbnail": "https://imgix.cosmicjs.com/4fb87d30-d5f4-11ec-bb19-d9085ce408df-robert-laursoo-WHPOFFzY9gU-unsplash.jpg",
-      "published_at": "2022-05-25T21:25:09.947Z",
+      "thumbnail": "https://imgix.cosmicjs.com/99f67b80-d609-11ec-bb19-d9085ce408df-onur-binay--DY5znt0Whs-unsplash.jpg",
+      "published_at": "2022-05-25T20:41:13.842Z",
+      "modified_by": "621e8a8f5930f70009316105",
+      "publish_at": null,
+      "unpublish_at": null,
+      "type": "products",
+      "metadata": {
+        "category": {
+          "key": "electronics",
+          "value": "Electronics"
+        },
+        "image": {
+          "url": "https://cdn.cosmicjs.com/99f67b80-d609-11ec-bb19-d9085ce408df-onur-binay--DY5znt0Whs-unsplash.jpg",
+          "imgix_url": "https://imgix.cosmicjs.com/99f67b80-d609-11ec-bb19-d9085ce408df-onur-binay--DY5znt0Whs-unsplash.jpg"
+        },
+        "price": 52.99,
+        "quantity": 17,
+        "sku": "",
+        "details": "",
+        "options": [],
+        "free_shipping": false
+      }
+    },
+    {
+      "id": "6283c5a330b2e10009e43610",
+      "slug": "windshield-wipers",
+      "title": "Windshield Wipers",
+      "content": "<p>See through the rain and stay safe on the road.</p>",
+      "bucket": "6283b64c9f8e3f00094504c4",
+      "created_at": "2022-05-17T15:56:19.345Z",
+      "created_by": "621e8a8f5930f70009316105",
+      "modified_at": "2022-05-25T21:14:39.202Z",
+      "created": "2022-05-17T15:56:19.346Z",
+      "status": "published",
+      "thumbnail": "https://imgix.cosmicjs.com/990b06c0-dc6f-11ec-bb19-d9085ce408df-thibault-valjevac-2m6GjKScw20-unsplash.jpg",
+      "published_at": "2022-05-25T21:14:39.202Z",
       "modified_by": "621e8a8f5930f70009316105",
       "publish_at": null,
       "unpublish_at": null,
@@ -419,21 +463,19 @@ The response will look like:
           "value": "Car"
         },
         "image": {
-          "url": "https://cdn.cosmicjs.com/4fb87d30-d5f4-11ec-bb19-d9085ce408df-robert-laursoo-WHPOFFzY9gU-unsplash.jpg",
-          "imgix_url": "https://imgix.cosmicjs.com/4fb87d30-d5f4-11ec-bb19-d9085ce408df-robert-laursoo-WHPOFFzY9gU-unsplash.jpg"
+          "url": "https://cdn.cosmicjs.com/7f8701d0-d5f9-11ec-bb19-d9085ce408df-u98yt7gyuvhjbkkino9u8",
+          "imgix_url": "https://cdn.cosmicjs.com/7f8701d0-d5f9-11ec-bb19-d9085ce408df-u98yt7gyuvhjbkkino9u8"
         },
-        "price": 175.99,
-        "quantity": 95,
-        "sku": "0018703",
-        "details": {
-          "brand": "Continental"
-        },
+        "price": 27.99,
+        "quantity": 54,
+        "sku": "0018169",
+        "details": "",
         "free_shipping": true,
-        "options": ["Size"]
+        "options": ["Color"]
       }
     }
   ],
-  "total": 1
+  "total": 2
 }
 ```
 
