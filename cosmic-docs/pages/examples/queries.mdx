@@ -41,52 +41,52 @@ That's all we need to start running queries! You could build an entire full-stac
 You may need to retrieve all of the products you have available in your store and you can use the following code snippets to do so. This retrieves all of the objects that are `products`.
 
 <Tabs>
-  <div label="REST">
-    ```bash
-    GET ${BASE_URL}/buckets/${YOUR_BUCKET_SLUG}/objects?read_key=${YOUR_BUCKET_READ_KEY}&query={"type":"products"}
-    ```
+<div label="REST">
+  ```bash
+  GET ${BASE_URL}/buckets/${YOUR_BUCKET_SLUG}/objects?read_key=${YOUR_BUCKET_READ_KEY}&query={"type":"products"}
+  ```
 
-  </div>
-  <div label="Node.js">
-    ```javascript
-    bucket.getObjects({
+</div>
+<div label="Node.js">
+  ```javascript
+  bucket.getObjects({
+      query: {
+        type: "products",
+      },
+    })
+  ```
+
+</div>
+<div label="GraphQL">
+  ```javascript
+  query ($bucket_slug: String!, $read_key: String, $query: JSON) {
+    getObjects(
+      bucket_slug: $bucket_slug
+      read_key: $read_key
+      input: {
         query: {
           type: "products",
-        },
-      })
-    ```
-
-  </div>
-  <div label="GraphQL">
-    ```javascript
-    query ($bucket_slug: String!, $read_key: String, $query: JSON) {
-      getObjects(
-        bucket_slug: $bucket_slug
-        read_key: $read_key
-        input: {
-          query: {
-            type: "products",
-          }
         }
-      ) {
-        objects {
-          id
-          title
-          slug
-          metadata
-        }
-        total
       }
+    ) {
+      objects {
+        id
+        title
+        slug
+        metadata
+      }
+      total
     }
-    ```
+  }
+  ```
 
-  </div>
-  <div label="CLI">
-    ```bash
-    cosmic get-objects --query '{"type":"products"}'
-    ```
-    
-  </div>
+</div>
+<div label="CLI">
+  ```bash
+  cosmic get-objects --query '{"type":"products"}'
+  ```
+  
+</div>
 </Tabs>
 
 The response will look like:
