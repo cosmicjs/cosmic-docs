@@ -170,21 +170,21 @@ Add a new Revision to your Object.
   request.
 </Callout>
 
-| Parameter              | Required |       Type       | Description                                                                                       |
-| :--------------------- | :------: | :--------------: | :------------------------------------------------------------------------------------------------ |
-| title                  | required |      String      | Your Object title                                                                                 |
-| slug                   |          |      String      | Unique identifier for your Object                                                                 |
-| content                |          |      String      | Add Content to your Object                                                                        |
-| status                 |          |       Enum       | draft, published, defaults to published                                                           |
-| metafields             |          | Array of Objects | Add Metafields to your Object. See [Metafields Model](/api-reference/getting-started/metafields). |
-| created_by             |          |      String      | Author User Id                                                                                    |
-| publish_at             |          |      Number      | UNIX millisecond timestamp. Publish automatically at a later time.                                |
-| options.slug_field     |          |     Boolean      | Set to false to hide the slug field                                                               |
-| options.content_editor |          |     Boolean      | Set to false to hide the content editor                                                           |
-| locale                 |          |      String      | Add localization to the Object                                                                    |
-| thumbnail              |          |      String      | Media `name`. Media must be available in Bucket. See [Media](/api-reference/media).               |
-| trigger_webhook        |          |     Boolean      | Triggers corresponding Object action Webhook ([See Webhooks](/dashboard/webhooks)).               |
-| pretty                 |          |       Enum       | true, Makes the response more reader-friendly                                                     |
+| Parameter              | Required |       Type       | Description                                                                         |
+| :--------------------- | :------: | :--------------: | :---------------------------------------------------------------------------------- |
+| title                  | required |      String      | Your Object title                                                                   |
+| slug                   |          |      String      | Unique identifier for your Object                                                   |
+| content                |          |      String      | Add Content to your Object                                                          |
+| status                 |          |       Enum       | draft, published, defaults to published                                             |
+| metafields             |          | Array of Objects | Add Metafields to your Object. See [Metafields Model](/api-reference/metafields).   |
+| created_by             |          |      String      | Author User Id                                                                      |
+| publish_at             |          |      Number      | UNIX millisecond timestamp. Publish automatically at a later time.                  |
+| options.slug_field     |          |     Boolean      | Set to false to hide the slug field                                                 |
+| options.content_editor |          |     Boolean      | Set to false to hide the content editor                                             |
+| locale                 |          |      String      | Add localization to the Object                                                      |
+| thumbnail              |          |      String      | Media `name`. Media must be available in Bucket. See [Media](/api-reference/media). |
+| trigger_webhook        |          |     Boolean      | Triggers corresponding Object action Webhook ([See Webhooks](/dashboard/webhooks)). |
+| pretty                 |          |       Enum       | true, Makes the response more reader-friendly                                       |
 
 **Methods**
 

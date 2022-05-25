@@ -1,8 +1,12 @@
 {
-  "getting-started": "Getting Started",
+	"introduction": "Introduction",
+  "available-methods": "Available Methods",
+  "request-limits": "Request Limits",
+  "error-handling": "Error Handling",
   "objects": "Objects",
   "queries": "Queries and Logic",
   "object-metafields": "Object Metafields",
+	"metafields": "Metafields",
   "object-types": "Object Types",
   "object-revisions": "Object Revisions",
   "media": "Media",
