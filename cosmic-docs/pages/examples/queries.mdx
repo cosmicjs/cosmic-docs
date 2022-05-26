@@ -178,8 +178,7 @@ There might be a certain product you need to look at and you have the title avai
 <div label="REST">
   ```bash
   GET ${BASE_URL}/buckets/${YOUR_BUCKET_SLUG}/objects?read_key=${YOUR_BUCKET_READ_KEY}&query={"title":"Cupboard"}
-
-````
+  ```
 </div>
 <div label="Node.js">
 ```javascript
@@ -188,8 +187,7 @@ bucket.getObjects({
       title: "Cupboard",
     },
   })
-
-````
+```
 
 </div>
 <div label="GraphQL">
@@ -213,13 +211,13 @@ bucket.getObjects({
       total
     }
   }
+```
 
-````
 </div>
 <div label="CLI">
 ```bash
 cosmic get-objects --query '{"title":"Mango Nation Hat"}'
-````
+```
 
 </div>
 </Tabs>
