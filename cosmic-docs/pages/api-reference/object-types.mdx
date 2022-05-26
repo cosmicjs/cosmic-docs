@@ -25,9 +25,10 @@ Get all Object Types in your Bucket.
 **Methods**
 
 <Tabs>
-<div label="REST">
+<div label="cURL">
 ```bash
-GET https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/object-types
+curl https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/object-types
+	-d read_key=${YOUR_BUCKET_READ_KEY}
 ```
 
 </div>
@@ -141,7 +142,8 @@ Get Object Type by `slug` from your Bucket.
 **Definition**
 
 ```bash
-GET https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/object-types/${slug}
+curl https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/object-types/${slug}
+	-d read_key=${YOUR_BUCKET_READ_KEY}
 ```
 
 **Example Response**
@@ -195,18 +197,13 @@ Add a new Object Type to your Bucket.
 **Methods**
 
 <Tabs>
-<div label="REST">
+<div label="cURL">
 ```bash
-POST https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/object-types
+curl https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/object-types
+	-d '{"title":"Products","singular":"Product"}' \
+	-H 'Content-Type: application/json' \
+	-H "Authorization: Bearer <YOUR_BUCKET_WRITE_KEY>"
 ```
-**Header**
-
-```json
-{
-  "Authorization": "Bearer YOUR_BUCKET_WRITE_KEY"
-}
-```
-
 </div>
 
 <div label="Node.js">
@@ -325,7 +322,7 @@ Edit an existing Object Type by `type_slug` in your Bucket.
 
 | Parameter              |             Required             |       Type       | Description                                                                                                                        |
 | :--------------------- | :------------------------------: | :--------------: | :--------------------------------------------------------------------------------------------------------------------------------- |
-| title                  |                                  |      String      | Plural title of your Object Type                                                                                                   |
+| title                  |             required             |      String      | Plural title of your Object Type                                                                                                   |
 | singular               |                                  |      String      | Singular title of your Object Type                                                                                                 |
 | metafields             |                                  | Array of Objects | Default Metafields for each Object in this type. Add Metafields to your Object. See [Metafields Model](/api-reference/metafields). |
 | options.slug_field     |                                  |     Boolean      | Set to false to hide the slug field                                                                                                |
@@ -342,16 +339,13 @@ _**Note:** At least one of the Parameters is required to process the request._
 **Methods**
 
 <Tabs>
-<div label="REST">
+<div label="cURL">
 ```bash
-PATCH https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/object-types/${type_slug}
-```
-**Header**
-
-```json
-{
-  "Authorization": "Bearer YOUR_BUCKET_WRITE_KEY"
-}
+curl https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/object-types/${type_slug}
+	-X PATCH
+	-d '{"title":"New Products","singular":"New Product"}' \
+	-H 'Content-Type: application/json' \
+	-H "Authorization: Bearer <YOUR_BUCKET_WRITE_KEY>"
 ```
 
 </div>
@@ -457,18 +451,12 @@ _**Note:** This does not delete Objects in this Object Type._
 **Methods**
 
 <Tabs>
-<div label="REST">
+<div label="cURL">
 ```bash
-DELETE https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/object-types/${type_slug}
+curl https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/object-types/${type_slug} \
+	-X DELETE \
+	-H "Authorization: Bearer <YOUR_BUCKET_WRITE_KEY>"
 ```
-**Header**
-
-```json
-{
-  "Authorization": "Bearer YOUR_BUCKET_WRITE_KEY"
-}
-```
-
 </div>
 
 <div label="Node.js">

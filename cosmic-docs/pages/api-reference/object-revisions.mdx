@@ -31,9 +31,10 @@ Get Object Revisions of Object with `id` in your Bucket.
 **Methods**
 
 <Tabs>
-<div label="REST">
+<div label="cURL">
 ```bash
-GET https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/objects/${object_id}/revisions?read_key=${YOUR_BUCKET_READ_KEY}
+curl https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/objects/${object_id}/revisions
+	-d read_key=${YOUR_BUCKET_READ_KEY}
 ```
 
 </div>
@@ -135,7 +136,8 @@ Returns a single Revision by `id` from your Object.
 **Definition**
 
 ```bash
-GET https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/objects/${object_id}/revisions/${revision_id}?read_key=${YOUR_BUCKET_READ_KEY}
+curl https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/objects/${object_id}/revisions/${revision_id}
+	-d read_key=${YOUR_BUCKET_READ_KEY}
 ```
 
 **Example Response**
@@ -189,25 +191,12 @@ Add a new Revision to your Object.
 **Methods**
 
 <Tabs>
-<div label="REST">
+<div label="cURL">
 ```bash
-POST https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/objects/${object_id}/revisions
-```
-**Header**
-
-```json
-{
-  "Authorization": "Bearer YOUR_BUCKET_WRITE_KEY"
-}
-```
-
-**Example Body (JSON)**
-
-```json
-{
-  "title": "New Title of the Post",
-  "slug": "new-title-of-the-post"
-}
+curl https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/objects/${object_id}/revisions \
+	-d '{"title":"New Title of the Post","slug":"new-title-of-the-post"}' \
+	-H 'Content-Type: application/json' \
+	-H "Authorization: Bearer <YOUR_BUCKET_WRITE_KEY>"
 ```
 
 **Example Response**
@@ -216,8 +205,8 @@ POST https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/objects/${object_id
 {
   "revision": {
     "id": "5ff75368c2dfa81a91695cec",
-    "slug": "title-of-the-post",
-    "title": "Title of the Post",
+    "slug": "new-title-of-the-post",
+    "title": "New Title of the Post",
     "content": "",
     "metafields": [],
     "bucket": "5f7357124b331d76c08de989",

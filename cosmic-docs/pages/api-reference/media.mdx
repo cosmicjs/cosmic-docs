@@ -30,9 +30,10 @@ Get Media List in your Bucket.
 **Methods**
 
 <Tabs>
-<div label="REST">
+<div label="cURL">
 ```bash
-GET https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/media
+curl https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/media \
+	-d read_key=${YOUR_BUCKET_READ_KEY}
 ```
 
 </div>
@@ -145,9 +146,10 @@ Returns a single Media by `id` from your Bucket.
 **Methods**
 
 <Tabs>
-<div label="REST">
+<div label="cURL">
 ```bash
-GET https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/media/${media_id}
+curl https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/media/${media_id}
+	-d read_key=${YOUR_BUCKET_READ_KEY}
 ```
 
 </div>
@@ -253,26 +255,13 @@ The Media Object must be an object with certain properties indicated below. If u
 **Methods**
 
 <Tabs>
-<div label="REST">
-  See [upload URL above](#upload-url).
+<div label="cURL">
 ```bash
-POST $UPLOAD_URL/buckets/:bucket_slug/media
+curl https://upload.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLU}/media
+	--form "folder=folder-name"
+	--form "media=@test.png"
+	-H "Authorization: Bearer <YOUR_BUCKET_WRITE_KEY>"
 ```
-
-**Curl**
-
-```bash
-curl --form "folder=folder-name" --form "media=@test.png" -H "Authorization: Bearer <write-key>" 'https://upload.cosmicjs.com/v2/buckets/:bucket_slug/media'
-```
-
-**Header**
-
-```json
-{
-  "Authorization": "Bearer YOUR_BUCKET_WRITE_KEY"
-}
-```
-
 </div>
 
 <div label="Node.js">
@@ -505,16 +494,11 @@ Delete an existing Media by `id` from your Bucket.
 **Methods**
 
 <Tabs>
-<div label="REST">
+<div label="cURL">
 ```bash
-DELETE https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/media/${media_id}?trigger_webhook=true
-```
-**Header**
-
-```json
-{
-  "Authorization": "Bearer YOUR_BUCKET_WRITE_KEY"
-}
+curl https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/media/${media_id}?trigger_webhook=true \
+	-H "Authorization: Bearer <YOUR_BUCKET_WRITE_KEY>" \
+	-X DELETE
 ```
 
 </div>
