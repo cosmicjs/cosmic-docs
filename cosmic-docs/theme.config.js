@@ -103,7 +103,6 @@ export default {
   head: (
     <>
       {/* Favicons, meta */}
-      <meta name="robots" content="noindex" />
       <link
         rel="shortcut icon"
         type="image/x-icon"
