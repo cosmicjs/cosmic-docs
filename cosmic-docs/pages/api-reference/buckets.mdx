@@ -36,18 +36,11 @@ Gets all Buckets connected to your account.
 **Methods**
 
 <Tabs>
-<div label="REST">
+<div label="cURL">
 ```bash
-GET $BASE_URL/buckets
+curl https://api.cosmicjs.com/v2/buckets \
+	-H "Authorization: Bearer <TOKEN>"
 ```
-**Header**
-
-```json
-{
-  "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXV.eyJlbWFpbCI6InNwaXJvbnl..."
-}
-```
-
 </div>
 
 <div label="Node.js">
@@ -135,9 +128,10 @@ Returns bucket by `slug` connected to your Bucket.
 **Methods**
 
 <Tabs>
-<div label="REST">
+<div label="cURL">
 ```bash
-GET $BASE_URL/buckets/${YOUR_BUCKET_SLUG}
+curl https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG} \
+	-H "Authorization: Bearer <TOKEN>"
 ```
 
 </div>
@@ -243,16 +237,12 @@ Add a new bucket to your account.
 **Methods**
 
 <Tabs>
-<div label="REST">
+<div label="cURL">
 ```bash
-POST $BASE_URL/buckets
-```
-**Example Body (JSON)**
-
-```json
-{
-  "title": "New Bucket"
-}
+curl https://api.cosmicjs.com/v2/buckets \
+	-d '{"title":"My Bucket"}' \
+	-H 'Content-Type: application/json' \
+	-H "Authorization: Bearer <TOKEN>"
 ```
 
 </div>
@@ -349,7 +339,7 @@ _**Note:** At least one of the Parameters is required to process the request._
 **Definition**
 
 ```bash
-PATCH $BASE_URL/buckets/${YOUR_BUCKET_SLUG}
+PATCH https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}
 ```
 
 **Example Body (JSON)**
@@ -399,9 +389,10 @@ Delete an existing bucket by `slug` from your account.
 **Methods**
 
 <Tabs>
-<div label="REST">
+<div label="cURL">
 ```bash
-DELETE $BASE_URL/buckets/${YOUR_BUCKET_SLUG}
+curl https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG} \
+	-H "Authorization: Bearer <TOKEN>"
 ```
 
 </div>

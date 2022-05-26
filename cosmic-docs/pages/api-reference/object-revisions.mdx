@@ -33,7 +33,7 @@ Get Object Revisions of Object with `id` in your Bucket.
 <Tabs>
 <div label="REST">
 ```bash
-GET $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/objects/${object_id}/revisions?read_key=${YOUR_BUCKET_READ_KEY}
+GET https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/objects/${object_id}/revisions?read_key=${YOUR_BUCKET_READ_KEY}
 ```
 
 </div>
@@ -135,7 +135,7 @@ Returns a single Revision by `id` from your Object.
 **Definition**
 
 ```bash
-GET $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/objects/${object_id}/revisions/${revision_id}?read_key=${YOUR_BUCKET_READ_KEY}
+GET https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/objects/${object_id}/revisions/${revision_id}?read_key=${YOUR_BUCKET_READ_KEY}
 ```
 
 **Example Response**
@@ -191,7 +191,7 @@ Add a new Revision to your Object.
 <Tabs>
 <div label="REST">
 ```bash
-POST $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/objects/${object_id}/revisions
+POST https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/objects/${object_id}/revisions
 ```
 **Header**
 

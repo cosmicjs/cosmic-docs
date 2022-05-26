@@ -24,9 +24,11 @@ Send your `email` and `password` to receive your access token. Your access token
 **Methods**
 
 <Tabs>
-<div label="REST">
+<div label="cURL">
 ```bash
-POST $BASE_URL/authenticate
+curl https://api.cosmicjs.com/v2/authenticate \
+	-d '{"email":"you@youremail.com","password":"yourpass"}' \
+	-H 'Content-Type: application/json'
 ```
 
 </div>
@@ -75,15 +77,6 @@ Authenticated
 </div>
 </Tabs>
 
-**Example Body (JSON)**
-
-```json
-{
-  "email": "you@youremail.com",
-  "password": "yourpassword"
-}
-```
-
 **Example Response**
 
 ```json
@@ -107,18 +100,11 @@ You can use the Authentication token using REST requests to the API
 **Methods**
 
 <Tabs>
-<div label="REST">
+<div label="cURL">
 
 ```bash
-GET $BASE_URL/buckets
-```
-
-**Header**
-
-```json
-{
-  "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXV.eyJlbWFpbCI6InNwaXJvbnl..."
-}
+curl https://api.cosmicjs.com/v2/buckets \
+	-H "Authorization: Bearer <TOKEN>"
 ```
 
 </div>

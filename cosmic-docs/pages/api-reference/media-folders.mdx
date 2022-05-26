@@ -24,7 +24,7 @@ Get Media Folders in your Bucket.
 **Definition**
 
 ```bash
-GET $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/media-folders?read_key=${YOUR_BUCKET_READ_KEY}
+GET https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/media-folders?read_key=${YOUR_BUCKET_READ_KEY}
 ```
 
 **Example Response**
@@ -61,7 +61,7 @@ Returns list of media in Folder by `slug` from your Bucket.
 **Definition**
 
 ```bash
-GET $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/media-folders/${media_folder_slug}/media?read_key=${YOUR_BUCKET_READ_KEY}
+GET https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/media-folders/${media_folder_slug}/media?read_key=${YOUR_BUCKET_READ_KEY}
 ```
 
 **Example Response**
@@ -122,7 +122,7 @@ Add a new Media Folder to your Bucket.
 **Definition**
 
 ```bash
-POST $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/media-folders
+POST https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/media-folders
 ```
 
 **Header**
@@ -172,7 +172,7 @@ _**Note:** At least one of the Parameters is required to process the request._
 **Definition**
 
 ```bash
-PATCH $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/media-folders/${media_folder_slug}
+PATCH https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/media-folders/${media_folder_slug}
 ```
 
 **Header**
@@ -216,7 +216,7 @@ Delete an existing Media Folder by `slug` from your Bucket.
 **Definition**
 
 ```bash
-DELETE $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/media-folders/${media_folder_slug}
+DELETE https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/media-folders/${media_folder_slug}
 ```
 
 **Header**

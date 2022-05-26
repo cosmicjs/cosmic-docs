@@ -35,7 +35,7 @@ Gets all users in your bucket.
 <Tabs>
 <div label="REST">
 ```bash
-GET $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/users
+GET https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/users
 ```
 
 </div>
@@ -134,7 +134,7 @@ Gets user by `id` in your bucket.
 <Tabs>
 <div label="REST">
 ```bash
-GET $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/users/${user_id}
+GET https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/users/${user_id}
 ```
 
 </div>
@@ -230,7 +230,7 @@ Add user to your bucket.
 <Tabs>
 <div label="REST">
 ```bash
-POST $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/users
+POST https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/users
 ```
 **Example Body (JSON)**
 
@@ -320,7 +320,7 @@ Edit user by `id` in your bucket.
 **Definition**
 
 ```bash
-PATCH $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/users/${user_id}
+PATCH https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/users/${user_id}
 ```
 
 **Example Body (JSON)**
@@ -353,7 +353,7 @@ Delete user by `id` from your bucket.
 **Definition**
 
 ```bash
-DELETE $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/users/${user_id}
+DELETE https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/users/${user_id}
 ```
 
 **Example Response**

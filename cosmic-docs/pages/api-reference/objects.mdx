@@ -42,7 +42,7 @@ const query = {
 ```
 **Endpoint**
 ```bash
-GET $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/objects?read_key=${YOUR_BUCKET_READ_KEY}&query=${query}&limit=1
+GET https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/objects?read_key=${YOUR_BUCKET_READ_KEY}&query=${query}&limit=1
 ```
 
 **Example Full Response**
@@ -203,7 +203,7 @@ const props = `
 ```
 **Endpoint**
 ```bash
-GET $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/objects?read_key=${YOUR_BUCKET_READ_KEY}&query=${query}&props=${props}&limit=1
+GET https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/objects?read_key=${YOUR_BUCKET_READ_KEY}&query=${query}&props=${props}&limit=1
 ```
 
 **Example Response with Props**
@@ -315,7 +315,7 @@ Returns a single Object by `id` from your Bucket.
 <Tabs>
   <div label="REST">
 ```bash
-GET $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/objects/${object_id}?read_key=${YOUR_BUCKET_READ_KEY}
+GET https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/objects/${object_id}?read_key=${YOUR_BUCKET_READ_KEY}
 ```
 
 **Example Full Response**
@@ -468,7 +468,7 @@ const props = `
 ```
 
 ```bash
-GET $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/objects/${object_id}?read_key=${YOUR_BUCKET_READ_KEY}&props=${props}
+GET https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/objects/${object_id}?read_key=${YOUR_BUCKET_READ_KEY}&props=${props}
 ```
 
 **Example Response with Props**
@@ -582,7 +582,7 @@ const props = `
 ```
 
 ```bash
-GET $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/objects/?read_key=${YOUR_BUCKET_READ_KEY}&query={"slug":"object-slug"}&props=${props}
+GET https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/objects/?read_key=${YOUR_BUCKET_READ_KEY}&query={"slug":"object-slug"}&props=${props}
 ```
 
 **Example Response with Props**
@@ -712,7 +712,7 @@ Add a new Object to your Bucket.
 <Tabs>
 <div label="REST">
 ```bash
-POST $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/objects
+POST https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/objects
 ```
 **Header**
 
@@ -876,7 +876,7 @@ _**Note:** At least one of the Parameters is required to process the request._
 <Tabs>
 <div label="REST">
 ```bash
-PATCH $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/objects/${object_id}
+PATCH https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/objects/${object_id}
 ```
 **Header**
 
@@ -1007,7 +1007,7 @@ Delete an existing Object by `id` from your Bucket.
 <Tabs>
 <div label="REST">
 ```bash
-DELETE $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/objects/${object_id}?trigger_webhook=true
+DELETE https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/objects/${object_id}?trigger_webhook=true
 ```
 **Header**
 
@@ -1112,7 +1112,7 @@ const query = {
 ```
 **Endpoint**
 ```bash
-GET $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/merge-requests/${merge_request_id}/objects?query=${query}&props=title,slug
+GET https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/merge-requests/${merge_request_id}/objects?query=${query}&props=title,slug
 ```
 
 **Example Response**
@@ -1212,7 +1212,7 @@ Get Metafields in your Object.
 **Definition**
 
 ```bash
-GET $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/objects/${object_id}/metafields?read_key=${YOUR_BUCKET_READ_KEY}
+GET https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/objects/${object_id}/metafields?read_key=${YOUR_BUCKET_READ_KEY}
 ```
 
 **Example Response**
@@ -1261,7 +1261,7 @@ Returns a single Metafield by `key` from your Object.
 **Definition**
 
 ```bash
-GET $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/objects/${object_id}/metafields/${metafield_key}?read_key=${YOUR_BUCKET_READ_KEY}
+GET https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/objects/${object_id}/metafields/${metafield_key}?read_key=${YOUR_BUCKET_READ_KEY}
 ```
 
 **Example Response**
@@ -1303,7 +1303,7 @@ Take a look at [Metafield Model](/api-reference/metafields) for reference to be 
 **Definition**
 
 ```bash
-POST $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/objects/${object_id}/metafields
+POST https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/objects/${object_id}/metafields
 ```
 
 **Header**
@@ -1351,7 +1351,7 @@ _**Note:** At least one of the Parameters is required to process the request._
 **Definition**
 
 ```bash
-PATCH $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/objects/${object_id}/metafields/${metafield_key}
+PATCH https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/objects/${object_id}/metafields/${metafield_key}
 ```
 
 **Header**
@@ -1374,7 +1374,7 @@ PATCH $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/objects/${object_id}/metafields/${me
 ```
 **Endpoint**
 ```bash
-PATCH $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/objects/${object_id}/metafields/${metafield_key}
+PATCH https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/objects/${object_id}/metafields/${metafield_key}
 ```
 </div>
 <div label="Node.js">
@@ -1426,7 +1426,7 @@ Delete an existing Metafield by `key` from your Object.
 **Definition**
 
 ```bash
-DELETE $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/objects/${object_id}/metafields/${metafield_key}
+DELETE https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/objects/${object_id}/metafields/${metafield_key}
 ```
 
 **Header**

@@ -27,7 +27,7 @@ Get all Object Types in your Bucket.
 <Tabs>
 <div label="REST">
 ```bash
-GET $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/object-types
+GET https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/object-types
 ```
 
 </div>
@@ -141,7 +141,7 @@ Get Object Type by `slug` from your Bucket.
 **Definition**
 
 ```bash
-GET $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/object-types/${slug}
+GET https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/object-types/${slug}
 ```
 
 **Example Response**
@@ -197,7 +197,7 @@ Add a new Object Type to your Bucket.
 <Tabs>
 <div label="REST">
 ```bash
-POST $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/object-types
+POST https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/object-types
 ```
 **Header**
 
@@ -344,7 +344,7 @@ _**Note:** At least one of the Parameters is required to process the request._
 <Tabs>
 <div label="REST">
 ```bash
-PATCH $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/object-types/${type_slug}
+PATCH https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/object-types/${type_slug}
 ```
 **Header**
 
@@ -459,7 +459,7 @@ _**Note:** This does not delete Objects in this Object Type._
 <Tabs>
 <div label="REST">
 ```bash
-DELETE $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/object-types/${type_slug}
+DELETE https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/object-types/${type_slug}
 ```
 **Header**
 

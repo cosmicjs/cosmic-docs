@@ -32,7 +32,7 @@ Get Media List in your Bucket.
 <Tabs>
 <div label="REST">
 ```bash
-GET $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/media
+GET https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/media
 ```
 
 </div>
@@ -147,7 +147,7 @@ Returns a single Media by `id` from your Bucket.
 <Tabs>
 <div label="REST">
 ```bash
-GET $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/media/${media_id}
+GET https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/media/${media_id}
 ```
 
 </div>
@@ -458,7 +458,7 @@ _**Note:** At least one of the Parameters is required to process the request._
 **Definition**
 
 ```bash
-PATCH $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/media/${media_id}
+PATCH https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/media/${media_id}
 ```
 
 **Header**
@@ -507,7 +507,7 @@ Delete an existing Media by `id` from your Bucket.
 <Tabs>
 <div label="REST">
 ```bash
-DELETE $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/media/${media_id}?trigger_webhook=true
+DELETE https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/media/${media_id}?trigger_webhook=true
 ```
 **Header**
 

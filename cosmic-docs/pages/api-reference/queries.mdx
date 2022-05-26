@@ -19,7 +19,7 @@ encoder tool may help](https://meyerweb.com/eric/tools/dencoder/).
 <Tabs>
 <div label="REST">
 ```bash
-GET $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/objects?read_key=${YOUR_BUCKET_READ_KEY}&query=${query}
+GET https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/objects?read_key=${YOUR_BUCKET_READ_KEY}&query=${query}
 ```
 
 </div>
@@ -161,7 +161,7 @@ cosmic get-objects --query '{"type":"products","metadata.price":{"$gte":100}}'
 To keep examples concise, the following base path is used:
 
 ```bash
-endpoint = "$BASE_URL/buckets/${YOUR_BUCKET_SLUG}/objects?read_key=${YOUR_BUCKET_READ_KEY}&props=title,slug,metadata"
+endpoint = "https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/objects?read_key=${YOUR_BUCKET_READ_KEY}&props=title,slug,metadata"
 ```
 
 Matches Objects with exact Object Type
