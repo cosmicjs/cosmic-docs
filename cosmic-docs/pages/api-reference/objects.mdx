@@ -3,7 +3,7 @@ import Tabs from '../../components/tabs'
 
 # Objects
 
-The following endpoints allow you to get, add, edit and delete Objects in your Bucket. See [API Introduction](/api-reference/getting-started/introduction) for getting started information.
+The following endpoints allow you to get, add, edit and delete Objects in your Bucket. See [API Introduction](/api-reference/introduction) for getting started information.
 
 <Callout emoji="✅">
   **Quick Tip**
@@ -690,22 +690,22 @@ Add a new Object to your Bucket.
   request.
 </Callout>
 
-| Parameter              | Required |       Type       | Description                                                                                       |
-| :--------------------- | :------: | :--------------: | :------------------------------------------------------------------------------------------------ |
-| type                   | required |      String      | Add Object to Object Type                                                                         |
-| title                  | required |      String      | Your Object title                                                                                 |
-| slug                   |          |      String      | Unique identifier for your Object                                                                 |
-| content                |          |      String      | Add Content to your Object                                                                        |
-| status                 |          |       Enum       | draft, published, defaults to published                                                           |
-| metafields             |          | Array of Objects | Add Metafields to your Object. See [Metafields Model](/api-reference/getting-started/metafields). |
-| created_by             |          |      String      | Author User Id                                                                                    |
-| publish_at             |          |      Number      | UNIX millisecond timestamp. Publish automatically at a later time.                                |
-| options.slug_field     |          |     Boolean      | Set to false to hide the slug field                                                               |
-| options.content_editor |          |     Boolean      | Set to false to hide the content editor                                                           |
-| locale                 |          |      String      | Add localization to the Object                                                                    |
-| thumbnail              |          |      String      | Media `name`. Media must be available in Bucket. See [Media](/api-reference/media).               |
-| trigger_webhook        |          |     Boolean      | Triggers corresponding Object action Webhook ([See Webhooks](/dashboard/webhooks)).               |
-| pretty                 |          |       Enum       | true, Makes the response more reader-friendly                                                     |
+| Parameter              | Required |       Type       | Description                                                                         |
+| :--------------------- | :------: | :--------------: | :---------------------------------------------------------------------------------- |
+| type                   | required |      String      | Add Object to Object Type                                                           |
+| title                  | required |      String      | Your Object title                                                                   |
+| slug                   |          |      String      | Unique identifier for your Object                                                   |
+| content                |          |      String      | Add Content to your Object                                                          |
+| status                 |          |       Enum       | draft, published, defaults to published                                             |
+| metafields             |          | Array of Objects | Add Metafields to your Object. See [Metafields Model](/api-reference/metafields).   |
+| created_by             |          |      String      | Author User Id                                                                      |
+| publish_at             |          |      Number      | UNIX millisecond timestamp. Publish automatically at a later time.                  |
+| options.slug_field     |          |     Boolean      | Set to false to hide the slug field                                                 |
+| options.content_editor |          |     Boolean      | Set to false to hide the content editor                                             |
+| locale                 |          |      String      | Add localization to the Object                                                      |
+| thumbnail              |          |      String      | Media `name`. Media must be available in Bucket. See [Media](/api-reference/media). |
+| trigger_webhook        |          |     Boolean      | Triggers corresponding Object action Webhook ([See Webhooks](/dashboard/webhooks)). |
+| pretty                 |          |       Enum       | true, Makes the response more reader-friendly                                       |
 
 **Methods**
 
@@ -854,20 +854,20 @@ Edit an existing Object by `id` in your Bucket.
   request.
 </Callout>
 
-| Parameter              |       Type       | Description                                                                                       |
-| :--------------------- | :--------------: | :------------------------------------------------------------------------------------------------ |
-| title                  |      String      | Your Object title                                                                                 |
-| slug                   |      String      | Unique identifier for your Object                                                                 |
-| content                |      String      | Add Content to your Object                                                                        |
-| status                 |       Enum       | draft, published, defaults to published                                                           |
-| metafields             | Array of Objects | Add Metafields to your Object. See [Metafields Model](/api-reference/getting-started/metafields). |
-| publish_at             |      Number      | UNIX millisecond timestamp. Publish automatically at a later time.                                |
-| options.slug_field     |     Boolean      | Set to false to hide the slug field                                                               |
-| options.content_editor |     Boolean      | Set to false to hide the content editor                                                           |
-| locale                 |      String      | Add localization to the Object                                                                    |
-| thumbnail              |      String      | Media `name`. Media must be available in Bucket. See [Media](/api-reference/media).               |
-| trigger_webhook        |     Boolean      | Triggers corresponding Object action Webhook ([See Webhooks](/dashboard/webhooks)).               |
-| pretty                 |       Enum       | true, Makes the response more reader-friendly                                                     |
+| Parameter              |       Type       | Description                                                                         |
+| :--------------------- | :--------------: | :---------------------------------------------------------------------------------- |
+| title                  |      String      | Your Object title                                                                   |
+| slug                   |      String      | Unique identifier for your Object                                                   |
+| content                |      String      | Add Content to your Object                                                          |
+| status                 |       Enum       | draft, published, defaults to published                                             |
+| metafields             | Array of Objects | Add Metafields to your Object. See [Metafields Model](/api-reference/metafields).   |
+| publish_at             |      Number      | UNIX millisecond timestamp. Publish automatically at a later time.                  |
+| options.slug_field     |     Boolean      | Set to false to hide the slug field                                                 |
+| options.content_editor |     Boolean      | Set to false to hide the content editor                                             |
+| locale                 |      String      | Add localization to the Object                                                      |
+| thumbnail              |      String      | Media `name`. Media must be available in Bucket. See [Media](/api-reference/media). |
+| trigger_webhook        |     Boolean      | Triggers corresponding Object action Webhook ([See Webhooks](/dashboard/webhooks)). |
+| pretty                 |       Enum       | true, Makes the response more reader-friendly                                       |
 
 _**Note:** At least one of the Parameters is required to process the request._
 
@@ -1187,3 +1187,260 @@ cosmic get-merge-request-objects --id merge-request-id --query '{"slug":"new-pos
 ```
 </div>
 </Tabs>
+
+## Object Metafields
+
+The following endpoints allow you to get, add, edit and delete Metafields in your Object.
+
+<Callout emoji="✅">
+  **Quick Tip**
+  <br />
+  Your `read` and `write` keys will be required to perform the following
+  requests. These can be found in <i>Your Bucket > Settings > API Access</i> in
+  your [Bucket Dashboard ](https://app.cosmicjs.com/login).
+</Callout>
+
+### Get Object Metafields
+
+Get Metafields in your Object.
+
+| Parameter | Required |  Type  | Description                                   |
+| :-------- | :------: | :----: | :-------------------------------------------- |
+| read_key  | required | String | Restrict read access to your Bucket           |
+| pretty    |          |  Enum  | true, Makes the response more reader-friendly |
+
+**Definition**
+
+```bash
+GET $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/objects/${object_id}/metafields?read_key=${YOUR_BUCKET_READ_KEY}
+```
+
+**Example Response**
+
+```json
+{
+  "metafields": [
+    {
+      "children": null,
+      "type": "number",
+      "title": "number",
+      "key": "number",
+      "id": "Hvix3sGVi0",
+      "value": ""
+    },
+    {
+      "children": null,
+      "type": "radio-buttons",
+      "title": "radio-buttons",
+      "key": "radio-buttons",
+      "id": "QCEI7BnfuO",
+      "value": "Ok",
+      "options": [
+        {
+          "value": "Ok"
+        },
+        {
+          "value": "All"
+        }
+      ]
+    }
+  ],
+  "total": 2
+}
+```
+
+### Get Object Metafield
+
+Returns a single Metafield by `key` from your Object.
+
+| Parameter | Required |  Type  | Description                                   |
+| :-------- | :------: | :----: | :-------------------------------------------- |
+| read_key  | required | String | Restrict read access to your Bucket           |
+| pretty    |          |  Enum  | true, Makes the response more reader-friendly |
+
+**Definition**
+
+```bash
+GET $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/objects/${object_id}/metafields/${metafield_key}?read_key=${YOUR_BUCKET_READ_KEY}
+```
+
+**Example Response**
+
+```json
+{
+  "metafield": {
+    "children": null,
+    "type": "radio-buttons",
+    "title": "radio-buttons",
+    "key": "radio-buttons",
+    "id": "QCEI7BnfuO",
+    "value": "Ok",
+    "options": [
+      {
+        "value": "Ok"
+      },
+      {
+        "value": "All"
+      }
+    ]
+  }
+}
+```
+
+### Add Object Metafield
+
+Add a new Metafield to your Object.
+
+<Callout emoji="⚠">
+  **Required**
+  <br />
+  `write_key` must be passed as `Authorization Bearer` in the header of the
+  request.
+</Callout>
+
+Take a look at [Metafield Model](/api-reference/metafields) for reference to be passed in the body.
+
+**Definition**
+
+```bash
+POST $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/objects/${object_id}/metafields
+```
+
+**Header**
+
+```json
+{
+  "Authorization": "Bearer YOUR_BUCKET_WRITE_KEY"
+}
+```
+
+**Example Body (JSON)**
+
+```json
+{
+  "type": "number",
+  "title": "Example Phone number",
+  "key": "example-phone-number",
+  "value": 123456789
+}
+```
+
+**Example Response**
+
+```json
+{
+  "message": "metafield with key: 'example-phone-number' added successfully in object with id:'${object_id}"
+}
+```
+
+### Edit Object Metafield
+
+Edit an existing Metafield by `key` in your Object.
+
+<Callout emoji="⚠">
+  **Required**
+  <br />
+  `write_key` must be passed as `Authorization Bearer` in the header of the
+  request.
+</Callout>
+
+Take a look at [Metafield Model](/api-reference/metafields) for reference to be passed in the body.
+
+_**Note:** At least one of the Parameters is required to process the request._
+
+**Definition**
+
+```bash
+PATCH $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/objects/${object_id}/metafields/${metafield_key}
+```
+
+**Header**
+
+```json
+{
+  "Authorization": "Bearer YOUR_BUCKET_WRITE_KEY"
+}
+```
+
+**Methods**
+
+<Tabs>
+<div label="REST">
+**Body**
+```json
+{
+  "value": 9876543210
+}
+```
+**Endpoint**
+```bash
+PATCH $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/objects/${object_id}/metafields/${metafield_key}
+```
+</div>
+<div label="Node.js">
+```javascript
+bucket.editObjectMetafield()
+```
+**Example Request**
+```javascript
+const Cosmic = require('cosmicjs');
+const api = Cosmic();
+const bucket = api.bucket({
+  slug: "bucket-slug",
+  read_key: "your-read-key-found-in-bucket-settings",
+});
+const params = {
+  id: `${object.id}`,
+  key: `number`,
+  value: 9876543210
+};
+bucket.editObjectMetafield(params);
+```
+</div>
+</Tabs>
+
+**Example Response**
+
+```json
+{
+  "metafield": {
+    "type": "number",
+    "title": "Example Phone number",
+    "key": "phone_number",
+    "value": 9876543210
+  }
+}
+```
+
+### Delete Object Metafield
+
+Delete an existing Metafield by `key` from your Object.
+
+<Callout emoji="⚠">
+  **Required**
+  <br />
+  `write_key` must be passed as `Authorization Bearer` in the header of the
+  request.
+</Callout>
+
+**Definition**
+
+```bash
+DELETE $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/objects/${object_id}/metafields/${metafield_key}
+```
+
+**Header**
+
+```json
+{
+  "Authorization": "Bearer YOUR_BUCKET_WRITE_KEY"
+}
+```
+
+**Example Response**
+
+```json
+{
+  "message": "metafield with key: '${metafield_key}' deleted successfully from object with id:'${object_id}"
+}
+```
