@@ -23,6 +23,29 @@ PATCH /v2/buckets/${YOUR_BUCKET_SLUG}/objects/:id
 DELETE /v2/buckets/${YOUR_BUCKET_SLUG}/objects/:id
 ```
 
+## Data Model
+
+| Property               |        Type         |                                        Notes                                        |
+| :--------------------- | :-----------------: | :---------------------------------------------------------------------------------: |
+| id                     |       String        |                            Unique identifier for Object                             |
+| slug                   |       String        |          Can have multiple Objects with same slug if localization enabled.          |
+| type                   |       String        |                                  Object Type slug                                   |
+| title                  |       String        |                                    Object title                                     |
+| content                |       String        |                                    HTML Content                                     |
+| status                 |        Enum         |                       draft, published, defaults to published                       |
+| metafields             | Array of Metafields |                 See [Metafields Model](/api-reference/metafields).                  |
+| metadata               |       Object        |                              Rendered Metafield values                              |
+| created_by             |       String        |                                   Author User Id                                    |
+| created_at             |       String        |                                    Date created                                     |
+| published_at           |       String        |                                 Date last published                                 |
+| modified_at            |       String        |                                    Date modified                                    |
+| modified_by            |       String        |                                   Author User Id                                    |
+| publish_at             |       Number        |         UNIX millisecond timestamp. Publish automatically at a later time.          |
+| options.slug_field     |       Boolean       |                         Set to false to hide the slug field                         |
+| options.content_editor |       Boolean       |                       Set to false to hide the content editor                       |
+| locale                 |        Enum         |         See [Localization](/api-reference/localization) for locale options.         |
+| thumbnail              |       String        | Media `name`. Media must be available in Bucket. See [Media](/api-reference/media). |
+
 ## Get Objects
 
 Returns Objects in your Bucket.

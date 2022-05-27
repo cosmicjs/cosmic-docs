@@ -28,6 +28,22 @@ PATCH /v2/buckets/${YOUR_BUCKET_SLUG}/object-types/:slug
 DELETE /v2/buckets/${YOUR_BUCKET_SLUG}/object-types/:slug
 ```
 
+## Data Model
+
+| Property               |                       Type                       | Notes                                                                                                                              |
+| :--------------------- | :----------------------------------------------: | :--------------------------------------------------------------------------------------------------------------------------------- |
+| slug                   |                      String                      | Plural slug of your Object Type                                                                                                    |
+| title                  |                      String                      | Plural title of your Object Type                                                                                                   |
+| singular               |                      String                      | Singular title of your Object Type                                                                                                 |
+| metafields             |               Array of Metafields                | Default Metafields for each Object in this type. Add Metafields to your Object. See [Metafields Model](/api-reference/metafields). |
+| options.slug_field     |                     Boolean                      | Set to false to hide the slug field                                                                                                |
+| options.content_editor |                     Boolean                      | Set to false to hide the content editor                                                                                            |
+| localization           |                     Boolean                      | true, Adds localization to the Object Type                                                                                         |
+| locales                | required if localization is true Array of String | Array of active locales in the Object Type. Check the [available locale codes](/api-reference/localization).                       |
+| priority_locale        |                      String                      | Default locale code for Objects in Object Type. Check the [available locale codes](/api-reference/localization)                    |
+| emoji                  |                      String                      | Valid Unicode emoji                                                                                                                |
+| singleton              |                     Boolean                      | Single or Multiple Objects                                                                                                         |
+
 ## Get Object Types
 
 Returns all Object Types in your Bucket.
@@ -222,23 +238,6 @@ Creates a new Object Type in your Bucket (REST is currently the only available m
 POST /v2/buckets/${YOUR_BUCKET_SLUG}/object-types
 ```
 
-**Parameters**
-
-| Parameter              |             Required             |        Type         | Description                                                                                                                        |
-| :--------------------- | :------------------------------: | :-----------------: | :--------------------------------------------------------------------------------------------------------------------------------- |
-| title                  |             required             |       String        | Plural title of your Object Type                                                                                                   |
-| slug                   |                                  |       String        | Plural slug of your Object Type                                                                                                    |
-| singular               |                                  |       String        | Singular title of your Object Type                                                                                                 |
-| metafields             |                                  | Array of Metafields | Default Metafields for each Object in this type. Add Metafields to your Object. See [Metafields Model](/api-reference/metafields). |
-| options.slug_field     |                                  |       Boolean       | Set to false to hide the slug field                                                                                                |
-| options.content_editor |                                  |       Boolean       | Set to false to hide the content editor                                                                                            |
-| localization           |                                  |        Enum         | true, Adds localization to the Object Type                                                                                         |
-| locales                | required if localization is true |   Array of String   | Array of active locales in the Object Type. Check the [available locale codes](/api-reference/localization).                       |
-| priority_locale        |                                  |       String        | Default locale code for Objects in Object Type. Check the [available locale codes](/api-reference/localization)                    |
-| emoji                  |                                  |       String        | Valid Unicode emoji                                                                                                                |
-| singleton              |                                  |       Boolean       | Single or Multiple Objects                                                                                                         |
-| pretty                 |                                  |        Enum         | true, Makes the response more reader-friendly                                                                                      |
-
 **Methods**
 
 <Tabs>
@@ -367,24 +366,6 @@ Edits an existing Object Type in your Bucket.
 ```bash
 PATCH /v2/buckets/${YOUR_BUCKET_SLUG}/object-types/:slug
 ```
-
-**Parameters**
-
-| Parameter              |             Required             |        Type         | Description                                                                                                                        |
-| :--------------------- | :------------------------------: | :-----------------: | :--------------------------------------------------------------------------------------------------------------------------------- |
-| title                  |             required             |       String        | Plural title of your Object Type                                                                                                   |
-| singular               |                                  |       String        | Singular title of your Object Type                                                                                                 |
-| metafields             |                                  | Array of Metafields | Default Metafields for each Object in this type. Add Metafields to your Object. See [Metafields Model](/api-reference/metafields). |
-| options.slug_field     |                                  |       Boolean       | Set to false to hide the slug field                                                                                                |
-| options.content_editor |                                  |       Boolean       | Set to false to hide the content editor                                                                                            |
-| localization           |                                  |        Enum         | true, Adds localization to the Object Type                                                                                         |
-| locales                | required if localization is true |   Array of String   | Array of active locales in the Object Type. Check the [available locale codes](/api-reference/localization).                       |
-| priority_locale        |                                  |       String        | Default locale code for Objects in Object Type. Check the [available locale codes](/api-reference/localization)                    |
-| emoji                  |                                  |       String        | Valid Unicode emoji                                                                                                                |
-| singleton              |                                  |       Boolean       | Single or Multiple Objects                                                                                                         |
-| pretty                 |                                  |        Enum         | true, Makes the response more reader-friendly                                                                                      |
-
-_**Note:** At least one of the Parameters is required to process the request._
 
 **Methods**
 
