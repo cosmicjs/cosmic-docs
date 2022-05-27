@@ -3,14 +3,15 @@ import Tabs from '../../components/tabs'
 
 # Objects
 
-The following endpoints allow you to create, read, update and delete Objects in your Bucket. See [API Introduction](/api-reference/introduction) for getting started information.
+The following endpoints enable you to create, read, update, and delete Objects in your Bucket. See [API Introduction](/api-reference/introduction) for getting started information.
 
 <Callout emoji="💡">
   **Quick Tip**
   <br />
-  Your `read` and `write` keys will be required to perform the following
-  requests. These can be found in <i>Your Bucket > Settings > API Access</i> in
-  your [Bucket Dashboard ](https://app.cosmicjs.com/login).
+  Your Bucket `slug`,`read_key`, and `write_key` will be required to perform the
+  following requests. These can be found in{' '}
+  <i>Your Bucket > Settings > API Access</i> in your [Bucket Dashboard
+  ](https://app.cosmicjs.com/login).
 </Callout>
 
 **Endpoints**
@@ -201,7 +202,7 @@ cosmic get-objects --limit 1 --query '{"type":"posts"}'
   infinite recursion.
 </Callout>
 
-**Example Request with Props**
+**Methods**
 
 <Tabs>
 <div label="Node.js">
@@ -238,7 +239,7 @@ curl https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/objects \
 	-d read_key=${YOUR_BUCKET_READ_KEY} \
 	--data-urlencode query='{"type":"posts"}' \
 	-d props="title,content,metadata.parent.title,metadata.parent.metadata.category.metadata.description" \
-	-d limit=1
+	-d limit=1 \
 	-G
 ```
 </div>
@@ -343,7 +344,7 @@ const bucket = Cosmic.bucket({
   slug: 'YOUR_BUCKET_SLUG',
   read_key: 'YOUR_BUCKET_READ_KEY'
 })
-bucket.getObject({
+const data = await bucket.getObject({
   id: '5e4d7eb92850c717ea93dba1'
 })
 ```
@@ -472,7 +473,7 @@ cosmic get-object --id 5ff75368c2dfa81a91695cec
   infinite recursion.
 </Callout>
 
-**Example Request with Props**
+**Methods**
 
 <Tabs>
 <div label="Node.js">
@@ -493,7 +494,7 @@ const props = `
   metadata.parent.title,
   metadata.parent.metadata.category.title
 `
-bucket.getObject({
+const data = await bucket.getObject({
   id: '5e4d7eb92850c717ea93dba1',
   props
 })
@@ -694,7 +695,7 @@ cosmic get-objects --query {"slug":"object-slug"} --props "title,content,metadat
 
 ## Add Object
 
-Creates a new Object to your Bucket.
+Creates a new Object in your Bucket.
 
 **Definition**
 
@@ -708,6 +709,8 @@ POST /v2/buckets/${YOUR_BUCKET_SLUG}/objects
   `write_key` must be passed as `Authorization Bearer` in the header of the
   request.
 </Callout>
+
+**Parameters**
 
 | Parameter              | Required |        Type         | Description                                                                         |
 | :--------------------- | :------: | :-----------------: | :---------------------------------------------------------------------------------- |
@@ -764,7 +767,7 @@ const params = {
     slug_field: false
   }
 }
-bucket
+const data = await bucket
   .addObject(params)
   .then(data => {
     console.log(data)
@@ -848,7 +851,7 @@ cosmic add-object --type planets --title Venus --metafields '[{"title": "Radius"
 
 ## Edit Object
 
-Edits an existing Object in your Bucket.
+Edits an Object in your Bucket.
 
 **Definition**
 
@@ -862,6 +865,8 @@ PATCH /v2/buckets/${YOUR_BUCKET_SLUG}/objects/:id
   `write_key` must be passed as `Authorization Bearer` in the header of the
   request.
 </Callout>
+
+**Parameters**
 
 | Parameter              |        Type         | Description                                                                         |
 | :--------------------- | :-----------------: | :---------------------------------------------------------------------------------- |
@@ -896,7 +901,7 @@ const bucket = Cosmic.bucket({
   slug: 'YOUR_BUCKET_SLUG',
   write_key: 'YOUR_BUCKET_WRITE_KEY'
 })
-bucket
+const data = await bucket
   .editObject({
     id: '5ff75368c2dfa81a91695cec',
     title: 'New Title Edit'
@@ -984,7 +989,7 @@ cosmic edit-object --id 5ff75368c2dfa81a91695cec --title 'New Title Edit'
 
 ## Delete Object
 
-Deletes an Object from your Bucket. This cannot be undone.
+Deletes an Object in your Bucket. This cannot be undone.
 
 **Definition**
 
@@ -999,7 +1004,9 @@ DELETE /v2/buckets/${YOUR_BUCKET_SLUG}/objects/:id
   request.
 </Callout>
 
-| Query Parameter |  Type   | Description                                                                         |
+**Parameters**
+
+| Parameter       |  Type   | Description                                                                         |
 | :-------------- | :-----: | :---------------------------------------------------------------------------------- |
 | trigger_webhook | Boolean | Triggers corresponding Object action Webhook ([See Webhooks](/dashboard/webhooks)). |
 
@@ -1028,7 +1035,7 @@ const bucket = Cosmic.bucket({
   slug: 'YOUR_BUCKET_SLUG',
   write_key: 'YOUR_BUCKET_WRITE_KEY'
 })
-bucket
+const data = await bucket
   .deleteObject({
     id: '5ff75368c2dfa81a91695cec'
   })
@@ -1120,7 +1127,7 @@ const query = {
   slug: 'new-post-in-merge-request',
   locale: 'en'
 }
-bucket.getMergeRequestObjects({
+const data = await bucket.getMergeRequestObjects({
   id: 'merge-request-id',
   query,
   props: 'slug,title'
@@ -1133,7 +1140,7 @@ bucket.getMergeRequestObjects({
 curl https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/merge-requests/:id/objects \
 	-d read_key=${YOUR_BUCKET_READ_KEY} \
 	--data-urlencode query='{"slug": "new-post-in-merge-request","locale":"en"}' \
-	-d props="slug,title"
+	-d props="slug,title" \
 	-d limit=1 \
 	-G
 ```
@@ -1190,7 +1197,7 @@ cosmic get-merge-request-objects --id merge-request-id --query '{"slug":"new-pos
 
 ## Object Metafields
 
-The following endpoints allow you to get, add, edit and delete Metafields in your Object.
+The following endpoints allow you to create, read, update, and delete Metafields in your Object. (Currently REST API only.)
 
 <Callout emoji="💡">
   **Quick Tip**
@@ -1219,7 +1226,8 @@ GET /v2/buckets/${YOUR_BUCKET_SLUG}/objects/:id/metafields
 
 ```bash
 curl https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/objects/:id/metafields \
-	-d read_key=${YOUR_BUCKET_READ_KEY}
+	-d read_key=${YOUR_BUCKET_READ_KEY} \
+	-G
 ```
 
 **Example Response**
@@ -1256,7 +1264,7 @@ curl https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/objects/:id/metafie
 
 ### Get Object Metafield
 
-Returns a single Metafield from your Object.
+Returns a single Metafield from an Object.
 
 **Definition**
 
@@ -1264,14 +1272,19 @@ Returns a single Metafield from your Object.
 GET /v2/buckets/${YOUR_BUCKET_SLUG}/objects/:id/metafields/:key
 ```
 
+**Parameters**
+
 | Parameter | Required |  Type  | Description                                   |
 | :-------- | :------: | :----: | :-------------------------------------------- |
 | read_key  | required | String | Restrict read access to your Bucket           |
 | pretty    |          |  Enum  | true, Makes the response more reader-friendly |
 
+**cURL**
+
 ```bash
-curl https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/objects/:id/metafields/:key
-	-d read_key=${YOUR_BUCKET_READ_KEY}
+curl https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/objects/:id/metafields/:key \
+	-d read_key=${YOUR_BUCKET_READ_KEY} \
+	-G
 ```
 
 **Example Response**
@@ -1298,7 +1311,7 @@ curl https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/objects/:id/metafie
 
 ### Add Object Metafield
 
-Creates a new Metafield on an Object. See [Metafields Model](/api-reference/metafields) for available parameters.
+Creates a new Metafield on an Object.
 
 **Definition**
 
@@ -1306,14 +1319,16 @@ Creates a new Metafield on an Object. See [Metafields Model](/api-reference/meta
 POST /v2/buckets/${YOUR_BUCKET_SLUG}/objects/:id/metafields
 ```
 
+**Parameters**
+
+See [Metafields Model](/api-reference/metafields) for available parameters.
+
 <Callout emoji="⚠">
   **Required**
   <br />
   `write_key` must be passed as `Authorization Bearer` in the header of the
   request.
 </Callout>
-
-Take a look at [Metafield Model](/api-reference/metafields) for reference to be passed in the body.
 
 **cURL**
 
@@ -1430,6 +1445,6 @@ curl https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/objects/:id/metafie
 
 ```json
 {
-  "message": "metafield with key: '${metafield_key}' deleted successfully from object with id:':id"
+  "message": "metafield with key: ':key' deleted successfully from object with id:':id"
 }
 ```
