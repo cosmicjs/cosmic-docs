@@ -3,7 +3,7 @@ import Tabs from '../../components/tabs'
 
 # Objects
 
-The following endpoints allow you to get, add, edit and delete Objects in your Bucket. See [API Introduction](/api-reference/introduction) for getting started information.
+The following endpoints allow you to create, read, update and delete Objects in your Bucket. See [API Introduction](/api-reference/introduction) for getting started information.
 
 <Callout emoji="💡">
   **Quick Tip**
@@ -222,7 +222,7 @@ const props = `
   metadata.parent.title,
   metadata.parent.metadata.category.metadata.description
 `
-bucket.getObjects({
+const data = await bucket.getObjects({
   query: {
     type: 'posts'
   },
@@ -608,7 +608,7 @@ const props = `
   metadata.parent.title,
   metadata.parent.metadata.category.title
 `
-bucket.getObjects({
+const data = await bucket.getObjects({
   query: {
     slug: 'object-slug'
   },
@@ -699,7 +699,7 @@ Creates a new Object to your Bucket.
 **Definition**
 
 ```bash
-POST https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/objects
+POST /v2/buckets/${YOUR_BUCKET_SLUG}/objects
 ```
 
 <Callout emoji="⚠">
@@ -853,7 +853,7 @@ Edits an existing Object in your Bucket.
 **Definition**
 
 ```bash
-PATCH https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/objects/:id
+PATCH /v2/buckets/${YOUR_BUCKET_SLUG}/objects/:id
 ```
 
 <Callout emoji="⚠">
@@ -989,7 +989,7 @@ Deletes an Object from your Bucket. This cannot be undone.
 **Definition**
 
 ```bash
-DELETE https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/objects/:id
+DELETE /v2/buckets/${YOUR_BUCKET_SLUG}/objects/:id
 ```
 
 <Callout emoji="⚠">
@@ -1098,7 +1098,7 @@ Returns Objects included in a Merge Request. See [Objects](#get-objects) for ava
 **Definition**
 
 ```bash
-GET https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/merge-requests/:id/objects
+GET /v2/buckets/${YOUR_BUCKET_SLUG}/merge-requests/:id/objects
 ```
 
 **Methods**
@@ -1415,7 +1415,7 @@ Deletes a Metafield from an Object.
 **Definition**
 
 ```bash
-DELETE https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/objects/:id/metafields/:key
+DELETE /v2/buckets/${YOUR_BUCKET_SLUG}/objects/:id/metafields/:key
 ```
 
 **cURL**

@@ -49,7 +49,7 @@ const query = {
     $gte: 100
   }
 }
-bucket.getObjects({
+const data = await bucket.getObjects({
   query,
   limit: 10
 })
