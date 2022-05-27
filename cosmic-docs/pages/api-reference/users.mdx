@@ -45,21 +45,24 @@ GET https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/users
 bucket.getUsers()
 ```
 **Example Request**
+
 ```javascript
 const Cosmic = require('cosmicjs')({
   token: 'your-token-from-auth-request' // required
 })
 const bucket = Cosmic.bucket({
-  slug: 'bucket-slug'
+  slug: 'YOUR_BUCKET_SLUG'
 })
-bucket.getUsers()
-.then(data => {
-  console.log(data)
-})
-.catch(err => {
-  console.log(err)
-})
+bucket
+  .getUsers()
+  .then(data => {
+    console.log(data)
+  })
+  .catch(err => {
+    console.log(err)
+  })
 ```
+
 </div>
 
 <div label="GraphQL">
@@ -144,24 +147,27 @@ GET https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/users/${user_id}
 bucket.getUser()
 ```
 **Example Request**
+
 ```javascript
 const Cosmic = require('cosmicjs')({
   token: 'your-token-from-auth-request' // required
 })
 const bucket = Cosmic.bucket({
-  slug: 'bucket-slug'
+  slug: 'YOUR_BUCKET_SLUG'
 })
 const params = {
   id: '5357ef811693be2118000001'
 }
-bucket.getUser(params)
-.then(data => {
-  console.log(data)
-})
-.catch(err => {
-  console.log(err)
-})
+bucket
+  .getUser(params)
+  .then(data => {
+    console.log(data)
+  })
+  .catch(err => {
+    console.log(err)
+  })
 ```
+
 </div>
 
 <div label="GraphQL">
@@ -250,12 +256,13 @@ POST https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/users
 bucket.addUser()
 ```
 **Example Request**
+
 ```javascript
 const Cosmic = require('cosmicjs')({
   token: 'your-token-from-auth-request' // required
 })
 const bucket = Cosmic.bucket({
-  slug: 'bucket-slug'
+  slug: 'YOUR_BUCKET_SLUG'
 })
 const params = {
   email: 'newuser@example.com',
@@ -263,14 +270,16 @@ const params = {
   first_name: 'Quasar',
   last_name: 'Jones'
 }
-bucket.addUser(params)
-.then(data => {
-  console.log(data)
-})
-.catch(err => {
-  console.log(err)
-})
+bucket
+  .addUser(params)
+  .then(data => {
+    console.log(data)
+  })
+  .catch(err => {
+    console.log(err)
+  })
 ```
+
 </div>
 
 <div label="GraphQL">

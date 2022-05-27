@@ -33,7 +33,7 @@ Get Object Revisions of Object with `id` in your Bucket.
 <Tabs>
 <div label="cURL">
 ```bash
-curl https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/objects/${object_id}/revisions
+curl https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/objects/:id/revisions
 	-d read_key=${YOUR_BUCKET_READ_KEY}
 ```
 
@@ -50,8 +50,8 @@ bucket.getObjectRevisions()
 const Cosmic = require('cosmicjs')
 const api = Cosmic()
 const bucket = api.bucket({
-  slug: 'your-bucket-slug',
-  read_key: 'your-read-key-found-in-bucket-settings'
+  slug: 'YOUR_BUCKET_SLUG',
+  read_key: 'YOUR_BUCKET_READ_KEY'
 })
 
 bucket.getObjectRevisions({
@@ -136,7 +136,7 @@ Returns a single Revision by `id` from your Object.
 **Definition**
 
 ```bash
-curl https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/objects/${object_id}/revisions/${revision_id}
+curl https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/objects/:id/revisions/${revision_id}
 	-d read_key=${YOUR_BUCKET_READ_KEY}
 ```
 
@@ -172,28 +172,28 @@ Add a new Revision to your Object.
   request.
 </Callout>
 
-| Parameter              | Required |       Type       | Description                                                                         |
-| :--------------------- | :------: | :--------------: | :---------------------------------------------------------------------------------- |
-| title                  | required |      String      | Your Object title                                                                   |
-| slug                   |          |      String      | Unique identifier for your Object                                                   |
-| content                |          |      String      | Add Content to your Object                                                          |
-| status                 |          |       Enum       | draft, published, defaults to published                                             |
-| metafields             |          | Array of Objects | Add Metafields to your Object. See [Metafields Model](/api-reference/metafields).   |
-| created_by             |          |      String      | Author User Id                                                                      |
-| publish_at             |          |      Number      | UNIX millisecond timestamp. Publish automatically at a later time.                  |
-| options.slug_field     |          |     Boolean      | Set to false to hide the slug field                                                 |
-| options.content_editor |          |     Boolean      | Set to false to hide the content editor                                             |
-| locale                 |          |      String      | Add localization to the Object                                                      |
-| thumbnail              |          |      String      | Media `name`. Media must be available in Bucket. See [Media](/api-reference/media). |
-| trigger_webhook        |          |     Boolean      | Triggers corresponding Object action Webhook ([See Webhooks](/dashboard/webhooks)). |
-| pretty                 |          |       Enum       | true, Makes the response more reader-friendly                                       |
+| Parameter              | Required |        Type         | Description                                                                         |
+| :--------------------- | :------: | :-----------------: | :---------------------------------------------------------------------------------- |
+| title                  | required |       String        | Your Object title                                                                   |
+| slug                   |          |       String        | Unique identifier for your Object                                                   |
+| content                |          |       String        | Add Content to your Object                                                          |
+| status                 |          |        Enum         | draft, published, defaults to published                                             |
+| metafields             |          | Array of Metafields | Add Metafields to your Object. See [Metafields Model](/api-reference/metafields).   |
+| created_by             |          |       String        | Author User Id                                                                      |
+| publish_at             |          |       Number        | UNIX millisecond timestamp. Publish automatically at a later time.                  |
+| options.slug_field     |          |       Boolean       | Set to false to hide the slug field                                                 |
+| options.content_editor |          |       Boolean       | Set to false to hide the content editor                                             |
+| locale                 |          |       String        | Add localization to the Object                                                      |
+| thumbnail              |          |       String        | Media `name`. Media must be available in Bucket. See [Media](/api-reference/media). |
+| trigger_webhook        |          |       Boolean       | Triggers corresponding Object action Webhook ([See Webhooks](/dashboard/webhooks)). |
+| pretty                 |          |        Enum         | true, Makes the response more reader-friendly                                       |
 
 **Methods**
 
 <Tabs>
 <div label="cURL">
 ```bash
-curl https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/objects/${object_id}/revisions \
+curl https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/objects/:id/revisions \
 	-d '{"title":"New Title of the Post","slug":"new-title-of-the-post"}' \
 	-H 'Content-Type: application/json' \
 	-H "Authorization: Bearer <YOUR_BUCKET_WRITE_KEY>"
@@ -232,8 +232,8 @@ bucket.addObjectRevision()
 const Cosmic = require('cosmicjs')
 const api = Cosmic()
 const bucket = api.bucket({
-  slug: 'bucket-slug',
-  write_key: 'your-write-key-found-in-bucket-settings'
+  slug: 'YOUR_BUCKET_SLUG',
+  read_key: 'YOUR_BUCKET_READ_KEY'
 })
 const params = {
   id: '5ff75368c2dfa81a91695cec',

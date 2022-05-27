@@ -50,7 +50,7 @@ const Cosmic = require('cosmicjs');
 const api = Cosmic();
 const bucket = api.bucket({
   slug: "your-bucket-slug",
-  read_key: "your-read-key-found-in-bucket-settings",
+  read_key: "YOUR_BUCKET_READ_KEY",
 });
 
 bucket.getMedia({
@@ -165,8 +165,8 @@ Cosmic.getSingleMedia()
 const Cosmic = require('cosmicjs')
 const api = Cosmic()
 const bucket = api.bucket({
-  slug: 'your-bucket-slug',
-  read_key: 'your-read-key-found-in-bucket-settings'
+  slug: 'YOUR_BUCKET_SLUG',
+  read_key: 'YOUR_BUCKET_READ_KEY'
 })
 
 bucket
@@ -257,9 +257,9 @@ The Media Object must be an object with certain properties indicated below. If u
 <Tabs>
 <div label="cURL">
 ```bash
-curl https://upload.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLU}/media
-	--form "folder=folder-name"
-	--form "media=@test.png"
+curl https://upload.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLU}/media \
+	--form "folder=folder-name" \
+	--form "media=@test.png" \
 	-H "Authorization: Bearer <YOUR_BUCKET_WRITE_KEY>"
 ```
 </div>
@@ -275,8 +275,8 @@ Cosmic.addMedia()
 const Cosmic = require('cosmicjs')
 const api = Cosmic()
 const bucket = api.bucket({
-  slug: 'bucket-slug',
-  write_key: 'your-write-key-found-in-bucket-settings'
+  slug: 'YOUR_BUCKET_SLUG',
+  read_key: 'YOUR_BUCKET_READ_KEY'
 })
 const media_object = req.files[0] // Using Multer
 // OR:
@@ -385,8 +385,8 @@ const multer = require('multer')
 const express = require('express')
 var app = express()
 const bucket = api.bucket({
-  slug: 'your-bucket-slug',
-  write_key: 'your-write-key-found-in-bucket-settings'
+  slug: 'YOUR_BUCKET_SLUG',
+  read_key: 'YOUR_BUCKET_READ_KEY'
 })
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -514,8 +514,8 @@ Cosmic.deleteMedia()
 const Cosmic = require('cosmicjs')
 const api = Cosmic()
 const bucket = api.bucket({
-  slug: 'your-bucket-slug',
-  read_key: 'your-read-key-found-in-bucket-settings'
+  slug: 'YOUR_BUCKET_SLUG',
+  read_key: 'YOUR_BUCKET_READ_KEY'
 })
 bucket
   .deleteMedia({

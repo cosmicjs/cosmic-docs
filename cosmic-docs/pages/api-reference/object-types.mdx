@@ -38,19 +38,24 @@ curl https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/object-types
 bucket.getObjectTypes()
 ```
 **Example Request**
+
 ```javascript
-const Cosmic = require('cosmicjs');
-const api = Cosmic();
+const Cosmic = require('cosmicjs')
+const api = Cosmic()
 const bucket = api.bucket({
-  slug: "bucket-slug",
-  read_key: "your-read-key-found-in-bucket-settings",
-});
-bucket.getObjectTypes().then(data => {
-  console.log(data)
-}).catch(err => {
-  console.log(err)
+  slug: 'YOUR_BUCKET_SLUG',
+  read_key: 'YOUR_BUCKET_READ_KEY'
 })
+bucket
+  .getObjectTypes()
+  .then(data => {
+    console.log(data)
+  })
+  .catch(err => {
+    console.log(err)
+  })
 ```
+
 </div>
 
 <div label="GraphQL">
@@ -179,27 +184,27 @@ Add a new Object Type to your Bucket.
   request.
 </Callout>
 
-| Parameter              |             Required             |       Type       | Description                                                                                                                        |
-| :--------------------- | :------------------------------: | :--------------: | :--------------------------------------------------------------------------------------------------------------------------------- |
-| title                  |             required             |      String      | Plural title of your Object Type                                                                                                   |
-| slug                   |                                  |      String      | Plural slug of your Object Type                                                                                                    |
-| singular               |                                  |      String      | Singular title of your Object Type                                                                                                 |
-| metafields             |                                  | Array of Objects | Default Metafields for each Object in this type. Add Metafields to your Object. See [Metafields Model](/api-reference/metafields). |
-| options.slug_field     |                                  |     Boolean      | Set to false to hide the slug field                                                                                                |
-| options.content_editor |                                  |     Boolean      | Set to false to hide the content editor                                                                                            |
-| localization           |                                  |       Enum       | true, Adds localization to the Object Type                                                                                         |
-| locales                | required if localization is true | Array of String  | Array of active locales in the Object Type. Check the [available locale codes](/api-reference/localization).                       |
-| priority_locale        |                                  |      String      | Default locale code for Objects in Object Type. Check the [available locale codes](/api-reference/localization)                    |
-| emoji                  |                                  |      String      | Valid Unicode emoji                                                                                                                |
-| singleton              |                                  |     Boolean      | Single or Multiple Objects                                                                                                         |
-| pretty                 |                                  |       Enum       | true, Makes the response more reader-friendly                                                                                      |
+| Parameter              |             Required             |        Type         | Description                                                                                                                        |
+| :--------------------- | :------------------------------: | :-----------------: | :--------------------------------------------------------------------------------------------------------------------------------- |
+| title                  |             required             |       String        | Plural title of your Object Type                                                                                                   |
+| slug                   |                                  |       String        | Plural slug of your Object Type                                                                                                    |
+| singular               |                                  |       String        | Singular title of your Object Type                                                                                                 |
+| metafields             |                                  | Array of Metafields | Default Metafields for each Object in this type. Add Metafields to your Object. See [Metafields Model](/api-reference/metafields). |
+| options.slug_field     |                                  |       Boolean       | Set to false to hide the slug field                                                                                                |
+| options.content_editor |                                  |       Boolean       | Set to false to hide the content editor                                                                                            |
+| localization           |                                  |        Enum         | true, Adds localization to the Object Type                                                                                         |
+| locales                | required if localization is true |   Array of String   | Array of active locales in the Object Type. Check the [available locale codes](/api-reference/localization).                       |
+| priority_locale        |                                  |       String        | Default locale code for Objects in Object Type. Check the [available locale codes](/api-reference/localization)                    |
+| emoji                  |                                  |       String        | Valid Unicode emoji                                                                                                                |
+| singleton              |                                  |       Boolean       | Single or Multiple Objects                                                                                                         |
+| pretty                 |                                  |        Enum         | true, Makes the response more reader-friendly                                                                                      |
 
 **Methods**
 
 <Tabs>
 <div label="cURL">
 ```bash
-curl https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/object-types
+curl https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/object-types \
 	-d '{"title":"Products","singular":"Product"}' \
 	-H 'Content-Type: application/json' \
 	-H "Authorization: Bearer <YOUR_BUCKET_WRITE_KEY>"
@@ -211,13 +216,14 @@ curl https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/object-types
 bucket.addObjectType()
 ```
 **Example Request**
+
 ```javascript
-const Cosmic = require('cosmicjs');
-const api = Cosmic();
+const Cosmic = require('cosmicjs')
+const api = Cosmic()
 const bucket = api.bucket({
-  slug: "bucket-slug",
-  read_key: "your-read-key-found-in-bucket-settings",
-});
+  slug: 'YOUR_BUCKET_SLUG',
+  read_key: 'YOUR_BUCKET_READ_KEY'
+})
 const params = {
   title: 'Pages',
   singular: 'Page',
@@ -239,7 +245,8 @@ const params = {
     }
   ]
 }
-bucket.addObjectType(params)
+bucket
+  .addObjectType(params)
   .then(data => {
     console.log(data)
   })
@@ -247,6 +254,7 @@ bucket.addObjectType(params)
     console.log(err)
   })
 ```
+
 </div>
 
 <div label="GraphQL">
@@ -320,19 +328,19 @@ Edit an existing Object Type by `type_slug` in your Bucket.
   request.
 </Callout>
 
-| Parameter              |             Required             |       Type       | Description                                                                                                                        |
-| :--------------------- | :------------------------------: | :--------------: | :--------------------------------------------------------------------------------------------------------------------------------- |
-| title                  |             required             |      String      | Plural title of your Object Type                                                                                                   |
-| singular               |                                  |      String      | Singular title of your Object Type                                                                                                 |
-| metafields             |                                  | Array of Objects | Default Metafields for each Object in this type. Add Metafields to your Object. See [Metafields Model](/api-reference/metafields). |
-| options.slug_field     |                                  |     Boolean      | Set to false to hide the slug field                                                                                                |
-| options.content_editor |                                  |     Boolean      | Set to false to hide the content editor                                                                                            |
-| localization           |                                  |       Enum       | true, Adds localization to the Object Type                                                                                         |
-| locales                | required if localization is true | Array of String  | Array of active locales in the Object Type. Check the [available locale codes](/api-reference/localization).                       |
-| priority_locale        |                                  |      String      | Default locale code for Objects in Object Type. Check the [available locale codes](/api-reference/localization)                    |
-| emoji                  |                                  |      String      | Valid Unicode emoji                                                                                                                |
-| singleton              |                                  |     Boolean      | Single or Multiple Objects                                                                                                         |
-| pretty                 |                                  |       Enum       | true, Makes the response more reader-friendly                                                                                      |
+| Parameter              |             Required             |        Type         | Description                                                                                                                        |
+| :--------------------- | :------------------------------: | :-----------------: | :--------------------------------------------------------------------------------------------------------------------------------- |
+| title                  |             required             |       String        | Plural title of your Object Type                                                                                                   |
+| singular               |                                  |       String        | Singular title of your Object Type                                                                                                 |
+| metafields             |                                  | Array of Metafields | Default Metafields for each Object in this type. Add Metafields to your Object. See [Metafields Model](/api-reference/metafields). |
+| options.slug_field     |                                  |       Boolean       | Set to false to hide the slug field                                                                                                |
+| options.content_editor |                                  |       Boolean       | Set to false to hide the content editor                                                                                            |
+| localization           |                                  |        Enum         | true, Adds localization to the Object Type                                                                                         |
+| locales                | required if localization is true |   Array of String   | Array of active locales in the Object Type. Check the [available locale codes](/api-reference/localization).                       |
+| priority_locale        |                                  |       String        | Default locale code for Objects in Object Type. Check the [available locale codes](/api-reference/localization)                    |
+| emoji                  |                                  |       String        | Valid Unicode emoji                                                                                                                |
+| singleton              |                                  |       Boolean       | Single or Multiple Objects                                                                                                         |
+| pretty                 |                                  |        Enum         | true, Makes the response more reader-friendly                                                                                      |
 
 _**Note:** At least one of the Parameters is required to process the request._
 
@@ -355,14 +363,16 @@ curl https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/object-types/${type
 bucket.editObjectType()
 ```
 **Example Request**
+
 ```javascript
-const Cosmic = require('cosmicjs');
-const api = Cosmic();
+const Cosmic = require('cosmicjs')
+const api = Cosmic()
 const bucket = api.bucket({
-  slug: 'bucket-slug',
-  write_key: 'your-write-key-found-in-bucket-settings'
+  slug: 'YOUR_BUCKET_SLUG',
+  read_key: 'YOUR_BUCKET_READ_KEY'
 })
-bucket.editObjectType({
+bucket
+  .editObjectType({
     slug: 'posts',
     title: 'New Posts Title'
   })
@@ -373,6 +383,7 @@ bucket.editObjectType({
     console.log(err)
   })
 ```
+
 </div>
 
 <div label="GraphQL">
@@ -454,8 +465,8 @@ _**Note:** This does not delete Objects in this Object Type._
 <div label="cURL">
 ```bash
 curl https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/object-types/${type_slug} \
-	-X DELETE \
-	-H "Authorization: Bearer <YOUR_BUCKET_WRITE_KEY>"
+	-H "Authorization: Bearer <YOUR_BUCKET_WRITE_KEY>" \
+	-X DELETE
 ```
 </div>
 
@@ -464,14 +475,16 @@ curl https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/object-types/${type
 bucket.deleteObjectType()
 ```
 **Example Request**
+
 ```javascript
-const Cosmic = require('cosmicjs');
-const api = Cosmic();
+const Cosmic = require('cosmicjs')
+const api = Cosmic()
 const bucket = api.bucket({
-  slug: 'bucket-slug',
-  write_key: 'your-write-key-found-in-bucket-settings'
+  slug: 'YOUR_BUCKET_SLUG',
+  read_key: 'YOUR_BUCKET_READ_KEY'
 })
-bucket.deleteObjectType({
+bucket
+  .deleteObjectType({
     slug: 'posts'
   })
   .then(data => {
@@ -481,6 +494,7 @@ bucket.deleteObjectType({
     console.log(err)
   })
 ```
+
 </div>
 
 <div label="GraphQL">
