@@ -706,8 +706,9 @@ POST /v2/buckets/${YOUR_BUCKET_SLUG}/objects
 <Callout emoji="⚠">
   **Required**
   <br />
-  `write_key` must be passed as `Authorization Bearer` in the header of the
-  request.
+  Your Bucket `write_key` must be passed as `Authorization Bearer` in the header
+  of the request. This can be found in
+  <i>Your Bucket > Settings > API Access</i> in your [Admin Dashboard](https://app.cosmicjs.com/login).
 </Callout>
 
 **Parameters**
@@ -862,8 +863,9 @@ PATCH /v2/buckets/${YOUR_BUCKET_SLUG}/objects/:id
 <Callout emoji="⚠">
   **Required**
   <br />
-  `write_key` must be passed as `Authorization Bearer` in the header of the
-  request.
+  Your Bucket `write_key` must be passed as `Authorization Bearer` in the header
+  of the request. This can be found in
+  <i>Your Bucket > Settings > API Access</i> in your [Admin Dashboard](https://app.cosmicjs.com/login).
 </Callout>
 
 **Parameters**
@@ -1000,8 +1002,9 @@ DELETE /v2/buckets/${YOUR_BUCKET_SLUG}/objects/:id
 <Callout emoji="⚠">
   **Required**
   <br />
-  `write_key` must be passed as `Authorization Bearer` in the header of the
-  request.
+  Your Bucket `write_key` must be passed as `Authorization Bearer` in the header
+  of the request. This can be found in
+  <i>Your Bucket > Settings > API Access</i> in your [Admin Dashboard](https://app.cosmicjs.com/login).
 </Callout>
 
 **Parameters**
@@ -1326,8 +1329,9 @@ See [Metafields Model](/api-reference/metafields) for available parameters.
 <Callout emoji="⚠">
   **Required**
   <br />
-  `write_key` must be passed as `Authorization Bearer` in the header of the
-  request.
+  Your Bucket `write_key` must be passed as `Authorization Bearer` in the header
+  of the request. This can be found in
+  <i>Your Bucket > Settings > API Access</i> in your [Admin Dashboard](https://app.cosmicjs.com/login).
 </Callout>
 
 **cURL**
@@ -1360,8 +1364,9 @@ PATCH /v2/buckets/${YOUR_BUCKET_SLUG}/objects/:id/metafields/${metafield_key}
 <Callout emoji="⚠">
   **Required**
   <br />
-  `write_key` must be passed as `Authorization Bearer` in the header of the
-  request.
+  Your Bucket `write_key` must be passed as `Authorization Bearer` in the header
+  of the request. This can be found in
+  <i>Your Bucket > Settings > API Access</i> in your [Admin Dashboard](https://app.cosmicjs.com/login).
 </Callout>
 
 Take a look at [Metafield Model](/api-reference/metafields) for reference to be passed in the body.
@@ -1381,14 +1386,14 @@ bucket.editObjectMetafield()
 const Cosmic = require('cosmicjs')() // empty init
 const bucket = Cosmic.bucket({
   slug: 'YOUR_BUCKET_SLUG',
-  read_key: 'YOUR_BUCKET_READ_KEY'
+  write_key: 'YOUR_BUCKET_WRITE_KEY'
 })
 const params = {
   id: 'object-id',
   key: 'phone_number',
   value: 9876543210
 }
-bucket.editObjectMetafield(params)
+const data = await bucket.editObjectMetafield(params)
 ```
 
 </div>
@@ -1423,8 +1428,9 @@ Deletes a Metafield from an Object.
 <Callout emoji="⚠">
   **Required**
   <br />
-  `write_key` must be passed as `Authorization Bearer` in the header of the
-  request.
+  Your Bucket `write_key` must be passed as `Authorization Bearer` in the header
+  of the request. This can be found in
+  <i>Your Bucket > Settings > API Access</i> in your [Admin Dashboard](https://app.cosmicjs.com/login).
 </Callout>
 
 **Definition**
