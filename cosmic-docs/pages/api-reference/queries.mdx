@@ -616,7 +616,7 @@ cosmic get-objects --query '{"type":"products","content":{$regex:"Find me",$opti
 
 ### Metadata Queries
 
-The following examples will use the `metadata` key to query for metadata properties in certain products.
+The following examples will use the `metadata` key to query for metadata properties a `products` Object Type.
 
 #### Get Products that match an exact value in a Text Metafield
 
@@ -820,7 +820,7 @@ cosmic get-objects --query '{"type":"products","metadata.price": { $lte: 1000 }}
 
 #### Get Products in a specific category
 
-The connected Object `id` is used to query by Single of Multiple Object Metafield.
+The Object `id` is used to get products that have this Single Object Metafield.
 
 <Tabs>
 
@@ -888,7 +888,7 @@ cosmic get-objects --query '{"type":"products","metadata.category":"category-obj
 
 #### Get Products that have certain categories
 
-The connected Object `id` is used to query by Single of Multiple Object Metafield. The `$in` query parameter is used.
+The Object `id` is used to get products that have this Multiple Object Metafield. The `$in` query parameter is used.
 
 <Tabs>
 
@@ -958,9 +958,9 @@ cosmic get-objects --query '{"type":"products","metadata.categories":{$in:["cate
 </div>
 </Tabs>
 
-#### Get Products that don't certain categories
+#### Get Products that don't have certain categories
 
-The connected Object `id` is used to query by Single of Multiple Object Metafield. The `$nin` query parameter is used.
+The Object `id` is used to get products that have this Multiple Object Metafield. The `$nin` query parameter is used.
 
 <Tabs>
 
