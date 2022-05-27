@@ -2,7 +2,7 @@
 
 Metafields are powerful components that can be added to Objects and Object Types. Metafields added to Object Types will be default for all new Objects in the type.
 
-## Model
+## Data Model
 
 | Parameter       |                         Required                         |       Type       | Description                                                                                                                                                                                      |
 | :-------------- | :------------------------------------------------------: | :--------------: | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -281,17 +281,39 @@ Reference the [Metafield model](/api-reference/metafields) to learn more.
 }
 ```
 
-## Connect Objects
+## Object Metafields
 
 You can connect Objects to create "one to many" and "many to many" relationships between Objects using Single and Multiple Object Metafields.
 
-**Definition**
+**Parameters**
 
-```bash
-POST https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/objects
-```
+| Parameter   | Required |  Type  | Description                                                                                                     |
+| :---------- | :------: | :----: | :-------------------------------------------------------------------------------------------------------------- |
+| type        | required |  Enum  | object, objects                                                                                                 |
+| title       | required | String | Your Metafield title                                                                                            |
+| key         | required | String | Unique identifier for your Metafield                                                                            |
+| object_type | required | String | Object Type slug                                                                                                |
+| value       |          | String | For single Object this is the `id` property. For multiple Objects it is comma-separated ids (order maintained). |
+
+### Single Objects
+
+For a Single Object Metafield, add the Object ID (`id`) to the value to connect the Object. The full Object will be returned on the Metadata response in the `object` property.
+
+### Multiple Objects
+
+For Multiple Object Type Metafields, you can add the Object IDs as comma-separated values. The full Objects will be returned on the Metadata response in the `objects` property.
+
+### Example
+
+Notice that the `Author` is a single `object` Metafield with a single id in the `value`. The `Categories` Metafield is a Multiple `objects` Metafield with comma-separated Object IDs.
 
 **Example Request**
+
+```bash
+POST /v2/buckets/${YOUR_BUCKET_SLUG}/objects
+```
+
+**Example Request Body**
 
 ```json
 {
@@ -323,18 +345,43 @@ POST https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/objects
 }
 ```
 
-### Single Objects
+## Media Metafields
 
-For a Single Object Metafield, add the Object ID (`id`) to the value to connect the Object. The full Object will be returned on the Metadata response in the `object` property.
+You can add media to your Object by using the Media Metafield. The full Media object including `url` and `imgix_url` will be provided in the `metadata` property when querying the Object.
 
-### Multiple Objects
+**Parameters**
 
-For Multiple Object type Metafields, you can add the Object IDs as comma-separated values. The full Objects will be returned on the Metadata response in the `objects` property.
+| Parameter | Required |  Type  | Description                                      |
+| :-------- | :------: | :----: | :----------------------------------------------- |
+| type      | required | String | file                                             |
+| title     | required | String | Your Metafield title                             |
+| key       | required | String | Unique identifier for your Metafield             |
+| value     |          | String | The `name` property of the media in your Bucket. |
 
-| Parameter   | Required |  Type  | Description                                                                                  |
-| :---------- | :------: | :----: | :------------------------------------------------------------------------------------------- |
-| type        | required |  Enum  | object, objects                                                                              |
-| title       | required | String | Your Metafield title                                                                         |
-| key         | required | String | Unique identifier for your Metafield                                                         |
-| object_type | required | String | Object Type slug                                                                             |
-| value       |          | String | For single Object this is the `id` property. For multiple Objects it is comma-separated ids. |
+### Example
+
+Notice that the `Hero` is the media name. The
+
+**Example Request**
+
+```bash
+POST /v2/buckets/${YOUR_BUCKET_SLUG}/objects
+```
+
+**Example Request Body**
+
+```json
+{
+  "title": "Blog Post Example with Media",
+  "type": "blog-posts",
+  "content": "This is some amazing blog content...",
+  "metafields": [
+    {
+      "title": "Hero",
+      "key": "hero",
+      "type": "file",
+      "value": "my-amazing-hero-image.jpg"
+    }
+  ]
+}
+```

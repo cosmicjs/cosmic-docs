@@ -30,7 +30,7 @@ DELETE /v2/buckets/${YOUR_BUCKET_SLUG}/object-types/:slug
 
 ## Data Model
 
-| Property               |                       Type                       | Notes                                                                                                                              |
+| Attribute              |                       Type                       | Notes                                                                                                                              |
 | :--------------------- | :----------------------------------------------: | :--------------------------------------------------------------------------------------------------------------------------------- |
 | slug                   |                      String                      | Plural slug of your Object Type                                                                                                    |
 | title                  |                      String                      | Plural title of your Object Type                                                                                                   |
@@ -500,7 +500,7 @@ bucket.deleteObjectType()
 const Cosmic = require('cosmicjs')() // empty init
 const bucket = Cosmic.bucket({
   slug: 'YOUR_BUCKET_SLUG',
-  read_key: 'YOUR_BUCKET_READ_KEY'
+  write_key: 'YOUR_BUCKET_WRITE_KEY'
 })
 bucket
   .deleteObjectType({

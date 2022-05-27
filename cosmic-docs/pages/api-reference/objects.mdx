@@ -25,10 +25,10 @@ DELETE /v2/buckets/${YOUR_BUCKET_SLUG}/objects/:id
 
 ## Data Model
 
-| Property               |        Type         |                                        Notes                                        |
+| Attribute              |        Type         |                                        Notes                                        |
 | :--------------------- | :-----------------: | :---------------------------------------------------------------------------------: |
 | id                     |       String        |                            Unique identifier for Object                             |
-| slug                   |       String        |          Can have multiple Objects with same slug if localization enabled.          |
+| slug                   |       String        |           Can have multiple Objects with same slug and different locales.           |
 | type                   |       String        |                                  Object Type slug                                   |
 | title                  |       String        |                                    Object title                                     |
 | content                |       String        |                                    HTML Content                                     |
@@ -38,7 +38,7 @@ DELETE /v2/buckets/${YOUR_BUCKET_SLUG}/objects/:id
 | created_by             |       String        |                                   Author User Id                                    |
 | created_at             |       String        |                                    Date created                                     |
 | published_at           |       String        |                                 Date last published                                 |
-| modified_at            |       String        |                                    Date modified                                    |
+| modified_at            |       String        |                                 Date last modified                                  |
 | modified_by            |       String        |                                   Author User Id                                    |
 | publish_at             |       Number        |         UNIX millisecond timestamp. Publish automatically at a later time.          |
 | options.slug_field     |       Boolean       |                         Set to false to hide the slug field                         |
@@ -1039,14 +1039,6 @@ DELETE /v2/buckets/${YOUR_BUCKET_SLUG}/objects/:id
 **Methods**
 
 <Tabs>
-<div label="cURL">
-```bash
-curl https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/objects/:id \
-	-H "Authorization: Bearer <YOUR_BUCKET_WRITE_KEY>" \
-	-X DELETE
-```
-
-</div>
 
 <div label="Node.js">
 ```javascript
@@ -1073,6 +1065,14 @@ const data = await bucket
   })
 ```
 
+</div>
+
+<div label="cURL">
+```bash
+curl https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/objects/:id \
+	-H "Authorization: Bearer <YOUR_BUCKET_WRITE_KEY>" \
+	-X DELETE
+```
 </div>
 
 <div label="GraphQL">
