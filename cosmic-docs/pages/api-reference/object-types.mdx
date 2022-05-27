@@ -3,19 +3,42 @@ import Tabs from '../../components/tabs'
 
 # Object Types
 
-The following endpoints allow you to get, add, edit and delete Object Types in your Bucket.
+The following endpoints enable you to create, read, update, and delete Object Types in your Bucket. See [API Introduction](/api-reference/introduction) for getting started information.
 
-<Callout emoji="✅">
-  **Quick Tip**
-  <br />
-  Your `read` and `write` keys will be required to perform the following
-  requests. These can be found in <i>Your Bucket > Settings > API Access</i> in
-  your [Bucket Dashboard ](https://app.cosmicjs.com/login).
+<Callout emoji="🛑">
+  This is for **Object modeling only**. Are you looking for ways to interact
+  with Objects? Go to the [Objects section](/api-reference/objects).
 </Callout>
+
+<Callout emoji="🔑">
+  **Get your keys**
+  <br />
+  Your Bucket `slug`,`read_key`, and `write_key` will be required to perform the
+  following requests. These can be found in{' '}
+  <i>Your Bucket > Settings > API Access</i> in your [Bucket Dashboard
+  ](https://app.cosmicjs.com/login).
+</Callout>
+
+**Endpoints**
+
+```bash
+GET /v2/buckets/${YOUR_BUCKET_SLUG}/object-types
+POST /v2/buckets/${YOUR_BUCKET_SLUG}/object-types
+PATCH /v2/buckets/${YOUR_BUCKET_SLUG}/object-types/:slug
+DELETE /v2/buckets/${YOUR_BUCKET_SLUG}/object-types/:slug
+```
 
 ## Get Object Types
 
-Get all Object Types in your Bucket.
+Returns all Object Types in your Bucket.
+
+**Definition**
+
+```bash
+GET /v2/buckets/${YOUR_BUCKET_SLUG}/object-types
+```
+
+**Parameters**
 
 | Parameter | Required |  Type  | Description                                   |
 | :-------- | :------: | :----: | :-------------------------------------------- |
@@ -25,14 +48,6 @@ Get all Object Types in your Bucket.
 **Methods**
 
 <Tabs>
-<div label="cURL">
-```bash
-curl https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/object-types
-	-d read_key=${YOUR_BUCKET_READ_KEY}
-```
-
-</div>
-
 <div label="Node.js">
 ```javascript
 bucket.getObjectTypes()
@@ -40,13 +55,12 @@ bucket.getObjectTypes()
 **Example Request**
 
 ```javascript
-const Cosmic = require('cosmicjs')
-const api = Cosmic()
-const bucket = api.bucket({
+const Cosmic = require('cosmicjs')() // empty init
+const bucket = Cosmic.bucket({
   slug: 'YOUR_BUCKET_SLUG',
   read_key: 'YOUR_BUCKET_READ_KEY'
 })
-bucket
+const data = await bucket
   .getObjectTypes()
   .then(data => {
     console.log(data)
@@ -54,6 +68,14 @@ bucket
   .catch(err => {
     console.log(err)
   })
+```
+
+</div>
+<div label="cURL">
+```bash
+curl https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/object-types \
+	-d read_key=${YOUR_BUCKET_READ_KEY} \
+	-G
 ```
 
 </div>
@@ -137,18 +159,27 @@ cosmic get-object-types
 
 ## Get Object Type
 
-Get Object Type by `slug` from your Bucket.
+Returns a single Object Type in your Bucket (REST is currently the only available method).
+
+**Definition**
+
+```bash
+GET /v2/buckets/${YOUR_BUCKET_SLUG}/object-types/:slug
+```
+
+**Parameters**
 
 | Parameter | Required |  Type  | Description                                   |
 | :-------- | :------: | :----: | :-------------------------------------------- |
 | read_key  | required | String | Restrict read access to your Bucket           |
 | pretty    |          |  Enum  | true, Makes the response more reader-friendly |
 
-**Definition**
+**cURL**
 
 ```bash
-curl https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/object-types/${slug}
-	-d read_key=${YOUR_BUCKET_READ_KEY}
+curl https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/object-types/:slug \
+	-d read_key=${YOUR_BUCKET_READ_KEY} \
+	-G
 ```
 
 **Example Response**
@@ -175,7 +206,7 @@ curl https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/object-types/${slug
 
 ## Add Object Type
 
-Add a new Object Type to your Bucket.
+Creates a new Object Type in your Bucket (REST is currently the only available method).
 
 <Callout emoji="⚠">
   **Required**
@@ -183,6 +214,14 @@ Add a new Object Type to your Bucket.
   `write_key` must be passed as `Authorization Bearer` in the header of the
   request.
 </Callout>
+
+**Definition**
+
+```bash
+POST /v2/buckets/${YOUR_BUCKET_SLUG}/object-types
+```
+
+**Parameters**
 
 | Parameter              |             Required             |        Type         | Description                                                                                                                        |
 | :--------------------- | :------------------------------: | :-----------------: | :--------------------------------------------------------------------------------------------------------------------------------- |
@@ -202,27 +241,19 @@ Add a new Object Type to your Bucket.
 **Methods**
 
 <Tabs>
-<div label="cURL">
-```bash
-curl https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/object-types \
-	-d '{"title":"Products","singular":"Product"}' \
-	-H 'Content-Type: application/json' \
-	-H "Authorization: Bearer <YOUR_BUCKET_WRITE_KEY>"
-```
-</div>
 
 <div label="Node.js">
 ```javascript
 bucket.addObjectType()
 ```
+
 **Example Request**
 
 ```javascript
-const Cosmic = require('cosmicjs')
-const api = Cosmic()
-const bucket = api.bucket({
+const Cosmic = require('cosmicjs')() // empty init
+const bucket = Cosmic.bucket({
   slug: 'YOUR_BUCKET_SLUG',
-  read_key: 'YOUR_BUCKET_READ_KEY'
+  write_key: 'YOUR_BUCKET_WRITE_KEY'
 })
 const params = {
   title: 'Pages',
@@ -245,7 +276,7 @@ const params = {
     }
   ]
 }
-bucket
+const data = await bucket
   .addObjectType(params)
   .then(data => {
     console.log(data)
@@ -255,6 +286,15 @@ bucket
   })
 ```
 
+</div>
+
+<div label="cURL">
+```bash
+curl https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/object-types \
+	-d '{"title":"Products","singular":"Product"}' \
+	-H 'Content-Type: application/json' \
+	-H "Authorization: Bearer <YOUR_BUCKET_WRITE_KEY>"
+```
 </div>
 
 <div label="GraphQL">
@@ -291,14 +331,6 @@ cosmic add-object-type --slug planets --title Planets --metafields '[{"title": "
 </div>
 </Tabs>
 
-**Example Body (JSON)**
-
-```json
-{
-  "title": "Categories"
-}
-```
-
 **Example Response**
 
 ```json
@@ -319,7 +351,7 @@ cosmic add-object-type --slug planets --title Planets --metafields '[{"title": "
 
 ## Edit Object Type
 
-Edit an existing Object Type by `type_slug` in your Bucket.
+Edits an existing Object Type in your Bucket.
 
 <Callout emoji="⚠">
   **Required**
@@ -327,6 +359,14 @@ Edit an existing Object Type by `type_slug` in your Bucket.
   `write_key` must be passed as `Authorization Bearer` in the header of the
   request.
 </Callout>
+
+**Definition**
+
+```bash
+PATCH /v2/buckets/${YOUR_BUCKET_SLUG}/object-types/:slug
+```
+
+**Parameters**
 
 | Parameter              |             Required             |        Type         | Description                                                                                                                        |
 | :--------------------- | :------------------------------: | :-----------------: | :--------------------------------------------------------------------------------------------------------------------------------- |
@@ -347,17 +387,6 @@ _**Note:** At least one of the Parameters is required to process the request._
 **Methods**
 
 <Tabs>
-<div label="cURL">
-```bash
-curl https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/object-types/${type_slug}
-	-X PATCH
-	-d '{"title":"New Products","singular":"New Product"}' \
-	-H 'Content-Type: application/json' \
-	-H "Authorization: Bearer <YOUR_BUCKET_WRITE_KEY>"
-```
-
-</div>
-
 <div label="Node.js">
 ```javascript
 bucket.editObjectType()
@@ -365,13 +394,12 @@ bucket.editObjectType()
 **Example Request**
 
 ```javascript
-const Cosmic = require('cosmicjs')
-const api = Cosmic()
-const bucket = api.bucket({
+const Cosmic = require('cosmicjs')() // empty init
+const bucket = Cosmic.bucket({
   slug: 'YOUR_BUCKET_SLUG',
-  read_key: 'YOUR_BUCKET_READ_KEY'
+  write_key: 'YOUR_BUCKET_WRITE_KEY'
 })
-bucket
+const data = await bucket
   .editObjectType({
     slug: 'posts',
     title: 'New Posts Title'
@@ -382,6 +410,16 @@ bucket
   .catch(err => {
     console.log(err)
   })
+```
+
+</div>
+<div label="cURL">
+```bash
+curl https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/object-types/:slug \
+	-d '{"title":"New Products","singular":"New Product"}' \
+	-H 'Content-Type: application/json' \
+	-H "Authorization: Bearer <YOUR_BUCKET_WRITE_KEY>" \
+	-X PATCH
 ```
 
 </div>
@@ -459,17 +497,15 @@ Delete an existing Object Type by `type_slug` from your Bucket.
 
 _**Note:** This does not delete Objects in this Object Type._
 
+**Definition**
+
+```bash
+DELETE /v2/buckets/${YOUR_BUCKET_SLUG}/object-types/:slug
+```
+
 **Methods**
 
 <Tabs>
-<div label="cURL">
-```bash
-curl https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/object-types/${type_slug} \
-	-H "Authorization: Bearer <YOUR_BUCKET_WRITE_KEY>" \
-	-X DELETE
-```
-</div>
-
 <div label="Node.js">
 ```javascript
 bucket.deleteObjectType()
@@ -477,9 +513,8 @@ bucket.deleteObjectType()
 **Example Request**
 
 ```javascript
-const Cosmic = require('cosmicjs')
-const api = Cosmic()
-const bucket = api.bucket({
+const Cosmic = require('cosmicjs')() // empty init
+const bucket = Cosmic.bucket({
   slug: 'YOUR_BUCKET_SLUG',
   read_key: 'YOUR_BUCKET_READ_KEY'
 })
@@ -495,6 +530,13 @@ bucket
   })
 ```
 
+</div>
+<div label="cURL">
+```bash
+curl https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/object-types/:slug \
+	-H "Authorization: Bearer <YOUR_BUCKET_WRITE_KEY>" \
+	-X DELETE
+```
 </div>
 
 <div label="GraphQL">
