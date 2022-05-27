@@ -34,7 +34,7 @@ DELETE /v2/buckets/${YOUR_BUCKET_SLUG}/objects/:id
 | content                |       String        |                                    HTML Content                                     |
 | status                 |        Enum         |                       draft, published, defaults to published                       |
 | metafields             | Array of Metafields |                 See [Metafields Model](/api-reference/metafields).                  |
-| metadata               |       Object        |                              Rendered Metafield values                              |
+| metadata               |       Object        |                             Rendered Metafield values.                              |
 | created_by             |       String        |                                   Author User Id                                    |
 | created_at             |       String        |                                    Date created                                     |
 | published_at           |       String        |                                 Date last published                                 |
@@ -736,22 +736,22 @@ POST /v2/buckets/${YOUR_BUCKET_SLUG}/objects
 
 **Parameters**
 
-| Parameter              | Required |        Type         | Description                                                                         |
-| :--------------------- | :------: | :-----------------: | :---------------------------------------------------------------------------------- |
-| type                   | required |       String        | Add Object to Object Type                                                           |
-| title                  | required |       String        | Your Object title                                                                   |
-| slug                   |          |       String        | Unique identifier for your Object                                                   |
-| content                |          |       String        | Add Content to your Object                                                          |
-| status                 |          |        Enum         | draft, published, defaults to published                                             |
-| metafields             |          | Array of Metafields | Add Metafields to your Object. See [Metafields Model](/api-reference/metafields).   |
-| created_by             |          |       String        | Author User Id                                                                      |
-| publish_at             |          |       Number        | UNIX millisecond timestamp. Publish automatically at a later time.                  |
-| options.slug_field     |          |       Boolean       | Set to false to hide the slug field                                                 |
-| options.content_editor |          |       Boolean       | Set to false to hide the content editor                                             |
-| locale                 |          |       String        | Add localization to the Object                                                      |
-| thumbnail              |          |       String        | Media `name`. Media must be available in Bucket. See [Media](/api-reference/media). |
-| trigger_webhook        |          |       Boolean       | Triggers corresponding Object action Webhook ([See Webhooks](/dashboard/webhooks)). |
-| pretty                 |          |        Enum         | true, Makes the response more reader-friendly                                       |
+| Parameter              | Required |        Type         | Description                                                                                          |
+| :--------------------- | :------: | :-----------------: | :--------------------------------------------------------------------------------------------------- |
+| type                   | required |       String        | Add Object to Object Type                                                                            |
+| title                  | required |       String        | Your Object title                                                                                    |
+| slug                   |          |       String        | Unique identifier for your Object                                                                    |
+| content                |          |       String        | Add Content to your Object                                                                           |
+| status                 |          |        Enum         | draft, published, defaults to published                                                              |
+| metafields             |          | Array of Metafields | Add Metafields to your Object. See [Metafields Model](/api-reference/metafields).                    |
+| created_by             |          |       String        | Author User Id                                                                                       |
+| publish_at             |          |       Number        | UNIX millisecond timestamp. Publish automatically at a later time.                                   |
+| options.slug_field     |          |       Boolean       | Set to false to hide the slug field                                                                  |
+| options.content_editor |          |       Boolean       | Set to false to hide the content editor                                                              |
+| locale                 |          |        Enum         | Adds localization to the Object. See [Localization](/api-reference/localization) for locale options. |
+| thumbnail              |          |       String        | Media `name`. Media must be available in Bucket. See [Media](/api-reference/media).                  |
+| trigger_webhook        |          |       Boolean       | Triggers corresponding Object action Webhook ([See Webhooks](/dashboard/webhooks)).                  |
+| pretty                 |          |        Enum         | true, Makes the response more reader-friendly                                                        |
 
 **Methods**
 
