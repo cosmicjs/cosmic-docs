@@ -3,19 +3,58 @@ import Tabs from '../../components/tabs'
 
 # Object Types
 
-The following endpoints allow you to get, add, edit and delete Object Types in your Bucket.
+The following endpoints enable you to create, read, update, and delete Object Types in your Bucket. See [API Introduction](/api-reference/introduction) for getting started information.
 
-<Callout emoji="✅">
-  **Quick Tip**
-  <br />
-  Your `read` and `write` keys will be required to perform the following
-  requests. These can be found in <i>Your Bucket > Settings > API Access</i> in
-  your [Bucket Dashboard ](https://app.cosmicjs.com/login).
+<Callout emoji="🛑">
+  This is for **Object modeling only**. Are you looking for ways to interact
+  with Objects? Go to the [Objects section](/api-reference/objects).
 </Callout>
+
+<Callout emoji="🔑">
+  **Get your keys**
+  <br />
+  Your Bucket `slug`,`read_key`, and `write_key` will be required to perform the
+  following requests. These can be found in{' '}
+  <i>Your Bucket > Settings > API Access</i> in your [Bucket Dashboard
+  ](https://app.cosmicjs.com/login).
+</Callout>
+
+**Endpoints**
+
+```bash
+GET /v2/buckets/${YOUR_BUCKET_SLUG}/object-types
+POST /v2/buckets/${YOUR_BUCKET_SLUG}/object-types
+PATCH /v2/buckets/${YOUR_BUCKET_SLUG}/object-types/:slug
+DELETE /v2/buckets/${YOUR_BUCKET_SLUG}/object-types/:slug
+```
+
+## Data Model
+
+| Attribute              |                       Type                       | Notes                                                                                                                              |
+| :--------------------- | :----------------------------------------------: | :--------------------------------------------------------------------------------------------------------------------------------- |
+| slug                   |                      String                      | Plural slug of your Object Type                                                                                                    |
+| title                  |                      String                      | Plural title of your Object Type                                                                                                   |
+| singular               |                      String                      | Singular title of your Object Type                                                                                                 |
+| metafields             |               Array of Metafields                | Default Metafields for each Object in this type. Add Metafields to your Object. See [Metafields Model](/api-reference/metafields). |
+| options.slug_field     |                     Boolean                      | Set to false to hide the slug field                                                                                                |
+| options.content_editor |                     Boolean                      | Set to false to hide the content editor                                                                                            |
+| localization           |                     Boolean                      | true, Adds localization to the Object Type                                                                                         |
+| locales                | required if localization is true Array of String | Array of active locales in the Object Type. Check the [available locale codes](/api-reference/localization).                       |
+| priority_locale        |                      String                      | Default locale code for Objects in Object Type. Check the [available locale codes](/api-reference/localization)                    |
+| emoji                  |                      String                      | Valid Unicode emoji                                                                                                                |
+| singleton              |                     Boolean                      | Single or Multiple Objects                                                                                                         |
 
 ## Get Object Types
 
-Get all Object Types in your Bucket.
+Returns all Object Types in your Bucket.
+
+**Definition**
+
+```bash
+GET /v2/buckets/${YOUR_BUCKET_SLUG}/object-types
+```
+
+**Parameters**
 
 | Parameter | Required |  Type  | Description                                   |
 | :-------- | :------: | :----: | :-------------------------------------------- |
@@ -25,31 +64,29 @@ Get all Object Types in your Bucket.
 **Methods**
 
 <Tabs>
-<div label="REST">
-```bash
-GET $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/object-types
-```
-
-</div>
-
 <div label="Node.js">
 ```javascript
 bucket.getObjectTypes()
 ```
 **Example Request**
+
 ```javascript
-const Cosmic = require('cosmicjs');
-const api = Cosmic();
-const bucket = api.bucket({
-  slug: "bucket-slug",
-  read_key: "your-read-key-found-in-bucket-settings",
-});
-bucket.getObjectTypes().then(data => {
-  console.log(data)
-}).catch(err => {
-  console.log(err)
+const Cosmic = require('cosmicjs')() // empty init
+const bucket = Cosmic.bucket({
+  slug: 'YOUR_BUCKET_SLUG',
+  read_key: 'YOUR_BUCKET_READ_KEY'
 })
+const data = await bucket.getObjectTypes()
 ```
+
+</div>
+<div label="cURL">
+```bash
+curl https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/object-types \
+	-d read_key=${YOUR_BUCKET_READ_KEY} \
+	-G
+```
+
 </div>
 
 <div label="GraphQL">
@@ -131,17 +168,27 @@ cosmic get-object-types
 
 ## Get Object Type
 
-Get Object Type by `slug` from your Bucket.
+Returns a single Object Type in your Bucket (REST is currently the only available method).
+
+**Definition**
+
+```bash
+GET /v2/buckets/${YOUR_BUCKET_SLUG}/object-types/:slug
+```
+
+**Parameters**
 
 | Parameter | Required |  Type  | Description                                   |
 | :-------- | :------: | :----: | :-------------------------------------------- |
 | read_key  | required | String | Restrict read access to your Bucket           |
 | pretty    |          |  Enum  | true, Makes the response more reader-friendly |
 
-**Definition**
+**cURL**
 
 ```bash
-GET $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/object-types/${slug}
+curl https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/object-types/:slug \
+	-d read_key=${YOUR_BUCKET_READ_KEY} \
+	-G
 ```
 
 **Example Response**
@@ -168,59 +215,39 @@ GET $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/object-types/${slug}
 
 ## Add Object Type
 
-Add a new Object Type to your Bucket.
+Creates a new Object Type in your Bucket (REST is currently the only available method).
 
 <Callout emoji="⚠">
   **Required**
   <br />
-  `write_key` must be passed as `Authorization Bearer` in the header of the
-  request.
+  Your Bucket `write_key` must be passed as `Authorization Bearer` in the header
+  of the request. This can be found in
+  <i>Your Bucket > Settings > API Access</i> in your [Admin Dashboard](https://app.cosmicjs.com/login).
 </Callout>
 
-| Parameter              |             Required             |       Type       | Description                                                                                                                        |
-| :--------------------- | :------------------------------: | :--------------: | :--------------------------------------------------------------------------------------------------------------------------------- |
-| title                  |             required             |      String      | Plural title of your Object Type                                                                                                   |
-| slug                   |                                  |      String      | Plural slug of your Object Type                                                                                                    |
-| singular               |                                  |      String      | Singular title of your Object Type                                                                                                 |
-| metafields             |                                  | Array of Objects | Default Metafields for each Object in this type. Add Metafields to your Object. See [Metafields Model](/api-reference/metafields). |
-| options.slug_field     |                                  |     Boolean      | Set to false to hide the slug field                                                                                                |
-| options.content_editor |                                  |     Boolean      | Set to false to hide the content editor                                                                                            |
-| localization           |                                  |       Enum       | true, Adds localization to the Object Type                                                                                         |
-| locales                | required if localization is true | Array of String  | Array of active locales in the Object Type. Check the [available locale codes](/api-reference/localization).                       |
-| priority_locale        |                                  |      String      | Default locale code for Objects in Object Type. Check the [available locale codes](/api-reference/localization)                    |
-| emoji                  |                                  |      String      | Valid Unicode emoji                                                                                                                |
-| singleton              |                                  |     Boolean      | Single or Multiple Objects                                                                                                         |
-| pretty                 |                                  |       Enum       | true, Makes the response more reader-friendly                                                                                      |
+**Definition**
+
+```bash
+POST /v2/buckets/${YOUR_BUCKET_SLUG}/object-types
+```
 
 **Methods**
 
 <Tabs>
-<div label="REST">
-```bash
-POST $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/object-types
-```
-**Header**
-
-```json
-{
-  "Authorization": "Bearer YOUR_BUCKET_WRITE_KEY"
-}
-```
-
-</div>
 
 <div label="Node.js">
 ```javascript
 bucket.addObjectType()
 ```
+
 **Example Request**
+
 ```javascript
-const Cosmic = require('cosmicjs');
-const api = Cosmic();
-const bucket = api.bucket({
-  slug: "bucket-slug",
-  read_key: "your-read-key-found-in-bucket-settings",
-});
+const Cosmic = require('cosmicjs')() // empty init
+const bucket = Cosmic.bucket({
+  slug: 'YOUR_BUCKET_SLUG',
+  write_key: 'YOUR_BUCKET_WRITE_KEY'
+})
 const params = {
   title: 'Pages',
   singular: 'Page',
@@ -242,13 +269,17 @@ const params = {
     }
   ]
 }
-bucket.addObjectType(params)
-  .then(data => {
-    console.log(data)
-  })
-  .catch(err => {
-    console.log(err)
-  })
+const data = await bucket.addObjectType(params)
+```
+
+</div>
+
+<div label="cURL">
+```bash
+curl https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/object-types \
+	-d '{"title":"Products","singular":"Product"}' \
+	-H 'Content-Type: application/json' \
+	-H "Authorization: Bearer <YOUR_BUCKET_WRITE_KEY>"
 ```
 </div>
 
@@ -286,14 +317,6 @@ cosmic add-object-type --slug planets --title Planets --metafields '[{"title": "
 </div>
 </Tabs>
 
-**Example Body (JSON)**
-
-```json
-{
-  "title": "Categories"
-}
-```
-
 **Example Response**
 
 ```json
@@ -314,71 +337,53 @@ cosmic add-object-type --slug planets --title Planets --metafields '[{"title": "
 
 ## Edit Object Type
 
-Edit an existing Object Type by `type_slug` in your Bucket.
+Edits an existing Object Type in your Bucket.
 
 <Callout emoji="⚠">
   **Required**
   <br />
-  `write_key` must be passed as `Authorization Bearer` in the header of the
-  request.
+  Your Bucket `write_key` must be passed as `Authorization Bearer` in the header
+  of the request. This can be found in
+  <i>Your Bucket > Settings > API Access</i> in your [Admin Dashboard](https://app.cosmicjs.com/login).
 </Callout>
 
-| Parameter              |             Required             |       Type       | Description                                                                                                                        |
-| :--------------------- | :------------------------------: | :--------------: | :--------------------------------------------------------------------------------------------------------------------------------- |
-| title                  |                                  |      String      | Plural title of your Object Type                                                                                                   |
-| singular               |                                  |      String      | Singular title of your Object Type                                                                                                 |
-| metafields             |                                  | Array of Objects | Default Metafields for each Object in this type. Add Metafields to your Object. See [Metafields Model](/api-reference/metafields). |
-| options.slug_field     |                                  |     Boolean      | Set to false to hide the slug field                                                                                                |
-| options.content_editor |                                  |     Boolean      | Set to false to hide the content editor                                                                                            |
-| localization           |                                  |       Enum       | true, Adds localization to the Object Type                                                                                         |
-| locales                | required if localization is true | Array of String  | Array of active locales in the Object Type. Check the [available locale codes](/api-reference/localization).                       |
-| priority_locale        |                                  |      String      | Default locale code for Objects in Object Type. Check the [available locale codes](/api-reference/localization)                    |
-| emoji                  |                                  |      String      | Valid Unicode emoji                                                                                                                |
-| singleton              |                                  |     Boolean      | Single or Multiple Objects                                                                                                         |
-| pretty                 |                                  |       Enum       | true, Makes the response more reader-friendly                                                                                      |
+**Definition**
 
-_**Note:** At least one of the Parameters is required to process the request._
+```bash
+PATCH /v2/buckets/${YOUR_BUCKET_SLUG}/object-types/:slug
+```
 
 **Methods**
 
 <Tabs>
-<div label="REST">
-```bash
-PATCH $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/object-types/${type_slug}
-```
-**Header**
-
-```json
-{
-  "Authorization": "Bearer YOUR_BUCKET_WRITE_KEY"
-}
-```
-
-</div>
-
 <div label="Node.js">
 ```javascript
 bucket.editObjectType()
 ```
 **Example Request**
+
 ```javascript
-const Cosmic = require('cosmicjs');
-const api = Cosmic();
-const bucket = api.bucket({
-  slug: 'bucket-slug',
-  write_key: 'your-write-key-found-in-bucket-settings'
+const Cosmic = require('cosmicjs')() // empty init
+const bucket = Cosmic.bucket({
+  slug: 'YOUR_BUCKET_SLUG',
+  write_key: 'YOUR_BUCKET_WRITE_KEY'
 })
-bucket.editObjectType({
-    slug: 'posts',
-    title: 'New Posts Title'
-  })
-  .then(data => {
-    console.log(data)
-  })
-  .catch(err => {
-    console.log(err)
-  })
+const data = await bucket.editObjectType({
+  slug: 'posts',
+  title: 'New Posts Title'
+})
 ```
+
+</div>
+<div label="cURL">
+```bash
+curl https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/object-types/:slug \
+	-d '{"title":"New Products","singular":"New Product"}' \
+	-H 'Content-Type: application/json' \
+	-H "Authorization: Bearer <YOUR_BUCKET_WRITE_KEY>" \
+	-X PATCH
+```
+
 </div>
 
 <div label="GraphQL">
@@ -448,50 +453,45 @@ Delete an existing Object Type by `type_slug` from your Bucket.
 <Callout emoji="⚠">
   **Required**
   <br />
-  `write_key` must be passed as `Authorization Bearer` in the header of the
-  request.
+  Your Bucket `write_key` must be passed as `Authorization Bearer` in the header
+  of the request. This can be found in
+  <i>Your Bucket > Settings > API Access</i> in your [Admin Dashboard](https://app.cosmicjs.com/login).
 </Callout>
 
 _**Note:** This does not delete Objects in this Object Type._
 
+**Definition**
+
+```bash
+DELETE /v2/buckets/${YOUR_BUCKET_SLUG}/object-types/:slug
+```
+
 **Methods**
 
 <Tabs>
-<div label="REST">
-```bash
-DELETE $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/object-types/${type_slug}
-```
-**Header**
-
-```json
-{
-  "Authorization": "Bearer YOUR_BUCKET_WRITE_KEY"
-}
-```
-
-</div>
-
 <div label="Node.js">
 ```javascript
 bucket.deleteObjectType()
 ```
 **Example Request**
+
 ```javascript
-const Cosmic = require('cosmicjs');
-const api = Cosmic();
-const bucket = api.bucket({
-  slug: 'bucket-slug',
-  write_key: 'your-write-key-found-in-bucket-settings'
+const Cosmic = require('cosmicjs')() // empty init
+const bucket = Cosmic.bucket({
+  slug: 'YOUR_BUCKET_SLUG',
+  write_key: 'YOUR_BUCKET_WRITE_KEY'
 })
-bucket.deleteObjectType({
-    slug: 'posts'
-  })
-  .then(data => {
-    console.log(data)
-  })
-  .catch(err => {
-    console.log(err)
-  })
+const data = await bucket.deleteObjectType({
+  slug: 'posts'
+})
+```
+
+</div>
+<div label="cURL">
+```bash
+curl https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/object-types/:slug \
+	-H "Authorization: Bearer <YOUR_BUCKET_WRITE_KEY>" \
+	-X DELETE
 ```
 </div>
 

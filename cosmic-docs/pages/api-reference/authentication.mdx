@@ -24,12 +24,6 @@ Send your `email` and `password` to receive your access token. Your access token
 **Methods**
 
 <Tabs>
-<div label="REST">
-```bash
-POST $BASE_URL/authenticate
-```
-
-</div>
 
 <div label="Node.js">
 ```javascript
@@ -40,16 +34,19 @@ Cosmic.authenticate()
 
 ```javascript
 const Cosmic = require('cosmicjs')() // double parentheses to init function without token
-Cosmic.authenticate({
+const data = await Cosmic.authenticate({
   email: 'you@youremail.com',
   password: 'yourpassword'
 })
-  .then(data => {
-    console.log(data)
-  })
-  .catch(err => {
-    console.log(err)
-  })
+```
+
+</div>
+
+<div label="cURL">
+```bash
+curl https://api.cosmicjs.com/v2/authenticate \
+	-d '{"email":"you@youremail.com","password":"yourpass"}' \
+	-H 'Content-Type: application/json'
 ```
 
 </div>
@@ -75,15 +72,6 @@ Authenticated
 </div>
 </Tabs>
 
-**Example Body (JSON)**
-
-```json
-{
-  "email": "you@youremail.com",
-  "password": "yourpassword"
-}
-```
-
 **Example Response**
 
 ```json
@@ -107,21 +95,6 @@ You can use the Authentication token using REST requests to the API
 **Methods**
 
 <Tabs>
-<div label="REST">
-
-```bash
-GET $BASE_URL/buckets
-```
-
-**Header**
-
-```json
-{
-  "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXV.eyJlbWFpbCI6InNwaXJvbnl..."
-}
-```
-
-</div>
 
 <div label="Node.js">
 ```javascript
@@ -134,13 +107,16 @@ Cosmic.getBuckets()
 const Cosmic = require('cosmicjs')({
   token: 'your-token-from-auth-request' // optional
 })
-Cosmic.getBuckets()
-  .then(data => {
-    console.log(data)
-  })
-  .catch(err => {
-    console.log(err)
-  })
+const data = await Cosmic.getBuckets()
+```
+
+</div>
+
+<div label="cURL">
+
+```bash
+curl https://api.cosmicjs.com/v2/buckets \
+	-H "Authorization: Bearer <TOKEN>"
 ```
 
 </div>

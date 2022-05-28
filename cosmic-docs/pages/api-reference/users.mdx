@@ -3,10 +3,10 @@ import Tabs from '../../components/tabs'
 
 # Users
 
-The following endpoints allow you to get, add, edit and delete users in your bucket.
+The following endpoints enable you to create, read, update, and delete users in your Bucket.
 
-<Callout emoji="✅">
-  **Quick Tip**
+<Callout emoji="🔑">
+  **Get your keys**
   <br />
   Your authentication `token` will be required to perform the following
   requests.
@@ -19,9 +19,37 @@ The following endpoints allow you to get, add, edit and delete users in your buc
   with your `email` and `password`.
 </Callout>
 
+### Endpoints
+
+```bash
+GET /v2/buckets/${YOUR_BUCKET_SLUG}/users
+POST /v2/buckets/${YOUR_BUCKET_SLUG}/users
+GET /v2/buckets/${YOUR_BUCKET_SLUG}/users/:id
+PATCH /v2/buckets/${YOUR_BUCKET_SLUG}/users/:id
+DELETE /v2/buckets/${YOUR_BUCKET_SLUG}/users/:id
+```
+
+## Data Model
+
+| Attribute  |  Type  |           Notes            |
+| :--------- | :----: | :------------------------: |
+| id         | String | Unique identifier for User |
+| first_name | String |      User first name       |
+| last_name  | String |       User last name       |
+| email      | String |         User email         |
+| avatar_url | String |      User avatar URL       |
+| username   | String |   URL-friendly username    |
+| bio        | String |          User bio          |
+| website    | String |        User website        |
+| twitter    | String |  User Twitter profile URL  |
+| linkedin   | String | User LinkedIn profile URL  |
+| github     | String |  User GitHub profile URL   |
+| company    | String |     User company name      |
+| location   | String |       User location        |
+
 ## Get Users
 
-Gets all users in your bucket.
+Gets all users in your Bucket.
 
 <Callout emoji="⚠">
   **Required**
@@ -30,35 +58,38 @@ Gets all users in your bucket.
   and you must have `admin` access to perform this operation.
 </Callout>
 
+**Definition**
+
+```bash
+GET /v2/buckets/${YOUR_BUCKET_SLUG}/users
+```
+
 **Methods**
 
 <Tabs>
-<div label="REST">
-```bash
-GET $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/users
-```
-
-</div>
 
 <div label="Node.js">
 ```javascript
 bucket.getUsers()
 ```
 **Example Request**
+
 ```javascript
 const Cosmic = require('cosmicjs')({
   token: 'your-token-from-auth-request' // required
 })
 const bucket = Cosmic.bucket({
-  slug: 'bucket-slug'
+  slug: 'YOUR_BUCKET_SLUG'
 })
-bucket.getUsers()
-.then(data => {
-  console.log(data)
-})
-.catch(err => {
-  console.log(err)
-})
+const data = await bucket.getUsers()
+```
+
+</div>
+<div label="cURL">
+```bash
+curl https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/users \
+	-H "Authorization: Bearer <TOKEN>" \
+	-G
 ```
 </div>
 
@@ -129,38 +160,40 @@ Gets user by `id` in your bucket.
   and you must have `admin` access to perform this operation.
 </Callout>
 
+**Definition**
+
+```bash
+GET /v2/buckets/${YOUR_BUCKET_SLUG}/users/:id
+```
+
 **Methods**
 
 <Tabs>
-<div label="REST">
-```bash
-GET $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/users/${user_id}
-```
-
-</div>
 
 <div label="Node.js">
 ```javascript
 bucket.getUser()
 ```
 **Example Request**
+
 ```javascript
 const Cosmic = require('cosmicjs')({
   token: 'your-token-from-auth-request' // required
 })
 const bucket = Cosmic.bucket({
-  slug: 'bucket-slug'
+  slug: 'YOUR_BUCKET_SLUG'
 })
 const params = {
   id: '5357ef811693be2118000001'
 }
-bucket.getUser(params)
-.then(data => {
-  console.log(data)
-})
-.catch(err => {
-  console.log(err)
-})
+const data = await bucket.getUser(params)
+```
+
+</div>
+<div label="cURL">
+```bash
+curl https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/users/:id \
+	-H "Authorization: Bearer <TOKEN>"
 ```
 </div>
 
@@ -206,7 +239,7 @@ getUser(bucket_slug, user_id)
 
 ## Add User
 
-Add user to your bucket.
+Add a user to your Bucket.
 
 <Callout emoji="⚠">
   **Required**
@@ -214,6 +247,12 @@ Add user to your bucket.
   `token` must be passed as `Authorization Bearer` in the header of the request
   and you must have `admin` access to perform this operation.
 </Callout>
+
+**Definition**
+
+```bash
+POST /v2/buckets/${YOUR_BUCKET_SLUG}/users
+```
 
 | Parameter               |             Required              |          Type          | Description                                     |
 | :---------------------- | :-------------------------------: | :--------------------: | :---------------------------------------------- |
@@ -228,34 +267,19 @@ Add user to your bucket.
 **Methods**
 
 <Tabs>
-<div label="REST">
-```bash
-POST $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/users
-```
-**Example Body (JSON)**
-
-```json
-{
-  "first_name": "ABC",
-  "last_name": "XYZ",
-  "email": "abc@xyz.com",
-  "role": "admin"
-}
-```
-
-</div>
 
 <div label="Node.js">
 ```javascript
 bucket.addUser()
 ```
 **Example Request**
+
 ```javascript
 const Cosmic = require('cosmicjs')({
   token: 'your-token-from-auth-request' // required
 })
 const bucket = Cosmic.bucket({
-  slug: 'bucket-slug'
+  slug: 'YOUR_BUCKET_SLUG'
 })
 const params = {
   email: 'newuser@example.com',
@@ -263,13 +287,17 @@ const params = {
   first_name: 'Quasar',
   last_name: 'Jones'
 }
-bucket.addUser(params)
-.then(data => {
-  console.log(data)
-})
-.catch(err => {
-  console.log(err)
-})
+const data = await bucket.addUser(params)
+```
+
+</div>
+
+<div label="cURL">
+```bash
+curl https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/users \
+	-d '{"first_name":"Jim","last_name":"Smith","email":"jim@xyz.com","role":"admin"}' \
+	-H 'Content-Type: application/json' \
+	-H "Authorization: Bearer <TOKEN>"
 ```
 </div>
 
@@ -301,7 +329,7 @@ $ cosmic add-user --email test@user.com --first_name John --last_name Smith --ro
 
 ## Edit User
 
-Edit user by `id` in your bucket.
+Edit user in your Bucket.
 
 <Callout emoji="⚠">
   **Required**
@@ -310,6 +338,12 @@ Edit user by `id` in your bucket.
   and you must have `admin` access to perform this operation.
 </Callout>
 
+**Definition**
+
+```bash
+PATCH /v2/buckets/${YOUR_BUCKET_SLUG}/users/:id
+```
+
 | Parameter               |             Required              |          Type          | Description                                     |
 | :---------------------- | :-------------------------------: | :--------------------: | :---------------------------------------------- |
 | role                    |             required              |          Enum          | `admin`, `developer`, `editor` or `contributor` |
@@ -317,18 +351,14 @@ Edit user by `id` in your bucket.
 | additional_permissions  |                                   | String / Array[String] | `users`, `settings`, `sort_metafields`          |
 | object_types            | required if role is `contributor` | String / Array[String] | Object Type slugs                               |
 
-**Definition**
+**cURL**
 
 ```bash
-PATCH $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/users/${user_id}
-```
-
-**Example Body (JSON)**
-
-```json
-{
-  "role": "editor"
-}
+curl https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/users/:id \
+	-d '{"role":"editor"}' \
+	-H 'Content-Type: application/json' \
+	-H "Authorization: Bearer <TOKEN>" \
+	-X PATCH
 ```
 
 **Example Response**
@@ -341,7 +371,7 @@ PATCH $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/users/${user_id}
 
 ## Delete User
 
-Delete user by `id` from your bucket.
+Remove user from your Bucket.
 
 <Callout emoji="⚠">
   **Required**
@@ -353,13 +383,21 @@ Delete user by `id` from your bucket.
 **Definition**
 
 ```bash
-DELETE $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/users/${user_id}
+DELETE /v2/buckets/${YOUR_BUCKET_SLUG}/users/:id
+```
+
+**cURL**
+
+```bash
+curl https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/users/:id \
+	-H "Authorization: Bearer <TOKEN>" \
+	-X DELETE
 ```
 
 **Example Response**
 
 ```json
 {
-  "message": "User delete successfully from bucket."
+  "message": "User removed from bucket successfully."
 }
 ```

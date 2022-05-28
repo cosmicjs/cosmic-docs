@@ -2,15 +2,25 @@ import Callout from 'nextra-theme-docs/callout'
 
 # Media Folders
 
-The following endpoints allow you to manage media folders in your Bucket.
+The following endpoints enable you to manage media folders in your Bucket.
 
-<Callout emoji="✅">
-  **Quick Tip**
+<Callout emoji="🔑">
+  **Get your keys**
   <br />
-  Your `read` and `write` keys will be required to perform the following
-  requests. These can be found in <i>Your Bucket > Settings > API Access</i> in
-  your [Bucket Dashboard ](https://app.cosmicjs.com/login).
+  Your Bucket `slug`,`read_key`, and `write_key` will be required to perform the
+  following requests. These can be found in{' '}
+  <i>Your Bucket > Settings > API Access</i> in your [Bucket Dashboard
+  ](https://app.cosmicjs.com/login).
 </Callout>
+
+### Endpoints
+
+```bash
+GET /v2/buckets/${YOUR_BUCKET_SLUG}/media-folders
+GET /v2/buckets/${YOUR_BUCKET_SLUG}/media-folders/:slug
+PATCH /v2/buckets/${YOUR_BUCKET_SLUG}/media-folders/:slug
+POST /v2/buckets/${YOUR_BUCKET_SLUG}/media-folders
+```
 
 ## Get Media Folders
 
@@ -24,7 +34,15 @@ Get Media Folders in your Bucket.
 **Definition**
 
 ```bash
-GET $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/media-folders?read_key=${YOUR_BUCKET_READ_KEY}
+GET /v2/buckets/${YOUR_BUCKET_SLUG}/media-folders
+```
+
+**cURL**
+
+```bash
+curl https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/media-folders \
+	-d read_key=${YOUR_BUCKET_READ_KEY} \
+	-G
 ```
 
 **Example Response**
@@ -61,7 +79,15 @@ Returns list of media in Folder by `slug` from your Bucket.
 **Definition**
 
 ```bash
-GET $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/media-folders/${media_folder_slug}/media?read_key=${YOUR_BUCKET_READ_KEY}
+GET /v2/buckets/${YOUR_BUCKET_SLUG}/media-folders/:slug
+```
+
+**cURL**
+
+```bash
+curl https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/media-folders/:slug \
+	-d read_key=${YOUR_BUCKET_READ_KEY} \
+	-G
 ```
 
 **Example Response**
@@ -111,8 +137,9 @@ Add a new Media Folder to your Bucket.
 <Callout emoji="⚠">
   **Required**
   <br />
-  `write_key` must be passed as `Authorization Bearer` in the header of the
-  request.
+  Your Bucket `write_key` must be passed as `Authorization Bearer` in the header
+  of the request. This can be found in
+  <i>Your Bucket > Settings > API Access</i> in your [Admin Dashboard](https://app.cosmicjs.com/login).
 </Callout>
 
 | Parameter | Required |  Type  | Description                                                          |
@@ -122,23 +149,16 @@ Add a new Media Folder to your Bucket.
 **Definition**
 
 ```bash
-POST $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/media-folders
+POST /v2/buckets/${YOUR_BUCKET_SLUG}/media-folders
 ```
 
-**Header**
+**cURL**
 
-```json
-{
-  "Authorization": "Bearer YOUR_BUCKET_WRITE_KEY"
-}
-```
-
-**Example Body (JSON)**
-
-```json
-{
-  "title": "Slideshow"
-}
+```bash
+curl https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/media-folders \
+	-d '{"title":"Products"}' \
+	-H 'Content-Type: application/json' \
+	-H "Authorization: Bearer <YOUR_BUCKET_WRITE_KEY>"
 ```
 
 **Example Response**
@@ -146,8 +166,8 @@ POST $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/media-folders
 ```json
 {
   "media_folder": {
-    "title": "Slideshow",
-    "slug": "slideshow"
+    "title": "Products",
+    "slug": "products"
   }
 }
 ```
@@ -159,8 +179,9 @@ Edit an existing Media Folder by `slug` in your Bucket.
 <Callout emoji="⚠">
   **Required**
   <br />
-  `write_key` must be passed as `Authorization Bearer` in the header of the
-  request.
+  Your Bucket `write_key` must be passed as `Authorization Bearer` in the header
+  of the request. This can be found in
+  <i>Your Bucket > Settings > API Access</i> in your [Admin Dashboard](https://app.cosmicjs.com/login).
 </Callout>
 
 | Parameter |  Type  | Description                                                          |
@@ -172,23 +193,17 @@ _**Note:** At least one of the Parameters is required to process the request._
 **Definition**
 
 ```bash
-PATCH $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/media-folders/${media_folder_slug}
+PATCH /v2/buckets/${YOUR_BUCKET_SLUG}/media-folders/:slug
 ```
 
-**Header**
+**cURL**
 
-```json
-{
-  "Authorization": "Bearer YOUR_BUCKET_WRITE_KEY"
-}
-```
-
-**Example Body (JSON)**
-
-```json
-{
-  "title": "Product Images"
-}
+```bash
+curl https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/media-folders/:slug \
+	-d '{"title":"New Product Images"}' \
+	-H 'Content-Type: application/json' \
+	-H "Authorization: Bearer <YOUR_BUCKET_WRITE_KEY>" \
+	-X PATCH
 ```
 
 **Example Response**
@@ -196,7 +211,7 @@ PATCH $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/media-folders/${media_folder_slug}
 ```json
 {
   "media_folder": {
-    "title": "Product Images",
+    "title": "New Product Images",
     "slug": "product-images"
   }
 }
@@ -209,28 +224,29 @@ Delete an existing Media Folder by `slug` from your Bucket.
 <Callout emoji="⚠">
   **Required**
   <br />
-  `write_key` must be passed as `Authorization Bearer` in the header of the
-  request.
+  Your Bucket `write_key` must be passed as `Authorization Bearer` in the header
+  of the request. This can be found in
+  <i>Your Bucket > Settings > API Access</i> in your [Admin Dashboard](https://app.cosmicjs.com/login).
 </Callout>
 
 **Definition**
 
 ```bash
-DELETE $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/media-folders/${media_folder_slug}
+DELETE /v2/buckets/${YOUR_BUCKET_SLUG}/media-folders/:slug
 ```
 
-**Header**
+**cURL**
 
-```json
-{
-  "Authorization": "Bearer YOUR_BUCKET_WRITE_KEY"
-}
+```bash
+curl https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/media-folders/:slug \
+	-H "Authorization: Bearer <YOUR_BUCKET_WRITE_KEY>" \
+	-X DELETE
 ```
 
 **Example Response**
 
 ```json
 {
-  "message": "Media folder with slug '${media_folder_slug}' deleted successfully from bucket."
+  "message": "Media folder with slug ':slug' deleted successfully from bucket."
 }
 ```
