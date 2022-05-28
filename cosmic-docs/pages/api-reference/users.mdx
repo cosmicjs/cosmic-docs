@@ -19,6 +19,16 @@ The following endpoints allow you to get, add, edit and delete users in your buc
   with your `email` and `password`.
 </Callout>
 
+### Endpoints
+
+```bash
+GET /v2/buckets/${YOUR_BUCKET_SLUG}/users
+POST /v2/buckets/${YOUR_BUCKET_SLUG}/users
+GET /v2/buckets/${YOUR_BUCKET_SLUG}/users/:id
+PATCH /v2/buckets/${YOUR_BUCKET_SLUG}/users/:id
+DELETE /v2/buckets/${YOUR_BUCKET_SLUG}/users/:id
+```
+
 ## Get Users
 
 Gets all users in your bucket.

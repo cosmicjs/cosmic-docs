@@ -19,6 +19,21 @@ The following endpoints allow you to get, add, edit and delete buckets in your a
   with your `email` and `password`.
 </Callout>
 
+## Data Model
+
+| Attribute            |  Type  |            Notes             |
+| :------------------- | :----: | :--------------------------: |
+| id                   | String | Unique identifier for Bucket |
+| slug                 | String | Unique identifier for Bucket |
+| title                | String |         Bucket title         |
+| created_by           | String |       Creator User Id        |
+| created_at           | String |         Date created         |
+| modified_at          | String |      Date last modified      |
+| modified_by          | String |    Last modified User Id     |
+| api_access.read_key  | String |       Bucket read key        |
+| api_access.write_key | String |       Bucket write key       |
+| thumbnail            | String |    Bucket thumbnail image    |
+
 ## Get Buckets
 
 Gets all Buckets connected to your account.
@@ -349,10 +364,9 @@ PATCH /v2/buckets/${YOUR_BUCKET_SLUG}
 
 ```bash
 curl https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG} \
-	-H "Authorization: Bearer <YOUR_BUCKET_WRITE_KEY>" \
 	-d '{"title":"New Bucket Title","reset_api_access_keys":true}' \
 	-H 'Content-Type: application/json' \
-	-H "Authorization: Bearer <YOUR_BUCKET_WRITE_KEY>" \
+	-H "Authorization: Bearer <TOKEN>"
 	-X PATCH
 ```
 
