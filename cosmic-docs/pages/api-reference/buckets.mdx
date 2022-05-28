@@ -36,12 +36,6 @@ Gets all Buckets connected to your account.
 **Methods**
 
 <Tabs>
-<div label="cURL">
-```bash
-curl https://api.cosmicjs.com/v2/buckets \
-	-H "Authorization: Bearer <TOKEN>"
-```
-</div>
 
 <div label="Node.js">
 ```javascript
@@ -63,6 +57,13 @@ Cosmic.getBuckets()
   })
 ```
 
+</div>
+
+<div label="cURL">
+```bash
+curl https://api.cosmicjs.com/v2/buckets \
+	-H "Authorization: Bearer <TOKEN>"
+```
 </div>
 
 <div label="GraphQL">
@@ -128,13 +129,6 @@ Returns bucket by `slug` connected to your Bucket.
 **Methods**
 
 <Tabs>
-<div label="cURL">
-```bash
-curl https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG} \
-	-H "Authorization: Bearer <TOKEN>"
-```
-
-</div>
 
 <div label="Node.js">
 ```javascript
@@ -147,13 +141,21 @@ Cosmic.getBucket()
 const Cosmic = require('cosmicjs')({
   token: 'your-token-from-auth-request'
 })
-Cosmic.getBucket({ slug: 'wedding-site' })
+Cosmic.getBucket({ slug: 'company-website' })
   .then(data => {
     console.log(data)
   })
   .catch(err => {
     console.log(err)
   })
+```
+
+</div>
+
+<div label="cURL">
+```bash
+curl https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG} \
+	-H "Authorization: Bearer <TOKEN>"
 ```
 
 </div>
@@ -237,15 +239,6 @@ Add a new bucket to your account.
 **Methods**
 
 <Tabs>
-<div label="cURL">
-```bash
-curl https://api.cosmicjs.com/v2/buckets \
-	-d '{"title":"My Bucket"}' \
-	-H 'Content-Type: application/json' \
-	-H "Authorization: Bearer <TOKEN>"
-```
-
-</div>
 
 <div label="Node.js">
 ```javascript
@@ -268,6 +261,16 @@ Cosmic.addBucket({
   .catch(err => {
     console.log(err)
   })
+```
+
+</div>
+
+<div label="cURL">
+```bash
+curl https://api.cosmicjs.com/v2/buckets \
+	-d '{"title":"My Bucket"}' \
+	-H 'Content-Type: application/json' \
+	-H "Authorization: Bearer <TOKEN>"
 ```
 
 </div>
@@ -339,15 +342,18 @@ _**Note:** At least one of the Parameters is required to process the request._
 **Definition**
 
 ```bash
-PATCH https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}
+PATCH /v2/buckets/${YOUR_BUCKET_SLUG}
 ```
 
-**Example Body (JSON)**
+**cURL**
 
-```json
-{
-  "reset_api_access_keys": true
-}
+```bash
+curl https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG} \
+	-H "Authorization: Bearer <YOUR_BUCKET_WRITE_KEY>" \
+	-d '{"title":"New Bucket Title","reset_api_access_keys":true}' \
+	-H 'Content-Type: application/json' \
+	-H "Authorization: Bearer <YOUR_BUCKET_WRITE_KEY>" \
+	-X PATCH
 ```
 
 **Example Response**
@@ -356,8 +362,8 @@ PATCH https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}
 {
   "bucket": {
     "id": "600ef5162394f77404e0d447",
-    "slug": "new-bucket",
-    "title": "New Bucket",
+    "slug": "new-bucket-title",
+    "title": "New Bucket Title",
     "created_at": "2021-01-25T16:43:02.477Z",
     "modified_at": "2021-01-25T16:46:53.226Z",
     "api_access": {
@@ -389,13 +395,6 @@ Delete an existing bucket by `slug` from your account.
 **Methods**
 
 <Tabs>
-<div label="cURL">
-```bash
-curl https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG} \
-	-H "Authorization: Bearer <TOKEN>"
-```
-
-</div>
 
 <div label="Node.js">
 ```javascript
@@ -409,7 +408,7 @@ const Cosmic = require('cosmicjs')({
   token: 'your-token-from-auth-request' // required
 })
 Cosmic.deleteBucket({
-  id: 'bucket_id'
+  slug: 'YOUR_BUCKET_SLUG'
 })
   .then(data => {
     console.log(data)
@@ -417,6 +416,14 @@ Cosmic.deleteBucket({
   .catch(err => {
     console.log(err)
   })
+```
+
+</div>
+
+<div label="cURL">
+```bash
+curl https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG} \
+	-H "Authorization: Bearer <TOKEN>"
 ```
 
 </div>
