@@ -63,13 +63,7 @@ Cosmic.getBuckets()
 const Cosmic = require('cosmicjs')({
   token: 'your-token-from-auth-request'
 })
-Cosmic.getBuckets()
-  .then(data => {
-    console.log(data)
-  })
-  .catch(err => {
-    console.log(err)
-  })
+const data = await Cosmic.getBuckets()
 ```
 
 </div>
@@ -156,13 +150,7 @@ Cosmic.getBucket()
 const Cosmic = require('cosmicjs')({
   token: 'your-token-from-auth-request'
 })
-Cosmic.getBucket({ slug: 'company-website' })
-  .then(data => {
-    console.log(data)
-  })
-  .catch(err => {
-    console.log(err)
-  })
+const data = await Cosmic.getBucket({ slug: 'company-website' })
 ```
 
 </div>
@@ -266,16 +254,10 @@ Cosmic.addBucket()
 const Cosmic = require('cosmicjs')({
   token: 'your-token-from-auth-request' // required
 })
-Cosmic.addBucket({
+const data = await Cosmic.addBucket({
   title: 'My New Bucket',
   slug: 'my-new-bucket' // must be unique across all Buckets in system
 })
-  .then(data => {
-    console.log(data)
-  })
-  .catch(err => {
-    console.log(err)
-  })
 ```
 
 </div>
@@ -421,15 +403,9 @@ Cosmic.deleteBucket()
 const Cosmic = require('cosmicjs')({
   token: 'your-token-from-auth-request' // required
 })
-Cosmic.deleteBucket({
+const data = await Cosmic.deleteBucket({
   slug: 'YOUR_BUCKET_SLUG'
 })
-  .then(data => {
-    console.log(data)
-  })
-  .catch(err => {
-    console.log(err)
-  })
 ```
 
 </div>
