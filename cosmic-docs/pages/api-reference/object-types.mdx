@@ -76,14 +76,7 @@ const bucket = Cosmic.bucket({
   slug: 'YOUR_BUCKET_SLUG',
   read_key: 'YOUR_BUCKET_READ_KEY'
 })
-const data = await bucket
-  .getObjectTypes()
-  .then(data => {
-    console.log(data)
-  })
-  .catch(err => {
-    console.log(err)
-  })
+const data = await bucket.getObjectTypes()
 ```
 
 </div>
@@ -276,14 +269,7 @@ const params = {
     }
   ]
 }
-const data = await bucket
-  .addObjectType(params)
-  .then(data => {
-    console.log(data)
-  })
-  .catch(err => {
-    console.log(err)
-  })
+const data = await bucket.addObjectType(params)
 ```
 
 </div>
@@ -382,17 +368,10 @@ const bucket = Cosmic.bucket({
   slug: 'YOUR_BUCKET_SLUG',
   write_key: 'YOUR_BUCKET_WRITE_KEY'
 })
-const data = await bucket
-  .editObjectType({
-    slug: 'posts',
-    title: 'New Posts Title'
-  })
-  .then(data => {
-    console.log(data)
-  })
-  .catch(err => {
-    console.log(err)
-  })
+const data = await bucket.editObjectType({
+  slug: 'posts',
+  title: 'New Posts Title'
+})
 ```
 
 </div>
@@ -502,16 +481,9 @@ const bucket = Cosmic.bucket({
   slug: 'YOUR_BUCKET_SLUG',
   write_key: 'YOUR_BUCKET_WRITE_KEY'
 })
-bucket
-  .deleteObjectType({
-    slug: 'posts'
-  })
-  .then(data => {
-    console.log(data)
-  })
-  .catch(err => {
-    console.log(err)
-  })
+const data = await bucket.deleteObjectType({
+  slug: 'posts'
+})
 ```
 
 </div>
