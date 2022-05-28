@@ -4,10 +4,6 @@
   "description": "Cosmic documentation",
   "main": "index.js",
   "license": "MIT",
-  "engines" : { 
-    "npm" : ">=7.0.0",
-    "node" : ">=14.0.0"
-  },
   "scripts": {
     "dev": "next",
     "build": "next build",
