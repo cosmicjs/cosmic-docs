@@ -8,10 +8,26 @@ The following endpoints allow you to manage media in your Bucket.
 <Callout emoji="🔑">
   **Get your keys**
   <br />
-  Your `read` and `write` keys will be required to perform the following
-  requests. These can be found in <i>Your Bucket > Settings > API Access</i> in
-  your [Bucket Dashboard ](https://app.cosmicjs.com/login).
+  Your Bucket `slug`,`read_key`, and `write_key` will be required to perform the
+  following requests. These can be found in{' '}
+  <i>Your Bucket > Settings > API Access</i> in your [Bucket Dashboard
+  ](https://app.cosmicjs.com/login).
 </Callout>
+
+### Upload URL
+
+```
+https://upload.cosmicjs.com/v2
+```
+
+### Endpoints
+
+```bash
+GET /v2/buckets/${YOUR_BUCKET_SLUG}/media
+GET /v2/buckets/${YOUR_BUCKET_SLUG}/media/:id
+PATCH /v2/buckets/${YOUR_BUCKET_SLUG}/media/:id
+POST ${UPLOAD_URL}/v2/buckets/${YOUR_BUCKET_SLUG}/media
+```
 
 ## Get Media List
 
@@ -27,16 +43,15 @@ Get Media List in your Bucket.
 | pretty    |          |  Enum  | false    | true, Makes the response more reader-friendly                                                                                                                  |
 | query     |          |  JSON  |          | A JSON string to perform media search and filtering. See [Queries section](/api-reference/queries) for more detail.                                            |
 
+**Definition**
+
+```bash
+GET /v2/buckets/${YOUR_BUCKET_SLUG}/media
+```
+
 **Methods**
 
 <Tabs>
-<div label="cURL">
-```bash
-curl https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/media \
-	-d read_key=${YOUR_BUCKET_READ_KEY}
-```
-
-</div>
 
 <div label="Node.js">
 ```javascript
@@ -46,24 +61,33 @@ Cosmic.getMedia()
 **Example Request**
 
 ```javascript
-const Cosmic = require('cosmicjs');
-const api = Cosmic();
-const bucket = api.bucket({
-  slug: "your-bucket-slug",
-  read_key: "YOUR_BUCKET_READ_KEY",
-});
-
-bucket.getMedia({
-  query: {
-    folder: 'groomsmen' // Get media in folder
-  },
-  props: 'imgix_url' // get only what you need
-  limit: 3
-}).then(data => {
-  console.log(data)
-}).catch(err => {
-  console.log(err)
+const Cosmic = require('cosmicjs')() // empty init
+const bucket = Cosmic.bucket({
+  slug: 'YOUR_BUCKET_SLUG',
+  read_key: 'YOUR_BUCKET_READ_KEY'
 })
+const data = await bucket
+  .getMedia({
+    query: {
+      folder: 'product-images' // Get media in folder
+    },
+    limit: 2
+  })
+  .then(data => {
+    console.log(data)
+  })
+  .catch(err => {
+    console.log(err)
+  })
+```
+
+</div>
+
+<div label="cURL">
+```bash
+curl https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/media \
+	-d read_key=${YOUR_BUCKET_READ_KEY} \
+	-G
 ```
 
 </div>
@@ -143,16 +167,15 @@ Returns a single Media by `id` from your Bucket.
 | props     |          | String |         | Declare which properties to return in comma-separated string. Reference full Media for all available properties. Example: `?props=name,url,imgix_url,metadata` |
 | pretty    |          |  Enum  | false   | true, Makes the response more reader-friendly                                                                                                                  |
 
+**Definition**
+
+```bash
+GET /v2/buckets/${YOUR_BUCKET_SLUG}/media/:id
+```
+
 **Methods**
 
 <Tabs>
-<div label="cURL">
-```bash
-curl https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/media/${media_id}
-	-d read_key=${YOUR_BUCKET_READ_KEY}
-```
-
-</div>
 
 <div label="Node.js">
 ```javascript
@@ -162,17 +185,16 @@ Cosmic.getSingleMedia()
 **Example Request**
 
 ```javascript
-const Cosmic = require('cosmicjs')
-const api = Cosmic()
-const bucket = api.bucket({
+const Cosmic = require('cosmicjs')() // empty init
+const bucket = Cosmic.bucket({
   slug: 'YOUR_BUCKET_SLUG',
   read_key: 'YOUR_BUCKET_READ_KEY'
 })
 
-bucket
+const data = await bucket
   .getMedia({
     id: '5f331eac9d52b17aee21d1b4',
-    props: 'imgix_url' // get only what you need
+    props: 'id,name,metadata,imgix_url' // get only what you need
   })
   .then(data => {
     console.log(data)
@@ -180,6 +202,16 @@ bucket
   .catch(err => {
     console.log(err)
   })
+```
+
+</div>
+
+<div label="cURL">
+```bash
+curl https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/media/:id \
+	-d read_key=${YOUR_BUCKET_READ_KEY} \
+	-d props="id,name,metadata,imgix_url" \
+	-G
 ```
 
 </div>
@@ -192,17 +224,9 @@ bucket
   "media": {
     "id": "5f331eac9d52b17aee21d1b4",
     "name": "d319ff30-13b7-11e9-acee-bd778576f320-default_profile.png",
-    "original_name": "default_profile.png",
-    "size": 4889,
-    "type": "image/png",
-    "bucket": "5e6818d8e11cffafef7a6230",
-    "created": "2020-08-11T22:41:48.651Z",
-    "location": "https://cdn.cosmicjs.com",
-    "folder": null,
     "metadata": {
       "ok": true
     },
-    "url": "https://cdn.cosmicjs.com/d319ff30-13b7-11e9-acee-bd778576f320-default_profile.png",
     "imgix_url": "https://imgix.cosmicjs.com/d319ff30-13b7-11e9-acee-bd778576f320-default_profile.png"
   }
 }
@@ -231,12 +255,6 @@ The only required post value is the `media` object. You can also add optional `f
   upload size limit of `900MB`.
 </Callout>
 
-### Upload URL
-
-```
-https://upload.cosmicjs.com/v2
-```
-
 | Parameter       | Required | Type                     | Description                                                                        |
 | --------------- | -------- | ------------------------ | ---------------------------------------------------------------------------------- |
 | media           | required | Media Object (see below) | Media object with specific properties                                              |
@@ -253,17 +271,15 @@ The Media Object must be an object with certain properties indicated below. If u
 | originalname | required | String      | The name of your file (something.jpg) |
 | buffer       |          | File Buffer | The File Buffer                       |
 
+**Definition**
+
+```bash
+POST https://upload.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/media
+```
+
 **Methods**
 
 <Tabs>
-<div label="cURL">
-```bash
-curl https://upload.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLU}/media \
-	--form "folder=folder-name" \
-	--form "media=@test.png" \
-	-H "Authorization: Bearer <YOUR_BUCKET_WRITE_KEY>"
-```
-</div>
 
 <div label="Node.js">
 ```javascript
@@ -273,9 +289,8 @@ Cosmic.addMedia()
 **Example Request**
 
 ```javascript
-const Cosmic = require('cosmicjs')
-const api = Cosmic()
-const bucket = api.bucket({
+const Cosmic = require('cosmicjs')() // empty init
+const bucket = Cosmic.bucket({
   slug: 'YOUR_BUCKET_SLUG',
   read_key: 'YOUR_BUCKET_READ_KEY'
 })
@@ -283,7 +298,7 @@ const media_object = req.files[0] // Using Multer
 // OR:
 // const media_object = { originalname: filename, buffer: filedata } // Not using Multer
 
-bucket
+const data = await bucket
   .addMedia({
     media: media_object,
     folder: 'your-folder-slug',
@@ -306,34 +321,14 @@ const media_object = {
 }
 ```
 
-**Example Response**
-
-```json
-{
-  "media": {
-    "name": "c20391e0-b8a4-11e6-8836-fbdfd6956b31-bird.jpg",
-    "original_name": "bird.jpg",
-    "size": 457307,
-    "type": "image/jpeg",
-    "bucket": "5839c67f0d3201c114000004",
-    "created": "2016-12-02T15:34:05.054Z",
-    "location": "https://cosmicjs.com/uploads",
-    "url": "https://cdn.cosmicjs.com/c20391e0-b8a4-11e6-8836-fbdfd6956b31-bird.jpg",
-    "imgix_url": "https://imgix.cosmicjs.com/c20391e0-b8a4-11e6-8836-fbdfd6956b31-bird.jpg",
-    "metadata": [
-      {
-        "key": "caption",
-        "value": "Beautiful picture of the beach"
-      },
-      {
-        "key": "credit",
-        "value": "Tyler Jackson"
-      }
-    ]
-  }
-}
+</div>
+<div label="cURL">
+```bash
+curl https://upload.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLU}/media \
+	--form "folder=folder-name" \
+	--form "media=@test.png" \
+	-H "Authorization: Bearer <YOUR_BUCKET_WRITE_KEY>"
 ```
-
 </div>
 
 <div label="CLI">
@@ -380,12 +375,11 @@ This application uses Express and Multer to create a route `POST http://localhos
 ```javascript
 // index.js
 const fs = require('fs')
-const Cosmic = require('cosmicjs')
-const api = Cosmic()
+const Cosmic = require('cosmicjs')() // empty init
 const multer = require('multer')
 const express = require('express')
 var app = express()
-const bucket = api.bucket({
+const bucket = Cosmic.bucket({
   slug: 'YOUR_BUCKET_SLUG',
   read_key: 'YOUR_BUCKET_READ_KEY'
 })
@@ -449,7 +443,7 @@ _**Note:** At least one of the Parameters is required to process the request._
 **Definition**
 
 ```bash
-PATCH https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/media/${media_id}
+PATCH https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/media/:id
 ```
 
 **Header**
@@ -474,7 +468,7 @@ PATCH https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/media/${media_id}
 
 ```json
 {
-  "message": "Media with id '${media_id}' edited successfully in bucket."
+  "message": "Media with id ':id' edited successfully in bucket."
 }
 ```
 
@@ -497,14 +491,6 @@ Delete an existing Media by `id` from your Bucket.
 **Methods**
 
 <Tabs>
-<div label="cURL">
-```bash
-curl https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/media/${media_id}?trigger_webhook=true \
-	-H "Authorization: Bearer <YOUR_BUCKET_WRITE_KEY>" \
-	-X DELETE
-```
-
-</div>
 
 <div label="Node.js">
 ```javascript
@@ -514,13 +500,12 @@ Cosmic.deleteMedia()
 **Example Request**
 
 ```javascript
-const Cosmic = require('cosmicjs')
-const api = Cosmic()
-const bucket = api.bucket({
+const Cosmic = require('cosmicjs')() // empty init
+const bucket = Cosmic.bucket({
   slug: 'YOUR_BUCKET_SLUG',
   read_key: 'YOUR_BUCKET_READ_KEY'
 })
-bucket
+const data = await bucket
   .deleteMedia({
     id: '5a4b18e12fff7ec0e3c13c65'
   })
@@ -530,6 +515,16 @@ bucket
   .catch(err => {
     console.log(err)
   })
+```
+
+</div>
+
+<div label="cURL">
+```bash
+curl https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/media/:id \
+	-d trigger_webhook=true
+	-H "Authorization: Bearer <YOUR_BUCKET_WRITE_KEY>" \
+	-X DELETE
 ```
 
 </div>
@@ -572,6 +567,6 @@ cosmic delete-media --id 5ff75368c2dfa81a91695cec
 
 ```json
 {
-  "message": "Media with id '${media_id}' deleted successfully from bucket."
+  "message": "Media with id ':id' deleted successfully from bucket."
 }
 ```
