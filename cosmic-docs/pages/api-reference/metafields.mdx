@@ -561,25 +561,19 @@ You can connect Objects to create "one to many" and "many to many" relationships
 | object_type | required | String | Object Type slug                                                                                                |
 | value       |          | String | For single Object this is the `id` property. For multiple Objects it is comma-separated ids (order maintained). |
 
-### Single Objects
+#### Single Objects
 
 For a Single Object Metafield, add the Object ID (`id`) to the value to connect the Object. The full Object will be returned on the Metadata response in the `object` property.
 
-### Multiple Objects
+#### Multiple Objects
 
 For Multiple Object Type Metafields, you can add the Object IDs as comma-separated values. The full Objects will be returned on the Metadata response in the `objects` property.
 
-### Example
+#### Example
 
 Note that the `Author` is a single `object` Metafield with a single id in the `value`. The `Categories` Metafield is a Multiple `objects` Metafield with comma-separated Object IDs.
 
-**Example Request**
-
-```bash
-POST /v2/buckets/${YOUR_BUCKET_SLUG}/objects
-```
-
-**Example Request Body**
+**Request Body**
 
 ```json
 {
@@ -611,6 +605,15 @@ POST /v2/buckets/${YOUR_BUCKET_SLUG}/objects
 }
 ```
 
+**cURL**
+
+```bash
+curl https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/objects \
+	-d ${REQUEST_BODY} \
+	-H 'Content-Type: application/json' \
+	-H "Authorization: Bearer <YOUR_BUCKET_WRITE_KEY>"
+```
+
 ## Media Metafields
 
 You can add media to your Object by using the Media Metafield. The full Media object including `url` and `imgix_url` will be provided in the `metadata` property when querying the Object.
@@ -624,15 +627,9 @@ You can add media to your Object by using the Media Metafield. The full Media ob
 | key       | required | String | Unique identifier for your Metafield             |
 | value     |          | String | The `name` property of the media in your Bucket. |
 
-### Example
+#### Example
 
-**Example Request**
-
-```bash
-POST /v2/buckets/${YOUR_BUCKET_SLUG}/objects
-```
-
-**Example Request Body**
+**Request Body**
 
 ```json
 {
@@ -648,6 +645,15 @@ POST /v2/buckets/${YOUR_BUCKET_SLUG}/objects
     }
   ]
 }
+```
+
+**cURL**
+
+```bash
+curl https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/objects \
+	-d ${REQUEST_BODY} \
+	-H 'Content-Type: application/json' \
+	-H "Authorization: Bearer <YOUR_BUCKET_WRITE_KEY>"
 ```
 
 - Note that the Metafield value is the media name.
