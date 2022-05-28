@@ -83,19 +83,12 @@ const bucket = Cosmic.bucket({
   slug: 'YOUR_BUCKET_SLUG',
   read_key: 'YOUR_BUCKET_READ_KEY'
 })
-const data = await bucket
-  .getMedia({
-    query: {
-      folder: 'product-images' // Get media in folder
-    },
-    limit: 2
-  })
-  .then(data => {
-    console.log(data)
-  })
-  .catch(err => {
-    console.log(err)
-  })
+const data = await bucket.getMedia({
+  query: {
+    folder: 'product-images' // Get media in folder
+  },
+  limit: 2
+})
 ```
 
 </div>
@@ -208,17 +201,10 @@ const bucket = Cosmic.bucket({
   read_key: 'YOUR_BUCKET_READ_KEY'
 })
 
-const data = await bucket
-  .getMedia({
-    id: '5f331eac9d52b17aee21d1b4',
-    props: 'id,name,metadata,imgix_url' // get only what you need
-  })
-  .then(data => {
-    console.log(data)
-  })
-  .catch(err => {
-    console.log(err)
-  })
+const data = await bucket.getMedia({
+  id: '5f331eac9d52b17aee21d1b4',
+  props: 'id,name,metadata,imgix_url' // get only what you need
+})
 ```
 
 </div>
@@ -335,21 +321,14 @@ const media_object = req.files[0] // Using Multer
 // OR:
 // const media_object = { originalname: filename, buffer: filedata } // Not using Multer
 
-const data = await bucket
-  .addMedia({
-    media: media_object,
-    folder: 'your-folder-slug',
-    metadata: {
-      caption: 'Beautiful picture of the beach',
-      credit: 'Tyler Jackson'
-    }
-  })
-  .then(data => {
-    console.log(data)
-  })
-  .catch(err => {
-    console.log(err)
-  })
+const data = await bucket.addMedia({
+  media: media_object,
+  folder: 'your-folder-slug',
+  metadata: {
+    caption: 'Beautiful picture of the beach',
+    credit: 'Tyler Jackson'
+  }
+})
 
 // In order to pass the file `req.files.foo` to Cosmic you would do:
 const media_object = {
@@ -542,16 +521,9 @@ const bucket = Cosmic.bucket({
   slug: 'YOUR_BUCKET_SLUG',
   read_key: 'YOUR_BUCKET_READ_KEY'
 })
-const data = await bucket
-  .deleteMedia({
-    id: '5a4b18e12fff7ec0e3c13c65'
-  })
-  .then(data => {
-    console.log(data)
-  })
-  .catch(err => {
-    console.log(err)
-  })
+const data = await bucket.deleteMedia({
+  id: '5a4b18e12fff7ec0e3c13c65'
+})
 ```
 
 </div>
