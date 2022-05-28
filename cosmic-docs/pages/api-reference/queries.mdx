@@ -14,7 +14,11 @@ encoder tool may help](https://meyerweb.com/eric/tools/dencoder/).
 
 </Callout>
 
-## Query Keys
+## Parameters
+
+### Object attributes
+
+Construct queries to search by the following Object attributes.
 
 | Parameter     | Description                |
 | :------------ | :------------------------- |
@@ -32,7 +36,9 @@ encoder tool may help](https://meyerweb.com/eric/tools/dencoder/).
 | modified_by   | Object Modified by user id |
 | metadata.$key | Metadata value(s)          |
 
-## Query Selectors
+### Selectors
+
+Use the following selectors to build your queries.
 
 | Parameter | Description                                                                  |
 | --------- | ---------------------------------------------------------------------------- |
@@ -46,13 +52,13 @@ encoder tool may help](https://meyerweb.com/eric/tools/dencoder/).
 | $ne       | Matches all values that are not equal to a specified value.                  |
 | $nin      | Matches none of the values specified in an array.                            |
 
-## Evaluation
+### Evaluation
 
 | Parameter        | Description                                                          |
 | ---------------- | -------------------------------------------------------------------- |
 | $regex, $options | Search for string, use `$options: "i"` for case insensitive matches. |
 
-## Logic Operators
+### Logic Operators
 
 | Parameter | Description                                                         |
 | --------- | ------------------------------------------------------------------- |
@@ -1035,7 +1041,7 @@ cosmic get-objects --query '{"type":"products","metadata.categories":{$nin:["cat
 <Callout>
   **Want more information?**
   <br />
-  Our queries follow MongoDB methods of comparison and logical operators. See
+  Cosmic queries follow MongoDB methods of comparison and logical operators. See
   further documentation and more examples in the [MongoDB
   docs](https://docs.mongodb.com/manual/reference/operator/query/index.html).
 </Callout>
