@@ -3,15 +3,24 @@ import Tabs from '../../components/tabs'
 
 # Object Revisions
 
-The following endpoints allow you to get Revision of your Object in your Bucket.
+The following endpoints enable you to create and read Object revisions in your Bucket. (Updating and deleting not possible.)
 
 <Callout emoji="🔑">
   **Get your keys**
   <br />
-  Your `read` and `write` keys will be required to perform the following
-  requests. These can be found in <i>Your Bucket > Settings > API Access</i> in
-  your [Bucket Dashboard ](https://app.cosmicjs.com/login).
+  Your Bucket `slug`,`read_key`, and `write_key` will be required to perform the
+  following requests. These can be found in{' '}
+  <i>Your Bucket > Settings > API Access</i> in your [Bucket Dashboard
+  ](https://app.cosmicjs.com/login).
 </Callout>
+
+### Endpoints
+
+```bash
+GET /v2/buckets/${YOUR_BUCKET_SLUG}/objects/:object_id/revisions
+GET /v2/buckets/${YOUR_BUCKET_SLUG}/objects/:object_id/revisions/:revision_id
+POST /v2/buckets/${YOUR_BUCKET_SLUG}/objects/:object_id/revisions
+```
 
 ## Get Object Revisions
 
@@ -28,17 +37,15 @@ Get Object Revisions of Object with `id` in your Bucket.
 | skip            |          | Number | 0       | The number of Objects to skip                                                                                                                                |
 | pretty          |          |  Enum  | false   | true, Makes the response more reader-friendly                                                                                                                |
 
+**Definition**
+
+```bash
+GET /v2/buckets/${YOUR_BUCKET_SLUG}/objects/:id/revisions
+```
+
 **Methods**
 
 <Tabs>
-<div label="cURL">
-```bash
-curl https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/objects/:id/revisions
-	-d read_key=${YOUR_BUCKET_READ_KEY}
-```
-
-</div>
-
 <div label="Node.js">
 ```javascript
 bucket.getObjectRevisions()
@@ -47,18 +54,26 @@ bucket.getObjectRevisions()
 **Example Request**
 
 ```javascript
-const Cosmic = require('cosmicjs')
-const api = Cosmic()
-const bucket = api.bucket({
+const Cosmic = require('cosmicjs')() // empty init
+const bucket = Cosmic.bucket({
   slug: 'YOUR_BUCKET_SLUG',
   read_key: 'YOUR_BUCKET_READ_KEY'
 })
 
-bucket.getObjectRevisions({
+const data = await bucket.getObjectRevisions({
   id: '5ff75368c2dfa81a91695cec',
   props: 'slug,title,created_at',
   limit: 10
 })
+```
+
+</div>
+
+<div label="cURL">
+```bash
+curl https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/objects/:id/revisions \
+	-d read_key=${YOUR_BUCKET_READ_KEY} \
+	-G
 ```
 
 </div>
@@ -133,11 +148,12 @@ Returns a single Revision by `id` from your Object.
 | props           |          | String |         | Declare which properties to return in comma-separated string. Reference full Object for all available properties. Example: `?props=id,title,metadata.author` |
 | pretty          |          |  Enum  | false   | true, Makes the response more reader-friendly                                                                                                                |
 
-**Definition**
+**cURL**
 
 ```bash
-curl https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/objects/:id/revisions/${revision_id}
-	-d read_key=${YOUR_BUCKET_READ_KEY}
+curl https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/objects/:object_id/revisions/:revision_id \
+	-d read_key=${YOUR_BUCKET_READ_KEY} \
+	-G
 ```
 
 **Example Response**
