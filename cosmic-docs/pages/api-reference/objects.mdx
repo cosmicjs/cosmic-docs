@@ -242,17 +242,17 @@ const bucket = Cosmic.bucket({
   slug: 'YOUR_BUCKET_SLUG',
   read_key: 'YOUR_BUCKET_READ_KEY'
 })
-const props = `
-  title,
-  content,
-  metadata.parent.title,
-  metadata.parent.metadata.category.metadata.description
-`
+const props = [
+  'title',
+  'content',
+  'metadata.parent.title',
+  'metadata.parent.metadata.category.metadata.description'
+]
 const data = await bucket.getObjects({
   query: {
     type: 'posts'
   },
-  props,
+  props: props.toString(),
   limit: 1
 })
 ```
@@ -333,7 +333,7 @@ cosmic get-objects --limit 1 --query '{"type":"posts"}' --props title,content,me
 
 ## Get Object
 
-Returns a single Object from your Bucket.
+Returns a single Object in your Bucket.
 
 **Definition**
 
@@ -513,15 +513,15 @@ const bucket = Cosmic.bucket({
   slug: 'YOUR_BUCKET_SLUG',
   read_key: 'YOUR_BUCKET_READ_KEY'
 })
-const props = `
-  title,
-  metadata.description,
-  metadata.parent.title,
-  metadata.parent.metadata.category.title
-`
+const props = [
+  'title',
+  'content',
+  'metadata.parent.title',
+  'metadata.parent.metadata.category.title'
+]
 const data = await bucket.getObject({
   id: '5e4d7eb92850c717ea93dba1',
-  props
+  props: props.toString()
 })
 ```
 
@@ -628,17 +628,17 @@ const bucket = Cosmic.bucket({
   slug: 'YOUR_BUCKET_SLUG',
   read_key: 'YOUR_BUCKET_READ_KEY'
 })
-const props = `
-  title,
-  metadata.description,
-  metadata.parent.title,
-  metadata.parent.metadata.category.title
-`
+const props = [
+  'title',
+  'content',
+  'metadata.parent.title',
+  'metadata.parent.metadata.category.title'
+]
 const data = await bucket.getObjects({
   query: {
     slug: 'object-slug'
   },
-  props
+  props: props.toString()
 })
 ```
 

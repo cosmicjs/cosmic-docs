@@ -14,10 +14,27 @@ The following endpoints allow you to manage media in your Bucket.
   ](https://app.cosmicjs.com/login).
 </Callout>
 
+## Data Model
+
+| Attribute     |  Type  |                              Notes                               |
+| :------------ | :----: | :--------------------------------------------------------------: |
+| id            | String |                   Unique identifier for Media                    |
+| name          | String | Unique name of the uploaded file, used in Media Metafield value. |
+| original_name | String |                        Original file name                        |
+| size          | String |                        File size in bytes                        |
+| type          | String |                            File type                             |
+| bucket        | String |                            Bucket id                             |
+| created       | String |                           Date created                           |
+| location      | String |           Location of uploaded asset (used internally)           |
+| folder        | String |                           Media folder                           |
+| url           | String |                          Media CDN URL                           |
+| imgix_url     | String |     imgix URL (used for image processing and optimizations)      |
+| metadata      | Object |                       User-added metadata                        |
+
 ### Upload URL
 
 ```
-https://upload.cosmicjs.com/v2
+https://upload.cosmicjs.com
 ```
 
 ### Endpoints
@@ -232,9 +249,27 @@ curl https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/media/:id \
 }
 ```
 
-### Imgix
+## imgix
 
-[Imgix](https://imgix.com/) is included with every account. You can use the Imgix suite of image processing tools on the URL provided by the `imgix_url` property value. Check out the [Imgix documentation](https://docs.imgix.com/) for more info.
+[imgix](https://imgix.com/) is included with every account. You can use the imgix suite of image processing tools on the URL provided by the `imgix_url` property value. Check out the [imgix documentation](https://docs.imgix.com/) for more info.
+
+#### Before imgix
+
+The image is full size and not optimized:
+![Image](https://imgix.cosmicjs.com/8d508870-9988-11ec-9edf-8d8ed23fd38e-starry.jpg)
+
+```
+<img src="https://imgix.cosmicjs.com/8d508870-9988-11ec-9edf-8d8ed23fd38e-starry.jpg" />
+```
+
+#### After imgix
+
+Using imgix, we can create an optimized thumbnail by adding `?w=100&auto=format` to the end of the URL:
+![Image](https://imgix.cosmicjs.com/8d508870-9988-11ec-9edf-8d8ed23fd38e-starry.jpg?w=100&auto=format)
+
+```
+<img src="https://imgix.cosmicjs.com/8d508870-9988-11ec-9edf-8d8ed23fd38e-starry.jpg?w=100&auto=format" />
+```
 
 ## Add Media
 
