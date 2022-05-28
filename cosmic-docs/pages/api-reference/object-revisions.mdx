@@ -208,35 +208,6 @@ Add a new Revision to your Object.
 **Methods**
 
 <Tabs>
-<div label="cURL">
-```bash
-curl https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/objects/:id/revisions \
-	-d '{"title":"New Title of the Post","slug":"new-title-of-the-post"}' \
-	-H 'Content-Type: application/json' \
-	-H "Authorization: Bearer <YOUR_BUCKET_WRITE_KEY>"
-```
-
-**Example Response**
-
-```json
-{
-  "revision": {
-    "id": "5ff75368c2dfa81a91695cec",
-    "slug": "new-title-of-the-post",
-    "title": "New Title of the Post",
-    "content": "",
-    "metafields": [],
-    "bucket": "5f7357124b331d76c08de989",
-    "created_at": "2021-01-07T18:31:04.005Z",
-    "modified_at": "2021-01-07T18:31:04.005Z",
-    "status": "published",
-    "published_at": "2021-01-07T18:31:04.005Z",
-    "type": "posts"
-  }
-}
-```
-
-</div>
 
 <div label="Node.js">
 ```javascript
@@ -257,16 +228,17 @@ const params = {
   title: 'New Title of the Post',
   slug: 'new-title-of-the-post'
 }
-bucket
-  .addObjectRevision(params)
-  .then(data => {
-    console.log(data)
-  })
-  .catch(err => {
-    console.log(err)
-  })
+const data = await bucket.addObjectRevision(params)
 ```
 
+</div>
+<div label="cURL">
+```bash
+curl https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/objects/:id/revisions \
+	-d '{"title":"New Title of the Post","slug":"new-title-of-the-post"}' \
+	-H 'Content-Type: application/json' \
+	-H "Authorization: Bearer <YOUR_BUCKET_WRITE_KEY>"
+```
 </div>
 
 <div label="GraphQL">
@@ -310,3 +282,23 @@ cosmic add-object-revision --id object-id --title "New Title of the Post" --slug
 ```
 </div>
 </Tabs>
+
+**Example Response**
+
+```json
+{
+  "revision": {
+    "id": "5ff75368c2dfa81a91695cec",
+    "slug": "new-title-of-the-post",
+    "title": "New Title of the Post",
+    "content": "",
+    "metafields": [],
+    "bucket": "5f7357124b331d76c08de989",
+    "created_at": "2021-01-07T18:31:04.005Z",
+    "modified_at": "2021-01-07T18:31:04.005Z",
+    "status": "published",
+    "published_at": "2021-01-07T18:31:04.005Z",
+    "type": "posts"
+  }
+}
+```
