@@ -800,14 +800,7 @@ const params = {
     slug_field: false
   }
 }
-const data = await bucket
-  .addObject(params)
-  .then(data => {
-    console.log(data)
-  })
-  .catch(err => {
-    console.log(err)
-  })
+const data = await bucket.addObject(params)
 ```
 
 </div>
@@ -935,17 +928,10 @@ const bucket = Cosmic.bucket({
   slug: 'YOUR_BUCKET_SLUG',
   write_key: 'YOUR_BUCKET_WRITE_KEY'
 })
-const data = await bucket
-  .editObject({
-    id: '5ff75368c2dfa81a91695cec',
-    title: 'New Title Edit'
-  })
-  .then(data => {
-    console.log(data)
-  })
-  .catch(err => {
-    console.log(err)
-  })
+const data = await bucket.editObject({
+  id: '5ff75368c2dfa81a91695cec',
+  title: 'New Title Edit'
+})
 ```
 
 </div>
@@ -1062,16 +1048,9 @@ const bucket = Cosmic.bucket({
   slug: 'YOUR_BUCKET_SLUG',
   write_key: 'YOUR_BUCKET_WRITE_KEY'
 })
-const data = await bucket
-  .deleteObject({
-    id: '5ff75368c2dfa81a91695cec'
-  })
-  .then(data => {
-    console.log(data)
-  })
-  .catch(err => {
-    console.log(err)
-  })
+const data = await bucket.deleteObject({
+  id: '5ff75368c2dfa81a91695cec'
+})
 ```
 
 </div>
