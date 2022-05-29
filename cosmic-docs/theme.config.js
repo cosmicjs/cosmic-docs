@@ -85,10 +85,10 @@ export default {
   docsRepository: 'https://github.com/cosmicjs/cosmic-docs',
   titleSuffix: ' – Cosmic Docs',
   branch: 'main', // branch of docs
-  path: '/', // path of docs,
+  path: 'cosmic-docs', // path of docs,
   nextLinks: true,
   prevLinks: true,
-  customSearch: <DocSearch />, // NOT YET, pulling v1 pages
+  customSearch: <DocSearch />,
   logo: (
     <>
       <Logo height={32} classes="mt-1" />

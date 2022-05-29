@@ -1,0 +1,142 @@
+import Tabs from '../../components/tabs'
+
+# Basic
+
+We'll be using the [Simple React Blog](https://www.cosmicjs.com/apps/simple-react-blog) app template for the following basic query examples.
+
+## Get Objects by Type
+
+The following example shows you how to perform a basic query to get multiple Objects from your Cosmic Bucket using the `type` query parameter. Copy and paste this into your code editor or terminal to see actual data returned.
+
+**Endpoint**
+
+```bash
+GET /v2/buckets/${YOUR_BUCKET_SLUG}/objects
+```
+
+**Query**
+
+```json
+{
+  "type": "posts"
+}
+```
+
+<Tabs>
+<div label="Node.js">
+```javascript
+const api = require('cosmicjs')()
+const bucket = api.bucket({
+  slug: 'simple-react-blog',
+  read_key: '' // Find this in Bucket > Settings > API Access after logging in https://app.cosmicjs.com/login
+})
+const app = async () => {
+  const data = await bucket.getObjects({
+    query: {
+      type: 'posts'
+    },
+    props: 'slug,title,metadata.hero.imgix_url,metadata.author.title'
+  })
+  const posts = data.objects
+  console.log(posts)
+}
+app()
+```
+
+</div>
+<div label="cURL">
+```bash
+curl https://api.cosmicjs.com/v2/buckets/simple-react-blog/objects \
+	-d read_key="" \
+	--data-urlencode query='{"type":"posts"}' \
+	-d props="slug,title,metadata.hero.imgix_url,metadata.author.title" \
+	-G
+```
+</div>
+
+<div label="GraphQL">
+  <a href="https://cosmic-graphql-playground.netlify.app/?endpoint=https%3A%2F%2Fgraphql.cosmicjs.com%2Fv3&query=%7B%0A%20%20getObjects%28%0A%20%20%20%20bucket_slug%3A%20%22simple-react-blog%22%0A%20%20%20%20input%3A%20%7B%0A%20%20%20%20%20%20%20query%3A%20%7B%0A%20%20%20%20%20%20%20%20type%3A%20%22posts%22%0A%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20props%3A%20%22slug%2Ctitle%2Cmetadata.hero.imgix_url%2Cmetadata.author.title%22%0A%20%20%20%20%7D%0A%20%20%29%20%7B%0A%20%20%20%20%20objects%20%7B%0A%20%20%20%20%20%20slug%0A%20%20%20%20%20%20title%0A%20%20%20%20%20%20metadata%0A%20%20%20%20%7D%0A%20%20%20%20total%0A%20%20%7D%0A%7D">
+    Full screen
+  </a>
+  <iframe
+    src="https://cosmic-graphql-playground.netlify.app/?endpoint=https%3A%2F%2Fgraphql.cosmicjs.com%2Fv3&query=%7B%0A%20%20getObjects%28%0A%20%20%20%20bucket_slug%3A%20%22simple-react-blog%22%0A%20%20%20%20input%3A%20%7B%0A%20%20%20%20%20%20%20query%3A%20%7B%0A%20%20%20%20%20%20%20%20type%3A%20%22posts%22%0A%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20props%3A%20%22slug%2Ctitle%2Cmetadata.hero.imgix_url%2Cmetadata.author.title%22%0A%20%20%20%20%7D%0A%20%20%29%20%7B%0A%20%20%20%20%20objects%20%7B%0A%20%20%20%20%20%20slug%0A%20%20%20%20%20%20title%0A%20%20%20%20%20%20metadata%0A%20%20%20%20%7D%0A%20%20%20%20total%0A%20%20%7D%0A%7D"
+    frameBorder="0"
+    style={{ width: '100%', height: '470px' }}
+  ></iframe>
+</div>
+
+<div label="CLI">
+```bash
+cosmic get-objects --query '{"type":"posts","props":"slug,title,metadata.hero.imgix_url,metadata.author.title"}'
+```
+</div>
+</Tabs>
+
+## Get Object by Slug
+
+The following example shows you how to perform a basic query to get a single Object from your Cosmic Bucket using the `slug` query parameter. Copy and paste this into your code editor or terminal to see actual data returned.
+
+**Endpoint**
+
+```bash
+GET /v2/buckets/${YOUR_BUCKET_SLUG}/objects
+```
+
+**Query**
+
+```json
+{
+  "slug": "a-wonderful-blog-post-about-earth"
+}
+```
+
+<Tabs>
+<div label="Node.js">
+```javascript
+const api = require('cosmicjs')()
+const bucket = api.bucket({
+  slug: 'simple-react-blog',
+  read_key: '' // Find this in Bucket > Settings > API Access after logging in https://app.cosmicjs.com/login
+})
+const app = async () => {
+  const data = await bucket.getObjects({
+    query: {
+      slug: 'a-wonderful-blog-post-about-earth'
+    },
+    props: 'slug,title,metadata.hero.imgix_url,metadata.author.title'
+  })
+  const post = data.objects[0]
+  console.log(post)
+}
+app()
+```
+
+</div>
+<div label="cURL">
+```bash
+curl https://api.cosmicjs.com/v2/buckets/simple-react-blog/objects \
+	-d read_key="" \
+	--data-urlencode query='{"slug":"a-wonderful-blog-post-about-earth"}' \
+	-d props="slug,title,metadata.hero.imgix_url,metadata.author.title" \
+	-d limit=1 \
+	-G
+```
+</div>
+
+<div label="GraphQL">
+  <a href="https://cosmic-graphql-playground.netlify.app/?endpoint=https%3A%2F%2Fgraphql.cosmicjs.com%2Fv3&query=%7B%0A%20%20getObjects%28%0A%20%20%20%20bucket_slug%3A%20%22simple-react-blog%22%0A%20%20%20%20input%3A%20%7B%0A%20%20%20%20%20%20%20query%3A%20%7B%0A%20%20%20%20%20%20%20%20slug%3A%20%22a-wonderful-blog-post-about-earth%22%0A%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20props%3A%20%22slug%2Ctitle%2Cmetadata.hero.imgix_url%2Cmetadata.author.title%22%0A%20%20%20%20%09limit%3A%201%0A%20%20%20%20%7D%0A%20%20%29%20%7B%0A%20%20%20%20%20objects%20%7B%0A%20%20%20%20%20%20title%0A%20%20%20%20%20%20slug%0A%20%20%20%20%20%20metadata%0A%20%20%20%20%7D%0A%20%20%20%20total%0A%20%20%7D%0A%7D">
+    Full screen
+  </a>
+  <iframe
+    src="https://cosmic-graphql-playground.netlify.app/?endpoint=https%3A%2F%2Fgraphql.cosmicjs.com%2Fv3&query=%7B%0A%20%20getObjects%28%0A%20%20%20%20bucket_slug%3A%20%22simple-react-blog%22%0A%20%20%20%20input%3A%20%7B%0A%20%20%20%20%20%20%20query%3A%20%7B%0A%20%20%20%20%20%20%20%20slug%3A%20%22a-wonderful-blog-post-about-earth%22%0A%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20props%3A%20%22slug%2Ctitle%2Cmetadata.hero.imgix_url%2Cmetadata.author.title%22%0A%20%20%20%20%09limit%3A%201%0A%20%20%20%20%7D%0A%20%20%29%20%7B%0A%20%20%20%20%20objects%20%7B%0A%20%20%20%20%20%20title%0A%20%20%20%20%20%20slug%0A%20%20%20%20%20%20metadata%0A%20%20%20%20%7D%0A%20%20%20%20total%0A%20%20%7D%0A%7D"
+    frameBorder="0"
+    style={{ width: '100%', height: '470px' }}
+  ></iframe>
+</div>
+
+<div label="CLI">
+```bash
+cosmic get-objects --limit 1 --query '{"slug":"a-wonderful-blog-post-about-earth","props":"slug,title,metadata.hero.imgix_url,metadata.author.title"}'
+```
+</div>
+</Tabs>
