@@ -3,7 +3,7 @@ import Tabs from '../../components/tabs'
 
 # Basic
 
-The following code examples feature the [Simple React Blog](https://www.cosmicjs.com/apps/simple-react-blog) app template. You can run the code examples as is or install the template to your account then switch `YOUR_BUCKET_SLUG` and `YOUR_BUCKET_READ_KEY` to your Bucket access keys. You can find these values located in <i>Your Bucket > Settings > API Access</i> after logging in to your <a href="https://app.cosmicjs.com">Cosmic dashboard</a>.
+The following code examples feature content from the [Simple React Blog](https://www.cosmicjs.com/apps/simple-react-blog) app template. You can run the code examples as is or install the template to your account then switch `YOUR_BUCKET_SLUG` and `YOUR_BUCKET_READ_KEY` to your Bucket access keys. You can find these values located in <i>Your Bucket > Settings > API Access</i> after logging in to your <a href="https://app.cosmicjs.com">Cosmic dashboard</a>.
 
 <Callout emoji="💡">
   **Quick Tip**
@@ -19,14 +19,14 @@ Get multiple Objects from your Cosmic Bucket using the `type` query parameter.
 <Tabs>
 <div label="Node.js">
 **Step 1.**
-Run the following commands
+Run the following commands to add the neccessary folder structure and dependencies.
 ```bash
 mkdir cosmic-multiple-example
 cd cosmic-multiple-example
 yarn add cosmicjs
 ```
 **Step 2.**
-Create `index.js` file with the following code
+Create `index.js` file with the following code.
 ```javascript
 const api = require('cosmicjs')() // empty init
 const bucket = api.bucket({
@@ -46,7 +46,7 @@ const app = async () => {
 app()
 ```
 **Step 3.**
-Run the app
+Run the app.
 ```bash
 node index.js
 ```
@@ -74,8 +74,17 @@ curl https://api.cosmicjs.com/v2/buckets/simple-react-blog/objects \
 </div>
 
 <div label="CLI">
+**Step 1.**
+Run the following commands to install the Cosmic CLI and connect to your Bucket.
 ```bash
-cosmic get-objects --query '{"type":"posts","props":"slug,title,metadata.hero.imgix_url,metadata.author.title"}'
+npx cosmic-cli
+cosmic login
+cosmic use-bucket simple-react-blog
+```
+**Step 2.**
+Run the following command to get content.
+```bash
+cosmic get-objects --query '{"type":"posts"}' --props="slug,title,metadata.hero.imgix_url,metadata.author.title"
 ```
 </div>
 </Tabs>
@@ -87,14 +96,14 @@ Get a single Object from your Cosmic Bucket using the `slug` query parameter.
 <Tabs>
 <div label="Node.js">
 **Step 1.**
-Run the following commands
+Run the following commands to add the neccessary folder structure and dependencies.
 ```bash
 mkdir cosmic-single-example
 cd cosmic-single-example
 yarn add cosmicjs
 ```
 **Step 2.**
-Create `index.js` file with the following code
+Create `index.js` file with the following code.
 ```javascript
 const api = require('cosmicjs')() // empty init
 const bucket = api.bucket({
@@ -114,7 +123,7 @@ const app = async () => {
 app()
 ```
 **Step 3.**
-Run the app
+Run the app.
 ```bash
 node index.js
 ```
@@ -124,7 +133,7 @@ node index.js
 curl https://api.cosmicjs.com/v2/buckets/simple-react-blog/objects \
 	-d read_key="" \
 	--data-urlencode query='{"slug":"a-wonderful-blog-post-about-earth"}' \
-	-d props="slug,title,metadata.hero.imgix_url,metadata.author.title" \
+	-d props="slug,title,content,metadata.hero.imgix_url,metadata.author.title" \
 	-d limit=1 \
 	-G
 ```
@@ -142,8 +151,17 @@ curl https://api.cosmicjs.com/v2/buckets/simple-react-blog/objects \
 </div>
 
 <div label="CLI">
+**Step 1.**
+Run the following commands to install the Cosmic CLI and connect to your Bucket.
 ```bash
-cosmic get-objects --limit 1 --query '{"slug":"a-wonderful-blog-post-about-earth","props":"slug,title,metadata.hero.imgix_url,metadata.author.title"}'
+npx cosmic-cli
+cosmic login
+cosmic use-bucket simple-react-blog
+```
+**Step 2.**
+Run the following command to get content.
+```bash
+cosmic get-objects --limit 1 --query '{"slug":"a-wonderful-blog-post-about-earth"}' --props="slug,title,content,metadata.hero.imgix_url,metadata.author.title"
 ```
 </div>
 </Tabs>
