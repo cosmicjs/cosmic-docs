@@ -1,34 +1,31 @@
+import Callout from 'nextra-theme-docs/callout'
 import Tabs from '../../components/tabs'
 
 # Basic
 
-We'll be using the [Simple React Blog](https://www.cosmicjs.com/apps/simple-react-blog) app template for the following basic query examples. You can install the demo content into your account then in the following code examples, switch the `BUCKET_SLUG` and `BUCKET_READ_KEY` to your Bucket access keys. You can find these values located in <i>Your Bucket > Settings > API Access</i> after logging in to your <a href="https://app.cosmicjs.com">Cosmic dashboard</a>.
+We'll be using the [Simple React Blog](https://www.cosmicjs.com/apps/simple-react-blog) app template for the following examples. You can:
 
-## Get Objects by Type
+1. Run the code examples as is.
+2. Install the template demo content into a Bucket on your account then switch `YOUR_BUCKET_SLUG` and `YOUR_BUCKET_READ_KEY` to your Bucket access keys. You can find these values located in <i>Your Bucket > Settings > API Access</i> after logging in to your <a href="https://app.cosmicjs.com">Cosmic dashboard</a>.
 
-The following example shows you how to perform a basic query to get multiple Objects from your Cosmic Bucket using the `type` query parameter. Copy and paste this into your code editor or terminal to see actual data returned.
+<Callout emoji="💡">
+  **Quick Tip**
+  <br />
+  Use `props` to limit the payload size and get only the data you need. Omit
+  this parameter to get the full Object response.
+</Callout>
 
-**Endpoint**
+## Get Objects by type
 
-```bash
-GET /v2/buckets/${YOUR_BUCKET_SLUG}/objects
-```
-
-**Query**
-
-```json
-{
-  "type": "posts"
-}
-```
+Get multiple Objects from your Cosmic Bucket using the `type` query parameter.
 
 <Tabs>
 <div label="Node.js">
 ```javascript
-const api = require('cosmicjs')()
+const api = require('cosmicjs')() // empty init
 const bucket = api.bucket({
-  slug: 'simple-react-blog',
-  read_key: '' // Find this in Bucket > Settings > API Access after logging in https://app.cosmicjs.com/login
+  slug: 'simple-react-blog', // YOUR_BUCKET_SLUG
+  read_key: '' // YOUR_BUCKET_READ_KEY
 })
 const app = async () => {
   const data = await bucket.getObjects({
@@ -72,31 +69,17 @@ cosmic get-objects --query '{"type":"posts","props":"slug,title,metadata.hero.im
 </div>
 </Tabs>
 
-## Get Object by Slug
+## Get Object by slug
 
-The following example shows you how to perform a basic query to get a single Object from your Cosmic Bucket using the `slug` query parameter. Copy and paste this into your code editor or terminal to see actual data returned.
-
-**Endpoint**
-
-```bash
-GET /v2/buckets/${YOUR_BUCKET_SLUG}/objects
-```
-
-**Query**
-
-```json
-{
-  "slug": "a-wonderful-blog-post-about-earth"
-}
-```
+Get a single Object from your Cosmic Bucket using the `slug` query parameter.
 
 <Tabs>
 <div label="Node.js">
 ```javascript
-const api = require('cosmicjs')()
+const api = require('cosmicjs')() // empty init
 const bucket = api.bucket({
-  slug: 'simple-react-blog',
-  read_key: '' // Find this in Bucket > Settings > API Access after logging in https://app.cosmicjs.com/login
+  slug: 'simple-react-blog', // YOUR_BUCKET_SLUG
+  read_key: '' // YOUR_READ_KEY
 })
 const app = async () => {
   const data = await bucket.getObjects({
