@@ -9,7 +9,7 @@ The following code examples uses a demo Bucket which includes product data for a
 2. Go to Bucket Settings > Import / Export and install this [Bucket export file](https://cdn.cosmicjs.com/68c19cc0-e04f-11ec-bb19-d9085ce408df-products-bucket.json).
 3. In the following examples, switch `YOUR_BUCKET_SLUG` and `YOUR_BUCKET_READ_KEY` to your Bucket access keys. You can find these values located in <i>Your Bucket > Settings > API Access</i> after logging in to your <a href="https://app.cosmicjs.com">Cosmic dashboard</a>.
 
-## Get Products by category
+## Get products by category
 
 Get Objects from your Cosmic Bucket using the `metadata` query parameter.
 
@@ -132,7 +132,7 @@ cosmic get-objects --query '{"type":"products","metadata.category":"Electronics"
 ]
 ```
 
-## Get Products by multiple categories $in
+## Get products by multiple categories using $in
 
 The following example uses the `$in` logic operator to search products by multiple metafield values.
 
@@ -261,7 +261,7 @@ cosmic get-objects --query '{"type":"products","metadata.category":{"$in":["Clot
 ]
 ```
 
-## Get Products by price $lte
+## Get products by price using $lte
 
 The following example uses the `$lte` logic operator to search products by price.
 
