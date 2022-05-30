@@ -41,7 +41,7 @@ const app = async () => {
     props: 'slug,title,metadata.hero.imgix_url,metadata.author.title'
   })
   const posts = data.objects
-  console.log(posts)
+  console.log(JSON.stringify(posts, null, 2))
 }
 app()
 ```
@@ -77,8 +77,7 @@ curl https://api.cosmicjs.com/v2/buckets/simple-react-blog/objects \
 **Step 1.**
 Run the following commands to install the Cosmic CLI and connect to your Bucket.
 ```bash
-npx cosmic-cli
-cosmic login
+yarn global add cosmic-cli
 cosmic use-bucket simple-react-blog
 ```
 **Step 2.**
@@ -88,6 +87,37 @@ cosmic get-objects --query '{"type":"posts"}' --props "slug,title,metadata.hero.
 ```
 </div>
 </Tabs>
+
+**Expected Result**
+
+```json
+[
+  {
+    "slug": "a-wonderful-blog-post-about-earth",
+    "title": "A Wonderful Blog Post About Earth",
+    "metadata": {
+      "hero": {
+        "imgix_url": "https://imgix.cosmicjs.com/56363630-af74-11e7-b864-313f959a776e-react-blog.jpg"
+      },
+      "author": {
+        "title": "John Doe"
+      }
+    }
+  },
+  {
+    "slug": "another-wonderful-blog-post-about-earth",
+    "title": "Another Wonderful Blog Post About Earth",
+    "metadata": {
+      "hero": {
+        "imgix_url": "https://imgix.cosmicjs.com/99fd6650-23f5-11e7-875c-3f5dc9c15c2b-beach.jpg"
+      },
+      "author": {
+        "title": "Jane Doe"
+      }
+    }
+  }
+]
+```
 
 ## Get Object by slug
 
@@ -118,7 +148,7 @@ const app = async () => {
     props: 'slug,title,metadata.hero.imgix_url,metadata.author.title'
   })
   const post = data.objects[0]
-  console.log(post)
+  console.log(JSON.stringify(post, null, 2))
 }
 app()
 ```
@@ -154,8 +184,7 @@ curl https://api.cosmicjs.com/v2/buckets/simple-react-blog/objects \
 **Step 1.**
 Run the following commands to install the Cosmic CLI and connect to your Bucket.
 ```bash
-npx cosmic-cli
-cosmic login
+yarn global add cosmic-cli
 cosmic use-bucket simple-react-blog
 ```
 **Step 2.**
@@ -165,3 +194,20 @@ cosmic get-objects --limit 1 --query '{"slug":"a-wonderful-blog-post-about-earth
 ```
 </div>
 </Tabs>
+
+**Expected Result**
+
+```json
+{
+  "slug": "a-wonderful-blog-post-about-earth",
+  "title": "A Wonderful Blog Post About Earth",
+  "metadata": {
+    "hero": {
+      "imgix_url": "https://imgix.cosmicjs.com/56363630-af74-11e7-b864-313f959a776e-react-blog.jpg"
+    },
+    "author": {
+      "title": "John Doe"
+    }
+  }
+}
+```
