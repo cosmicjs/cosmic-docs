@@ -18,6 +18,15 @@ Get multiple Objects from your Cosmic Bucket using the `type` query parameter.
 
 <Tabs>
 <div label="Node.js">
+**Step 1.**
+Run the following commands
+```bash
+mkdir cosmic-multiple-example
+cd cosmic-multiple-example
+yarn add cosmicjs
+```
+**Step 2.**
+Create `index.js` file with the following code
 ```javascript
 const api = require('cosmicjs')() // empty init
 const bucket = api.bucket({
@@ -35,6 +44,11 @@ const app = async () => {
   console.log(posts)
 }
 app()
+```
+**Step 3.**
+Run the app
+```bash
+node index.js
 ```
 
 </div>
@@ -72,6 +86,15 @@ Get a single Object from your Cosmic Bucket using the `slug` query parameter.
 
 <Tabs>
 <div label="Node.js">
+**Step 1.**
+Run the following commands
+```bash
+mkdir cosmic-single-example
+cd cosmic-single-example
+yarn add cosmicjs
+```
+**Step 2.**
+Create `index.js` file with the following code
 ```javascript
 const api = require('cosmicjs')() // empty init
 const bucket = api.bucket({
@@ -90,7 +113,11 @@ const app = async () => {
 }
 app()
 ```
-
+**Step 3.**
+Run the app
+```bash
+node index.js
+```
 </div>
 <div label="cURL">
 ```bash
