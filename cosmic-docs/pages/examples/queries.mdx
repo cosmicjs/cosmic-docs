@@ -53,7 +53,7 @@ We will also be working with the `props` parameter in the requests to get concis
 Retrieves all of the objects that are `products`.
 
 <Tabs>
-  <div label="Node.js">
+<div label="Node.js">
 ```javascript
 bucket.getObjects({
   query: {
@@ -217,19 +217,20 @@ The response for this query would look like:
 You may need to get a product based on its ID that gets submitted via a hidden field in a form.
 
 <Tabs>
+<div label="Node.js">
+```javascript
+bucket.getObjects({
+  query: {
+    id: "6283bc5a0c164700097679ff",
+  },
+  props: "slug,title,metadata.price,metadata.quantity,metadata.free_shipping",
+  limit: 3
+})
+```
+</div>
 <div label="REST">
   ```bash
   GET ${BASE_URL}/buckets/${YOUR_BUCKET_SLUG}/objects?read_key=${YOUR_BUCKET_READ_KEY}&query={"id":"6283bc5a0c164700097679ff"}
-  ```
-
-</div>
-<div label="Node.js">
-  ```javascript
-  bucket.getObjects({
-      query: {
-        id: "6283bc5a0c164700097679ff",
-      },
-    })
   ```
 
 </div>
@@ -275,19 +276,20 @@ The response will look like:
 Now you may need to get a few different products based on their IDs that get submitted when a user places an order.
 
 <Tabs>
+<div label="Node.js">
+```javascript
+bucket.getObjects({
+  query: {
+    id: ["6283c5a330b2e10009e43610","6283e0235882c30009b49e5f"],
+  },
+  props: "slug,title,metadata.price,metadata.quantity,metadata.free_shipping",
+  limit: 3
+})
+```
+</div>
 <div label="REST">
   ```bash
   GET ${BASE_URL}/buckets/${YOUR_BUCKET_SLUG}/objects?read_key=${YOUR_BUCKET_READ_KEY}&query={"id":["6283c5a330b2e10009e43610","6283e0235882c30009b49e5f"]}
-  ```
-
-</div>
-<div label="Node.js">
-  ```javascript
-  bucket.getObjects({
-      query: {
-        id: ["6283c5a330b2e10009e43610","6283e0235882c30009b49e5f"],
-      },
-    })
   ```
 
 </div>
@@ -333,21 +335,22 @@ The response will look like:
 You may need to filter products based on the IDs of items that have been sold out or something. In this case, we're filtering out the `Blouse` product because it's not available in certain sizes. This query will give us all of the products _except_ for the `Blouse`.
 
 <Tabs>
+<div label="Node.js">
+```javascript
+bucket.getObjects({
+  query: {
+    id: {
+      "$ne":"6283df2391f3660009da194b"
+    },
+  },
+  props: "slug,title,metadata.price,metadata.quantity,metadata.free_shipping",
+  limit: 3
+})
+```
+</div>
 <div label="REST">
   ```bash
   GET ${BASE_URL}/buckets/${YOUR_BUCKET_SLUG}/objects?read_key=${YOUR_BUCKET_READ_KEY}&query={"id":{"$ne":"6283df2391f3660009da194b"}}
-  ```
-
-</div>
-<div label="Node.js">
-  ```javascript
-  bucket.getObjects({
-      query: {
-        id: {
-          "$ne":"6283df2391f3660009da194b"
-        },
-      },
-    })
   ```
 
 </div>
@@ -397,23 +400,24 @@ You may have a set of products you have on sale and you don't want them to show 
 In this example, we have the IDs of `Sandwich`, `Extension Cord`, and `Pineapple` in the request. So we will get a list of all of the products, excluding these 3.
 
 <Tabs>
+<div label="Node.js">
+```javascript
+bucket.getObjects({
+  query: {
+    id: {
+      "$nin":["6283dd60803a1a0009112e32","6283de686605090009c58739", "6283dddc6605090009c58736"]
+    },
+  },
+  props: "slug,title,metadata.price,metadata.quantity,metadata.free_shipping",
+  limit: 3
+})
+```  
+</div>
 <div label="REST">
   ```bash
   GET ${BASE_URL}/buckets/${YOUR_BUCKET_SLUG}/objects?read_key=${YOUR_BUCKET_READ_KEY}&query={"id":{"$nin":["6283dd60803a1a0009112e32","6283de686605090009c58739", "6283dddc6605090009c58736"]}}
   ```
 
-</div>
-<div label="Node.js">
-  ```javascript
-  bucket.getObjects({
-      query: {
-        id: {
-          "$nin":["6283dd60803a1a0009112e32","6283de686605090009c58739", "6283dddc6605090009c58736"]
-        },
-      },
-    })
-  ```
-  
 </div>
 <div label="GraphQL">
   ```javascript
@@ -459,19 +463,20 @@ The response will look like:
 You might use a product slug in the URL of your application depending on how you set things up. In this case, you can fetch the product with that slug value.
 
 <Tabs>
+<div label="Node.js">
+```javascript
+bucket.getObjects({
+  query: {
+    slug:"hot-pot",
+  },
+  props: "slug,title,metadata.price,metadata.quantity,metadata.free_shipping",
+  limit: 3
+})
+```
+</div>
 <div label="REST">
   ```bash
   GET $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/objects?read_key=${YOUR_BUCKET_READ_KEY}&query={"slug":"hot-pot"}
-  ```
-
-</div>
-<div label="Node.js">
-  ```javascript
-  bucket.getObjects({
-      query: {
-        slug:"hot-pot",
-      },
-    })
   ```
 
 </div>
@@ -517,22 +522,22 @@ The response will look like:
 You may have some products you want to get specifically based on the products a customer has viewed. Maybe the slugs are stored in the local storage for data analytics and you want to look at a list of products based on these slugs.
 
 <Tabs>
+<div label="Node.js">
+```javascript
+bucket.getObjects({
+  query: {
+    "$or": [{"slug":"pasta"},{"slug":"drill"}]
+  },
+  props: "slug,title,metadata.price,metadata.quantity,metadata.free_shipping",
+  limit: 3
+})
+```
+</div>
 <div label="REST">
   ```bash
   GET $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/objects?read_key=${YOUR_BUCKET_READ_KEY}&query={"$or":[{"slug":"pasta"},{"slug":"drill"}]}
   ```
 
-</div>
-<div label="Node.js">
-  ```javascript
-  bucket.getObjects({
-      query: {
-          "$or": [{"slug":"pasta"},{"slug":"drill"}]
-        },
-      },
-    })
-  ```
-  
 </div>
 <div label="GraphQL">
   ```javascript
@@ -578,22 +583,23 @@ The `content` value can be any string, but for our products, we'll consider it t
 You can also specify a few different options, like in this example, making the search case-insensitive with `$options`.
 
 <Tabs>
+<div label="Node.js">
+```javascript
+bucket.getObjects({
+  query: {
+    content: {
+      "$regex": "is",
+      "$options": "i",
+    },
+  },
+  props: "slug,title,metadata.price,metadata.quantity,metadata.free_shipping",
+  limit: 3
+})
+```
+</div>
 <div label="REST">
   ```bash
   GET $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/objects?read_key=${YOUR_BUCKET_READ_KEY}&query={"content":{"$regex":"is","$options":"i"}}
-  ```
-
-</div>
-<div label="Node.js">
-  ```javascript
-  bucket.getObjects({
-      query: {
-        content: {
-          "$regex": "is",
-          "$options": "i",
-        },
-      },
-    })
   ```
 
 </div>
@@ -646,23 +652,23 @@ The metadata values are the ones you defined for your product object in Cosmic. 
 Customers will often want to sort and filter products by price and you'll be able to return the exact products they are looking for.
 
 <Tabs>
+<div label="Node.js">
+```javascript
+bucket.getObjects({
+  query: {
+    "type":"products",
+    "metadata.price": 19.99
+  },
+  props: "slug,title,metadata.price,metadata.quantity,metadata.free_shipping",
+  limit: 3
+})
+```
+</div>
 <div label="REST">
   ```bash
   GET $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/objects?read_key=${YOUR_BUCKET_READ_KEY}&query={"type":"products","metadata.price":19.99}
   ```
 
-</div>
-<div label="Node.js">
-  ```javascript
-  bucket.getObjects({
-      query: {
-          "type":"products",
-          "metadata.price": 19.99
-        },
-      },
-    })
-  ```
-  
 </div>
 <div label="GraphQL">
   ```javascript
@@ -707,21 +713,21 @@ The response will look like:
 Again, customers like to sort and filter products based on what they're looking for. This query will return a list of products that are either in the `Electronics` category or that offer free shipping on products.
 
 <Tabs>
+<div label="Node.js">
+```javascript
+bucket.getObjects({
+  query: {
+    type: "products",
+    "$or":[{"metadata.category":"Electronics"},{"metadata.free_shipping":true}]
+  },
+  props: "slug,title,metadata.price,metadata.quantity,metadata.free_shipping",
+  limit: 3
+})
+```
+</div>
 <div label="REST">
   ```bash
   GET $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/objects?read_key=${YOUR_BUCKET_READ_KEY}&query={"type": "products","$or":[{"metadata.category":"Electronics"},{"metadata.free_shipping":true}]}
-  ```
-
-</div>
-<div label="Node.js">
-  ```javascript
-  bucket.getObjects({
-      query: {
-          type: "products",
-          "$or":[{"metadata.category":"Electronics"},{"metadata.free_shipping":true}]
-        },
-      },
-    })
   ```
 
 </div>
@@ -768,21 +774,21 @@ The response will look like:
 Similar to the query above, this will let customers filter products and return very specific results. In this example, we will only return products that have less than 50 in stock _and_ have a `price` under $79.99.
 
 <Tabs>
+<div label="Node.js">
+```javascript
+bucket.getObjects({
+  query: {
+    type: "products",
+    "$and":[{"metadata.quantity":{"$lt":50}},{"metadata.price":{"$lt":79.99}}]
+  },
+  props: "slug,title,metadata.price,metadata.quantity,metadata.free_shipping",
+  limit: 3
+})
+```
+</div>
 <div label="REST">
   ```bash
   GET $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/objects?read_key=${YOUR_BUCKET_READ_KEY}&query={"type": "products","$and":[{"metadata.quantity":{"$lt":50}},{"metadata.price":{"$lt":79.99}}]}
-  ```
-
-</div>
-<div label="Node.js">
-  ```javascript
-  bucket.getObjects({
-      query: {
-          type: "products",
-          "$and":[{"metadata.quantity":{"$lt":50}},{"metadata.price":{"$lt":79.99}}]
-        },
-      },
-    })
   ```
 
 </div>
@@ -829,23 +835,23 @@ The response will look like:
 When customers are shopping, they might want to see what the higher end products you have are. For example, maybe they want to see all of the products that cost over $100.
 
 <Tabs>
+<div label="Node.js">
+```javascript
+bucket.getObjects({
+  query: {
+    type: "products",
+    "metadata.price":{
+      "$gte":100
+    }
+  },
+  props: "slug,title,metadata.price,metadata.quantity,metadata.free_shipping",
+  limit: 3
+})
+```
+</div>
 <div label="REST">
   ```bash
   GET $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/objects?read_key=${YOUR_BUCKET_READ_KEY}&query={"type": "products","metadata.price":{"$gte":100}}
-  ```
-
-</div>
-<div label="Node.js">
-  ```javascript
-  bucket.getObjects({
-      query: {
-          type: "products",
-          "metadata.price":{
-            "$gte":100
-          }
-        },
-      },
-    })
   ```
 
 </div>
@@ -894,21 +900,21 @@ The response will look like:
 To get a list of products that particular match a category or an option, you can query based on the metadata values.
 
 <Tabs>
+<div label="Node.js">
+```javascript
+bucket.getObjects({
+  query: {
+    type: "products",
+    "metadata.category": "Food"
+  },
+  props: "slug,title,metadata.price,metadata.quantity,metadata.free_shipping",
+  limit: 3
+})
+```
+</div>
 <div label="REST">
   ```bash
   GET $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/objects?read_key=${YOUR_BUCKET_READ_KEY}&query={"type": "products","metadata.category": "Food"}
-  ```
-
-</div>
-<div label="Node.js">
-  ```javascript
-  bucket.getObjects({
-      query: {
-          type: "products",
-          "metadata.category": "Food"
-        },
-      },
-    })
   ```
 
 </div>
@@ -955,23 +961,23 @@ The response will look like:
 Sometimes the product values that you work with on the front-end and back-end might vary a little. For example, with the `category`, you might need to distinguish your query based on the key value instead of the display name.
 
 <Tabs>
+<div label="Node.js">
+```javascript
+bucket.getObjects({
+  query: {
+    type: "products",
+    "metadata.details": {
+      "brand":"Samsung"
+    }
+  },
+  props: "slug,title,metadata.price,metadata.quantity,metadata.free_shipping",
+  limit: 3
+})
+```
+</div>
 <div label="REST">
   ```bash
   GET $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/objects?read_key=${YOUR_BUCKET_READ_KEY}&query={"type": "products","metadata.details":{"brand":"Samsung"}}
-  ```
-
-</div>
-<div label="Node.js">
-  ```javascript
-  bucket.getObjects({
-      query: {
-          type: "products",
-          "metadata.details": {
-            "brand":"Samsung"
-          }
-        },
-      },
-    })
   ```
 
 </div>
@@ -1020,23 +1026,23 @@ The response will look like:
 A customer might want to look at all of the products you offer _except_ for those in the `Electronics` category.
 
 <Tabs>
+<div label="Node.js">
+```javascript
+bucket.getObjects({
+  query: {
+    type: "products",
+    "metadata.category": {
+      "$ne": "Electronics"
+    }
+  },
+  props: "slug,title,metadata.price,metadata.quantity,metadata.free_shipping",
+  limit: 3
+})
+```
+</div>
 <div label="REST">
   ```bash
   GET $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/objects?read_key=${YOUR_BUCKET_READ_KEY}&query={"type": "products","metadata.category":{"$ne":"Electronics"}}
-  ```
-
-</div>
-<div label="Node.js">
-  ```javascript
-  bucket.getObjects({
-      query: {
-          type: "products",
-          "metadata.category": {
-            "$ne": "Electronics"
-          }
-        },
-      },
-    })
   ```
 
 </div>
@@ -1085,21 +1091,21 @@ The response will look like:
 A customer might want to know if they can shop by color _and_ size can be expedited to them. So you could have a list of `options` on your products to make this search faster.
 
 <Tabs>
+<div label="Node.js">
+```javascript
+bucket.getObjects({
+  query: {
+    type: "products",
+    "metadata.options":["color","expedited"]
+  },
+  props: "slug,title,metadata.price,metadata.quantity,metadata.free_shipping",
+  limit: 3
+})
+```
+</div>
 <div label="REST">
   ```bash
   GET $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/objects?read_key=${YOUR_BUCKET_READ_KEY}&query={"type": "products","metadata.options":["Color","Size"]}
-  ```
-
-</div>
-<div label="Node.js">
-  ```javascript
-  bucket.getObjects({
-      query: {
-          type: "products",
-          "metadata.options":["color","expedited"]
-        },
-      },
-    })
   ```
 
 </div>
@@ -1146,23 +1152,23 @@ The response will look like:
 When customers are evaluating products, they might want to look at all of the products that let them customize their `size` regardless of any other options available. So if a product has the `size` option enabled, then it will be return in a list.
 
 <Tabs>
+<div label="Node.js">
+```javascript
+bucket.getObjects({
+  query: {
+    type: "products",
+    "metadata.options": {
+      "$in":["Size"]
+    }
+  },
+  props: "slug,title,metadata.price,metadata.quantity,metadata.free_shipping",
+  limit: 3
+})
+```
+</div>
 <div label="REST">
   ```bash
   GET $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/objects?read_key=${YOUR_BUCKET_READ_KEY}&query={"type": "products","metadata.options":{"$in":["Size"]}}
-  ```
-
-</div>
-<div label="Node.js">
-  ```javascript
-  bucket.getObjects({
-      query: {
-          type: "products",
-          "metadata.options": {
-            "$in":["Size"]
-          }
-        },
-      },
-    })
   ```
 
 </div>
@@ -1218,18 +1224,18 @@ Sometimes customers will want to see the products you have that don't meet certa
 
 </div>
 <div label="Node.js">
-  ```javascript
-  bucket.getObjects({
-      query: {
-          type: "products",
-          "metadata.options": {
-            "$nin":["Size"]
-          }
-        },
-      },
-    })
-  ```
-
+```javascript
+bucket.getObjects({
+  query: {
+    type: "products",
+    "metadata.options": {
+      "$nin":["Size"]
+    }
+  },
+  props: "slug,title,metadata.price,metadata.quantity,metadata.free_shipping",
+  limit: 3
+})
+```
 </div>
 <div label="GraphQL">
   ```javascript
