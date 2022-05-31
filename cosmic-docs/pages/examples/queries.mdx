@@ -2,15 +2,13 @@ import Tabs from '../../components/tabs'
 
 # Queries
 
-There will be times when you need to retrieve data from Cosmic in more complex ways than simply querying a record by its slug or ID. For example, you might have an online store with a catalog of products that need to be searched through based on the price, quanity, or a number of other properties.
-
-To show off some of these advanced queries, we're going to use some data stored in Cosmic for an e-commerce platform and perform some useful queries on it.
+To show some of the advanced queries you can do, we're going to use some data stored in Cosmic for an e-commerce platform and perform some useful queries on it.
 
 ## Getting Started
 
 You'll need to create a new Cosmic project in [your dashboard](https://app.cosmicjs.com/projects) by clicking the `Add New Project` button.
 
-![add new project button](https://imgix.cosmicjs.com/387be820-db6f-11ec-bb19-d9085ce408df-addprojectbutton.png)
+![add new project button](https://imgix.cosmicjs.com/b80673d0-e0f6-11ec-bb19-d9085ce408df-Screenshot-from-2022-05-31-10-31-01.png)
 
 This will take you to a screen where you can enter the project name and decide if you want to use a template or not. For this project, keep all of the default selections and name the project `The Store`.
 
@@ -20,7 +18,7 @@ You should see a screen like this when the project is created. Cosmic calls thes
 
 ![bucket success page](https://imgix.cosmicjs.com/38a25be0-db6f-11ec-bb19-d9085ce408df-createdbucket.png)
 
-From here, you can click `Skip to bucket settings`. Then you'll need to click the `Import/Export` button because we have an example dataset you can work with. You can download the [bucket data here](https://imgix.cosmicjs.com/40a1fb70-dc73-11ec-bb19-d9085ce408df-the-store-production-products.json). Then you can upload it to your bucket through the `Import Bucket` widget.
+From here, you can click `Skip to bucket settings`. Then you'll need to click the `Import/Export` button because we have an example dataset you can work with. You can download the [bucket data here](https://cdn.cosmicjs.com/2566c9c0-e0f7-11ec-bb19-d9085ce408df-the-store-production.json). Then you can upload it to your bucket through the `Import Bucket` widget.
 
 ![import bucket widget](https://imgix.cosmicjs.com/38a14a70-db6f-11ec-bb19-d9085ce408df-importdata.png)
 
@@ -28,13 +26,15 @@ From here, you can click `Skip to bucket settings`. Then you'll need to click th
 
 After the import finishes, you should see all of the `Products` in your bucket.
 
-![products in the bucket after import](https://imgix.cosmicjs.com/1e790480-dc73-11ec-bb19-d9085ce408df-productsuploaded.png)
+![products in the bucket after import](https://imgix.cosmicjs.com/feb38fc0-e0f6-11ec-bb19-d9085ce408df-Screenshot-from-2022-05-31-10-32-20.png)
 
 That's all we need to start running queries! You could build an entire full-stack app around this data, but we're going to focus on the snippets for a number of queries that may come up.
 
 ## Basic Queries
 
-**Note:** The `$BASE_URL` we'll use throughout these examples is `https://api.cosmicjs.com/v2/`.
+**Note:** There are a couple of configs that will be used throughout the examples that we define here.
+
+The `$BASE_URL` we'll use throughout these examples is `https://api.cosmicjs.com/v2/`.
 
 If using Node.js, the following config is required:
 
@@ -46,9 +46,11 @@ const bucket = Cosmic.bucket({
 })
 ```
 
+We will also be working with the `props` parameter in the requests to get concise data returned from the API. You can learn more about `props` [here](https://docs.cosmicjs.com/api-reference/objects#get-objects).
+
 ### Get all of the products
 
-You may need to retrieve all of the products you have available in your store and you can use the following code snippets to do so. This retrieves all of the objects that are `products`.
+Retrieves all of the objects that are `products`.
 
 <Tabs>
   <div label="Node.js">
@@ -57,7 +59,8 @@ bucket.getObjects({
   query: {
     type: "products",
   },
-  props: "slug,title,metadata.price"
+  props: "slug,title,metadata.price,metadata.quantity,metadata.free_shipping",
+  limit: 3
 })
 ```
 </div>
@@ -66,7 +69,8 @@ bucket.getObjects({
   curl ${BASE_URL}/buckets/${YOUR_BUCKET_SLUG}/objects \
   -d read_key=${YOUR_BUCKET_READ_KEY} \
   -d query={"type":"products"} \
-  -d props="slug,title,metadata.price" \
+  -d props="slug,title,metadata.price,metadata.quantity,metadata.free_shipping" \
+  -d limit=3 \
   ```
 </div>
 <div label="GraphQL">
@@ -79,7 +83,8 @@ bucket.getObjects({
         query: {
           type: "products",
         }
-        props: "slug,title,metadata.price"
+        props: "slug,title,metadata.price,metadata.quantity,metadata.free_shipping"
+        limit: 3
       }
     ) {
       objects {
@@ -92,12 +97,11 @@ bucket.getObjects({
     }
   }
   ```
-
 </div>
 <div label="CLI">
-  ```bash
-  cosmic get-objects --query '{"type":"products"}' --props 'slug,title,metadata.price'
-  ```
+```bash
+cosmic get-objects --query '{"type":"products"}' --props 'slug,title,metadata.price,metadata.quantity,metadata.free_shipping' --limit '3'
+```
 </div>
 </Tabs>
 
@@ -107,44 +111,56 @@ The response will look like:
 {
   "objects": [
     {
-      "slug": "watch",
       "title": "Watch",
       "metadata": {
-        "price": 259.99
+        "price": 259.99,
+        "quantity": 63
       }
     },
     {
-      "slug": "battery-charger",
       "title": "Battery Charger",
       "metadata": {
-        "price": 52.99
+        "price": 52.99,
+        "quantity": 17
       }
     },
-    ...
+    {
+      "title": "Pants",
+      "metadata": {
+        "price": 37.99,
+        "quantity": 48
+      }
+    }
   ],
-  "total": 21
+  "total": 21,
+  "limit": 3
 }
 ```
 
 ### Get products by title
 
-There might be a certain product you need to look at and you have the title available from your front-end.
+Retrieves products with the given title.
 
 <Tabs>
-<div label="REST">
-  ```bash
-  GET ${BASE_URL}/buckets/${YOUR_BUCKET_SLUG}/objects?read_key=${YOUR_BUCKET_READ_KEY}&query={"title":"Cupboard"}
-  ```
-</div>
 <div label="Node.js">
 ```javascript
 bucket.getObjects({
-    query: {
-      title: "Cupboard",
-    },
-  })
+  query: {
+    title: "Cupboard",
+  },
+  props: "slug,title,metadata.price,metadata.quantity,metadata.free_shipping",
+  limit: 3
+})
 ```
-
+</div>
+<div label="cURL">
+  ```bash
+  curl ${BASE_URL}/buckets/${YOUR_BUCKET_SLUG}/objects \
+  -d read_key=${YOUR_BUCKET_READ_KEY} \
+  -d query={"title":"Cupboard"} \
+  -d props="slug,title,metadata.price,metadata.quantity,metadata.free_shipping" \
+  -d limit=3 \
+  ```
 </div>
 <div label="GraphQL">
   ```javascript
@@ -156,6 +172,8 @@ bucket.getObjects({
         query: {
           title: "Cupboard",
         }
+        props: "slug,title,metadata.price,metadata.quantity,metadata.free_shipping"
+        limit: 3
       }
     ) {
       objects {
@@ -172,9 +190,8 @@ bucket.getObjects({
 </div>
 <div label="CLI">
 ```bash
-cosmic get-objects --query '{"title":"Mango Nation Hat"}'
+cosmic get-objects --query '{"title":"Cupboard"}' --props 'slug,title,metadata.price,metadata.quantity,metadata.free_shipping' --limit '3'
 ```
-
 </div>
 </Tabs>
 
@@ -184,37 +201,10 @@ The response for this query would look like:
 {
   "objects": [
     {
-      "id": "6283bcffd4903800092ffeda",
-      "slug": "cupboard",
       "title": "Cupboard",
-      "content": "<p>Sleek, integrated storage space.</p>",
-      "bucket": "6283b64c9f8e3f00094504c4",
-      "created_at": "2022-05-17T15:19:27.028Z",
-      "created_by": "621e8a8f5930f70009316105",
-      "modified_at": "2022-05-25T21:22:41.608Z",
-      "created": "2022-05-17T15:19:27.028Z",
-      "status": "published",
-      "thumbnail": "https://imgix.cosmicjs.com/b208cb20-d5f4-11ec-bb19-d9085ce408df-callum-hill-zILpNroX12o-unsplash.jpg",
-      "published_at": "2022-05-25T21:22:41.608Z",
-      "modified_by": "621e8a8f5930f70009316105",
-      "publish_at": null,
-      "unpublish_at": null,
-      "type": "products",
       "metadata": {
-        "category": {
-          "key": "kitchen",
-          "value": "Kitchen"
-        },
-        "image": {
-          "url": "https://cdn.cosmicjs.com/b208cb20-d5f4-11ec-bb19-d9085ce408df-callum-hill-zILpNroX12o-unsplash.jpg",
-          "imgix_url": "https://imgix.cosmicjs.com/b208cb20-d5f4-11ec-bb19-d9085ce408df-callum-hill-zILpNroX12o-unsplash.jpg"
-        },
         "price": 239.99,
-        "quantity": 15,
-        "sku": "0012549",
-        "details": "",
-        "free_shipping": true,
-        "options": ["Color"]
+        "quantity": 15
       }
     }
   ],
@@ -268,57 +258,16 @@ You may need to get a product based on its ID that gets submitted via a hidden f
 
 </div>
 <div label="CLI">
-  ```bash
-  cosmic get-objects --query '{"id":"6283bc5a0c164700097679ff"}'
-  ```
-  
+```bash
+cosmic get-objects --query '{"id":"6283bc5a0c164700097679ff"}' --props 'slug,title,metadata.price,metadata.quantity,metadata.free_shipping' --limit '3'
+```
 </div>
 </Tabs>
 
 The response will look like:
 
 ```json
-{
-  "objects": [
-    {
-      "id": "6283bc5a0c164700097679ff",
-      "slug": "tire",
-      "title": "Tire",
-      "content": "<p>Superb road grip, lifetime warranty.</p>",
-      "bucket": "6283b64c9f8e3f00094504c4",
-      "created_at": "2022-05-17T15:16:41.995Z",
-      "created_by": "621e8a8f5930f70009316105",
-      "modified_at": "2022-05-25T21:25:09.947Z",
-      "created": "2022-05-17T15:16:41.995Z",
-      "status": "published",
-      "thumbnail": "https://imgix.cosmicjs.com/4fb87d30-d5f4-11ec-bb19-d9085ce408df-robert-laursoo-WHPOFFzY9gU-unsplash.jpg",
-      "published_at": "2022-05-25T21:25:09.947Z",
-      "modified_by": "621e8a8f5930f70009316105",
-      "publish_at": null,
-      "unpublish_at": null,
-      "type": "products",
-      "metadata": {
-        "category": {
-          "key": "car",
-          "value": "Car"
-        },
-        "image": {
-          "url": "https://cdn.cosmicjs.com/4fb87d30-d5f4-11ec-bb19-d9085ce408df-robert-laursoo-WHPOFFzY9gU-unsplash.jpg",
-          "imgix_url": "https://imgix.cosmicjs.com/4fb87d30-d5f4-11ec-bb19-d9085ce408df-robert-laursoo-WHPOFFzY9gU-unsplash.jpg"
-        },
-        "price": 175.99,
-        "quantity": 95,
-        "sku": "0018703",
-        "details": {
-          "brand": "Continental"
-        },
-        "free_shipping": true,
-        "options": ["Size"]
-      }
-    }
-  ],
-  "total": 1
-}
+
 ```
 
 ### Get multiple products by IDs
@@ -367,89 +316,16 @@ Now you may need to get a few different products based on their IDs that get sub
 
 </div>
 <div label="CLI">
-  ```bash
-  cosmic get-objects --query '{"id":["6283c5a330b2e10009e43610","6283e0235882c30009b49e5f"]}'
-  ```
-  
+```bash
+cosmic get-objects --query '{"id":["6283c5a330b2e10009e43610","6283e0235882c30009b49e5f"]}' --props 'slug,title,metadata.price,metadata.quantity,metadata.free_shipping' --limit '3'
+```
 </div>
 </Tabs>
 
 The response will look like:
 
 ```json
-{
-  "objects": [
-    {
-      "id": "6283e0235882c30009b49e5f",
-      "slug": "battery-charger",
-      "title": "Battery Charger",
-      "content": "<p>If your phone is dead, you need this brick.</p>",
-      "bucket": "6283b64c9f8e3f00094504c4",
-      "created_at": "2022-05-17T17:49:23.855Z",
-      "created_by": "621e8a8f5930f70009316105",
-      "modified_at": "2022-05-25T20:41:13.842Z",
-      "created": "2022-05-17T17:49:23.855Z",
-      "status": "published",
-      "thumbnail": "https://imgix.cosmicjs.com/99f67b80-d609-11ec-bb19-d9085ce408df-onur-binay--DY5znt0Whs-unsplash.jpg",
-      "published_at": "2022-05-25T20:41:13.842Z",
-      "modified_by": "621e8a8f5930f70009316105",
-      "publish_at": null,
-      "unpublish_at": null,
-      "type": "products",
-      "metadata": {
-        "category": {
-          "key": "electronics",
-          "value": "Electronics"
-        },
-        "image": {
-          "url": "https://cdn.cosmicjs.com/99f67b80-d609-11ec-bb19-d9085ce408df-onur-binay--DY5znt0Whs-unsplash.jpg",
-          "imgix_url": "https://imgix.cosmicjs.com/99f67b80-d609-11ec-bb19-d9085ce408df-onur-binay--DY5znt0Whs-unsplash.jpg"
-        },
-        "price": 52.99,
-        "quantity": 17,
-        "sku": "",
-        "details": "",
-        "options": [],
-        "free_shipping": false
-      }
-    },
-    {
-      "id": "6283c5a330b2e10009e43610",
-      "slug": "windshield-wipers",
-      "title": "Windshield Wipers",
-      "content": "<p>See through the rain and stay safe on the road.</p>",
-      "bucket": "6283b64c9f8e3f00094504c4",
-      "created_at": "2022-05-17T15:56:19.345Z",
-      "created_by": "621e8a8f5930f70009316105",
-      "modified_at": "2022-05-25T21:14:39.202Z",
-      "created": "2022-05-17T15:56:19.346Z",
-      "status": "published",
-      "thumbnail": "https://imgix.cosmicjs.com/990b06c0-dc6f-11ec-bb19-d9085ce408df-thibault-valjevac-2m6GjKScw20-unsplash.jpg",
-      "published_at": "2022-05-25T21:14:39.202Z",
-      "modified_by": "621e8a8f5930f70009316105",
-      "publish_at": null,
-      "unpublish_at": null,
-      "type": "products",
-      "metadata": {
-        "category": {
-          "key": "car",
-          "value": "Car"
-        },
-        "image": {
-          "url": "https://cdn.cosmicjs.com/7f8701d0-d5f9-11ec-bb19-d9085ce408df-u98yt7gyuvhjbkkino9u8",
-          "imgix_url": "https://cdn.cosmicjs.com/7f8701d0-d5f9-11ec-bb19-d9085ce408df-u98yt7gyuvhjbkkino9u8"
-        },
-        "price": 27.99,
-        "quantity": 54,
-        "sku": "0018169",
-        "details": "",
-        "free_shipping": true,
-        "options": ["Color"]
-      }
-    }
-  ],
-  "total": 2
-}
+
 ```
 
 ### Filter out products by IDs
@@ -502,126 +378,16 @@ You may need to filter products based on the IDs of items that have been sold ou
 
 </div>
 <div label="CLI">
-  ```bash
-  cosmic get-objects --query '{"id":{"$ne":"6283df2391f3660009da194b"}}'
-  ```
-  
+```bash
+cosmic get-objects --query '{"id":{"$ne":"6283df2391f3660009da194b"}}' --props 'slug,title,metadata.price,metadata.quantity,metadata.free_shipping' --limit '3'
+```
 </div>
 </Tabs>
 
 The response will look like:
 
 ```json
-{
-  "objects": [
-    {
-      "id": "6283e06091f3660009da1950",
-      "slug": "watch",
-      "title": "Watch",
-      "content": "<p>You will always know what time it is.</p>",
-      "bucket": "6283b64c9f8e3f00094504c4",
-      "created_at": "2022-05-17T17:50:24.769Z",
-      "created_by": "621e8a8f5930f70009316105",
-      "modified_at": "2022-05-25T20:42:01.239Z",
-      "created": "2022-05-17T17:50:24.769Z",
-      "status": "published",
-      "thumbnail": "https://imgix.cosmicjs.com/c2f987e0-dc6a-11ec-bb19-d9085ce408df-age-barros-rBPOfVqROzY-unsplash.jpg",
-      "published_at": "2022-05-25T20:42:01.239Z",
-      "modified_by": "621e8a8f5930f70009316105",
-      "publish_at": null,
-      "unpublish_at": null,
-      "type": "products",
-      "metadata": {
-        "category": {
-          "key": "electronics",
-          "value": "Electronics"
-        },
-        "image": {
-          "url": null,
-          "imgix_url": null
-        },
-        "price": 259.99,
-        "quantity": 63,
-        "sku": "00115699",
-        "details": {
-          "brand": "Samsung"
-        },
-        "options": ["Expedited Shipping"],
-        "free_shipping": true
-      }
-    },
-    {
-      "id": "6283e0235882c30009b49e5f",
-      "slug": "battery-charger",
-      "title": "Battery Charger",
-      "content": "<p>If your phone is dead, you need this brick.</p>",
-      "bucket": "6283b64c9f8e3f00094504c4",
-      "created_at": "2022-05-17T17:49:23.855Z",
-      "created_by": "621e8a8f5930f70009316105",
-      "modified_at": "2022-05-25T20:41:13.842Z",
-      "created": "2022-05-17T17:49:23.855Z",
-      "status": "published",
-      "thumbnail": "https://imgix.cosmicjs.com/99f67b80-d609-11ec-bb19-d9085ce408df-onur-binay--DY5znt0Whs-unsplash.jpg",
-      "published_at": "2022-05-25T20:41:13.842Z",
-      "modified_by": "621e8a8f5930f70009316105",
-      "publish_at": null,
-      "unpublish_at": null,
-      "type": "products",
-      "metadata": {
-        "category": {
-          "key": "electronics",
-          "value": "Electronics"
-        },
-        "image": {
-          "url": "https://cdn.cosmicjs.com/99f67b80-d609-11ec-bb19-d9085ce408df-onur-binay--DY5znt0Whs-unsplash.jpg",
-          "imgix_url": "https://imgix.cosmicjs.com/99f67b80-d609-11ec-bb19-d9085ce408df-onur-binay--DY5znt0Whs-unsplash.jpg"
-        },
-        "price": 52.99,
-        "quantity": 17,
-        "sku": "",
-        "details": "",
-        "options": [],
-        "free_shipping": false
-      }
-    },
-    {
-      "id": "6283df6291f3660009da194d",
-      "slug": "pants",
-      "title": "Pants",
-      "content": "<p>They fit great and have real pockets.</p>",
-      "bucket": "6283b64c9f8e3f00094504c4",
-      "created_at": "2022-05-17T17:46:10.605Z",
-      "created_by": "621e8a8f5930f70009316105",
-      "modified_at": "2022-05-25T20:43:00.438Z",
-      "created": "2022-05-17T17:46:10.605Z",
-      "status": "published",
-      "thumbnail": "https://imgix.cosmicjs.com/32587370-d609-11ec-bb19-d9085ce408df-matt-moloney-YeGao3uk8kI-unsplash.jpg",
-      "published_at": "2022-05-25T20:43:00.438Z",
-      "modified_by": "621e8a8f5930f70009316105",
-      "publish_at": null,
-      "unpublish_at": null,
-      "type": "products",
-      "metadata": {
-        "category": {
-          "key": "clothing",
-          "value": "Clothing"
-        },
-        "image": {
-          "url": "https://cdn.cosmicjs.com/32587370-d609-11ec-bb19-d9085ce408df-matt-moloney-YeGao3uk8kI-unsplash.jpg",
-          "imgix_url": "https://imgix.cosmicjs.com/32587370-d609-11ec-bb19-d9085ce408df-matt-moloney-YeGao3uk8kI-unsplash.jpg"
-        },
-        "price": 37.99,
-        "quantity": 48,
-        "sku": "0014328",
-        "details": "",
-        "options": [],
-        "free_shipping": false
-      }
-    },
-    ...
-  ],
-  "total": 20
-}
+
 ```
 
 ### Filter out products by IDs contained in an array
@@ -676,125 +442,16 @@ In this example, we have the IDs of `Sandwich`, `Extension Cord`, and `Pineapple
 
 </div>
 <div label="CLI">
-  ```bash
-  cosmic get-objects --query '{"id":{"$nin":["6283dd60803a1a0009112e32","6283de686605090009c58739", "6283dddc6605090009c58736"]}}'
-  ```
-  
+```bash
+cosmic get-objects --query '{"id":{"$nin":["6283dd60803a1a0009112e32","6283de686605090009c58739", "6283dddc6605090009c58736"]}}' --props 'slug,title,metadata.price,metadata.quantity,metadata.free_shipping' --limit '3'
+```
 </div>
 </Tabs>
 
 The response will look like:
 
 ```json
-{
-  "objects": [
-    {
-      "id": "6283e06091f3660009da1950",
-      "slug": "watch",
-      "title": "Watch",
-      "content": "<p>You will always know what time it is.</p>",
-      "bucket": "6283b64c9f8e3f00094504c4",
-      "created_at": "2022-05-17T17:50:24.769Z",
-      "created_by": "621e8a8f5930f70009316105",
-      "modified_at": "2022-05-25T20:42:01.239Z",
-      "created": "2022-05-17T17:50:24.769Z",
-      "status": "published",
-      "thumbnail": "https://imgix.cosmicjs.com/c2f987e0-dc6a-11ec-bb19-d9085ce408df-age-barros-rBPOfVqROzY-unsplash.jpg",
-      "published_at": "2022-05-25T20:42:01.239Z",
-      "modified_by": "621e8a8f5930f70009316105",
-      "publish_at": null,
-      "unpublish_at": null,
-      "type": "products",
-      "metadata": {
-        "category": {
-          "key": "electronics",
-          "value": "Electronics"
-        },
-        "image": {
-          "url": null,
-          "imgix_url": null
-        },
-        "price": 259.99,
-        "quantity": 63,
-        "sku": "00115699",
-        "details": {
-          "brand": "Samsung"
-        },
-        "options": ["Expedited Shipping"],
-        "free_shipping": true
-      }
-    },
-    {
-      "id": "6283e0235882c30009b49e5f",
-      "slug": "battery-charger",
-      "title": "Battery Charger",
-      "content": "<p>If your phone is dead, you need this brick.</p>",
-      "bucket": "6283b64c9f8e3f00094504c4",
-      "created_at": "2022-05-17T17:49:23.855Z",
-      "created_by": "621e8a8f5930f70009316105",
-      "modified_at": "2022-05-25T20:41:13.842Z",
-      "created": "2022-05-17T17:49:23.855Z",
-      "status": "published",
-      "thumbnail": "https://imgix.cosmicjs.com/99f67b80-d609-11ec-bb19-d9085ce408df-onur-binay--DY5znt0Whs-unsplash.jpg",
-      "published_at": "2022-05-25T20:41:13.842Z",
-      "modified_by": "621e8a8f5930f70009316105",
-      "publish_at": null,
-      "unpublish_at": null,
-      "type": "products",
-      "metadata": {
-        "category": {
-          "key": "electronics",
-          "value": "Electronics"
-        },
-        "image": {
-          "url": "https://cdn.cosmicjs.com/99f67b80-d609-11ec-bb19-d9085ce408df-onur-binay--DY5znt0Whs-unsplash.jpg",
-          "imgix_url": "https://imgix.cosmicjs.com/99f67b80-d609-11ec-bb19-d9085ce408df-onur-binay--DY5znt0Whs-unsplash.jpg"
-        },
-        "price": 52.99,
-        "quantity": 17,
-        "sku": "",
-        "details": "",
-        "options": [],
-        "free_shipping": false
-      }
-    },
-    {
-      "id": "6283df6291f3660009da194d",
-      "slug": "pants",
-      "title": "Pants",
-      "content": "<p>They fit great and have real pockets.</p>",
-      "bucket": "6283b64c9f8e3f00094504c4",
-      "created_at": "2022-05-17T17:46:10.605Z",
-      "created_by": "621e8a8f5930f70009316105",
-      "modified_at": "2022-05-25T20:43:00.438Z",
-      "created": "2022-05-17T17:46:10.605Z",
-      "status": "published",
-      "thumbnail": "https://imgix.cosmicjs.com/32587370-d609-11ec-bb19-d9085ce408df-matt-moloney-YeGao3uk8kI-unsplash.jpg",
-      "published_at": "2022-05-25T20:43:00.438Z",
-      "modified_by": "621e8a8f5930f70009316105",
-      "publish_at": null,
-      "unpublish_at": null,
-      "type": "products",
-      "metadata": {
-        "category": {
-          "key": "clothing",
-          "value": "Clothing"
-        },
-        "image": {
-          "url": "https://cdn.cosmicjs.com/32587370-d609-11ec-bb19-d9085ce408df-matt-moloney-YeGao3uk8kI-unsplash.jpg",
-          "imgix_url": "https://imgix.cosmicjs.com/32587370-d609-11ec-bb19-d9085ce408df-matt-moloney-YeGao3uk8kI-unsplash.jpg"
-        },
-        "price": 37.99,
-        "quantity": 48,
-        "sku": "0014328",
-        "details": "",
-        "options": [],
-        "free_shipping": false
-      }
-    }
-  ],
-  "total": 18
-}
+
 ```
 
 ### Get a product based on slug
@@ -843,55 +500,16 @@ You might use a product slug in the URL of your application depending on how you
 
 </div>
 <div label="CLI">
-  ```bash
-  cosmic get-objects --query '{"slug":"user_1"}'
-  ```
-  
+```bash
+cosmic get-objects --query '{"slug":"hot-pot"}' --props 'slug,title,metadata.price,metadata.quantity,metadata.free_shipping' --limit '3'
+```
 </div>
 </Tabs>
 
 The response will look like:
 
 ```json
-{
-  "objects": [
-    {
-      "id": "6283c472f183ef00091760e7",
-      "slug": "hot-pot",
-      "title": "Hot Pot",
-      "content": "<p>Share savory slices of meat and vegetables with friends.</p>",
-      "bucket": "6283b64c9f8e3f00094504c4",
-      "created_at": "2022-05-17T15:51:13.995Z",
-      "created_by": "621e8a8f5930f70009316105",
-      "modified_at": "2022-05-25T21:15:48.988Z",
-      "created": "2022-05-17T15:51:13.995Z",
-      "status": "published",
-      "thumbnail": "https://imgix.cosmicjs.com/223abad0-d5f9-11ec-bb19-d9085ce408df-xiong-gordon-kpC36hIsODQ-unsplash.jpg",
-      "published_at": "2022-05-25T21:15:48.988Z",
-      "modified_by": "621e8a8f5930f70009316105",
-      "publish_at": null,
-      "unpublish_at": null,
-      "type": "products",
-      "metadata": {
-        "category": {
-          "key": "kitchen",
-          "value": "Kitchen"
-        },
-        "image": {
-          "url": "https://cdn.cosmicjs.com/223abad0-d5f9-11ec-bb19-d9085ce408df-xiong-gordon-kpC36hIsODQ-unsplash.jpg",
-          "imgix_url": "https://imgix.cosmicjs.com/223abad0-d5f9-11ec-bb19-d9085ce408df-xiong-gordon-kpC36hIsODQ-unsplash.jpg"
-        },
-        "price": 59.99,
-        "quantity": 17,
-        "sku": "0012169",
-        "details": "",
-        "free_shipping": true,
-        "options": ["Size", "Expedited Shipping"]
-      }
-    }
-  ],
-  "total": 1
-}
+
 ```
 
 ### Get products with any slug values
@@ -941,55 +559,16 @@ You may have some products you want to get specifically based on the products a 
 
 </div>
 <div label="CLI">
-  ```bash
-  cosmic get-objects --query '{"$or":[{"slug":"pasta"},{"slug":"drill"}]}'
-  ```
-  
+```bash
+cosmic get-objects --query '{"$or":[{"slug":"pasta"},{"slug":"drill"}]}' --props 'slug,title,metadata.price,metadata.quantity,metadata.free_shipping' --limit '3'
+```
 </div>
 </Tabs>
 
 The response will look like:
 
 ```json
-{
-  "objects": [
-    {
-      "id": "6283bc029d76630009b0b707",
-      "slug": "drill",
-      "title": "Drill",
-      "content": "<p>Useful tool for building, cleaning, or anything else you need something to spin fast for.</p>",
-      "bucket": "6283b64c9f8e3f00094504c4",
-      "created_at": "2022-05-17T15:15:14.892Z",
-      "created_by": "621e8a8f5930f70009316105",
-      "modified_at": "2022-05-25T21:26:12.974Z",
-      "created": "2022-05-17T15:15:14.893Z",
-      "status": "published",
-      "thumbnail": "https://imgix.cosmicjs.com/196be280-d5f4-11ec-bb19-d9085ce408df-syed-hussaini-MXeDEyCdHQ-unsplash.jpg",
-      "published_at": "2022-05-25T21:26:12.974Z",
-      "modified_by": "621e8a8f5930f70009316105",
-      "publish_at": null,
-      "unpublish_at": null,
-      "type": "products",
-      "metadata": {
-        "category": {
-          "key": "construction",
-          "value": "Construction"
-        },
-        "image": {
-          "url": "https://cdn.cosmicjs.com/196be280-d5f4-11ec-bb19-d9085ce408df-syed-hussaini-MXeDEyCdHQ-unsplash.jpg",
-          "imgix_url": "https://imgix.cosmicjs.com/196be280-d5f4-11ec-bb19-d9085ce408df-syed-hussaini-MXeDEyCdHQ-unsplash.jpg"
-        },
-        "price": 89.99,
-        "quantity": 70,
-        "sku": "0016913",
-        "details": "",
-        "free_shipping": true,
-        "options": ["Color"]
-      }
-    }
-  ],
-  "total": 1
-}
+
 ```
 
 ### Get products based on the `content` value
@@ -1046,159 +625,16 @@ You can also specify a few different options, like in this example, making the s
 
 </div>
 <div label="CLI">
-  ```bash
-  cosmic get-objects --query '{"content":{"$regex":"is","$options":"i"}}'
-  ```
-  
+```bash
+cosmic get-objects --query '{"content":{"$regex":"is","$options":"i"}}' --props 'slug,title,metadata.price,metadata.quantity,metadata.free_shipping' --limit '3'
+```
 </div>
 </Tabs>
 
 The response will look like:
 
 ```json
-{
-  "objects": [
-    {
-      "id": "6283e06091f3660009da1950",
-      "slug": "watch",
-      "title": "Watch",
-      "content": "<p>You will always know what time it is.</p>",
-      "bucket": "6283b64c9f8e3f00094504c4",
-      "created_at": "2022-05-17T17:50:24.769Z",
-      "created_by": "621e8a8f5930f70009316105",
-      "modified_at": "2022-05-25T20:42:01.239Z",
-      "created": "2022-05-17T17:50:24.769Z",
-      "status": "published",
-      "thumbnail": "https://imgix.cosmicjs.com/c2f987e0-dc6a-11ec-bb19-d9085ce408df-age-barros-rBPOfVqROzY-unsplash.jpg",
-      "published_at": "2022-05-25T20:42:01.239Z",
-      "modified_by": "621e8a8f5930f70009316105",
-      "publish_at": null,
-      "unpublish_at": null,
-      "type": "products",
-      "metadata": {
-        "category": {
-          "key": "electronics",
-          "value": "Electronics"
-        },
-        "image": {
-          "url": null,
-          "imgix_url": null
-        },
-        "price": 259.99,
-        "quantity": 63,
-        "sku": "00115699",
-        "details": {
-          "brand": "Samsung"
-        },
-        "options": ["Expedited Shipping"],
-        "free_shipping": true
-      }
-    },
-    {
-      "id": "6283e0235882c30009b49e5f",
-      "slug": "battery-charger",
-      "title": "Battery Charger",
-      "content": "<p>If your phone is dead, you need this brick.</p>",
-      "bucket": "6283b64c9f8e3f00094504c4",
-      "created_at": "2022-05-17T17:49:23.855Z",
-      "created_by": "621e8a8f5930f70009316105",
-      "modified_at": "2022-05-25T20:41:13.842Z",
-      "created": "2022-05-17T17:49:23.855Z",
-      "status": "published",
-      "thumbnail": "https://imgix.cosmicjs.com/99f67b80-d609-11ec-bb19-d9085ce408df-onur-binay--DY5znt0Whs-unsplash.jpg",
-      "published_at": "2022-05-25T20:41:13.842Z",
-      "modified_by": "621e8a8f5930f70009316105",
-      "publish_at": null,
-      "unpublish_at": null,
-      "type": "products",
-      "metadata": {
-        "category": {
-          "key": "electronics",
-          "value": "Electronics"
-        },
-        "image": {
-          "url": "https://cdn.cosmicjs.com/99f67b80-d609-11ec-bb19-d9085ce408df-onur-binay--DY5znt0Whs-unsplash.jpg",
-          "imgix_url": "https://imgix.cosmicjs.com/99f67b80-d609-11ec-bb19-d9085ce408df-onur-binay--DY5znt0Whs-unsplash.jpg"
-        },
-        "price": 52.99,
-        "quantity": 17,
-        "sku": "",
-        "details": "",
-        "options": [],
-        "free_shipping": false
-      }
-    },
-    {
-      "id": "6283df2391f3660009da194b",
-      "slug": "blouse",
-      "title": "Blouse",
-      "content": "<p>Flowy and soft, this blouse will make you happy.</p>",
-      "bucket": "6283b64c9f8e3f00094504c4",
-      "created_at": "2022-05-17T17:45:07.705Z",
-      "created_by": "621e8a8f5930f70009316105",
-      "modified_at": "2022-05-25T20:44:13.368Z",
-      "created": "2022-05-17T17:45:07.705Z",
-      "status": "published",
-      "thumbnail": "https://imgix.cosmicjs.com/0b5803d0-d609-11ec-bb19-d9085ce408df-aronskaya-186XBXoPAeU-unsplash.jpg",
-      "published_at": "2022-05-25T20:44:13.368Z",
-      "modified_by": "621e8a8f5930f70009316105",
-      "publish_at": null,
-      "unpublish_at": null,
-      "type": "products",
-      "metadata": {
-        "category": {
-          "key": "clothing",
-          "value": "Clothing"
-        },
-        "image": {
-          "url": "https://cdn.cosmicjs.com/0b5803d0-d609-11ec-bb19-d9085ce408df-aronskaya-186XBXoPAeU-unsplash.jpg",
-          "imgix_url": "https://imgix.cosmicjs.com/0b5803d0-d609-11ec-bb19-d9085ce408df-aronskaya-186XBXoPAeU-unsplash.jpg"
-        },
-        "price": 25.99,
-        "quantity": 57,
-        "sku": "0014728",
-        "details": "",
-        "free_shipping": false,
-        "options": ["Size", "Color"]
-      }
-    },
-    {
-      "id": "6283dd60803a1a0009112e32",
-      "slug": "sandwich",
-      "title": "Sandwich",
-      "content": "<p>The perfect cheese and the perfect bread make this sandwich perfect.</p>",
-      "bucket": "6283b64c9f8e3f00094504c4",
-      "created_at": "2022-05-17T17:37:36.514Z",
-      "created_by": "621e8a8f5930f70009316105",
-      "modified_at": "2022-05-25T21:10:07.902Z",
-      "created": "2022-05-17T17:37:36.514Z",
-      "status": "published",
-      "thumbnail": "https://imgix.cosmicjs.com/f6640d30-d607-11ec-bb19-d9085ce408df-jay-gajjar-9bsNSwZZMN8-unsplash.jpg",
-      "published_at": "2022-05-25T21:10:07.902Z",
-      "modified_by": "621e8a8f5930f70009316105",
-      "publish_at": null,
-      "unpublish_at": null,
-      "type": "products",
-      "metadata": {
-        "category": {
-          "key": "food",
-          "value": "Food"
-        },
-        "image": {
-          "url": "https://cdn.cosmicjs.com/f6640d30-d607-11ec-bb19-d9085ce408df-jay-gajjar-9bsNSwZZMN8-unsplash.jpg",
-          "imgix_url": "https://imgix.cosmicjs.com/f6640d30-d607-11ec-bb19-d9085ce408df-jay-gajjar-9bsNSwZZMN8-unsplash.jpg"
-        },
-        "price": 8.99,
-        "quantity": 3,
-        "sku": "00111587",
-        "details": "",
-        "free_shipping": false,
-        "options": ["Expedited Shipping"]
-      }
-    }
-  ],
-  "total": 4
-}
+
 ```
 
 ## Metadata Queries
@@ -1254,55 +690,16 @@ Customers will often want to sort and filter products by price and you'll be abl
 
 </div>
 <div label="CLI">
-  ```bash
-  cosmic get-objects --query '{"type":"products","metadata.price":19.99}'
-  ```
-  
+```bash
+cosmic get-objects --query '{"type":"products","metadata.price":19.99}' --props 'slug,title,metadata.price,metadata.quantity,metadata.free_shipping' --limit '3'
+```
 </div>
 </Tabs>
 
 The response will look like:
 
 ```json
-{
-  "objects": [
-    {
-      "id": "6283deb85882c30009b49e5b",
-      "slug": "wood-screw",
-      "title": "Wood Screw",
-      "content": "<p>These screws won&#39;t let go of anything.</p>",
-      "bucket": "6283b64c9f8e3f00094504c4",
-      "created_at": "2022-05-17T17:43:20.043Z",
-      "created_by": "621e8a8f5930f70009316105",
-      "modified_at": "2022-05-25T20:45:58.222Z",
-      "created": "2022-05-17T17:43:20.043Z",
-      "status": "published",
-      "thumbnail": "https://imgix.cosmicjs.com/9327c030-dc6b-11ec-bb19-d9085ce408df-chris-yates-bVG0-KSh8Sc-unsplash.jpg",
-      "published_at": "2022-05-25T20:45:58.222Z",
-      "modified_by": "621e8a8f5930f70009316105",
-      "publish_at": null,
-      "unpublish_at": null,
-      "type": "products",
-      "metadata": {
-        "category": {
-          "key": "construction",
-          "value": "Construction"
-        },
-        "image": {
-          "url": null,
-          "imgix_url": null
-        },
-        "price": 19.99,
-        "quantity": 22,
-        "sku": "0016431",
-        "details": "",
-        "free_shipping": false,
-        "options": ["Size"]
-      }
-    }
-  ],
-  "total": 1
-}
+
 ```
 
 ### Get products based on any combination of metadata values
@@ -1354,92 +751,16 @@ Again, customers like to sort and filter products based on what they're looking 
 
 </div>
 <div label="CLI">
-  ```bash
-  cosmic get-objects --query '{type: "products","$or":[{"metadata.category":"Electronics"},{"metadata.free_shipping":true}]}'
-  ```
-  
+```bash
+cosmic get-objects --query '{type: "products","$or":[{"metadata.category":"Electronics"},{"metadata.free_shipping":true}]}' --props 'slug,title,metadata.price,metadata.quantity,metadata.free_shipping' --limit '3'
+```
 </div>
 </Tabs>
 
 The response will look like:
 
 ```json
-{
-  "objects": [
-    {
-      "id": "6283e06091f3660009da1950",
-      "slug": "watch",
-      "title": "Watch",
-      "content": "<p>You will always know what time it is.</p>",
-      "bucket": "6283b64c9f8e3f00094504c4",
-      "created_at": "2022-05-17T17:50:24.769Z",
-      "created_by": "621e8a8f5930f70009316105",
-      "modified_at": "2022-05-25T20:42:01.239Z",
-      "created": "2022-05-17T17:50:24.769Z",
-      "status": "published",
-      "thumbnail": "https://imgix.cosmicjs.com/c2f987e0-dc6a-11ec-bb19-d9085ce408df-age-barros-rBPOfVqROzY-unsplash.jpg",
-      "published_at": "2022-05-25T20:42:01.239Z",
-      "modified_by": "621e8a8f5930f70009316105",
-      "publish_at": null,
-      "unpublish_at": null,
-      "type": "products",
-      "metadata": {
-        "category": {
-          "key": "electronics",
-          "value": "Electronics"
-        },
-        "image": {
-          "url": null,
-          "imgix_url": null
-        },
-        "price": 259.99,
-        "quantity": 63,
-        "sku": "00115699",
-        "details": {
-          "brand": "Samsung"
-        },
-        "options": ["Expedited Shipping"],
-        "free_shipping": true
-      }
-    },
-    {
-      "id": "6283e0235882c30009b49e5f",
-      "slug": "battery-charger",
-      "title": "Battery Charger",
-      "content": "<p>If your phone is dead, you need this brick.</p>",
-      "bucket": "6283b64c9f8e3f00094504c4",
-      "created_at": "2022-05-17T17:49:23.855Z",
-      "created_by": "621e8a8f5930f70009316105",
-      "modified_at": "2022-05-25T20:41:13.842Z",
-      "created": "2022-05-17T17:49:23.855Z",
-      "status": "published",
-      "thumbnail": "https://imgix.cosmicjs.com/99f67b80-d609-11ec-bb19-d9085ce408df-onur-binay--DY5znt0Whs-unsplash.jpg",
-      "published_at": "2022-05-25T20:41:13.842Z",
-      "modified_by": "621e8a8f5930f70009316105",
-      "publish_at": null,
-      "unpublish_at": null,
-      "type": "products",
-      "metadata": {
-        "category": {
-          "key": "electronics",
-          "value": "Electronics"
-        },
-        "image": {
-          "url": "https://cdn.cosmicjs.com/99f67b80-d609-11ec-bb19-d9085ce408df-onur-binay--DY5znt0Whs-unsplash.jpg",
-          "imgix_url": "https://imgix.cosmicjs.com/99f67b80-d609-11ec-bb19-d9085ce408df-onur-binay--DY5znt0Whs-unsplash.jpg"
-        },
-        "price": 52.99,
-        "quantity": 17,
-        "sku": "",
-        "details": "",
-        "options": [],
-        "free_shipping": false
-      }
-    },
-    ...
-  ],
-  "total": 16
-}
+
 ```
 
 ### Get products that match a specific combination metadata values
@@ -1491,124 +812,16 @@ Similar to the query above, this will let customers filter products and return v
 
 </div>
 <div label="CLI">
-  ```bash
-  cosmic get-objects --query '{type: "products","$and":[{"metadata.quantity":{"$lt":50}},{"metadata.price":{"$lt":79.99}}]}'
-  ```
-  
+```bash
+cosmic get-objects --query '{type: "products","$and":[{"metadata.quantity":{"$lt":50}},{"metadata.price":{"$lt":79.99}}]}' --props 'slug,title,metadata.price,metadata.quantity,metadata.free_shipping' --limit '3'
+```
 </div>
 </Tabs>
 
 The response will look like:
 
 ```json
-{
-  "objects": [
-    {
-      "id": "6283e0235882c30009b49e5f",
-      "slug": "battery-charger",
-      "title": "Battery Charger",
-      "content": "<p>If your phone is dead, you need this brick.</p>",
-      "bucket": "6283b64c9f8e3f00094504c4",
-      "created_at": "2022-05-17T17:49:23.855Z",
-      "created_by": "621e8a8f5930f70009316105",
-      "modified_at": "2022-05-25T20:41:13.842Z",
-      "created": "2022-05-17T17:49:23.855Z",
-      "status": "published",
-      "thumbnail": "https://imgix.cosmicjs.com/99f67b80-d609-11ec-bb19-d9085ce408df-onur-binay--DY5znt0Whs-unsplash.jpg",
-      "published_at": "2022-05-25T20:41:13.842Z",
-      "modified_by": "621e8a8f5930f70009316105",
-      "publish_at": null,
-      "unpublish_at": null,
-      "type": "products",
-      "metadata": {
-        "category": {
-          "key": "electronics",
-          "value": "Electronics"
-        },
-        "image": {
-          "url": "https://cdn.cosmicjs.com/99f67b80-d609-11ec-bb19-d9085ce408df-onur-binay--DY5znt0Whs-unsplash.jpg",
-          "imgix_url": "https://imgix.cosmicjs.com/99f67b80-d609-11ec-bb19-d9085ce408df-onur-binay--DY5znt0Whs-unsplash.jpg"
-        },
-        "price": 52.99,
-        "quantity": 17,
-        "sku": "",
-        "details": "",
-        "options": [],
-        "free_shipping": false
-      }
-    },
-    {
-      "id": "6283df6291f3660009da194d",
-      "slug": "pants",
-      "title": "Pants",
-      "content": "<p>They fit great and have real pockets.</p>",
-      "bucket": "6283b64c9f8e3f00094504c4",
-      "created_at": "2022-05-17T17:46:10.605Z",
-      "created_by": "621e8a8f5930f70009316105",
-      "modified_at": "2022-05-25T20:43:00.438Z",
-      "created": "2022-05-17T17:46:10.605Z",
-      "status": "published",
-      "thumbnail": "https://imgix.cosmicjs.com/32587370-d609-11ec-bb19-d9085ce408df-matt-moloney-YeGao3uk8kI-unsplash.jpg",
-      "published_at": "2022-05-25T20:43:00.438Z",
-      "modified_by": "621e8a8f5930f70009316105",
-      "publish_at": null,
-      "unpublish_at": null,
-      "type": "products",
-      "metadata": {
-        "category": {
-          "key": "clothing",
-          "value": "Clothing"
-        },
-        "image": {
-          "url": "https://cdn.cosmicjs.com/32587370-d609-11ec-bb19-d9085ce408df-matt-moloney-YeGao3uk8kI-unsplash.jpg",
-          "imgix_url": "https://imgix.cosmicjs.com/32587370-d609-11ec-bb19-d9085ce408df-matt-moloney-YeGao3uk8kI-unsplash.jpg"
-        },
-        "price": 37.99,
-        "quantity": 48,
-        "sku": "0014328",
-        "details": "",
-        "options": [],
-        "free_shipping": false
-      }
-    },
-    {
-      "id": "6283deb85882c30009b49e5b",
-      "slug": "wood-screw",
-      "title": "Wood Screw",
-      "content": "<p>These screws won&#39;t let go of anything.</p>",
-      "bucket": "6283b64c9f8e3f00094504c4",
-      "created_at": "2022-05-17T17:43:20.043Z",
-      "created_by": "621e8a8f5930f70009316105",
-      "modified_at": "2022-05-25T20:45:58.222Z",
-      "created": "2022-05-17T17:43:20.043Z",
-      "status": "published",
-      "thumbnail": "https://imgix.cosmicjs.com/9327c030-dc6b-11ec-bb19-d9085ce408df-chris-yates-bVG0-KSh8Sc-unsplash.jpg",
-      "published_at": "2022-05-25T20:45:58.222Z",
-      "modified_by": "621e8a8f5930f70009316105",
-      "publish_at": null,
-      "unpublish_at": null,
-      "type": "products",
-      "metadata": {
-        "category": {
-          "key": "construction",
-          "value": "Construction"
-        },
-        "image": {
-          "url": null,
-          "imgix_url": null
-        },
-        "price": 19.99,
-        "quantity": 22,
-        "sku": "0016431",
-        "details": "",
-        "free_shipping": false,
-        "options": ["Size"]
-      }
-    },
-    ...
-  ],
-  "total": 9
-}
+
 ```
 
 ### Get products with a metadata value greater than or equal to a given value
@@ -1664,126 +877,16 @@ When customers are shopping, they might want to see what the higher end products
 
 </div>
 <div label="CLI">
-  ```bash
-  cosmic get-objects --query '{type: "products","metadata.price":{"$gte":100}}'
-  ```
-  
+```bash
+cosmic get-objects --query '{type: "products","metadata.price":{"$gte":100}}' --props 'slug,title,metadata.price,metadata.quantity,metadata.free_shipping' --limit '3'
+```
 </div>
 </Tabs>
 
 The response will look like:
 
 ```json
-{
-  "objects": [
-    {
-      "id": "6283e06091f3660009da1950",
-      "slug": "watch",
-      "title": "Watch",
-      "content": "<p>You will always know what time it is.</p>",
-      "bucket": "6283b64c9f8e3f00094504c4",
-      "created_at": "2022-05-17T17:50:24.769Z",
-      "created_by": "621e8a8f5930f70009316105",
-      "modified_at": "2022-05-25T20:42:01.239Z",
-      "created": "2022-05-17T17:50:24.769Z",
-      "status": "published",
-      "thumbnail": "https://imgix.cosmicjs.com/c2f987e0-dc6a-11ec-bb19-d9085ce408df-age-barros-rBPOfVqROzY-unsplash.jpg",
-      "published_at": "2022-05-25T20:42:01.239Z",
-      "modified_by": "621e8a8f5930f70009316105",
-      "publish_at": null,
-      "unpublish_at": null,
-      "type": "products",
-      "metadata": {
-        "category": {
-          "key": "electronics",
-          "value": "Electronics"
-        },
-        "image": {
-          "url": null,
-          "imgix_url": null
-        },
-        "price": 259.99,
-        "quantity": 63,
-        "sku": "00115699",
-        "details": {
-          "brand": "Samsung"
-        },
-        "options": ["Expedited Shipping"],
-        "free_shipping": true
-      }
-    },
-    {
-      "id": "6283c5ecf511d80009dedff1",
-      "slug": "car-cover",
-      "title": "Car Cover",
-      "content": "<p>Protect the car from the sun.</p>",
-      "bucket": "6283b64c9f8e3f00094504c4",
-      "created_at": "2022-05-17T15:57:32.695Z",
-      "created_by": "621e8a8f5930f70009316105",
-      "modified_at": "2022-05-25T21:11:45.037Z",
-      "created": "2022-05-17T15:57:32.695Z",
-      "status": "published",
-      "thumbnail": "https://imgix.cosmicjs.com/04942240-d5fa-11ec-bb19-d9085ce408df-freddy-g-TgSXG-YHpNM-unsplash.jpg",
-      "published_at": "2022-05-25T21:11:45.037Z",
-      "modified_by": "621e8a8f5930f70009316105",
-      "publish_at": null,
-      "unpublish_at": null,
-      "type": "products",
-      "metadata": {
-        "category": {
-          "key": "car",
-          "value": "Car"
-        },
-        "image": {
-          "url": "https://cdn.cosmicjs.com/04942240-d5fa-11ec-bb19-d9085ce408df-freddy-g-TgSXG-YHpNM-unsplash.jpg",
-          "imgix_url": "https://imgix.cosmicjs.com/04942240-d5fa-11ec-bb19-d9085ce408df-freddy-g-TgSXG-YHpNM-unsplash.jpg"
-        },
-        "price": 358.98,
-        "quantity": 8,
-        "sku": "0018694",
-        "details": "",
-        "free_shipping": false,
-        "options": ["Size", "Color"]
-      }
-    },
-    {
-      "id": "6283c4212cbee5000952ff6e",
-      "slug": "refrigerator",
-      "title": "Refrigerator",
-      "content": "<p>Big, keeps all of the things cold.</p>",
-      "bucket": "6283b64c9f8e3f00094504c4",
-      "created_at": "2022-05-17T15:49:53.441Z",
-      "created_by": "621e8a8f5930f70009316105",
-      "modified_at": "2022-05-25T21:17:34.909Z",
-      "created": "2022-05-17T15:49:53.441Z",
-      "status": "published",
-      "thumbnail": "https://imgix.cosmicjs.com/f1a8f3f0-d5f8-11ec-bb19-d9085ce408df-latrach-med-jamil-Eb6hMEhGlKY-unsplash.jpg",
-      "published_at": "2022-05-25T21:17:34.909Z",
-      "modified_by": "621e8a8f5930f70009316105",
-      "publish_at": null,
-      "unpublish_at": null,
-      "type": "products",
-      "metadata": {
-        "category": {
-          "key": "kitchen",
-          "value": "Kitchen"
-        },
-        "image": {
-          "url": "https://cdn.cosmicjs.com/f1a8f3f0-d5f8-11ec-bb19-d9085ce408df-latrach-med-jamil-Eb6hMEhGlKY-unsplash.jpg",
-          "imgix_url": "https://imgix.cosmicjs.com/f1a8f3f0-d5f8-11ec-bb19-d9085ce408df-latrach-med-jamil-Eb6hMEhGlKY-unsplash.jpg"
-        },
-        "price": 1299.99,
-        "quantity": 6,
-        "sku": "0012846",
-        "details": "",
-        "free_shipping": true,
-        "options": ["Size"]
-      }
-    },
-    ...
-  ],
-  "total": 7
-}
+
 ```
 
 ### Get products that match a specific metadata value
@@ -1835,123 +938,16 @@ To get a list of products that particular match a category or an option, you can
 
 </div>
 <div label="CLI">
-  ```bash
-  cosmic get-objects --query '{type: "products","metadata.category": "Food"}'
-  ```
-  
+```bash
+cosmic get-objects --query '{type: "products","metadata.category": "Food"}' --props 'slug,title,metadata.price,metadata.quantity,metadata.free_shipping' --limit '3'
+```
 </div>
 </Tabs>
 
 The response will look like:
 
 ```json
-{
-  "objects": [
-    {
-      "id": "6283dddc6605090009c58736",
-      "slug": "pineapple",
-      "title": "Pineapple",
-      "content": "<p>Sweet, ripe fruit.</p>",
-      "bucket": "6283b64c9f8e3f00094504c4",
-      "created_at": "2022-05-17T17:39:40.093Z",
-      "created_by": "621e8a8f5930f70009316105",
-      "modified_at": "2022-05-25T21:08:32.228Z",
-      "created": "2022-05-17T17:39:40.093Z",
-      "status": "published",
-      "thumbnail": "https://imgix.cosmicjs.com/438efed0-d608-11ec-bb19-d9085ce408df-phoenix-han-ZSRypKo9sk-unsplash.jpg",
-      "published_at": "2022-05-25T21:08:32.228Z",
-      "modified_by": "621e8a8f5930f70009316105",
-      "publish_at": null,
-      "unpublish_at": null,
-      "type": "products",
-      "metadata": {
-        "category": {
-          "key": "food",
-          "value": "Food"
-        },
-        "image": {
-          "url": "https://cdn.cosmicjs.com/438efed0-d608-11ec-bb19-d9085ce408df-phoenix-han-ZSRypKo9sk-unsplash.jpg",
-          "imgix_url": "https://imgix.cosmicjs.com/438efed0-d608-11ec-bb19-d9085ce408df-phoenix-han-ZSRypKo9sk-unsplash.jpg"
-        },
-        "price": 1.99,
-        "quantity": 33,
-        "sku": "00111453",
-        "details": "",
-        "free_shipping": true,
-        "options": ["Expedited Shipping"]
-      }
-    },
-    {
-      "id": "6283dd60803a1a0009112e32",
-      "slug": "sandwich",
-      "title": "Sandwich",
-      "content": "<p>The perfect cheese and the perfect bread make this sandwich perfect.</p>",
-      "bucket": "6283b64c9f8e3f00094504c4",
-      "created_at": "2022-05-17T17:37:36.514Z",
-      "created_by": "621e8a8f5930f70009316105",
-      "modified_at": "2022-05-25T21:10:07.902Z",
-      "created": "2022-05-17T17:37:36.514Z",
-      "status": "published",
-      "thumbnail": "https://imgix.cosmicjs.com/f6640d30-d607-11ec-bb19-d9085ce408df-jay-gajjar-9bsNSwZZMN8-unsplash.jpg",
-      "published_at": "2022-05-25T21:10:07.902Z",
-      "modified_by": "621e8a8f5930f70009316105",
-      "publish_at": null,
-      "unpublish_at": null,
-      "type": "products",
-      "metadata": {
-        "category": {
-          "key": "food",
-          "value": "Food"
-        },
-        "image": {
-          "url": "https://cdn.cosmicjs.com/f6640d30-d607-11ec-bb19-d9085ce408df-jay-gajjar-9bsNSwZZMN8-unsplash.jpg",
-          "imgix_url": "https://imgix.cosmicjs.com/f6640d30-d607-11ec-bb19-d9085ce408df-jay-gajjar-9bsNSwZZMN8-unsplash.jpg"
-        },
-        "price": 8.99,
-        "quantity": 3,
-        "sku": "00111587",
-        "details": "",
-        "free_shipping": false,
-        "options": ["Expedited Shipping"]
-      }
-    },
-    {
-      "id": "6283bbbad4903800092ffed7",
-      "slug": "pasta",
-      "title": "Pasta",
-      "content": "<p>Delicious bowtie pasta and fancy ingredients.</p>",
-      "bucket": "6283b64c9f8e3f00094504c4",
-      "created_at": "2022-05-17T15:14:02.149Z",
-      "created_by": "621e8a8f5930f70009316105",
-      "modified_at": "2022-05-25T21:27:22.382Z",
-      "created": "2022-05-17T15:14:02.149Z",
-      "status": "published",
-      "thumbnail": "https://imgix.cosmicjs.com/e4b8ac80-d5f3-11ec-bb19-d9085ce408df-eaters-collective-12eHC6FxPyg-unsplash.jpg",
-      "published_at": "2022-05-25T21:27:22.382Z",
-      "modified_by": "621e8a8f5930f70009316105",
-      "publish_at": null,
-      "unpublish_at": null,
-      "type": "products",
-      "metadata": {
-        "category": {
-          "key": "food",
-          "value": "Food"
-        },
-        "image": {
-          "url": "https://cdn.cosmicjs.com/e4b8ac80-d5f3-11ec-bb19-d9085ce408df-eaters-collective-12eHC6FxPyg-unsplash.jpg",
-          "imgix_url": "https://imgix.cosmicjs.com/e4b8ac80-d5f3-11ec-bb19-d9085ce408df-eaters-collective-12eHC6FxPyg-unsplash.jpg"
-        },
-        "price": 12.99,
-        "quantity": 8,
-        "sku": "00111798",
-        "details": "",
-        "free_shipping": true,
-        "options": ["Expedited Shipping"]
-      }
-    }
-  ],
-  "total": 3
-}
+
 ```
 
 ### Get products based on nested JSON metadata values
@@ -2007,57 +1003,16 @@ Sometimes the product values that you work with on the front-end and back-end mi
 
 </div>
 <div label="CLI">
-  ```bash
-  cosmic get-objects --query '{type: "products","metadata.details":{"brand":"Samsung"}}'
-  ```
-  
+```bash
+cosmic get-objects --query '{type: "products","metadata.details":{"brand":"Samsung"}}' --props 'slug,title,metadata.price,metadata.quantity,metadata.free_shipping' --limit '3'
+```
 </div>
 </Tabs>
 
 The response will look like:
 
 ```json
-{
-  "objects": [
-    {
-      "id": "6283e06091f3660009da1950",
-      "slug": "watch",
-      "title": "Watch",
-      "content": "<p>You will always know what time it is.</p>",
-      "bucket": "6283b64c9f8e3f00094504c4",
-      "created_at": "2022-05-17T17:50:24.769Z",
-      "created_by": "621e8a8f5930f70009316105",
-      "modified_at": "2022-05-25T20:42:01.239Z",
-      "created": "2022-05-17T17:50:24.769Z",
-      "status": "published",
-      "thumbnail": "https://imgix.cosmicjs.com/c2f987e0-dc6a-11ec-bb19-d9085ce408df-age-barros-rBPOfVqROzY-unsplash.jpg",
-      "published_at": "2022-05-25T20:42:01.239Z",
-      "modified_by": "621e8a8f5930f70009316105",
-      "publish_at": null,
-      "unpublish_at": null,
-      "type": "products",
-      "metadata": {
-        "category": {
-          "key": "electronics",
-          "value": "Electronics"
-        },
-        "image": {
-          "url": null,
-          "imgix_url": null
-        },
-        "price": 259.99,
-        "quantity": 63,
-        "sku": "00115699",
-        "details": {
-          "brand": "Samsung"
-        },
-        "options": ["Expedited Shipping"],
-        "free_shipping": true
-      }
-    }
-  ],
-  "total": 1
-}
+
 ```
 
 ### Get products not equal to a metadata value
@@ -2113,124 +1068,16 @@ A customer might want to look at all of the products you offer _except_ for thos
 
 </div>
 <div label="CLI">
-  ```bash
-  cosmic get-objects --query '{type: "products","metadata.category":{"$ne":"Electronics"}}'
-  ```
-  
+```bash
+cosmic get-objects --query '{type: "products","metadata.category":{"$ne":"Electronics"}}' --props 'slug,title,metadata.price,metadata.quantity,metadata.free_shipping' --limit '3'
+```  
 </div>
 </Tabs>
 
 The response will look like:
 
 ```json
-{
-  "objects": [
-    {
-      "id": "6283df6291f3660009da194d",
-      "slug": "pants",
-      "title": "Pants",
-      "content": "<p>They fit great and have real pockets.</p>",
-      "bucket": "6283b64c9f8e3f00094504c4",
-      "created_at": "2022-05-17T17:46:10.605Z",
-      "created_by": "621e8a8f5930f70009316105",
-      "modified_at": "2022-05-25T20:43:00.438Z",
-      "created": "2022-05-17T17:46:10.605Z",
-      "status": "published",
-      "thumbnail": "https://imgix.cosmicjs.com/32587370-d609-11ec-bb19-d9085ce408df-matt-moloney-YeGao3uk8kI-unsplash.jpg",
-      "published_at": "2022-05-25T20:43:00.438Z",
-      "modified_by": "621e8a8f5930f70009316105",
-      "publish_at": null,
-      "unpublish_at": null,
-      "type": "products",
-      "metadata": {
-        "category": {
-          "key": "clothing",
-          "value": "Clothing"
-        },
-        "image": {
-          "url": "https://cdn.cosmicjs.com/32587370-d609-11ec-bb19-d9085ce408df-matt-moloney-YeGao3uk8kI-unsplash.jpg",
-          "imgix_url": "https://imgix.cosmicjs.com/32587370-d609-11ec-bb19-d9085ce408df-matt-moloney-YeGao3uk8kI-unsplash.jpg"
-        },
-        "price": 37.99,
-        "quantity": 48,
-        "sku": "0014328",
-        "details": "",
-        "options": [],
-        "free_shipping": false
-      }
-    },
-    {
-      "id": "6283df2391f3660009da194b",
-      "slug": "blouse",
-      "title": "Blouse",
-      "content": "<p>Flowy and soft, this blouse will make you happy.</p>",
-      "bucket": "6283b64c9f8e3f00094504c4",
-      "created_at": "2022-05-17T17:45:07.705Z",
-      "created_by": "621e8a8f5930f70009316105",
-      "modified_at": "2022-05-25T20:44:13.368Z",
-      "created": "2022-05-17T17:45:07.705Z",
-      "status": "published",
-      "thumbnail": "https://imgix.cosmicjs.com/0b5803d0-d609-11ec-bb19-d9085ce408df-aronskaya-186XBXoPAeU-unsplash.jpg",
-      "published_at": "2022-05-25T20:44:13.368Z",
-      "modified_by": "621e8a8f5930f70009316105",
-      "publish_at": null,
-      "unpublish_at": null,
-      "type": "products",
-      "metadata": {
-        "category": {
-          "key": "clothing",
-          "value": "Clothing"
-        },
-        "image": {
-          "url": "https://cdn.cosmicjs.com/0b5803d0-d609-11ec-bb19-d9085ce408df-aronskaya-186XBXoPAeU-unsplash.jpg",
-          "imgix_url": "https://imgix.cosmicjs.com/0b5803d0-d609-11ec-bb19-d9085ce408df-aronskaya-186XBXoPAeU-unsplash.jpg"
-        },
-        "price": 25.99,
-        "quantity": 57,
-        "sku": "0014728",
-        "details": "",
-        "free_shipping": false,
-        "options": ["Size", "Color"]
-      }
-    },
-    {
-      "id": "6283deb85882c30009b49e5b",
-      "slug": "wood-screw",
-      "title": "Wood Screw",
-      "content": "<p>These screws won&#39;t let go of anything.</p>",
-      "bucket": "6283b64c9f8e3f00094504c4",
-      "created_at": "2022-05-17T17:43:20.043Z",
-      "created_by": "621e8a8f5930f70009316105",
-      "modified_at": "2022-05-25T20:45:58.222Z",
-      "created": "2022-05-17T17:43:20.043Z",
-      "status": "published",
-      "thumbnail": "https://imgix.cosmicjs.com/9327c030-dc6b-11ec-bb19-d9085ce408df-chris-yates-bVG0-KSh8Sc-unsplash.jpg",
-      "published_at": "2022-05-25T20:45:58.222Z",
-      "modified_by": "621e8a8f5930f70009316105",
-      "publish_at": null,
-      "unpublish_at": null,
-      "type": "products",
-      "metadata": {
-        "category": {
-          "key": "construction",
-          "value": "Construction"
-        },
-        "image": {
-          "url": null,
-          "imgix_url": null
-        },
-        "price": 19.99,
-        "quantity": 22,
-        "sku": "0016431",
-        "details": "",
-        "free_shipping": false,
-        "options": ["Size"]
-      }
-    },
-    ...
-  ],
-  "total": 18
-}
+
 ```
 
 ### Get products that match a specific metadata value with a subset of multiple options
@@ -2282,124 +1129,16 @@ A customer might want to know if they can shop by color _and_ size can be expedi
 
 </div>
 <div label="CLI">
-  ```bash
-  cosmic get-objects --query '{type: "products","metadata.options":["color","expedited"]}'
-  ```
-  
+```bash
+cosmic get-objects --query '{type: "products","metadata.options":["color","expedited"]}' --props 'slug,title,metadata.price,metadata.quantity,metadata.free_shipping' --limit '3'
+```
 </div>
 </Tabs>
 
 The response will look like:
 
 ```json
-{
-  "objects": [
-    {
-      "id": "6283c5a330b2e10009e43610",
-      "slug": "windshield-wipers",
-      "title": "Windshield Wipers",
-      "content": "<p>See through the rain and stay safe on the road.</p>",
-      "bucket": "6283b64c9f8e3f00094504c4",
-      "created_at": "2022-05-17T15:56:19.345Z",
-      "created_by": "621e8a8f5930f70009316105",
-      "modified_at": "2022-05-25T21:14:39.202Z",
-      "created": "2022-05-17T15:56:19.346Z",
-      "status": "published",
-      "thumbnail": "https://imgix.cosmicjs.com/990b06c0-dc6f-11ec-bb19-d9085ce408df-thibault-valjevac-2m6GjKScw20-unsplash.jpg",
-      "published_at": "2022-05-25T21:14:39.202Z",
-      "modified_by": "621e8a8f5930f70009316105",
-      "publish_at": null,
-      "unpublish_at": null,
-      "type": "products",
-      "metadata": {
-        "category": {
-          "key": "car",
-          "value": "Car"
-        },
-        "image": {
-          "url": "https://cdn.cosmicjs.com/7f8701d0-d5f9-11ec-bb19-d9085ce408df-u98yt7gyuvhjbkkino9u8",
-          "imgix_url": "https://cdn.cosmicjs.com/7f8701d0-d5f9-11ec-bb19-d9085ce408df-u98yt7gyuvhjbkkino9u8"
-        },
-        "price": 27.99,
-        "quantity": 54,
-        "sku": "0018169",
-        "details": "",
-        "free_shipping": true,
-        "options": ["Color"]
-      }
-    },
-    {
-      "id": "6283bdba9d76630009b0b70a",
-      "slug": "lamp",
-      "title": "Lamp",
-      "content": "<p>Light where you need it.</p>",
-      "bucket": "6283b64c9f8e3f00094504c4",
-      "created_at": "2022-05-17T15:22:34.394Z",
-      "created_by": "621e8a8f5930f70009316105",
-      "modified_at": "2022-05-25T21:20:26.929Z",
-      "created": "2022-05-17T15:22:34.394Z",
-      "status": "published",
-      "thumbnail": "https://imgix.cosmicjs.com/1d7edd40-d5f5-11ec-bb19-d9085ce408df-sincerely-media-VDPauwJsHo-unsplash.jpg",
-      "published_at": "2022-05-25T21:20:26.929Z",
-      "modified_by": "621e8a8f5930f70009316105",
-      "publish_at": null,
-      "unpublish_at": null,
-      "type": "products",
-      "metadata": {
-        "category": {
-          "key": "home_decor",
-          "value": "Home Decor"
-        },
-        "image": {
-          "url": "https://cdn.cosmicjs.com/1d7edd40-d5f5-11ec-bb19-d9085ce408df-sincerely-media-VDPauwJsHo-unsplash.jpg",
-          "imgix_url": "https://imgix.cosmicjs.com/1d7edd40-d5f5-11ec-bb19-d9085ce408df-sincerely-media-VDPauwJsHo-unsplash.jpg"
-        },
-        "price": 12,
-        "quantity": "",
-        "sku": "0011652",
-        "details": "",
-        "free_shipping": true,
-        "options": ["Color"]
-      }
-    },
-    {
-      "id": "6283bd5ba87dd8000923c294",
-      "slug": "phone-case",
-      "title": "Phone Case",
-      "content": "<p>Screen protection, privacy film, grip ergonomics.</p>",
-      "bucket": "6283b64c9f8e3f00094504c4",
-      "created_at": "2022-05-17T15:20:59.459Z",
-      "created_by": "621e8a8f5930f70009316105",
-      "modified_at": "2022-05-25T21:21:24.032Z",
-      "created": "2022-05-17T15:20:59.459Z",
-      "status": "published",
-      "thumbnail": "https://imgix.cosmicjs.com/e92dc470-d5f4-11ec-bb19-d9085ce408df-michael-evins-RCdTWp0P9o-unsplash.jpg",
-      "published_at": "2022-05-25T21:21:24.032Z",
-      "modified_by": "621e8a8f5930f70009316105",
-      "publish_at": null,
-      "unpublish_at": null,
-      "type": "products",
-      "metadata": {
-        "category": {
-          "key": "electronics",
-          "value": "Electronics"
-        },
-        "image": {
-          "url": "https://cdn.cosmicjs.com/e92dc470-d5f4-11ec-bb19-d9085ce408df-michael-evins-RCdTWp0P9o-unsplash.jpg",
-          "imgix_url": "https://imgix.cosmicjs.com/e92dc470-d5f4-11ec-bb19-d9085ce408df-michael-evins-RCdTWp0P9o-unsplash.jpg"
-        },
-        "price": 35.99,
-        "quantity": "",
-        "sku": "",
-        "details": "",
-        "free_shipping": true,
-        "options": ["Color"]
-      }
-    },
-    ...
-  ],
-  "total": 6
-}
+
 ```
 
 ### Get products that match a metadata value with any subset of multiple options
@@ -2455,124 +1194,16 @@ When customers are evaluating products, they might want to look at all of the pr
 
 </div>
 <div label="CLI">
-  ```bash
-  cosmic get-objects --query '{type: "products","metadata.options":{"$in":["Size"]}}'
-  ```
-  
+```bash
+cosmic get-objects --query '{type: "products","metadata.options":{"$in":["Size"]}}' --props 'slug,title,metadata.price,metadata.quantity,metadata.free_shipping' --limit '3'
+```
 </div>
 </Tabs>
 
 The response will look like:
 
 ```json
-{
-  "objects": [
-    {
-      "id": "6283df2391f3660009da194b",
-      "slug": "blouse",
-      "title": "Blouse",
-      "content": "<p>Flowy and soft, this blouse will make you happy.</p>",
-      "bucket": "6283b64c9f8e3f00094504c4",
-      "created_at": "2022-05-17T17:45:07.705Z",
-      "created_by": "621e8a8f5930f70009316105",
-      "modified_at": "2022-05-25T20:44:13.368Z",
-      "created": "2022-05-17T17:45:07.705Z",
-      "status": "published",
-      "thumbnail": "https://imgix.cosmicjs.com/0b5803d0-d609-11ec-bb19-d9085ce408df-aronskaya-186XBXoPAeU-unsplash.jpg",
-      "published_at": "2022-05-25T20:44:13.368Z",
-      "modified_by": "621e8a8f5930f70009316105",
-      "publish_at": null,
-      "unpublish_at": null,
-      "type": "products",
-      "metadata": {
-        "category": {
-          "key": "clothing",
-          "value": "Clothing"
-        },
-        "image": {
-          "url": "https://cdn.cosmicjs.com/0b5803d0-d609-11ec-bb19-d9085ce408df-aronskaya-186XBXoPAeU-unsplash.jpg",
-          "imgix_url": "https://imgix.cosmicjs.com/0b5803d0-d609-11ec-bb19-d9085ce408df-aronskaya-186XBXoPAeU-unsplash.jpg"
-        },
-        "price": 25.99,
-        "quantity": 57,
-        "sku": "0014728",
-        "details": "",
-        "free_shipping": false,
-        "options": ["Size", "Color"]
-      }
-    },
-    {
-      "id": "6283deb85882c30009b49e5b",
-      "slug": "wood-screw",
-      "title": "Wood Screw",
-      "content": "<p>These screws won&#39;t let go of anything.</p>",
-      "bucket": "6283b64c9f8e3f00094504c4",
-      "created_at": "2022-05-17T17:43:20.043Z",
-      "created_by": "621e8a8f5930f70009316105",
-      "modified_at": "2022-05-25T20:45:58.222Z",
-      "created": "2022-05-17T17:43:20.043Z",
-      "status": "published",
-      "thumbnail": "https://imgix.cosmicjs.com/9327c030-dc6b-11ec-bb19-d9085ce408df-chris-yates-bVG0-KSh8Sc-unsplash.jpg",
-      "published_at": "2022-05-25T20:45:58.222Z",
-      "modified_by": "621e8a8f5930f70009316105",
-      "publish_at": null,
-      "unpublish_at": null,
-      "type": "products",
-      "metadata": {
-        "category": {
-          "key": "construction",
-          "value": "Construction"
-        },
-        "image": {
-          "url": null,
-          "imgix_url": null
-        },
-        "price": 19.99,
-        "quantity": 22,
-        "sku": "0016431",
-        "details": "",
-        "free_shipping": false,
-        "options": ["Size"]
-      }
-    },
-    {
-      "id": "6283de686605090009c58739",
-      "slug": "extension-cord",
-      "title": "Extension Cord",
-      "content": "<p>A cord to help you reach everything with power.</p>",
-      "bucket": "6283b64c9f8e3f00094504c4",
-      "created_at": "2022-05-17T17:42:00.359Z",
-      "created_by": "621e8a8f5930f70009316105",
-      "modified_at": "2022-05-25T21:06:39.908Z",
-      "created": "2022-05-17T17:42:00.359Z",
-      "status": "published",
-      "thumbnail": "https://imgix.cosmicjs.com/e2b6b980-dc6b-11ec-bb19-d9085ce408df-kier-in-sight-7d8pxcMVl7A-unsplash.jpg",
-      "published_at": "2022-05-25T21:06:39.908Z",
-      "modified_by": "621e8a8f5930f70009316105",
-      "publish_at": null,
-      "unpublish_at": null,
-      "type": "products",
-      "metadata": {
-        "category": {
-          "key": "construction",
-          "value": "Construction"
-        },
-        "image": {
-          "url": null,
-          "imgix_url": null
-        },
-        "price": 25.99,
-        "quantity": 14,
-        "sku": "0016358",
-        "details": "",
-        "free_shipping": true,
-        "options": ["Size"]
-      }
-    },
-    ...
-  ],
-  "total": 9
-}
+
 ```
 
 ### Get products that don't match any values in a multi-option metadata value
@@ -2628,124 +1259,14 @@ Sometimes customers will want to see the products you have that don't meet certa
 
 </div>
 <div label="CLI">
-  ```bash
-  cosmic get-objects --query '{type: "products","metadata.options":{"$nin":["Size"]}}'
-  ```
-  
+```bash
+cosmic get-objects --query '{type: "products","metadata.options":{"$nin":["Size"]}}' --props 'slug,title,metadata.price,metadata.quantity,metadata.free_shipping' --limit '3'
+```
 </div>
 </Tabs>
 
 The response will look like:
 
 ```json
-{
-  "objects": [
-    {
-      "id": "6283e06091f3660009da1950",
-      "slug": "watch",
-      "title": "Watch",
-      "content": "<p>You will always know what time it is.</p>",
-      "bucket": "6283b64c9f8e3f00094504c4",
-      "created_at": "2022-05-17T17:50:24.769Z",
-      "created_by": "621e8a8f5930f70009316105",
-      "modified_at": "2022-05-25T20:42:01.239Z",
-      "created": "2022-05-17T17:50:24.769Z",
-      "status": "published",
-      "thumbnail": "https://imgix.cosmicjs.com/c2f987e0-dc6a-11ec-bb19-d9085ce408df-age-barros-rBPOfVqROzY-unsplash.jpg",
-      "published_at": "2022-05-25T20:42:01.239Z",
-      "modified_by": "621e8a8f5930f70009316105",
-      "publish_at": null,
-      "unpublish_at": null,
-      "type": "products",
-      "metadata": {
-        "category": {
-          "key": "electronics",
-          "value": "Electronics"
-        },
-        "image": {
-          "url": null,
-          "imgix_url": null
-        },
-        "price": 259.99,
-        "quantity": 63,
-        "sku": "00115699",
-        "details": {
-          "brand": "Samsung"
-        },
-        "options": ["Expedited Shipping"],
-        "free_shipping": true
-      }
-    },
-    {
-      "id": "6283e0235882c30009b49e5f",
-      "slug": "battery-charger",
-      "title": "Battery Charger",
-      "content": "<p>If your phone is dead, you need this brick.</p>",
-      "bucket": "6283b64c9f8e3f00094504c4",
-      "created_at": "2022-05-17T17:49:23.855Z",
-      "created_by": "621e8a8f5930f70009316105",
-      "modified_at": "2022-05-25T20:41:13.842Z",
-      "created": "2022-05-17T17:49:23.855Z",
-      "status": "published",
-      "thumbnail": "https://imgix.cosmicjs.com/99f67b80-d609-11ec-bb19-d9085ce408df-onur-binay--DY5znt0Whs-unsplash.jpg",
-      "published_at": "2022-05-25T20:41:13.842Z",
-      "modified_by": "621e8a8f5930f70009316105",
-      "publish_at": null,
-      "unpublish_at": null,
-      "type": "products",
-      "metadata": {
-        "category": {
-          "key": "electronics",
-          "value": "Electronics"
-        },
-        "image": {
-          "url": "https://cdn.cosmicjs.com/99f67b80-d609-11ec-bb19-d9085ce408df-onur-binay--DY5znt0Whs-unsplash.jpg",
-          "imgix_url": "https://imgix.cosmicjs.com/99f67b80-d609-11ec-bb19-d9085ce408df-onur-binay--DY5znt0Whs-unsplash.jpg"
-        },
-        "price": 52.99,
-        "quantity": 17,
-        "sku": "",
-        "details": "",
-        "options": [],
-        "free_shipping": false
-      }
-    },
-    {
-      "id": "6283df6291f3660009da194d",
-      "slug": "pants",
-      "title": "Pants",
-      "content": "<p>They fit great and have real pockets.</p>",
-      "bucket": "6283b64c9f8e3f00094504c4",
-      "created_at": "2022-05-17T17:46:10.605Z",
-      "created_by": "621e8a8f5930f70009316105",
-      "modified_at": "2022-05-25T20:43:00.438Z",
-      "created": "2022-05-17T17:46:10.605Z",
-      "status": "published",
-      "thumbnail": "https://imgix.cosmicjs.com/32587370-d609-11ec-bb19-d9085ce408df-matt-moloney-YeGao3uk8kI-unsplash.jpg",
-      "published_at": "2022-05-25T20:43:00.438Z",
-      "modified_by": "621e8a8f5930f70009316105",
-      "publish_at": null,
-      "unpublish_at": null,
-      "type": "products",
-      "metadata": {
-        "category": {
-          "key": "clothing",
-          "value": "Clothing"
-        },
-        "image": {
-          "url": "https://cdn.cosmicjs.com/32587370-d609-11ec-bb19-d9085ce408df-matt-moloney-YeGao3uk8kI-unsplash.jpg",
-          "imgix_url": "https://imgix.cosmicjs.com/32587370-d609-11ec-bb19-d9085ce408df-matt-moloney-YeGao3uk8kI-unsplash.jpg"
-        },
-        "price": 37.99,
-        "quantity": 48,
-        "sku": "0014328",
-        "details": "",
-        "options": [],
-        "free_shipping": false
-      }
-    },
-    ...
-  ],
-  "total": 12
-}
+
 ```
