@@ -119,13 +119,10 @@ Add this with your variable values to "Query Variables".
 
 ```
 {
-  bucket_slug: "YOUR_BUCKET_SLUG",
-  read_key: "YOUR_BUCKET_READ_KEY",
-  input: {
-    query: {
-      type: "posts"
-    },
-    props: "slug,title,metadata.hero.url"
+  "bucket_slug": "YOUR_BUCKET_SLUG",
+  "read_key": "YOUR_BUCKET_READ_KEY",
+  "query": {
+    "type": "posts"
   }
 }
 ```
@@ -277,13 +274,10 @@ getObjects(bucket_slug, read_key, input)
 
 ```
 {
-  bucket_slug: "YOUR_BUCKET_SLUG",
-  read_key: "YOUR_BUCKET_READ_KEY",
-  input: {
-    query: {
-      type: "posts"
-    },
-    props: "slug,title,content,metadata"
+  "bucket_slug": "YOUR_BUCKET_SLUG",
+  "read_key": "YOUR_BUCKET_READ_KEY",
+  "query": {
+    "type": "posts"
   }
 }
 ```
@@ -400,16 +394,17 @@ Add this with your variable values to "Query Variables".
 
 ```
 {
-  bucket_slug: "YOUR_BUCKET_SLUG",
-  read_key: "YOUR_BUCKET_READ_KEY"
+  "bucket_slug": "YOUR_BUCKET_SLUG",
+  "read_key": "YOUR_BUCKET_READ_KEY",
+  "object_id": "{{object_id}}"
 }
 ```
 
-  <a href="https://cosmic-graphql-playground.netlify.app/?endpoint=https%3A%2F%2Fgraphql.cosmicjs.com%2Fv3&query=%20query%20%28%24bucket_slug%3A%20String%21%2C%20%24read_key%3A%20String%29%20%7B%0A%20%20getObject%28%0A%20%20%20%20bucket_slug%3A%20%24bucket_slug%0A%20%20%20%20read_key%3A%20%24read_key%0A%20%20%20%20object_id%3A%20%2260105b2ed026d40008d745e5%22%0A%20%20%29%20%7B%0A%20%20%20%20%20%20title%0A%20%20%7D%0A%7D">
+  <a href="https://cosmic-graphql-playground.netlify.app/?endpoint=https%3A%2F%2Fgraphql.cosmicjs.com%2Fv3&query=%20query%20%28%24bucket_slug%3A%20String%21%2C%20%24read_key%3A%20String%2C%20%24object_id%3A%20ID%21%29%20%7B%0A%20%20getObject%28%0A%20%20%20%20bucket_slug%3A%20%24bucket_slug%0A%20%20%20%20read_key%3A%20%24read_key%0A%20%20%20%20object_id%3A%20%24object_id%0A%20%20%29%20%7B%0A%20%20%20%20%20%20title%0A%20%20%7D%0A%7D">
     Full screen
   </a>
   <iframe
-    src="https://cosmic-graphql-playground.netlify.app/?endpoint=https%3A%2F%2Fgraphql.cosmicjs.com%2Fv3&query=%20query%20%28%24bucket_slug%3A%20String%21%2C%20%24read_key%3A%20String%29%20%7B%0A%20%20getObject%28%0A%20%20%20%20bucket_slug%3A%20%24bucket_slug%0A%20%20%20%20read_key%3A%20%24read_key%0A%20%20%20%20object_id%3A%20%2260105b2ed026d40008d745e5%22%0A%20%20%29%20%7B%0A%20%20%20%20%20%20title%0A%20%20%7D%0A%7D"
+    src="https://cosmic-graphql-playground.netlify.app/?endpoint=https%3A%2F%2Fgraphql.cosmicjs.com%2Fv3&query=%20query%20%28%24bucket_slug%3A%20String%21%2C%20%24read_key%3A%20String%2C%20%24object_id%3A%20ID%21%29%20%7B%0A%20%20getObject%28%0A%20%20%20%20bucket_slug%3A%20%24bucket_slug%0A%20%20%20%20read_key%3A%20%24read_key%0A%20%20%20%20object_id%3A%20%24object_id%0A%20%20%29%20%7B%0A%20%20%20%20%20%20title%0A%20%20%7D%0A%7D"
     frameBorder="0"
     style={{ width: "100%", height: "470px" }}
   ></iframe>
@@ -557,20 +552,17 @@ Add this with your variable values to "Query Variables".
 
 ```
 {
-  bucket_slug: "YOUR_BUCKET_SLUG",
-  read_key: "YOUR_BUCKET_READ_KEY",
-  object_id: "{{object_id}}",
-  input: {
-    props: "slug,title,metadata"
-  }
+  "bucket_slug": "YOUR_BUCKET_SLUG",
+  "read_key": "YOUR_BUCKET_READ_KEY",
+  "object_id": "{{object_id}}"
 }
 ```
 
-  <a href="https://cosmic-graphql-playground.netlify.app/?endpoint=https%3A%2F%2Fgraphql.cosmicjs.com%2Fv3&query=%20query%20%28%24bucket_slug%3A%20String%21%2C%20%24read_key%3A%20String%29%20%7B%0A%20%20getObject%28%0A%20%20%20%20bucket_slug%3A%20%24bucket_slug%0A%20%20%20%20read_key%3A%20%24read_key%0A%20%20%20%20object_id%3A%20%2260105b2ed026d40008d745e5%22%0A%20%20%20%20input%3A%20%7B%0A%20%20%20%20%20%20%20%20props%3A%20%22title%22%0A%20%20%20%20%7D%0A%20%20%29%20%7B%0A%20%20%20%20%20%20title%0A%20%20%7D%0A%7D">
+  <a href="https://cosmic-graphql-playground.netlify.app/?endpoint=https%3A%2F%2Fgraphql.cosmicjs.com%2Fv3&query=%20query%20%28%24bucket_slug%3A%20String%21%2C%20%24read_key%3A%20String%2C%20%24object_id%3A%20ID%21%29%20%7B%0A%20%20getObject%28%0A%20%20%20%20bucket_slug%3A%20%24bucket_slug%0A%20%20%20%20read_key%3A%20%24read_key%0A%20%20%20%20object_id%3A%20%24object_id%0A%20%20%20%20input%3A%20%7B%0A%20%20%20%20%20%20props%3A%20%22title%22%0A%20%20%20%20%7D%0A%20%20%29%20%7B%0A%20%20%20%20%20%20title%0A%20%20%7D%0A%7D">
     Full screen
   </a>
   <iframe
-    src="https://cosmic-graphql-playground.netlify.app/?endpoint=https%3A%2F%2Fgraphql.cosmicjs.com%2Fv3&query=%20query%20%28%24bucket_slug%3A%20String%21%2C%20%24read_key%3A%20String%29%20%7B%0A%20%20getObject%28%0A%20%20%20%20bucket_slug%3A%20%24bucket_slug%0A%20%20%20%20read_key%3A%20%24read_key%0A%20%20%20%20object_id%3A%20%2260105b2ed026d40008d745e5%22%0A%20%20%20%20input%3A%20%7B%0A%20%20%20%20%20%20%20%20props%3A%20%22title%22%0A%20%20%20%20%7D%0A%20%20%29%20%7B%0A%20%20%20%20%20%20title%0A%20%20%7D%0A%7D"
+    src="https://cosmic-graphql-playground.netlify.app/?endpoint=https%3A%2F%2Fgraphql.cosmicjs.com%2Fv3&query=%20query%20%28%24bucket_slug%3A%20String%21%2C%20%24read_key%3A%20String%2C%20%24object_id%3A%20ID%21%29%20%7B%0A%20%20getObject%28%0A%20%20%20%20bucket_slug%3A%20%24bucket_slug%0A%20%20%20%20read_key%3A%20%24read_key%0A%20%20%20%20object_id%3A%20%24object_id%0A%20%20%20%20input%3A%20%7B%0A%20%20%20%20%20%20props%3A%20%22title%22%0A%20%20%20%20%7D%0A%20%20%29%20%7B%0A%20%20%20%20%20%20title%0A%20%20%7D%0A%7D"
     frameBorder="0"
     style={{ width: "100%", height: "470px" }}
   ></iframe>
@@ -679,11 +671,11 @@ Add this with your variable values to "Query Variables".
 }
 ```
 
-  <a href="https://cosmic-graphql-playground.netlify.app/?endpoint=https%3A%2F%2Fgraphql.cosmicjs.com%2Fv3&query=%20query%20%28%24bucket_slug%3A%20String%21%2C%20%24read_key%3A%20String%29%20%7B%0A%20%20getObjects%28%0A%20%20%20%20bucket_slug%3A%20%24bucket_slug%0A%20%20%20%20read_key%3A%20%24read_key%0A%20%20%20%20input%3A%20%7B%0A%20%20%20%20%20%20query%3A%20%7B%0A%20%20%20%20%20%20%20%20slug%3A%20%22test-schedule%22%0A%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20props%3A%20%22title%22%0A%20%20%20%20%7D%0A%20%20%29%20%7B%0A%20%20%20%20%20%20objects%20%7B%0A%20%20%20%20%20%20%20%20title%0A%20%20%20%20%20%20%7D%0A%20%20%7D%0A%7D">
+  <a href="https://cosmic-graphql-playground.netlify.app/?endpoint=https%3A%2F%2Fgraphql.cosmicjs.com%2Fv3&query=%20query%20%28%24bucket_slug%3A%20String%21%2C%20%24read_key%3A%20String%29%20%7B%0A%20%20getObjects%28%0A%20%20%20%20bucket_slug%3A%20%24bucket_slug%0A%20%20%20%20read_key%3A%20%24read_key%0A%20%20%20%20input%3A%20%7B%0A%20%20%20%20%20%20query%3A%20%7B%0A%20%20%20%20%20%20%20%20slug%3A%20%22object-slug%22%0A%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20props%3A%20%22title%22%0A%20%20%20%20%7D%0A%20%20%29%20%7B%0A%20%20%20%20%20%20objects%20%7B%0A%20%20%20%20%20%20%20%20title%0A%20%20%20%20%20%20%7D%0A%20%20%7D%0A%7D">
     Full screen
   </a>
   <iframe
-    src="https://cosmic-graphql-playground.netlify.app/?endpoint=https%3A%2F%2Fgraphql.cosmicjs.com%2Fv3&query=%20query%20%28%24bucket_slug%3A%20String%21%2C%20%24read_key%3A%20String%29%20%7B%0A%20%20getObjects%28%0A%20%20%20%20bucket_slug%3A%20%24bucket_slug%0A%20%20%20%20read_key%3A%20%24read_key%0A%20%20%20%20input%3A%20%7B%0A%20%20%20%20%20%20query%3A%20%7B%0A%20%20%20%20%20%20%20%20slug%3A%20%22test-schedule%22%0A%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20props%3A%20%22title%22%0A%20%20%20%20%7D%0A%20%20%29%20%7B%0A%20%20%20%20%20%20objects%20%7B%0A%20%20%20%20%20%20%20%20title%0A%20%20%20%20%20%20%7D%0A%20%20%7D%0A%7D"
+    src="https://cosmic-graphql-playground.netlify.app/?endpoint=https%3A%2F%2Fgraphql.cosmicjs.com%2Fv3&query=%20query%20%28%24bucket_slug%3A%20String%21%2C%20%24read_key%3A%20String%29%20%7B%0A%20%20getObjects%28%0A%20%20%20%20bucket_slug%3A%20%24bucket_slug%0A%20%20%20%20read_key%3A%20%24read_key%0A%20%20%20%20input%3A%20%7B%0A%20%20%20%20%20%20query%3A%20%7B%0A%20%20%20%20%20%20%20%20slug%3A%20%22object-slug%22%0A%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20props%3A%20%22title%22%0A%20%20%20%20%7D%0A%20%20%29%20%7B%0A%20%20%20%20%20%20objects%20%7B%0A%20%20%20%20%20%20%20%20title%0A%20%20%20%20%20%20%7D%0A%20%20%7D%0A%7D"
     frameBorder="0"
     style={{ width: "100%", height: "470px" }}
   ></iframe>
@@ -1173,16 +1165,15 @@ Add this with your variable values to "Query Variables".
 {
   "bucket_slug": "YOUR_BUCKET_SLUG",
   "read_key": "YOUR_BUCKET_READ_KEY",
-  "merge_request_id": "merge-request-id",
+  "merge_request_id": "{{merge_request_id}}",
   "query": {
-    "slug": "new-post-in-merge-request",
-    "locale": "en"
+    "slug": "new-post-in-merge-request"
   }
 }
 ```
 
-<a href="https://cosmic-graphql-playground.netlify.app/?endpoint=https%3A%2F%2Fgraphql.cosmicjs.com%2Fv3&query=%20query%20%28%24bucket_slug%3A%20String%21%2C%20%24read_key%3A%20String%2C%20%24merge_request_id%3A%20ID%21%29%20%7B%0A%20%20getMergeRequestObjects%28%0A%20%20%20%20bucket_slug%3A%20%24bucket_slug%0A%20%20%20%20read_key%3A%20%24read_key%0A%20%20%20%20merge_request_id%3A%20%24merge_request_id%0A%20%20%29%20%7B%0A%20%20%20%20%20objects%20%7B%0A%20%20%20%20%20%20id%0A%20%20%20%20%20%20title%0A%20%20%20%20%20%20slug%0A%20%20%20%20%7D%0A%20%20%20%20total%0A%20%20%7D%0A%7D">Full screen</a>
-<iframe src="https://cosmic-graphql-playground.netlify.app/?endpoint=https%3A%2F%2Fgraphql.cosmicjs.com%2Fv3&query=%20query%20%28%24bucket_slug%3A%20String%21%2C%20%24read_key%3A%20String%2C%20%24merge_request_id%3A%20ID%21%29%20%7B%0A%20%20getMergeRequestObjects%28%0A%20%20%20%20bucket_slug%3A%20%24bucket_slug%0A%20%20%20%20read_key%3A%20%24read_key%0A%20%20%20%20merge_request_id%3A%20%24merge_request_id%0A%20%20%29%20%7B%0A%20%20%20%20%20objects%20%7B%0A%20%20%20%20%20%20id%0A%20%20%20%20%20%20title%0A%20%20%20%20%20%20slug%0A%20%20%20%20%7D%0A%20%20%20%20total%0A%20%20%7D%0A%7D" frameBorder="0" style={{ width: '100%', height: '470px'}}></iframe>
+<a href="https://cosmic-graphql-playground.netlify.app/?endpoint=https%3A%2F%2Fgraphql.cosmicjs.com%2Fv3&query=%20query%20%28%24bucket_slug%3A%20String%21%2C%20%24read_key%3A%20String%2C%20%24merge_request_id%3A%20ID%21%2C%20%24query%3A%20String%29%20%7B%0A%20%20getMergeRequestObjects%28%0A%20%20%20%20bucket_slug%3A%20%24bucket_slug%0A%20%20%20%20read_key%3A%20%24read_key%0A%20%20%20%20merge_request_id%3A%20%24merge_request_id%0A%20%20%20%20input%3A%20%7B%0A%20%20%20%20%20%20query%3A%20%24query%0A%20%20%20%20%7D%0A%20%20%29%20%7B%0A%20%20%20%20%20objects%20%7B%0A%20%20%20%20%20%20id%0A%20%20%20%20%20%20title%0A%20%20%20%20%20%20slug%0A%20%20%20%20%7D%0A%20%20%20%20total%0A%20%20%7D%0A%7D">Full screen</a>
+<iframe src="https://cosmic-graphql-playground.netlify.app/?endpoint=https%3A%2F%2Fgraphql.cosmicjs.com%2Fv3&query=%20query%20%28%24bucket_slug%3A%20String%21%2C%20%24read_key%3A%20String%2C%20%24merge_request_id%3A%20ID%21%2C%20%24query%3A%20String%29%20%7B%0A%20%20getMergeRequestObjects%28%0A%20%20%20%20bucket_slug%3A%20%24bucket_slug%0A%20%20%20%20read_key%3A%20%24read_key%0A%20%20%20%20merge_request_id%3A%20%24merge_request_id%0A%20%20%20%20input%3A%20%7B%0A%20%20%20%20%20%20query%3A%20%24query%0A%20%20%20%20%7D%0A%20%20%29%20%7B%0A%20%20%20%20%20objects%20%7B%0A%20%20%20%20%20%20id%0A%20%20%20%20%20%20title%0A%20%20%20%20%20%20slug%0A%20%20%20%20%7D%0A%20%20%20%20total%0A%20%20%7D%0A%7D" frameBorder="0" style={{ width: '100%', height: '470px'}}></iframe>
 </div>
 
 <div label="CLI">
