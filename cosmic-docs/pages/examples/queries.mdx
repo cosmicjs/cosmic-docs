@@ -277,7 +277,18 @@ cosmic get-objects --query '{"id":"6283bc5a0c164700097679ff"}' \
 The response will look like:
 
 ```json
-
+{
+  "objects": [
+    {
+      "title": "Tire",
+      "metadata": {
+        "price": 175.99,
+        "quantity": 95
+      }
+    }
+  ],
+  "total": 1
+}
 ```
 
 ### Get multiple products by IDs
@@ -342,7 +353,25 @@ cosmic get-objects --query '{"id":["6283c5a330b2e10009e43610","6283e0235882c3000
 The response will look like:
 
 ```json
-
+{
+  "objects": [
+    {
+      "title": "Battery Charger",
+      "metadata": {
+        "price": 52.99,
+        "quantity": 17
+      }
+    },
+    {
+      "title": "Windshield Wipers",
+      "metadata": {
+        "price": 27.99,
+        "quantity": 54
+      }
+    }
+  ],
+  "total": 2
+}
 ```
 
 ### Filter out products by IDs
@@ -411,7 +440,33 @@ cosmic get-objects --query '{"id":{"$ne":"6283df2391f3660009da194b"}}' \
 The response will look like:
 
 ```json
-
+{
+  "objects": [
+    {
+      "title": "Watch",
+      "metadata": {
+        "price": 259.99,
+        "quantity": 63
+      }
+    },
+    {
+      "title": "Battery Charger",
+      "metadata": {
+        "price": 52.99,
+        "quantity": 17
+      }
+    },
+    {
+      "title": "Pants",
+      "metadata": {
+        "price": 37.99,
+        "quantity": 48
+      }
+    }
+  ],
+  "total": 20,
+  "limit": 3
+}
 ```
 
 ### Filter out products by IDs contained in an array
@@ -482,7 +537,33 @@ cosmic get-objects --query '{"id":{"$nin":["6283dd60803a1a0009112e32","6283de686
 The response will look like:
 
 ```json
-
+{
+  "objects": [
+    {
+      "title": "Watch",
+      "metadata": {
+        "price": 259.99,
+        "quantity": 63
+      }
+    },
+    {
+      "title": "Battery Charger",
+      "metadata": {
+        "price": 52.99,
+        "quantity": 17
+      }
+    },
+    {
+      "title": "Pants",
+      "metadata": {
+        "price": 37.99,
+        "quantity": 48
+      }
+    }
+  ],
+  "total": 18,
+  "limit": 3
+}
 ```
 
 ### Get a product based on slug
@@ -547,7 +628,18 @@ cosmic get-objects --query '{"slug":"hot-pot"}' \
 The response will look like:
 
 ```json
-
+{
+  "objects": [
+    {
+      "title": "Hot Pot",
+      "metadata": {
+        "price": 59.99,
+        "quantity": 17
+      }
+    }
+  ],
+  "total": 1
+}
 ```
 
 ### Get products with any slug values
@@ -612,7 +704,18 @@ cosmic get-objects --query '{"$or":[{"slug":"pasta"},{"slug":"drill"}]}' \
 The response will look like:
 
 ```json
-
+{
+  "objects": [
+    {
+      "title": "Drill",
+      "metadata": {
+        "price": 89.99,
+        "quantity": 70
+      }
+    }
+  ],
+  "total": 1
+}
 ```
 
 ### Get products based on the `content` value
@@ -685,7 +788,33 @@ cosmic get-objects --query '{"content":{"$regex":"is","$options":"i"}}' \
 The response will look like:
 
 ```json
-
+{
+  "objects": [
+    {
+      "title": "Watch",
+      "metadata": {
+        "price": 259.99,
+        "quantity": 63
+      }
+    },
+    {
+      "title": "Battery Charger",
+      "metadata": {
+        "price": 52.99,
+        "quantity": 17
+      }
+    },
+    {
+      "title": "Blouse",
+      "metadata": {
+        "price": 25.99,
+        "quantity": 57
+      }
+    }
+  ],
+  "total": 4,
+  "limit": 3
+}
 ```
 
 ## Metadata Queries
@@ -756,7 +885,18 @@ cosmic get-objects --query '{"type":"products","metadata.price":19.99}' \
 The response will look like:
 
 ```json
-
+{
+  "objects": [
+    {
+      "title": "Wood Screw",
+      "metadata": {
+        "price": 19.99,
+        "quantity": 22
+      }
+    }
+  ],
+  "total": 1
+}
 ```
 
 ### Get products based on any combination of metadata values
@@ -813,7 +953,7 @@ query ($bucket_slug: String!, $read_key: String, $query: JSON) {
 </div>
 <div label="CLI">
 ```bash
-cosmic get-objects --query '{type: "products","$or":[{"metadata.category":"Electronics"},{"metadata.free_shipping":true}]}' \
+cosmic get-objects --query '{"type": "products","$or":[{"metadata.category":"Electronics"},{"metadata.free_shipping":true}]}' \
   --props 'slug,title,metadata.price,metadata.quantity,metadata.free_shipping' \
   --limit '3'
 ```
@@ -823,7 +963,33 @@ cosmic get-objects --query '{type: "products","$or":[{"metadata.category":"Elect
 The response will look like:
 
 ```json
-
+{
+  "objects": [
+    {
+      "title": "Watch",
+      "metadata": {
+        "price": 259.99,
+        "quantity": 63
+      }
+    },
+    {
+      "title": "Battery Charger",
+      "metadata": {
+        "price": 52.99,
+        "quantity": 17
+      }
+    },
+    {
+      "title": "Extension Cord",
+      "metadata": {
+        "price": 25.99,
+        "quantity": 14
+      }
+    }
+  ],
+  "total": 16,
+  "limit": 3
+}
 ```
 
 ### Get products that match a specific combination metadata values
@@ -880,7 +1046,7 @@ query ($bucket_slug: String!, $read_key: String, $query: JSON) {
 </div>
 <div label="CLI">
 ```bash
-cosmic get-objects --query '{type: "products","$and":[{"metadata.quantity":{"$lt":50}},{"metadata.price":{"$lt":79.99}}]}' \
+cosmic get-objects --query '{"type": "products","$and":[{"metadata.quantity":{"$lt":50}},{"metadata.price":{"$lt":79.99}}]}' \
   --props 'slug,title,metadata.price,metadata.quantity,metadata.free_shipping' \
   --limit '3'
 ```
@@ -890,7 +1056,33 @@ cosmic get-objects --query '{type: "products","$and":[{"metadata.quantity":{"$lt
 The response will look like:
 
 ```json
-
+{
+  "objects": [
+    {
+      "title": "Battery Charger",
+      "metadata": {
+        "price": 52.99,
+        "quantity": 17
+      }
+    },
+    {
+      "title": "Pants",
+      "metadata": {
+        "price": 37.99,
+        "quantity": 48
+      }
+    },
+    {
+      "title": "Wood Screw",
+      "metadata": {
+        "price": 19.99,
+        "quantity": 22
+      }
+    }
+  ],
+  "total": 9,
+  "limit": 3
+}
 ```
 
 ### Get products with a metadata value greater than or equal to a given value
@@ -950,7 +1142,7 @@ curl ${BASE_URL}/buckets/${YOUR_BUCKET_SLUG}/objects \
 </div>
 <div label="CLI">
 ```bash
-cosmic get-objects --query '{type: "products","metadata.price":{"$gte":100}}' \
+cosmic get-objects --query '{"type": "products","metadata.price":{"$gte":100}}' \
   --props 'slug,title,metadata.price,metadata.quantity,metadata.free_shipping' \
   --limit '3'
 ```
@@ -960,7 +1152,33 @@ cosmic get-objects --query '{type: "products","metadata.price":{"$gte":100}}' \
 The response will look like:
 
 ```json
-
+{
+  "objects": [
+    {
+      "title": "Watch",
+      "metadata": {
+        "price": 259.99,
+        "quantity": 63
+      }
+    },
+    {
+      "title": "Car Cover",
+      "metadata": {
+        "price": 358.98,
+        "quantity": 8
+      }
+    },
+    {
+      "title": "Refrigerator",
+      "metadata": {
+        "price": 1299.99,
+        "quantity": 6
+      }
+    }
+  ],
+  "total": 7,
+  "limit": 3
+}
 ```
 
 ### Get products that match a specific metadata value
@@ -1017,7 +1235,7 @@ query ($bucket_slug: String!, $read_key: String, $query: JSON) {
 </div>
 <div label="CLI">
 ```bash
-cosmic get-objects --query '{type: "products","metadata.category": "Food"}' \
+cosmic get-objects --query '{"type": "products","metadata.category": "Food"}' \
   --props 'slug,title,metadata.price,metadata.quantity,metadata.free_shipping' \
   --limit '3'
 ```
@@ -1027,7 +1245,32 @@ cosmic get-objects --query '{type: "products","metadata.category": "Food"}' \
 The response will look like:
 
 ```json
-
+{
+  "objects": [
+    {
+      "title": "Pineapple",
+      "metadata": {
+        "price": 1.99,
+        "quantity": 33
+      }
+    },
+    {
+      "title": "Sandwich",
+      "metadata": {
+        "price": 8.99,
+        "quantity": 3
+      }
+    },
+    {
+      "title": "Pasta",
+      "metadata": {
+        "price": 12.99,
+        "quantity": 8
+      }
+    }
+  ],
+  "total": 3
+}
 ```
 
 ### Get products based on nested JSON metadata values
@@ -1088,7 +1331,7 @@ query ($bucket_slug: String!, $read_key: String, $query: JSON) {
 </div>
 <div label="CLI">
 ```bash
-cosmic get-objects --query '{type: "products","metadata.details":{"brand":"Samsung"}}' \
+cosmic get-objects --query '{"type": "products","metadata.details":{"brand":"Samsung"}}' \
   --props 'slug,title,metadata.price,metadata.quantity,metadata.free_shipping' \
   --limit '3'
 ```
@@ -1098,7 +1341,18 @@ cosmic get-objects --query '{type: "products","metadata.details":{"brand":"Samsu
 The response will look like:
 
 ```json
-
+{
+  "objects": [
+    {
+      "title": "Watch",
+      "metadata": {
+        "price": 259.99,
+        "quantity": 63
+      }
+    }
+  ],
+  "total": 1
+}
 ```
 
 ### Get products not equal to a metadata value
@@ -1159,7 +1413,7 @@ query ($bucket_slug: String!, $read_key: String, $query: JSON) {
 </div>
 <div label="CLI">
 ```bash
-cosmic get-objects --query '{type: "products","metadata.category":{"$ne":"Electronics"}}' \
+cosmic get-objects --query '{"type": "products","metadata.category":{"$ne":"Electronics"}}' \
   --props 'slug,title,metadata.price,metadata.quantity,metadata.free_shipping' \
   --limit '3'
 ```  
@@ -1169,7 +1423,33 @@ cosmic get-objects --query '{type: "products","metadata.category":{"$ne":"Electr
 The response will look like:
 
 ```json
-
+{
+  "objects": [
+    {
+      "title": "Pants",
+      "metadata": {
+        "price": 37.99,
+        "quantity": 48
+      }
+    },
+    {
+      "title": "Blouse",
+      "metadata": {
+        "price": 25.99,
+        "quantity": 57
+      }
+    },
+    {
+      "title": "Wood Screw",
+      "metadata": {
+        "price": 19.99,
+        "quantity": 22
+      }
+    }
+  ],
+  "total": 18,
+  "limit": 3
+}
 ```
 
 ### Get products that match a specific metadata value with a subset of multiple options
@@ -1182,7 +1462,7 @@ A customer might want to know if they can shop by color _and_ size can be expedi
 bucket.getObjects({
   query: {
     type: "products",
-    "metadata.options":["color","expedited"]
+    "metadata.options":["Color","Size"]
   },
   props: "slug,title,metadata.price,metadata.quantity,metadata.free_shipping",
   limit: 3
@@ -1207,7 +1487,7 @@ query ($bucket_slug: String!, $read_key: String, $query: JSON) {
     input: {
       query: {
         type: "products",
-        "metadata.options":["color","expedited"]
+        "metadata.options":["Color","Size`"]
       }
       props: "slug,title,metadata.price,metadata.quantity,metadata.free_shipping"
       limit: 3
@@ -1226,7 +1506,7 @@ query ($bucket_slug: String!, $read_key: String, $query: JSON) {
 </div>
 <div label="CLI">
 ```bash
-cosmic get-objects --query '{type: "products","metadata.options":["color","expedited"]}' \
+cosmic get-objects --query '{"type": "products","metadata.options":["Color","Size"]}' \
   --props 'slug,title,metadata.price,metadata.quantity,metadata.free_shipping' \
   --limit '3'
 ```
@@ -1297,7 +1577,7 @@ query ($bucket_slug: String!, $read_key: String, $query: JSON) {
 </div>
 <div label="CLI">
 ```bash
-cosmic get-objects --query '{type: "products","metadata.options":{"$in":["Size"]}}' \
+cosmic get-objects --query '{"type": "products","metadata.options":{"$in":["Size"]}}' \
   --props 'slug,title,metadata.price,metadata.quantity,metadata.free_shipping' \
   --limit '3'
 ```
@@ -1307,7 +1587,33 @@ cosmic get-objects --query '{type: "products","metadata.options":{"$in":["Size"]
 The response will look like:
 
 ```json
-
+{
+  "objects": [
+    {
+      "title": "Blouse",
+      "metadata": {
+        "price": 25.99,
+        "quantity": 57
+      }
+    },
+    {
+      "title": "Wood Screw",
+      "metadata": {
+        "price": 19.99,
+        "quantity": 22
+      }
+    },
+    {
+      "title": "Extension Cord",
+      "metadata": {
+        "price": 25.99,
+        "quantity": 14
+      }
+    }
+  ],
+  "total": 9,
+  "limit": 3
+}
 ```
 
 ### Get products that don't match any values in a multi-option metadata value
@@ -1367,7 +1673,7 @@ query ($bucket_slug: String!, $read_key: String, $query: JSON) {
 </div>
 <div label="CLI">
 ```bash
-cosmic get-objects --query '{type: "products","metadata.options":{"$nin":["Size"]}}' \
+cosmic get-objects --query '{"type": "products","metadata.options":{"$nin":["Size"]}}' \
   --props 'slug,title,metadata.price,metadata.quantity,metadata.free_shipping' \
   --limit '3'
 ```
@@ -1377,5 +1683,31 @@ cosmic get-objects --query '{type: "products","metadata.options":{"$nin":["Size"
 The response will look like:
 
 ```json
-
+{
+  "objects": [
+    {
+      "title": "Watch",
+      "metadata": {
+        "price": 259.99,
+        "quantity": 63
+      }
+    },
+    {
+      "title": "Battery Charger",
+      "metadata": {
+        "price": 52.99,
+        "quantity": 17
+      }
+    },
+    {
+      "title": "Pants",
+      "metadata": {
+        "price": 37.99,
+        "quantity": 48
+      }
+    }
+  ],
+  "total": 12,
+  "limit": 3
+}
 ```
