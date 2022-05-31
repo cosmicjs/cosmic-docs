@@ -1,6 +1,6 @@
-import DocSearch from './components/docsearch'
+import DocSearch from "./components/docsearch";
 
-export const Logo = ({ height = 20, classes = '' }) => (
+export const Logo = ({ height = 20, classes = "" }) => (
   <svg height={height} className={classes} viewBox="0 0 681 189" version="1.1">
     <defs></defs>
     <g id="Page-1" stroke="none" strokeWidth="1" fill="none">
@@ -78,17 +78,17 @@ export const Logo = ({ height = 20, classes = '' }) => (
       </g>
     </g>
   </svg>
-)
+);
 
 export default {
-  repository: 'https://github.com/cosmicjs/cosmic-docs',
-  docsRepository: 'https://github.com/cosmicjs/cosmic-docs',
-  titleSuffix: ' – Cosmic Docs',
-  branch: 'main', // branch of docs
-  path: '/', // path of docs,
+  repository: "https://github.com/cosmicjs/cosmic-docs",
+  docsRepository: "https://github.com/cosmicjs/cosmic-docs",
+  titleSuffix: " – Cosmic Docs",
+  branch: "main", // branch of docs
+  path: "cosmic-docs", // path of docs,
   nextLinks: true,
   prevLinks: true,
-  customSearch: <DocSearch />, // NOT YET, pulling v1 pages
+  customSearch: <DocSearch />,
   logo: (
     <>
       <Logo height={32} classes="mt-1" />
@@ -144,5 +144,5 @@ export default {
         Looking for the <a href="https://docs-v1.cosmicjs.com">v1 docs</a>?
       </span>
     </span>
-  )
-}
+  ),
+};

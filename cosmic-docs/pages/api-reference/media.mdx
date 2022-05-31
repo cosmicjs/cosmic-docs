@@ -1,5 +1,5 @@
-import Callout from 'nextra-theme-docs/callout'
-import Tabs from '../../components/tabs'
+import Callout from "nextra-theme-docs/callout";
+import Tabs from "../../components/tabs";
 
 # Media
 
@@ -9,9 +9,10 @@ The following endpoints allow you to manage media in your Bucket.
   **Get your keys**
   <br />
   Your Bucket `slug`,`read_key`, and `write_key` will be required to perform the
-  following requests. These can be found in{' '}
-  <i>Your Bucket > Settings > API Access</i> in your [Bucket Dashboard
-  ](https://app.cosmicjs.com/login).
+  following requests. These can be found in <i>
+    Bucket Settings > API Access
+  </i>{" "}
+  in your [Bucket Dashboard ](https://app.cosmicjs.com/login).
 </Callout>
 
 ## Data Model
@@ -78,17 +79,17 @@ Cosmic.getMedia()
 **Example Request**
 
 ```javascript
-const Cosmic = require('cosmicjs')() // empty init
+const Cosmic = require("cosmicjs")(); // empty init
 const bucket = Cosmic.bucket({
-  slug: 'YOUR_BUCKET_SLUG',
-  read_key: 'YOUR_BUCKET_READ_KEY'
-})
+  slug: "YOUR_BUCKET_SLUG",
+  read_key: "YOUR_BUCKET_READ_KEY",
+});
 const data = await bucket.getMedia({
   query: {
-    folder: 'product-images' // Get media in folder
+    folder: "product-images", // Get media in folder
   },
-  limit: 2
-})
+  limit: 2,
+});
 ```
 
 </div>
@@ -195,16 +196,16 @@ Cosmic.getSingleMedia()
 **Example Request**
 
 ```javascript
-const Cosmic = require('cosmicjs')() // empty init
+const Cosmic = require("cosmicjs")(); // empty init
 const bucket = Cosmic.bucket({
-  slug: 'YOUR_BUCKET_SLUG',
-  read_key: 'YOUR_BUCKET_READ_KEY'
-})
+  slug: "YOUR_BUCKET_SLUG",
+  read_key: "YOUR_BUCKET_READ_KEY",
+});
 
 const data = await bucket.getMedia({
-  id: '5f331eac9d52b17aee21d1b4',
-  props: 'id,name,metadata,imgix_url' // get only what you need
-})
+  id: "5f331eac9d52b17aee21d1b4",
+  props: "id,name,metadata,imgix_url", // get only what you need
+});
 ```
 
 </div>
@@ -268,7 +269,7 @@ The only required post value is the `media` object. You can also add optional `f
   <br />
   Your Bucket `write_key` must be passed as `Authorization Bearer` in the header
   of the request. This can be found in
-  <i>Your Bucket > Settings > API Access</i> in your [Admin Dashboard](https://app.cosmicjs.com/login).
+  <i>Bucket Settings > API Access</i> in your [Admin Dashboard](https://app.cosmicjs.com/login).
 </Callout>
 
 <Callout emoji="✅">
@@ -312,29 +313,29 @@ Cosmic.addMedia()
 **Example Request**
 
 ```javascript
-const Cosmic = require('cosmicjs')() // empty init
+const Cosmic = require("cosmicjs")(); // empty init
 const bucket = Cosmic.bucket({
-  slug: 'YOUR_BUCKET_SLUG',
-  read_key: 'YOUR_BUCKET_READ_KEY'
-})
-const media_object = req.files[0] // Using Multer
+  slug: "YOUR_BUCKET_SLUG",
+  read_key: "YOUR_BUCKET_READ_KEY",
+});
+const media_object = req.files[0]; // Using Multer
 // OR:
 // const media_object = { originalname: filename, buffer: filedata } // Not using Multer
 
 const data = await bucket.addMedia({
   media: media_object,
-  folder: 'your-folder-slug',
+  folder: "your-folder-slug",
   metadata: {
-    caption: 'Beautiful picture of the beach',
-    credit: 'Tyler Jackson'
-  }
-})
+    caption: "Beautiful picture of the beach",
+    credit: "Tyler Jackson",
+  },
+});
 
 // In order to pass the file `req.files.foo` to Cosmic you would do:
 const media_object = {
   originalname: req.files.foo.name,
-  buffer: req.files.foo.data
-}
+  buffer: req.files.foo.data,
+};
 ```
 
 </div>
@@ -390,37 +391,37 @@ This application uses Express and Multer to create a route `POST http://localhos
 
 ```javascript
 // index.js
-const fs = require('fs')
-const Cosmic = require('cosmicjs')() // empty init
-const multer = require('multer')
-const express = require('express')
-var app = express()
+const fs = require("fs");
+const Cosmic = require("cosmicjs")(); // empty init
+const multer = require("multer");
+const express = require("express");
+var app = express();
 const bucket = Cosmic.bucket({
-  slug: 'YOUR_BUCKET_SLUG',
-  read_key: 'YOUR_BUCKET_READ_KEY'
-})
+  slug: "YOUR_BUCKET_SLUG",
+  read_key: "YOUR_BUCKET_READ_KEY",
+});
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, __dirname + '/uploads')
+    cb(null, __dirname + "/uploads");
   },
   filename: function (req, file, cb) {
-    cb(null, file.fieldname + '-' + Date.now())
-  }
-})
-var upload = multer({ storage: storage })
-app.post('/upload', upload.single('file'), async function (req, res) {
+    cb(null, file.fieldname + "-" + Date.now());
+  },
+});
+var upload = multer({ storage: storage });
+app.post("/upload", upload.single("file"), async function (req, res) {
   try {
     const media_object = {
       originalname: req.file.originalname,
-      buffer: fs.createReadStream(req.file.path)
-    }
-    const response = await bucket.addMedia({ media: media_object })
-    return res.json(response)
+      buffer: fs.createReadStream(req.file.path),
+    };
+    const response = await bucket.addMedia({ media: media_object });
+    return res.json(response);
   } catch (e) {
-    console.log(e)
+    console.log(e);
   }
-})
-app.listen(5000)
+});
+app.listen(5000);
 ```
 
 ### React Dropzone: Client-side
@@ -445,7 +446,7 @@ Edit an existing Media by `id` in your Bucket.
   <br />
   Your Bucket `write_key` must be passed as `Authorization Bearer` in the header
   of the request. This can be found in
-  <i>Your Bucket > Settings > API Access</i> in your [Admin Dashboard](https://app.cosmicjs.com/login).
+  <i>Bucket Settings > API Access</i> in your [Admin Dashboard](https://app.cosmicjs.com/login).
 </Callout>
 
 | Parameter       |  Type   | Description                                                                        |
@@ -497,7 +498,7 @@ Delete an existing Media by `id` from your Bucket.
   <br />
   Your Bucket `write_key` must be passed as `Authorization Bearer` in the header
   of the request. This can be found in
-  <i>Your Bucket > Settings > API Access</i> in your [Admin Dashboard](https://app.cosmicjs.com/login).
+  <i>Bucket Settings > API Access</i> in your [Admin Dashboard](https://app.cosmicjs.com/login).
 </Callout>
 
 | Query Parameter |  Type   | Description                                                                        |
@@ -516,14 +517,14 @@ Cosmic.deleteMedia()
 **Example Request**
 
 ```javascript
-const Cosmic = require('cosmicjs')() // empty init
+const Cosmic = require("cosmicjs")(); // empty init
 const bucket = Cosmic.bucket({
-  slug: 'YOUR_BUCKET_SLUG',
-  read_key: 'YOUR_BUCKET_READ_KEY'
-})
+  slug: "YOUR_BUCKET_SLUG",
+  read_key: "YOUR_BUCKET_READ_KEY",
+});
 const data = await bucket.deleteMedia({
-  id: '5a4b18e12fff7ec0e3c13c65'
-})
+  id: "5a4b18e12fff7ec0e3c13c65",
+});
 ```
 
 </div>

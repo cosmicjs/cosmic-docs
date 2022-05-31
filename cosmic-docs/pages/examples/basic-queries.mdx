@@ -1,0 +1,226 @@
+import Callout from "nextra-theme-docs/callout";
+import Tabs from "../../components/tabs";
+
+# Basic Queries
+
+The following code examples feature content from the [Simple React Blog](https://www.cosmicjs.com/apps/simple-react-blog) app template.
+
+## Setup
+
+You can run the code examples as is or install the template to your account then switch the values indicated with `YOUR_BUCKET_SLUG` and `YOUR_BUCKET_READ_KEY` to your Bucket access keys. You can find these values located in <i>Bucket Settings > API Access</i> after logging in to your <a href="https://app.cosmicjs.com">Cosmic dashboard</a>.
+
+<Callout emoji="💡">
+  **Quick Tip**
+  <br />
+  Use `props` to limit the payload size and get only the data you need. Omit
+  this parameter to get the full response.
+</Callout>
+
+## Get Objects by type
+
+Get multiple Objects from your Cosmic Bucket using the `type` query parameter.
+
+<Tabs>
+<div label="Node.js">
+**Step 1.**
+Run the following commands to add the neccessary folder structure and dependencies.
+```bash
+mkdir cosmic-multiple-example
+cd cosmic-multiple-example
+yarn add cosmicjs
+```
+**Step 2.**
+Create `index.js` file with the following code.
+```javascript
+const api = require('cosmicjs')() // empty init
+const bucket = api.bucket({
+  slug: 'simple-react-blog', // YOUR_BUCKET_SLUG
+  read_key: '' // YOUR_BUCKET_READ_KEY
+})
+const app = async () => {
+  const data = await bucket.getObjects({
+    query: {
+      type: 'posts'
+    },
+    props: 'slug,title,metadata.hero.imgix_url,metadata.author.title'
+  })
+  const posts = data.objects
+  console.log(JSON.stringify(posts, null, 2))
+}
+app()
+```
+**Step 3.**
+Run the app.
+```bash
+node index.js
+```
+
+</div>
+<div label="cURL">
+```bash
+curl https://api.cosmicjs.com/v2/buckets/simple-react-blog/objects \
+	-d read_key="" \
+	--data-urlencode query='{"type":"posts"}' \
+	-d props="slug,title,metadata.hero.imgix_url,metadata.author.title" \
+	-G
+```
+</div>
+
+<div label="GraphQL">
+  <a href="https://cosmic-graphql-playground.netlify.app/?endpoint=https%3A%2F%2Fgraphql.cosmicjs.com%2Fv3&query=%7B%0A%20%20getObjects%28%0A%20%20%20%20bucket_slug%3A%20%22simple-react-blog%22%0A%20%20%20%20input%3A%20%7B%0A%20%20%20%20%20%20query%3A%20%7B%0A%20%20%20%20%20%20%20%20type%3A%20%22posts%22%0A%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20props%3A%20%22slug%2Ctitle%2Cmetadata.hero.imgix_url%2Cmetadata.author.title%22%0A%20%20%20%20%7D%0A%20%20%29%20%7B%0A%20%20%20%20%20objects%20%7B%0A%20%20%20%20%20%20slug%0A%20%20%20%20%20%20title%0A%20%20%20%20%20%20metadata%0A%20%20%20%20%7D%0A%20%20%20%20total%0A%20%20%7D%0A%7D">
+    Full screen
+  </a>
+  <iframe
+    src="https://cosmic-graphql-playground.netlify.app/?endpoint=https%3A%2F%2Fgraphql.cosmicjs.com%2Fv3&query=%7B%0A%20%20getObjects%28%0A%20%20%20%20bucket_slug%3A%20%22simple-react-blog%22%0A%20%20%20%20input%3A%20%7B%0A%20%20%20%20%20%20query%3A%20%7B%0A%20%20%20%20%20%20%20%20type%3A%20%22posts%22%0A%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20props%3A%20%22slug%2Ctitle%2Cmetadata.hero.imgix_url%2Cmetadata.author.title%22%0A%20%20%20%20%7D%0A%20%20%29%20%7B%0A%20%20%20%20%20objects%20%7B%0A%20%20%20%20%20%20slug%0A%20%20%20%20%20%20title%0A%20%20%20%20%20%20metadata%0A%20%20%20%20%7D%0A%20%20%20%20total%0A%20%20%7D%0A%7D"
+    frameBorder="0"
+    style={{ width: "100%", height: "470px" }}
+  ></iframe>
+</div>
+
+<div label="CLI">
+**Step 1.**
+Run the following commands to install the Cosmic CLI and connect to your Bucket.
+```bash
+yarn global add cosmic-cli
+cosmic use-bucket simple-react-blog
+```
+**Step 2.**
+Run the following command to get content.
+```bash
+cosmic get-objects --query '{"type":"posts"}' --props "slug,title,metadata.hero.imgix_url,metadata.author.title"
+```
+</div>
+</Tabs>
+
+**Expected Result**
+
+```json
+[
+  {
+    "slug": "a-wonderful-blog-post-about-earth",
+    "title": "A Wonderful Blog Post About Earth",
+    "metadata": {
+      "hero": {
+        "imgix_url": "https://imgix.cosmicjs.com/56363630-af74-11e7-b864-313f959a776e-react-blog.jpg"
+      },
+      "author": {
+        "title": "John Doe"
+      }
+    }
+  },
+  {
+    "slug": "another-wonderful-blog-post-about-earth",
+    "title": "Another Wonderful Blog Post About Earth",
+    "metadata": {
+      "hero": {
+        "imgix_url": "https://imgix.cosmicjs.com/99fd6650-23f5-11e7-875c-3f5dc9c15c2b-beach.jpg"
+      },
+      "author": {
+        "title": "Jane Doe"
+      }
+    }
+  }
+]
+```
+
+## Get Object by slug
+
+Get a single Object from your Cosmic Bucket using the `slug` query parameter.
+
+<Tabs>
+<div label="Node.js">
+**Step 1.**
+Run the following commands to add the neccessary folder structure and dependencies.
+```bash
+mkdir cosmic-single-example
+cd cosmic-single-example
+yarn add cosmicjs
+```
+**Step 2.**
+Create `index.js` file with the following code.
+```javascript
+const api = require('cosmicjs')() // empty init
+const bucket = api.bucket({
+  slug: 'simple-react-blog', // YOUR_BUCKET_SLUG
+  read_key: '' // YOUR_READ_KEY
+})
+const app = async () => {
+  const data = await bucket.getObjects({
+    query: {
+      slug: 'a-wonderful-blog-post-about-earth'
+    },
+    props: 'slug,title,metadata.hero.imgix_url,metadata.author.title'
+  })
+  const post = data.objects[0]
+  console.log(JSON.stringify(post, null, 2))
+}
+app()
+```
+**Step 3.**
+Run the app.
+```bash
+node index.js
+```
+</div>
+<div label="cURL">
+```bash
+curl https://api.cosmicjs.com/v2/buckets/simple-react-blog/objects \
+	-d read_key="" \
+	--data-urlencode query='{"slug":"a-wonderful-blog-post-about-earth"}' \
+	-d props="slug,title,content,metadata.hero.imgix_url,metadata.author.title" \
+	-d limit=1 \
+	-G
+```
+</div>
+
+<div label="GraphQL">
+  <a href="https://cosmic-graphql-playground.netlify.app/?endpoint=https%3A%2F%2Fgraphql.cosmicjs.com%2Fv3&query=%7B%0A%20%20getObjects%28%0A%20%20%20%20bucket_slug%3A%20%22simple-react-blog%22%0A%20%20%20%20input%3A%20%7B%0A%20%20%20%20%20%20query%3A%20%7B%0A%20%20%20%20%20%20%09slug%3A%20%22a-wonderful-blog-post-about-earth%22%0A%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20props%3A%20%22slug%2Ctitle%2Cmetadata.hero.imgix_url%2Cmetadata.author.title%22%0A%20%20%20%20%09limit%3A%201%0A%20%20%20%20%7D%0A%20%20%29%20%7B%0A%20%20%20%20%20objects%20%7B%0A%20%20%20%20%20%20title%0A%20%20%20%20%20%20slug%0A%20%20%20%20%20%20metadata%0A%20%20%20%20%7D%0A%20%20%20%20total%0A%20%20%7D%0A%7D">
+    Full screen
+  </a>
+  <iframe
+    src="https://cosmic-graphql-playground.netlify.app/?endpoint=https%3A%2F%2Fgraphql.cosmicjs.com%2Fv3&query=%7B%0A%20%20getObjects%28%0A%20%20%20%20bucket_slug%3A%20%22simple-react-blog%22%0A%20%20%20%20input%3A%20%7B%0A%20%20%20%20%20%20query%3A%20%7B%0A%20%20%20%20%20%20%09slug%3A%20%22a-wonderful-blog-post-about-earth%22%0A%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20props%3A%20%22slug%2Ctitle%2Cmetadata.hero.imgix_url%2Cmetadata.author.title%22%0A%20%20%20%20%09limit%3A%201%0A%20%20%20%20%7D%0A%20%20%29%20%7B%0A%20%20%20%20%20objects%20%7B%0A%20%20%20%20%20%20title%0A%20%20%20%20%20%20slug%0A%20%20%20%20%20%20metadata%0A%20%20%20%20%7D%0A%20%20%20%20total%0A%20%20%7D%0A%7D"
+    frameBorder="0"
+    style={{ width: "100%", height: "470px" }}
+  ></iframe>
+</div>
+
+<div label="CLI">
+**Step 1.**
+Run the following commands to install the Cosmic CLI and connect to your Bucket.
+```bash
+yarn global add cosmic-cli
+cosmic use-bucket simple-react-blog
+```
+**Step 2.**
+Run the following command to get content.
+```bash
+cosmic get-objects --limit 1 --query '{"slug":"a-wonderful-blog-post-about-earth"}' --props "slug,title,content,metadata.hero.imgix_url,metadata.author.title"
+```
+</div>
+</Tabs>
+
+**Expected Result**
+
+```json
+{
+  "slug": "a-wonderful-blog-post-about-earth",
+  "title": "A Wonderful Blog Post About Earth",
+  "metadata": {
+    "hero": {
+      "imgix_url": "https://imgix.cosmicjs.com/56363630-af74-11e7-b864-313f959a776e-react-blog.jpg"
+    },
+    "author": {
+      "title": "John Doe"
+    }
+  }
+}
+```
+
+## Next steps
+
+<Callout emoji="💡">
+  **Learn More**
+  <br />
+  Go to the [queries section](/api-reference/queries) in the docs to learn more
+  about Cosmic queries and available methods.
+</Callout>

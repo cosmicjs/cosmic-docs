@@ -1,5 +1,5 @@
-import Callout from 'nextra-theme-docs/callout'
-import Tabs from '../../components/tabs'
+import Callout from "nextra-theme-docs/callout";
+import Tabs from "../../components/tabs";
 
 # Objects
 
@@ -9,9 +9,10 @@ The following endpoints enable you to create, read, update, and delete Objects i
   **Get your keys**
   <br />
   Your Bucket `slug`,`read_key`, and `write_key` will be required to perform the
-  following requests. These can be found in{' '}
-  <i>Your Bucket > Settings > API Access</i> in your [Bucket Dashboard
-  ](https://app.cosmicjs.com/login).
+  following requests. These can be found in <i>
+    Bucket Settings > API Access
+  </i>{" "}
+  in your [Bucket Dashboard ](https://app.cosmicjs.com/login).
 </Callout>
 
 ### Endpoints
@@ -84,17 +85,17 @@ bucket.getObjects()
 **Example Request**
 
 ```javascript
-const Cosmic = require('cosmicjs')() // empty init
+const Cosmic = require("cosmicjs")(); // empty init
 const bucket = Cosmic.bucket({
-  slug: 'YOUR_BUCKET_SLUG',
-  read_key: 'YOUR_BUCKET_READ_KEY'
-})
+  slug: "YOUR_BUCKET_SLUG",
+  read_key: "YOUR_BUCKET_READ_KEY",
+});
 const data = await bucket.getObjects({
   query: {
-    type: 'posts'
+    type: "posts",
   },
-  limit: 1
-})
+  limit: 1,
+});
 ```
 
 </div>
@@ -234,24 +235,24 @@ bucket.getObjects()
 **Example Request**
 
 ```javascript
-const Cosmic = require('cosmicjs')() // empty init
+const Cosmic = require("cosmicjs")(); // empty init
 const bucket = Cosmic.bucket({
-  slug: 'YOUR_BUCKET_SLUG',
-  read_key: 'YOUR_BUCKET_READ_KEY'
-})
+  slug: "YOUR_BUCKET_SLUG",
+  read_key: "YOUR_BUCKET_READ_KEY",
+});
 const props = [
-  'title',
-  'content',
-  'metadata.parent.title',
-  'metadata.parent.metadata.category.metadata.description'
-]
+  "title",
+  "content",
+  "metadata.parent.title",
+  "metadata.parent.metadata.category.metadata.description",
+];
 const data = await bucket.getObjects({
   query: {
-    type: 'posts'
+    type: "posts",
   },
   props: props.toString(),
-  limit: 1
-})
+  limit: 1,
+});
 ```
 
 </div>
@@ -365,14 +366,14 @@ bucket.getObject()
 **Example Request**
 
 ```javascript
-const Cosmic = require('cosmicjs')() // empty init
+const Cosmic = require("cosmicjs")(); // empty init
 const bucket = Cosmic.bucket({
-  slug: 'YOUR_BUCKET_SLUG',
-  read_key: 'YOUR_BUCKET_READ_KEY'
-})
+  slug: "YOUR_BUCKET_SLUG",
+  read_key: "YOUR_BUCKET_READ_KEY",
+});
 const data = await bucket.getObject({
-  id: '5e4d7eb92850c717ea93dba1'
-})
+  id: "5e4d7eb92850c717ea93dba1",
+});
 ```
 
 </div>
@@ -510,21 +511,21 @@ bucket.getObject()
 **Example Request**
 
 ```javascript
-const Cosmic = require('cosmicjs')() // empty init
+const Cosmic = require("cosmicjs")(); // empty init
 const bucket = Cosmic.bucket({
-  slug: 'YOUR_BUCKET_SLUG',
-  read_key: 'YOUR_BUCKET_READ_KEY'
-})
+  slug: "YOUR_BUCKET_SLUG",
+  read_key: "YOUR_BUCKET_READ_KEY",
+});
 const props = [
-  'title',
-  'content',
-  'metadata.parent.title',
-  'metadata.parent.metadata.category.title'
-]
+  "title",
+  "content",
+  "metadata.parent.title",
+  "metadata.parent.metadata.category.title",
+];
 const data = await bucket.getObject({
-  id: '5e4d7eb92850c717ea93dba1',
-  props: props.toString()
-})
+  id: "5e4d7eb92850c717ea93dba1",
+  props: props.toString(),
+});
 ```
 
 </div>
@@ -543,7 +544,7 @@ curl https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/objects/:id \
 **Note:**  Using props with the GraphQL API may optimize server response time.
 
 ```javascript
-getObject(bucket_slug, read_key, input)
+getObject(bucket_slug, read_key, input);
 ```
 
 **Variables**
@@ -622,23 +623,23 @@ bucket.getObjects()
 **Example Request**
 
 ```javascript
-const Cosmic = require('cosmicjs')() // empty init;
+const Cosmic = require("cosmicjs")(); // empty init;
 const bucket = Cosmic.bucket({
-  slug: 'YOUR_BUCKET_SLUG',
-  read_key: 'YOUR_BUCKET_READ_KEY'
-})
+  slug: "YOUR_BUCKET_SLUG",
+  read_key: "YOUR_BUCKET_READ_KEY",
+});
 const props = [
-  'title',
-  'content',
-  'metadata.parent.title',
-  'metadata.parent.metadata.category.title'
-]
+  "title",
+  "content",
+  "metadata.parent.title",
+  "metadata.parent.metadata.category.title",
+];
 const data = await bucket.getObjects({
   query: {
-    slug: 'object-slug'
+    slug: "object-slug",
   },
-  props: props.toString()
-})
+  props: props.toString(),
+});
 ```
 
 </div>
@@ -657,7 +658,7 @@ curl https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/objects \
 **Note:**  Using props with the GraphQL API may optimize server response time.
 
 ```javascript
-getObjects(bucket_slug, read_key, input)
+getObjects(bucket_slug, read_key, input);
 ```
 
 **Variables**
@@ -732,7 +733,7 @@ POST /v2/buckets/${YOUR_BUCKET_SLUG}/objects
   <br />
   Your Bucket `write_key` must be passed as `Authorization Bearer` in the header
   of the request. This can be found in
-  <i>Your Bucket > Settings > API Access</i> in your [Admin Dashboard](https://app.cosmicjs.com/login).
+  <i>Bucket Settings > API Access</i> in your [Admin Dashboard](https://app.cosmicjs.com/login).
 </Callout>
 
 **Parameters**
@@ -765,34 +766,34 @@ bucket.addObject()
 **Example Request**
 
 ```javascript
-const Cosmic = require('cosmicjs')() // empty init
+const Cosmic = require("cosmicjs")(); // empty init
 const bucket = Cosmic.bucket({
-  slug: 'YOUR_BUCKET_SLUG',
-  write_key: 'YOUR_BUCKET_WRITE_KEY'
-})
+  slug: "YOUR_BUCKET_SLUG",
+  write_key: "YOUR_BUCKET_WRITE_KEY",
+});
 const params = {
-  title: 'Cosmic Example',
-  type: 'examples',
-  content: 'Learning the Cosmic API is really fun and so easy',
+  title: "Cosmic Example",
+  type: "examples",
+  content: "Learning the Cosmic API is really fun and so easy",
   metafields: [
     {
-      title: 'Headline',
-      key: 'headline',
-      type: 'text',
-      value: 'Learn Cosmic!'
+      title: "Headline",
+      key: "headline",
+      type: "text",
+      value: "Learn Cosmic!",
     },
     {
-      title: 'Author',
-      key: 'author',
-      type: 'text',
-      value: 'Quasar Jones'
-    }
+      title: "Author",
+      key: "author",
+      type: "text",
+      value: "Quasar Jones",
+    },
   ],
   options: {
-    slug_field: false
-  }
-}
-const data = await bucket.addObject(params)
+    slug_field: false,
+  },
+};
+const data = await bucket.addObject(params);
 ```
 
 </div>
@@ -882,7 +883,7 @@ PATCH /v2/buckets/${YOUR_BUCKET_SLUG}/objects/:id
   <br />
   Your Bucket `write_key` must be passed as `Authorization Bearer` in the header
   of the request. This can be found in
-  <i>Your Bucket > Settings > API Access</i> in your [Admin Dashboard](https://app.cosmicjs.com/login).
+  <i>Bucket Settings > API Access</i> in your [Admin Dashboard](https://app.cosmicjs.com/login).
 </Callout>
 
 **Parameters**
@@ -915,15 +916,15 @@ bucket.editObject()
 **Example Request**
 
 ```javascript
-const Cosmic = require('cosmicjs')() // empty init
+const Cosmic = require("cosmicjs")(); // empty init
 const bucket = Cosmic.bucket({
-  slug: 'YOUR_BUCKET_SLUG',
-  write_key: 'YOUR_BUCKET_WRITE_KEY'
-})
+  slug: "YOUR_BUCKET_SLUG",
+  write_key: "YOUR_BUCKET_WRITE_KEY",
+});
 const data = await bucket.editObject({
-  id: '5ff75368c2dfa81a91695cec',
-  title: 'New Title Edit'
-})
+  id: "5ff75368c2dfa81a91695cec",
+  title: "New Title Edit",
+});
 ```
 
 </div>
@@ -1014,7 +1015,7 @@ DELETE /v2/buckets/${YOUR_BUCKET_SLUG}/objects/:id
   <br />
   Your Bucket `write_key` must be passed as `Authorization Bearer` in the header
   of the request. This can be found in
-  <i>Your Bucket > Settings > API Access</i> in your [Admin Dashboard](https://app.cosmicjs.com/login).
+  <i>Bucket Settings > API Access</i> in your [Admin Dashboard](https://app.cosmicjs.com/login).
 </Callout>
 
 **Parameters**
@@ -1035,14 +1036,14 @@ bucket.deleteObject()
 **Example Request**
 
 ```javascript
-const Cosmic = require('cosmicjs')() // empty init
+const Cosmic = require("cosmicjs")(); // empty init
 const bucket = Cosmic.bucket({
-  slug: 'YOUR_BUCKET_SLUG',
-  write_key: 'YOUR_BUCKET_WRITE_KEY'
-})
+  slug: "YOUR_BUCKET_SLUG",
+  write_key: "YOUR_BUCKET_WRITE_KEY",
+});
 const data = await bucket.deleteObject({
-  id: '5ff75368c2dfa81a91695cec'
-})
+  id: "5ff75368c2dfa81a91695cec",
+});
 ```
 
 </div>
@@ -1124,20 +1125,20 @@ bucket.getMergeRequestObjects()
 **Example Request**
 
 ```javascript
-const Cosmic = require('cosmicjs')() // empty init
+const Cosmic = require("cosmicjs")(); // empty init
 const bucket = Cosmic.bucket({
-  slug: 'YOUR_BUCKET_SLUG',
-  read_key: 'YOUR_BUCKET_READ_KEY'
-})
+  slug: "YOUR_BUCKET_SLUG",
+  read_key: "YOUR_BUCKET_READ_KEY",
+});
 const query = {
-  slug: 'new-post-in-merge-request',
-  locale: 'en'
-}
+  slug: "new-post-in-merge-request",
+  locale: "en",
+};
 const data = await bucket.getMergeRequestObjects({
-  id: 'merge-request-id',
+  id: "merge-request-id",
   query,
-  props: 'slug,title'
-})
+  props: "slug,title",
+});
 ```
 
 </div>

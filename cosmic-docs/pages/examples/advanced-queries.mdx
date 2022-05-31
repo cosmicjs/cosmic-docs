@@ -1,0 +1,805 @@
+import Callout from "nextra-theme-docs/callout";
+import Tabs from "../../components/tabs";
+
+# Advanced Queries
+
+The following code examples uses a demo Bucket which includes product data for an ecommerce store.
+
+## Setup
+
+You can run the code examples as is or install the template to your account with the following steps:
+
+1. Create a new project and Bucket after loggin in to your [Cosmic dashboard](https://app.cosmicjs.com).
+2. Go to <i>Bucket Settings > Import / Export</i> and install this [Bucket export file](https://cdn.cosmicjs.com/92cf4d80-e12d-11ec-8e11-7b73d7c60456-2022-05-31-8fb674c0-e12d-11ec-8e11-7b73d7c60456-docs-ecommerce-app-production.json).
+3. In the following examples, switch `YOUR_BUCKET_SLUG` and `YOUR_BUCKET_READ_KEY` to your Bucket access keys. You can find these values located in <i>Bucket Settings > API Access</i> after logging in to your <a href="https://app.cosmicjs.com">Cosmic dashboard</a>.
+
+## Get products by metadata value
+
+Get Objects from your Cosmic Bucket using the `metadata` query parameter.
+
+<Tabs>
+<div label="Node.js">
+**Step 1.**
+Run the following commands to add the neccessary folder structure and dependencies.
+```bash
+mkdir cosmic-advanced-example
+cd cosmic-advanced-example
+yarn add cosmicjs
+```
+**Step 2.**
+Create `index.js` file with the following code.
+```javascript
+const api = require('cosmicjs')() // empty init
+const bucket = api.bucket({
+  slug: 'docs-ecommerce-app-production', // YOUR_BUCKET_SLUG
+  read_key: '49TG2OEZMVML9fNvVObbFOEsjkFaCYpbVIP1kb8kYCY6RMWqBf' // YOUR_BUCKET_READ_KEY
+})
+const app = async () => {
+  const data = await bucket.getObjects({
+    query: {
+      type: 'products',
+      'metadata.category':'Electronics'
+    },
+    props: 'slug,title,metadata.category'
+  })
+  const products = data.objects
+  console.log(JSON.stringify(products, null, 2))
+}
+app()
+```
+**Step 3.**
+Run the app.
+```bash
+node index.js
+```
+
+</div>
+<div label="cURL">
+```bash
+curl https://api.cosmicjs.com/v2/buckets/docs-ecommerce-app-production/objects \
+  -d read_key="49TG2OEZMVML9fNvVObbFOEsjkFaCYpbVIP1kb8kYCY6RMWqBf" \
+  --data-urlencode query='{"type":"products","metadata.category":"Electronics"}' \
+  -d props="slug,title,metadata.category" \
+  -G
+```
+</div>
+
+<div label="GraphQL">
+  Add the following query variable.
+```json
+{
+  "query": {
+    "type": "products",
+    "metadata.category": "Electronics"
+  }
+}
+```
+  <a href="https://cosmic-graphql-playground.netlify.app/?endpoint=https%3A%2F%2Fgraphql.cosmicjs.com%2Fv3&query=query%20%28%24query%3A%20JSON%29%0A%7B%0A%20%20getObjects%28%0A%20%20%20%20bucket_slug%3A%20%22docs-ecommerce-app-production%22%0A%20%20%20%20read_key%3A%20%2249TG2OEZMVML9fNvVObbFOEsjkFaCYpbVIP1kb8kYCY6RMWqBf%22%0A%20%20%20%20input%3A%20%7B%0A%20%20%20%20%20%20query%3A%20%24query%0A%20%20%20%20%20%20props%3A%20%22slug%2Ctitle%2Cmetadata%22%0A%20%20%20%20%7D%0A%20%20%29%20%7B%0A%20%20%20%20%20objects%20%7B%0A%20%20%20%20%20%20slug%0A%20%20%20%20%20%20title%0A%20%20%20%20%20%20metadata%0A%20%20%20%20%7D%0A%20%20%20%20total%0A%20%20%7D%0A%7D">
+    Full screen
+  </a>
+  <iframe
+    src="https://cosmic-graphql-playground.netlify.app/?endpoint=https%3A%2F%2Fgraphql.cosmicjs.com%2Fv3&query=query%20%28%24query%3A%20JSON%29%0A%7B%0A%20%20getObjects%28%0A%20%20%20%20bucket_slug%3A%20%22docs-ecommerce-app-production%22%0A%20%20%20%20read_key%3A%20%2249TG2OEZMVML9fNvVObbFOEsjkFaCYpbVIP1kb8kYCY6RMWqBf%22%0A%20%20%20%20input%3A%20%7B%0A%20%20%20%20%20%20query%3A%20%24query%0A%20%20%20%20%20%20props%3A%20%22slug%2Ctitle%2Cmetadata%22%0A%20%20%20%20%7D%0A%20%20%29%20%7B%0A%20%20%20%20%20objects%20%7B%0A%20%20%20%20%20%20slug%0A%20%20%20%20%20%20title%0A%20%20%20%20%20%20metadata%0A%20%20%20%20%7D%0A%20%20%20%20total%0A%20%20%7D%0A%7D"
+    frameBorder="0"
+    style={{ width: '100%', height: '470px' }}
+  ></iframe>
+</div>
+
+<div label="CLI">
+**Step 1.**
+Run the following commands to install the Cosmic CLI and connect to your Bucket.
+```bash
+yarn global add cosmic-cli
+cosmic use-bucket docs-ecommerce-app-production --read_key 49TG2OEZMVML9fNvVObbFOEsjkFaCYpbVIP1kb8kYCY6RMWqBf
+```
+**Step 2.**
+Run the following command to get content.
+```bash
+cosmic get-objects --query '{"type":"products","metadata.category":"Electronics"}' --props "slug,title,metadata.category"
+```
+</div>
+</Tabs>
+
+**Expected Result**
+
+```json
+[
+  {
+    "slug": "watch",
+    "title": "Watch",
+    "metadata": {
+      "category": {
+        "key": "electronics",
+        "value": "Electronics"
+      }
+    }
+  },
+  {
+    "slug": "battery-charger",
+    "title": "Battery Charger",
+    "metadata": {
+      "category": {
+        "key": "electronics",
+        "value": "Electronics"
+      }
+    }
+  },
+  {
+    "slug": "phone-case",
+    "title": "Phone Case",
+    "metadata": {
+      "category": {
+        "key": "electronics",
+        "value": "Electronics"
+      }
+    }
+  }
+]
+```
+
+## Get products by Object Metafield
+
+Get Objects from your Bucket that match Multiple Object Metafield values.
+
+<Callout emoji="💡">
+  **Note**
+  <br />
+  This method queries the Multiple Object Metafield value by the Object `id`.
+</Callout>
+
+<Tabs>
+<div label="Node.js">
+**Step 1.**
+Run the following commands to add the neccessary folder structure and dependencies.
+```bash
+mkdir cosmic-advanced-example
+cd cosmic-advanced-example
+yarn add cosmicjs
+```
+**Step 2.**
+Create `index.js` file with the following code.
+```javascript
+const api = require('cosmicjs')() // empty init
+const bucket = api.bucket({
+  slug: 'docs-ecommerce-app-production', // YOUR_BUCKET_SLUG
+  read_key: '49TG2OEZMVML9fNvVObbFOEsjkFaCYpbVIP1kb8kYCY6RMWqBf' // YOUR_BUCKET_READ_KEY
+})
+const app = async () => {
+  const data = await bucket.getObjects({
+    query: {
+      type: 'products',
+      'metadata.stores':'6296803e6c21c20e4add83ae' // Store Object id
+    },
+    props: 'slug,title,metadata.stores.title',
+    limit: 3
+  })
+  const products = data.objects
+  console.log(JSON.stringify(products, null, 2))
+}
+app()
+```
+**Step 3.**
+Run the app.
+```bash
+node index.js
+```
+
+</div>
+<div label="cURL">
+```bash
+curl https://api.cosmicjs.com/v2/buckets/docs-ecommerce-app-production/objects \
+  -d read_key="49TG2OEZMVML9fNvVObbFOEsjkFaCYpbVIP1kb8kYCY6RMWqBf" \
+  --data-urlencode query='{"type":"products","metadata.stores":"6296803e6c21c20e4add83ae"}' \
+  -d props="slug,title,metadata.stores.title" \
+  -d limit=3 \
+  -G
+```
+</div>
+
+<div label="GraphQL">
+  Add the following query variable.
+```json
+{
+  "query": {
+    "type": "products",
+    "metadata.stores": "6296803e6c21c20e4add83ae"
+  }
+}
+```
+  <a href="https://cosmic-graphql-playground.netlify.app/?endpoint=https%3A%2F%2Fgraphql.cosmicjs.com%2Fv3&query=query%20%28%24query%3A%20JSON%29%0A%7B%0A%20%20getObjects%28%0A%20%20%20%20bucket_slug%3A%20%22docs-ecommerce-app-production%22%0A%20%20%20%20read_key%3A%20%2249TG2OEZMVML9fNvVObbFOEsjkFaCYpbVIP1kb8kYCY6RMWqBf%22%0A%20%20%20%20input%3A%20%7B%0A%20%20%20%20%20%20query%3A%20%24query%0A%20%20%20%20%20%20props%3A%20%22slug%2Ctitle%2Cmetadata%22%0A%20%20%20%20%7D%0A%20%20%29%20%7B%0A%20%20%20%20%20objects%20%7B%0A%20%20%20%20%20%20slug%0A%20%20%20%20%20%20title%0A%20%20%20%20%20%20metadata%0A%20%20%20%20%7D%0A%20%20%20%20total%0A%20%20%7D%0A%7D">
+    Full screen
+  </a>
+  <iframe
+    src="https://cosmic-graphql-playground.netlify.app/?endpoint=https%3A%2F%2Fgraphql.cosmicjs.com%2Fv3&query=query%20%28%24query%3A%20JSON%29%0A%7B%0A%20%20getObjects%28%0A%20%20%20%20bucket_slug%3A%20%22docs-ecommerce-app-production%22%0A%20%20%20%20read_key%3A%20%2249TG2OEZMVML9fNvVObbFOEsjkFaCYpbVIP1kb8kYCY6RMWqBf%22%0A%20%20%20%20input%3A%20%7B%0A%20%20%20%20%20%20query%3A%20%24query%0A%20%20%20%20%20%20props%3A%20%22slug%2Ctitle%2Cmetadata%22%0A%20%20%20%20%7D%0A%20%20%29%20%7B%0A%20%20%20%20%20objects%20%7B%0A%20%20%20%20%20%20slug%0A%20%20%20%20%20%20title%0A%20%20%20%20%20%20metadata%0A%20%20%20%20%7D%0A%20%20%20%20total%0A%20%20%7D%0A%7D"
+    frameBorder="0"
+    style={{ width: '100%', height: '470px' }}
+  ></iframe>
+</div>
+
+<div label="CLI">
+**Step 1.**
+Run the following commands to install the Cosmic CLI and connect to your Bucket.
+```bash
+yarn global add cosmic-cli
+cosmic use-bucket docs-ecommerce-app-production --read_key 49TG2OEZMVML9fNvVObbFOEsjkFaCYpbVIP1kb8kYCY6RMWqBf
+```
+**Step 2.**
+Run the following command to get content.
+```bash
+cosmic get-objects --query '{"type":"products","metadata.stores":"6296803e6c21c20e4add83ae"}' --props "slug,title,metadata.stores.title" --limit 3
+```
+</div>
+</Tabs>
+
+**Expected Result**
+
+```json
+[
+  {
+    "slug": "watch",
+    "title": "Watch",
+    "metadata": {
+      "stores": [
+        {
+          "title": "Walmart"
+        },
+        {
+          "title": "Target"
+        }
+      ]
+    }
+  },
+  {
+    "slug": "battery-charger",
+    "title": "Battery Charger",
+    "metadata": {
+      "stores": [
+        {
+          "title": "Walmart"
+        },
+        {
+          "title": "Target"
+        }
+      ]
+    }
+  },
+  {
+    "slug": "pants",
+    "title": "Pants",
+    "metadata": {
+      "stores": [
+        {
+          "title": "Walmart"
+        },
+        {
+          "title": "Target"
+        }
+      ]
+    }
+  }
+]
+```
+
+## Get products by multiple metadata values using $in
+
+The following example uses the `$in` logic operator to search products by multiple metafield values.
+
+<Tabs>
+<div label="Node.js">
+**Step 1.**
+Run the following commands to add the neccessary folder structure and dependencies.
+```bash
+mkdir cosmic-advanced-example
+cd cosmic-advanced-example
+yarn add cosmicjs
+```
+**Step 2.**
+Create `index.js` file with the following code.
+```javascript
+const api = require('cosmicjs')() // empty init
+const bucket = api.bucket({
+  slug: 'docs-ecommerce-app-production', // YOUR_BUCKET_SLUG
+  read_key: '49TG2OEZMVML9fNvVObbFOEsjkFaCYpbVIP1kb8kYCY6RMWqBf' // YOUR_BUCKET_READ_KEY
+})
+const app = async () => {
+  const data = await bucket.getObjects({
+    query: {
+      type: 'products',
+      'metadata.category': {
+        $in: ['Clothing','Food']
+      }
+    },
+    props: 'slug,title,metadata.category',
+    limit: 3
+  })
+  const products = data.objects
+  console.log(JSON.stringify(products, null, 2))
+}
+app()
+```
+**Step 3.**
+Run the app.
+```bash
+node index.js
+```
+
+</div>
+<div label="cURL">
+```bash
+curl https://api.cosmicjs.com/v2/buckets/docs-ecommerce-app-production/objects \
+  -d read_key="49TG2OEZMVML9fNvVObbFOEsjkFaCYpbVIP1kb8kYCY6RMWqBf" \
+  --data-urlencode query='{"type":"products","metadata.category":{"$in":["Clothing","Food"]}}' \
+  -d props="slug,title,metadata.category" \
+  -d limit=3 \
+  -G
+```
+</div>
+
+<div label="GraphQL">
+  Add the following query variable.
+```json
+{
+  "query": {
+    "type": "products",
+    "metadata.category": {
+      "$in": ["Clothing","Food"]
+    }
+  }
+}
+```
+  <a href="https://cosmic-graphql-playground.netlify.app/?endpoint=https%3A%2F%2Fgraphql.cosmicjs.com%2Fv3&query=query%20%28%24query%3A%20JSON%29%0A%7B%0A%20%20getObjects%28%0A%20%20%20%20bucket_slug%3A%20%22docs-ecommerce-app-production%22%0A%20%20%20%20read_key%3A%20%2249TG2OEZMVML9fNvVObbFOEsjkFaCYpbVIP1kb8kYCY6RMWqBf%22%0A%20%20%20%20input%3A%20%7B%0A%20%20%20%20%20%20query%3A%20%24query%0A%20%20%20%20%20%20props%3A%20%22slug%2Ctitle%2Cmetadata%22%0A%20%20%20%20%7D%0A%20%20%29%20%7B%0A%20%20%20%20%20objects%20%7B%0A%20%20%20%20%20%20slug%0A%20%20%20%20%20%20title%0A%20%20%20%20%20%20metadata%0A%20%20%20%20%7D%0A%20%20%20%20total%0A%20%20%7D%0A%7D">
+    Full screen
+  </a>
+  <iframe
+    src="https://cosmic-graphql-playground.netlify.app/?endpoint=https%3A%2F%2Fgraphql.cosmicjs.com%2Fv3&query=query%20%28%24query%3A%20JSON%29%0A%7B%0A%20%20getObjects%28%0A%20%20%20%20bucket_slug%3A%20%22docs-ecommerce-app-production%22%0A%20%20%20%20read_key%3A%20%2249TG2OEZMVML9fNvVObbFOEsjkFaCYpbVIP1kb8kYCY6RMWqBf%22%0A%20%20%20%20input%3A%20%7B%0A%20%20%20%20%20%20query%3A%20%24query%0A%20%20%20%20%20%20props%3A%20%22slug%2Ctitle%2Cmetadata%22%0A%20%20%20%20%7D%0A%20%20%29%20%7B%0A%20%20%20%20%20objects%20%7B%0A%20%20%20%20%20%20slug%0A%20%20%20%20%20%20title%0A%20%20%20%20%20%20metadata%0A%20%20%20%20%7D%0A%20%20%20%20total%0A%20%20%7D%0A%7D"
+    frameBorder="0"
+    style={{ width: '100%', height: '470px' }}
+  ></iframe>
+</div>
+
+<div label="CLI">
+**Step 1.**
+Run the following commands to install the Cosmic CLI and connect to your Bucket.
+```bash
+yarn global add cosmic-cli
+cosmic use-bucket docs-ecommerce-app-production
+```
+**Step 2.**
+Run the following command to get content.
+```bash
+cosmic get-objects --query '{"type":"products","metadata.category":{"$in":["Clothing","Food"]}}' --props "slug,title,metadata.category" --limit 3
+```
+</div>
+</Tabs>
+
+**Expected Result**
+
+```json
+[
+  {
+    "slug": "pants",
+    "title": "Pants",
+    "metadata": {
+      "category": {
+        "key": "clothing",
+        "value": "Clothing"
+      }
+    }
+  },
+  {
+    "slug": "blouse",
+    "title": "Blouse",
+    "metadata": {
+      "category": {
+        "key": "clothing",
+        "value": "Clothing"
+      }
+    }
+  },
+  {
+    "slug": "pineapple",
+    "title": "Pineapple",
+    "metadata": {
+      "category": {
+        "key": "food",
+        "value": "Food"
+      }
+    }
+  }
+]
+```
+
+## Get products by price using $lte
+
+The following example uses the `$lte` (less than or equal to) logic operator to search products by price.
+
+<Tabs>
+<div label="Node.js">
+**Step 1.**
+Run the following commands to add the neccessary folder structure and dependencies.
+```bash
+mkdir cosmic-advanced-example
+cd cosmic-advanced-example
+yarn add cosmicjs
+```
+**Step 2.**
+Create `index.js` file with the following code.
+```javascript
+const api = require('cosmicjs')() // empty init
+const bucket = api.bucket({
+  slug: 'docs-ecommerce-app-production', // YOUR_BUCKET_SLUG
+  read_key: '49TG2OEZMVML9fNvVObbFOEsjkFaCYpbVIP1kb8kYCY6RMWqBf' // YOUR_BUCKET_READ_KEY
+})
+const app = async () => {
+  const data = await bucket.getObjects({
+    query: {
+      type: 'products',
+      'metadata.price': {
+        $lte: 10.00
+      }
+    },
+    props: 'slug,title,metadata.price'
+  })
+  const products = data.objects
+  console.log(JSON.stringify(products, null, 2))
+}
+app()
+```
+**Step 3.**
+Run the app.
+```bash
+node index.js
+```
+
+</div>
+<div label="cURL">
+```bash
+curl https://api.cosmicjs.com/v2/buckets/docs-ecommerce-app-production/objects \
+  -d read_key="49TG2OEZMVML9fNvVObbFOEsjkFaCYpbVIP1kb8kYCY6RMWqBf" \
+  --data-urlencode query='{"type":"products","metadata.price":{"$lte":10.00}}' \
+  -d props="slug,title,metadata.price" \
+  -G
+```
+</div>
+
+<div label="GraphQL">
+  Add the following query variable.
+```json
+{
+  "query": {
+    "type": "products",
+    "metadata.price": {
+      "$lte": 10.00
+    }
+  }
+}
+```
+  <a href="https://cosmic-graphql-playground.netlify.app/?endpoint=https%3A%2F%2Fgraphql.cosmicjs.com%2Fv3&query=query%20%28%24query%3A%20JSON%29%0A%7B%0A%20%20getObjects%28%0A%20%20%20%20bucket_slug%3A%20%22docs-ecommerce-app-production%22%0A%20%20%20%20read_key%3A%20%2249TG2OEZMVML9fNvVObbFOEsjkFaCYpbVIP1kb8kYCY6RMWqBf%22%0A%20%20%20%20input%3A%20%7B%0A%20%20%20%20%20%20query%3A%20%24query%0A%20%20%20%20%20%20props%3A%20%22slug%2Ctitle%2Cmetadata%22%0A%20%20%20%20%7D%0A%20%20%29%20%7B%0A%20%20%20%20%20objects%20%7B%0A%20%20%20%20%20%20slug%0A%20%20%20%20%20%20title%0A%20%20%20%20%20%20metadata%0A%20%20%20%20%7D%0A%20%20%20%20total%0A%20%20%7D%0A%7D">
+    Full screen
+  </a>
+  <iframe
+    src="https://cosmic-graphql-playground.netlify.app/?endpoint=https%3A%2F%2Fgraphql.cosmicjs.com%2Fv3&query=query%20%28%24query%3A%20JSON%29%0A%7B%0A%20%20getObjects%28%0A%20%20%20%20bucket_slug%3A%20%22docs-ecommerce-app-production%22%0A%20%20%20%20read_key%3A%20%2249TG2OEZMVML9fNvVObbFOEsjkFaCYpbVIP1kb8kYCY6RMWqBf%22%0A%20%20%20%20input%3A%20%7B%0A%20%20%20%20%20%20query%3A%20%24query%0A%20%20%20%20%20%20props%3A%20%22slug%2Ctitle%2Cmetadata%22%0A%20%20%20%20%7D%0A%20%20%29%20%7B%0A%20%20%20%20%20objects%20%7B%0A%20%20%20%20%20%20slug%0A%20%20%20%20%20%20title%0A%20%20%20%20%20%20metadata%0A%20%20%20%20%7D%0A%20%20%20%20total%0A%20%20%7D%0A%7D"
+    frameBorder="0"
+    style={{ width: '100%', height: '470px' }}
+  ></iframe>
+</div>
+
+<div label="CLI">
+**Step 1.**
+Run the following commands to install the Cosmic CLI and connect to your Bucket.
+```bash
+yarn global add cosmic-cli
+cosmic use-bucket docs-ecommerce-app-production
+```
+**Step 2.**
+Run the following command to get content.
+```bash
+cosmic get-objects --query '{"type":"products","metadata.price":{"$lte":10.00}}' --props "slug,title,metadata.price"
+```
+</div>
+</Tabs>
+
+**Expected Result**
+
+```json
+[
+  {
+    "slug": "pineapple",
+    "title": "Pineapple",
+    "metadata": {
+      "price": 1.99
+    }
+  },
+  {
+    "slug": "sandwich",
+    "title": "Sandwich",
+    "metadata": {
+      "price": 8.99
+    }
+  }
+]
+```
+
+## Get products that match a combination of metadata values using $and
+
+The following example uses the `$and` logic operator to search products by a combination of values.
+
+<Tabs>
+<div label="Node.js">
+**Step 1.**
+Run the following commands to add the neccessary folder structure and dependencies.
+```bash
+mkdir cosmic-advanced-example
+cd cosmic-advanced-example
+yarn add cosmicjs
+```
+**Step 2.**
+Create `index.js` file with the following code.
+```javascript
+const api = require('cosmicjs')() // empty init
+const bucket = api.bucket({
+  slug: 'docs-ecommerce-app-production', // YOUR_BUCKET_SLUG
+  read_key: '49TG2OEZMVML9fNvVObbFOEsjkFaCYpbVIP1kb8kYCY6RMWqBf' // YOUR_BUCKET_READ_KEY
+})
+const app = async () => {
+  const data = await bucket.getObjects({
+    query: {
+      type: 'products',
+      "$and": [
+        {
+          "metadata.category": "Food"
+        },
+        {
+          "metadata.price": {
+            "$lte": 49.99
+          }
+        }
+      ]
+    },
+    props: 'slug,title,metadata.category,metadata.price'
+  })
+  const products = data.objects
+  console.log(JSON.stringify(products, null, 2))
+}
+app()
+```
+**Step 3.**
+Run the app.
+```bash
+node index.js
+```
+
+</div>
+<div label="cURL">
+```bash
+curl https://api.cosmicjs.com/v2/buckets/docs-ecommerce-app-production/objects \
+  -d read_key="49TG2OEZMVML9fNvVObbFOEsjkFaCYpbVIP1kb8kYCY6RMWqBf" \
+  --data-urlencode query='{"type":"products","$and":[{"metadata.category":"Food"},{"metadata.price": {"$lte":49.99}}]}' \
+  -d props="slug,title,metadata.category,metadata.price" \
+  -G
+```
+</div>
+
+<div label="GraphQL">
+  Add the following query variable.
+```json
+{
+  "query": {
+    "type": "products",
+    "$and": [
+      {
+        "metadata.category": "Food"
+      },
+      {
+        "metadata.price": {
+          "$lte": 49.99
+        }
+      }
+    ]
+  }
+}
+```
+  <a href="https://cosmic-graphql-playground.netlify.app/?endpoint=https%3A%2F%2Fgraphql.cosmicjs.com%2Fv3&query=query%20%28%24query%3A%20JSON%29%0A%7B%0A%20%20getObjects%28%0A%20%20%20%20bucket_slug%3A%20%22docs-ecommerce-app-production%22%0A%20%20%20%20read_key%3A%20%2249TG2OEZMVML9fNvVObbFOEsjkFaCYpbVIP1kb8kYCY6RMWqBf%22%0A%20%20%20%20input%3A%20%7B%0A%20%20%20%20%20%20query%3A%20%24query%0A%20%20%20%20%20%20props%3A%20%22slug%2Ctitle%2Cmetadata%22%0A%20%20%20%20%7D%0A%20%20%29%20%7B%0A%20%20%20%20%20objects%20%7B%0A%20%20%20%20%20%20slug%0A%20%20%20%20%20%20title%0A%20%20%20%20%20%20metadata%0A%20%20%20%20%7D%0A%20%20%20%20total%0A%20%20%7D%0A%7D">
+    Full screen
+  </a>
+  <iframe
+    src="https://cosmic-graphql-playground.netlify.app/?endpoint=https%3A%2F%2Fgraphql.cosmicjs.com%2Fv3&query=query%20%28%24query%3A%20JSON%29%0A%7B%0A%20%20getObjects%28%0A%20%20%20%20bucket_slug%3A%20%22docs-ecommerce-app-production%22%0A%20%20%20%20read_key%3A%20%2249TG2OEZMVML9fNvVObbFOEsjkFaCYpbVIP1kb8kYCY6RMWqBf%22%0A%20%20%20%20input%3A%20%7B%0A%20%20%20%20%20%20query%3A%20%24query%0A%20%20%20%20%20%20props%3A%20%22slug%2Ctitle%2Cmetadata%22%0A%20%20%20%20%7D%0A%20%20%29%20%7B%0A%20%20%20%20%20objects%20%7B%0A%20%20%20%20%20%20slug%0A%20%20%20%20%20%20title%0A%20%20%20%20%20%20metadata%0A%20%20%20%20%7D%0A%20%20%20%20total%0A%20%20%7D%0A%7D"
+    frameBorder="0"
+    style={{ width: '100%', height: '470px' }}
+  ></iframe>
+</div>
+
+<div label="CLI">
+**Step 1.**
+Run the following commands to install the Cosmic CLI and connect to your Bucket.
+```bash
+yarn global add cosmic-cli
+cosmic use-bucket docs-ecommerce-app-production
+```
+**Step 2.**
+Run the following command to get content.
+```bash
+cosmic get-objects --query '{"type":"products","$and":[{"metadata.category":"Food"},{"metadata.price":{"$lte":49.99}}]}' --props "slug,title,metadata.category,metadata.price"
+```
+</div>
+</Tabs>
+
+**Expected Result**
+
+```json
+[
+  {
+    "slug": "pineapple",
+    "title": "Pineapple",
+    "metadata": {
+      "category": {
+        "key": "food",
+        "value": "Food"
+      },
+      "price": 1.99
+    }
+  },
+  {
+    "slug": "sandwich",
+    "title": "Sandwich",
+    "metadata": {
+      "category": {
+        "key": "food",
+        "value": "Food"
+      },
+      "price": 8.99
+    }
+  },
+  {
+    "slug": "pasta",
+    "title": "Pasta",
+    "metadata": {
+      "category": {
+        "key": "food",
+        "value": "Food"
+      },
+      "price": 12.99
+    }
+  }
+]
+```
+
+## Get products not equal to a metadata value using $ne
+
+The following example uses the `$ne` logic operator to search products not equal to a value.
+
+<Tabs>
+<div label="Node.js">
+**Step 1.**
+Run the following commands to add the neccessary folder structure and dependencies.
+```bash
+mkdir cosmic-advanced-example
+cd cosmic-advanced-example
+yarn add cosmicjs
+```
+**Step 2.**
+Create `index.js` file with the following code.
+```javascript
+const api = require('cosmicjs')() // empty init
+const bucket = api.bucket({
+  slug: 'docs-ecommerce-app-production', // YOUR_BUCKET_SLUG
+  read_key: '49TG2OEZMVML9fNvVObbFOEsjkFaCYpbVIP1kb8kYCY6RMWqBf' // YOUR_BUCKET_READ_KEY
+})
+const app = async () => {
+  const data = await bucket.getObjects({
+    query: {
+      type: 'products',
+      "metadata.category": {
+        $ne: "Food"
+      }
+    },
+    limit: 3,
+    props: 'slug,title,metadata.category,metadata.price'
+  })
+  const products = data.objects
+  console.log(JSON.stringify(products, null, 2))
+}
+app()
+```
+**Step 3.**
+Run the app.
+```bash
+node index.js
+```
+
+</div>
+<div label="cURL">
+```bash
+curl https://api.cosmicjs.com/v2/buckets/docs-ecommerce-app-production/objects \
+  -d read_key="49TG2OEZMVML9fNvVObbFOEsjkFaCYpbVIP1kb8kYCY6RMWqBf" \
+  --data-urlencode query='{"type":"products","metadata.category":{"$ne":"Food"}}' \
+  -d props="slug,title,metadata.category,metadata.price" \
+  -d limit=3 \
+  -G
+```
+</div>
+
+<div label="GraphQL">
+  Add the following query variable.
+```json
+{
+  "query": {
+    "type": "products",
+    "metadata.category": {
+      "$ne": "Food"
+    }
+  }
+}
+```
+  <a href="https://cosmic-graphql-playground.netlify.app/?endpoint=https%3A%2F%2Fgraphql.cosmicjs.com%2Fv3&query=query%20%28%24query%3A%20JSON%29%0A%7B%0A%20%20getObjects%28%0A%20%20%20%20bucket_slug%3A%20%22docs-ecommerce-app-production%22%0A%20%20%20%20read_key%3A%20%2249TG2OEZMVML9fNvVObbFOEsjkFaCYpbVIP1kb8kYCY6RMWqBf%22%0A%20%20%20%20input%3A%20%7B%0A%20%20%20%20%20%20query%3A%20%24query%0A%20%20%20%20%20%20props%3A%20%22slug%2Ctitle%2Cmetadata%22%0A%20%20%20%20%7D%0A%20%20%29%20%7B%0A%20%20%20%20%20objects%20%7B%0A%20%20%20%20%20%20slug%0A%20%20%20%20%20%20title%0A%20%20%20%20%20%20metadata%0A%20%20%20%20%7D%0A%20%20%20%20total%0A%20%20%7D%0A%7D">
+    Full screen
+  </a>
+  <iframe
+    src="https://cosmic-graphql-playground.netlify.app/?endpoint=https%3A%2F%2Fgraphql.cosmicjs.com%2Fv3&query=query%20%28%24query%3A%20JSON%29%0A%7B%0A%20%20getObjects%28%0A%20%20%20%20bucket_slug%3A%20%22docs-ecommerce-app-production%22%0A%20%20%20%20read_key%3A%20%2249TG2OEZMVML9fNvVObbFOEsjkFaCYpbVIP1kb8kYCY6RMWqBf%22%0A%20%20%20%20input%3A%20%7B%0A%20%20%20%20%20%20query%3A%20%24query%0A%20%20%20%20%20%20props%3A%20%22slug%2Ctitle%2Cmetadata%22%0A%20%20%20%20%7D%0A%20%20%29%20%7B%0A%20%20%20%20%20objects%20%7B%0A%20%20%20%20%20%20slug%0A%20%20%20%20%20%20title%0A%20%20%20%20%20%20metadata%0A%20%20%20%20%7D%0A%20%20%20%20total%0A%20%20%7D%0A%7D"
+    frameBorder="0"
+    style={{ width: '100%', height: '470px' }}
+  ></iframe>
+</div>
+
+<div label="CLI">
+**Step 1.**
+Run the following commands to install the Cosmic CLI and connect to your Bucket.
+```bash
+yarn global add cosmic-cli
+cosmic use-bucket docs-ecommerce-app-production
+```
+**Step 2.**
+Run the following command to get content.
+```bash
+cosmic get-objects --query '{"type":"products","metadata.category":{"$ne":"Food"}}' --props "slug,title,metadata.category,metadata.price"
+```
+</div>
+</Tabs>
+
+**Expected Result**
+
+```json
+[
+  {
+    "slug": "watch",
+    "title": "Watch",
+    "metadata": {
+      "category": {
+        "key": "electronics",
+        "value": "Electronics"
+      },
+      "price": 259.99
+    }
+  },
+  {
+    "slug": "battery-charger",
+    "title": "Battery Charger",
+    "metadata": {
+      "category": {
+        "key": "electronics",
+        "value": "Electronics"
+      },
+      "price": 52.99
+    }
+  },
+  {
+    "slug": "pants",
+    "title": "Pants",
+    "metadata": {
+      "category": {
+        "key": "clothing",
+        "value": "Clothing"
+      },
+      "price": 37.99
+    }
+  }
+]
+```
+
+## Next steps
+
+<Callout emoji="💡">
+  **Learn More**
+  <br />
+  Go to the [queries section](/api-reference/queries) in the docs to learn more
+  about Cosmic queries and available methods.
+</Callout>

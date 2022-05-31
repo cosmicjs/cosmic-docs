@@ -1,5 +1,5 @@
-import Callout from 'nextra-theme-docs/callout'
-import Tabs from '../../components/tabs'
+import Callout from "nextra-theme-docs/callout";
+import Tabs from "../../components/tabs";
 
 # Authentication
 
@@ -33,11 +33,11 @@ Cosmic.authenticate()
 **Example Request**
 
 ```javascript
-const Cosmic = require('cosmicjs')() // double parentheses to init function without token
+const Cosmic = require("cosmicjs")(); // double parentheses to init function without token
 const data = await Cosmic.authenticate({
-  email: 'you@youremail.com',
-  password: 'yourpassword'
-})
+  email: "you@youremail.com",
+  password: "yourpassword",
+});
 ```
 
 </div>
@@ -104,10 +104,10 @@ Cosmic.getBuckets()
 **Example Request**
 
 ```javascript
-const Cosmic = require('cosmicjs')({
-  token: 'your-token-from-auth-request' // optional
-})
-const data = await Cosmic.getBuckets()
+const Cosmic = require("cosmicjs")({
+  token: "your-token-from-auth-request", // optional
+});
+const data = await Cosmic.getBuckets();
 ```
 
 </div>

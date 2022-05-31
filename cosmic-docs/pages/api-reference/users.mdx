@@ -1,5 +1,5 @@
-import Callout from 'nextra-theme-docs/callout'
-import Tabs from '../../components/tabs'
+import Callout from "nextra-theme-docs/callout";
+import Tabs from "../../components/tabs";
 
 # Users
 
@@ -13,7 +13,7 @@ The following endpoints enable you to create, read, update, and delete users in 
   <br />
   You can get your authentication token in your user account settings located in
   <i>
-    [Account Settings {'>'}
+    [Account Settings {">"}
     Authentication](https://app.cosmicjs.com/account/authentication)
   </i>. You can also get your token using the [API](/api-reference/authentication#get-your-token)
   with your `email` and `password`.
@@ -75,13 +75,13 @@ bucket.getUsers()
 **Example Request**
 
 ```javascript
-const Cosmic = require('cosmicjs')({
-  token: 'your-token-from-auth-request' // required
-})
+const Cosmic = require("cosmicjs")({
+  token: "your-token-from-auth-request", // required
+});
 const bucket = Cosmic.bucket({
-  slug: 'YOUR_BUCKET_SLUG'
-})
-const data = await bucket.getUsers()
+  slug: "YOUR_BUCKET_SLUG",
+});
+const data = await bucket.getUsers();
 ```
 
 </div>
@@ -177,16 +177,16 @@ bucket.getUser()
 **Example Request**
 
 ```javascript
-const Cosmic = require('cosmicjs')({
-  token: 'your-token-from-auth-request' // required
-})
+const Cosmic = require("cosmicjs")({
+  token: "your-token-from-auth-request", // required
+});
 const bucket = Cosmic.bucket({
-  slug: 'YOUR_BUCKET_SLUG'
-})
+  slug: "YOUR_BUCKET_SLUG",
+});
 const params = {
-  id: '5357ef811693be2118000001'
-}
-const data = await bucket.getUser(params)
+  id: "5357ef811693be2118000001",
+};
+const data = await bucket.getUser(params);
 ```
 
 </div>
@@ -275,19 +275,19 @@ bucket.addUser()
 **Example Request**
 
 ```javascript
-const Cosmic = require('cosmicjs')({
-  token: 'your-token-from-auth-request' // required
-})
+const Cosmic = require("cosmicjs")({
+  token: "your-token-from-auth-request", // required
+});
 const bucket = Cosmic.bucket({
-  slug: 'YOUR_BUCKET_SLUG'
-})
+  slug: "YOUR_BUCKET_SLUG",
+});
 const params = {
-  email: 'newuser@example.com',
-  role: 'editor',
-  first_name: 'Quasar',
-  last_name: 'Jones'
-}
-const data = await bucket.addUser(params)
+  email: "newuser@example.com",
+  role: "editor",
+  first_name: "Quasar",
+  last_name: "Jones",
+};
+const data = await bucket.addUser(params);
 ```
 
 </div>

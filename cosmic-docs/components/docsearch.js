@@ -1,44 +1,44 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef } from "react";
 
 const docsearch = function () {
-  const input = useRef(null)
+  const input = useRef(null);
 
   useEffect(() => {
-    const inputs = ['input', 'select', 'button', 'textarea']
+    const inputs = ["input", "select", "button", "textarea"];
 
-    const down = e => {
+    const down = (e) => {
       if (
         document.activeElement &&
         inputs.indexOf(document.activeElement.tagName.toLowerCase() !== -1)
       ) {
-        if (e.key === '/') {
-          e.preventDefault()
-          input.current?.focus()
+        if (e.key === "/") {
+          e.preventDefault();
+          input.current?.focus();
         }
       }
-    }
+    };
 
-    window.addEventListener('keydown', down)
-    return () => window.removeEventListener('keydown', down)
-  }, [])
+    window.addEventListener("keydown", down);
+    return () => window.removeEventListener("keydown", down);
+  }, []);
 
   useEffect(() => {
     const initDocSearch = () => {
       // If there's no docsearch, retry after 500ms
-      if (!window.docsearch) return setTimeout(initDocSearch, 500)
+      if (!window.docsearch) return setTimeout(initDocSearch, 500);
       // If there's docsearch, intialize it
       window.docsearch({
-        apiKey: '2cdadd5ab16751ea3a49a13854e5b052',
-        indexName: 'cosmicjs',
-        inputSelector: 'input#algolia-doc-search',
+        apiKey: "2cdadd5ab16751ea3a49a13854e5b052",
+        indexName: "cosmicjs",
+        inputSelector: "input#algolia-doc-search",
         algoliaOptions: {
-          facetFilters: ['tags:v2']
-        }
-      })
-    }
+          facetFilters: ["tags:v2"],
+        },
+      });
+    };
     // Call initDocSearch (one time after mount)
-    initDocSearch()
-  }, [])
+    initDocSearch();
+  }, []);
 
   return (
     <div className="relative w-full mr-2 docs-search">
@@ -88,7 +88,7 @@ const docsearch = function () {
         </svg>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default docsearch
+export default docsearch;

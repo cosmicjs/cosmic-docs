@@ -24,18 +24,18 @@ npm i cosmicjs
 
 ### 3. Add the following code into your `pages/index.js` file
 
-Find your Bucket slug and API read key in <i>Your Bucket > Settings > API Access</i> after [logging in](https://app.cosmicjs.com).
+Find your Bucket slug and API read key in <i>Bucket Settings > API Access</i> after [logging in](https://app.cosmicjs.com).
 
 ```javascript
 // pages/index.js
-import Head from 'next/head'
-const Cosmic = require('cosmicjs')
-const api = Cosmic()
+import Head from "next/head";
+const Cosmic = require("cosmicjs");
+const api = Cosmic();
 // Set these values, found in Bucket > Settings after logging in at https://app.cosmicjs.com/login
 const bucket = api.bucket({
-  slug: 'YOUR_BUCKET_SLUG',
-  read_key: 'YOUR_BUCKET_READ_KEY'
-})
+  slug: "YOUR_BUCKET_SLUG",
+  read_key: "YOUR_BUCKET_READ_KEY",
+});
 function Blog({ posts }) {
   return (
     <div className="container">
@@ -43,30 +43,30 @@ function Blog({ posts }) {
         <title>Cosmic App</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      {posts.map(post => (
+      {posts.map((post) => (
         <div key={post.slug}>
           <h3>{post.title}</h3>
           <img alt="" src={`${post.metadata.hero.imgix_url}?w=400`} />
         </div>
       ))}
     </div>
-  )
+  );
 }
 export async function getStaticProps() {
   const data = await bucket.getObjects({
     query: {
-      type: 'posts'
+      type: "posts",
     },
-    props: 'slug,title,content,metadata' // Limit the API response data by props
-  })
-  const posts = await data.objects
+    props: "slug,title,content,metadata", // Limit the API response data by props
+  });
+  const posts = await data.objects;
   return {
     props: {
-      posts
-    }
-  }
+      posts,
+    },
+  };
 }
-export default Blog
+export default Blog;
 ```
 
 ### 4. Start your app
