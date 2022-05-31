@@ -228,11 +228,14 @@ bucket.getObjects({
 })
 ```
 </div>
-<div label="REST">
-  ```bash
-  GET ${BASE_URL}/buckets/${YOUR_BUCKET_SLUG}/objects?read_key=${YOUR_BUCKET_READ_KEY}&query={"id":"6283bc5a0c164700097679ff"}
-  ```
-
+<div label="cURL">
+```bash
+curl ${BASE_URL}/buckets/${YOUR_BUCKET_SLUG}/objects \
+-d read_key=${YOUR_BUCKET_READ_KEY} \
+-d query={"id":"6283bc5a0c164700097679ff"} \
+-d props="slug,title,metadata.price,metadata.quantity,metadata.free_shipping" \
+-d limit=3 \
+```
 </div>
 <div label="GraphQL">
   ```javascript
@@ -287,11 +290,14 @@ bucket.getObjects({
 })
 ```
 </div>
-<div label="REST">
-  ```bash
-  GET ${BASE_URL}/buckets/${YOUR_BUCKET_SLUG}/objects?read_key=${YOUR_BUCKET_READ_KEY}&query={"id":["6283c5a330b2e10009e43610","6283e0235882c30009b49e5f"]}
-  ```
-
+<div label="cURL">
+```bash
+curl ${BASE_URL}/buckets/${YOUR_BUCKET_SLUG}/objects \
+-d read_key=${YOUR_BUCKET_READ_KEY} \
+-d query={"id":["6283c5a330b2e10009e43610","6283e0235882c30009b49e5f"]} \
+-d props="slug,title,metadata.price,metadata.quantity,metadata.free_shipping" \
+-d limit=3 \
+```
 </div>
 <div label="GraphQL">
   ```javascript
@@ -348,11 +354,14 @@ bucket.getObjects({
 })
 ```
 </div>
-<div label="REST">
-  ```bash
-  GET ${BASE_URL}/buckets/${YOUR_BUCKET_SLUG}/objects?read_key=${YOUR_BUCKET_READ_KEY}&query={"id":{"$ne":"6283df2391f3660009da194b"}}
-  ```
-
+<div label="cURL">
+```bash
+curl ${BASE_URL}/buckets/${YOUR_BUCKET_SLUG}/objects \
+-d read_key=${YOUR_BUCKET_READ_KEY} \
+-d query={"id":{"$ne":"6283df2391f3660009da194b"}} \
+-d props="slug,title,metadata.price,metadata.quantity,metadata.free_shipping" \
+-d limit=3 \
+```
 </div>
 <div label="GraphQL">
   ```javascript
@@ -413,11 +422,14 @@ bucket.getObjects({
 })
 ```  
 </div>
-<div label="REST">
-  ```bash
-  GET ${BASE_URL}/buckets/${YOUR_BUCKET_SLUG}/objects?read_key=${YOUR_BUCKET_READ_KEY}&query={"id":{"$nin":["6283dd60803a1a0009112e32","6283de686605090009c58739", "6283dddc6605090009c58736"]}}
-  ```
-
+<div label="cURL">
+```bash
+curl ${BASE_URL}/buckets/${YOUR_BUCKET_SLUG}/objects \
+-d read_key=${YOUR_BUCKET_READ_KEY} \
+-d query={"id":{"$nin":["6283dd60803a1a0009112e32","6283de686605090009c58739", "6283dddc6605090009c58736"]}} \
+-d props="slug,title,metadata.price,metadata.quantity,metadata.free_shipping" \
+-d limit=3 \
+```
 </div>
 <div label="GraphQL">
   ```javascript
@@ -474,11 +486,14 @@ bucket.getObjects({
 })
 ```
 </div>
-<div label="REST">
-  ```bash
-  GET $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/objects?read_key=${YOUR_BUCKET_READ_KEY}&query={"slug":"hot-pot"}
-  ```
-
+<div label="cURL">
+```bash
+curl ${BASE_URL}/buckets/${YOUR_BUCKET_SLUG}/objects \
+-d read_key=${YOUR_BUCKET_READ_KEY} \
+-d query={"slug":"hot-pot"} \
+-d props="slug,title,metadata.price,metadata.quantity,metadata.free_shipping" \
+-d limit=3 \
+```
 </div>
 <div label="GraphQL">
   ```javascript
@@ -533,11 +548,14 @@ bucket.getObjects({
 })
 ```
 </div>
-<div label="REST">
-  ```bash
-  GET $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/objects?read_key=${YOUR_BUCKET_READ_KEY}&query={"$or":[{"slug":"pasta"},{"slug":"drill"}]}
-  ```
-
+<div label="cURL">
+```bash
+curl ${BASE_URL}/buckets/${YOUR_BUCKET_SLUG}/objects \
+-d read_key=${YOUR_BUCKET_READ_KEY} \
+-d query={"$or":[{"slug":"pasta"},{"slug":"drill"}]} \
+-d props="slug,title,metadata.price,metadata.quantity,metadata.free_shipping" \
+-d limit=3 \
+```
 </div>
 <div label="GraphQL">
   ```javascript
@@ -597,11 +615,14 @@ bucket.getObjects({
 })
 ```
 </div>
-<div label="REST">
-  ```bash
-  GET $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/objects?read_key=${YOUR_BUCKET_READ_KEY}&query={"content":{"$regex":"is","$options":"i"}}
-  ```
-
+<div label="cURL">
+```bash
+curl ${BASE_URL}/buckets/${YOUR_BUCKET_SLUG}/objects \
+-d read_key=${YOUR_BUCKET_READ_KEY} \
+-d query={"content":{"$regex":"is","$options":"i"}} \
+-d props="slug,title,metadata.price,metadata.quantity,metadata.free_shipping" \
+-d limit=3 \
+```
 </div>
 <div label="GraphQL">
   ```javascript
@@ -664,11 +685,14 @@ bucket.getObjects({
 })
 ```
 </div>
-<div label="REST">
-  ```bash
-  GET $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/objects?read_key=${YOUR_BUCKET_READ_KEY}&query={"type":"products","metadata.price":19.99}
-  ```
-
+<div label="cURL">
+```bash
+curl ${BASE_URL}/buckets/${YOUR_BUCKET_SLUG}/objects \
+-d read_key=${YOUR_BUCKET_READ_KEY} \
+-d query={"type":"products","metadata.price":19.99} \
+-d props="slug,title,metadata.price,metadata.quantity,metadata.free_shipping" \
+-d limit=3 \
+```
 </div>
 <div label="GraphQL">
   ```javascript
@@ -725,11 +749,14 @@ bucket.getObjects({
 })
 ```
 </div>
-<div label="REST">
-  ```bash
-  GET $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/objects?read_key=${YOUR_BUCKET_READ_KEY}&query={"type": "products","$or":[{"metadata.category":"Electronics"},{"metadata.free_shipping":true}]}
-  ```
-
+<div label="cURL">
+```bash
+curl ${BASE_URL}/buckets/${YOUR_BUCKET_SLUG}/objects \
+-d read_key=${YOUR_BUCKET_READ_KEY} \
+-d query={"type": "products","$or":[{"metadata.category":"Electronics"},{"metadata.free_shipping":true}]} \
+-d props="slug,title,metadata.price,metadata.quantity,metadata.free_shipping" \
+-d limit=3 \
+```
 </div>
 <div label="GraphQL">
   ```javascript
@@ -786,11 +813,14 @@ bucket.getObjects({
 })
 ```
 </div>
-<div label="REST">
-  ```bash
-  GET $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/objects?read_key=${YOUR_BUCKET_READ_KEY}&query={"type": "products","$and":[{"metadata.quantity":{"$lt":50}},{"metadata.price":{"$lt":79.99}}]}
-  ```
-
+<div label="cURL">
+```bash
+curl ${BASE_URL}/buckets/${YOUR_BUCKET_SLUG}/objects \
+-d read_key=${YOUR_BUCKET_READ_KEY} \
+-d query={"type": "products","$and":[{"metadata.quantity":{"$lt":50}},{"metadata.price":{"$lt":79.99}}]} \
+-d props="slug,title,metadata.price,metadata.quantity,metadata.free_shipping" \
+-d limit=3 \
+```
 </div>
 <div label="GraphQL">
   ```javascript
@@ -849,11 +879,14 @@ bucket.getObjects({
 })
 ```
 </div>
-<div label="REST">
-  ```bash
-  GET $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/objects?read_key=${YOUR_BUCKET_READ_KEY}&query={"type": "products","metadata.price":{"$gte":100}}
-  ```
-
+<div label="cURL">
+```bash
+curl ${BASE_URL}/buckets/${YOUR_BUCKET_SLUG}/objects \
+-d read_key=${YOUR_BUCKET_READ_KEY} \
+-d query={"type": "products","metadata.price":{"$gte":100}} \
+-d props="slug,title,metadata.price,metadata.quantity,metadata.free_shipping" \
+-d limit=3 \
+```
 </div>
 <div label="GraphQL">
   ```javascript
@@ -912,11 +945,14 @@ bucket.getObjects({
 })
 ```
 </div>
-<div label="REST">
-  ```bash
-  GET $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/objects?read_key=${YOUR_BUCKET_READ_KEY}&query={"type": "products","metadata.category": "Food"}
-  ```
-
+<div label="cURL">
+```bash
+curl ${BASE_URL}/buckets/${YOUR_BUCKET_SLUG}/objects \
+-d read_key=${YOUR_BUCKET_READ_KEY} \
+-d query={"type": "products","metadata.category": "Food"} \
+-d props="slug,title,metadata.price,metadata.quantity,metadata.free_shipping" \
+-d limit=3 \
+```
 </div>
 <div label="GraphQL">
   ```javascript
@@ -975,11 +1011,14 @@ bucket.getObjects({
 })
 ```
 </div>
-<div label="REST">
-  ```bash
-  GET $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/objects?read_key=${YOUR_BUCKET_READ_KEY}&query={"type": "products","metadata.details":{"brand":"Samsung"}}
-  ```
-
+<div label="cURL">
+```bash
+curl ${BASE_URL}/buckets/${YOUR_BUCKET_SLUG}/objects \
+-d read_key=${YOUR_BUCKET_READ_KEY} \
+-d query={"type": "products","metadata.details":{"brand":"Samsung"}} \
+-d props="slug,title,metadata.price,metadata.quantity,metadata.free_shipping" \
+-d limit=3 \
+```
 </div>
 <div label="GraphQL">
   ```javascript
@@ -1040,11 +1079,14 @@ bucket.getObjects({
 })
 ```
 </div>
-<div label="REST">
-  ```bash
-  GET $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/objects?read_key=${YOUR_BUCKET_READ_KEY}&query={"type": "products","metadata.category":{"$ne":"Electronics"}}
-  ```
-
+<div label="cURL">
+```bash
+curl ${BASE_URL}/buckets/${YOUR_BUCKET_SLUG}/objects \
+-d read_key=${YOUR_BUCKET_READ_KEY} \
+-d query={"type": "products","metadata.category":{"$ne":"Electronics"}} \
+-d props="slug,title,metadata.price,metadata.quantity,metadata.free_shipping" \
+-d limit=3 \
+```
 </div>
 <div label="GraphQL">
   ```javascript
@@ -1103,11 +1145,14 @@ bucket.getObjects({
 })
 ```
 </div>
-<div label="REST">
-  ```bash
-  GET $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/objects?read_key=${YOUR_BUCKET_READ_KEY}&query={"type": "products","metadata.options":["Color","Size"]}
-  ```
-
+<div label="cURL">
+```bash
+curl ${BASE_URL}/buckets/${YOUR_BUCKET_SLUG}/objects \
+-d read_key=${YOUR_BUCKET_READ_KEY} \
+-d query={"type": "products","metadata.options":["Color","Size"]} \
+-d props="slug,title,metadata.price,metadata.quantity,metadata.free_shipping" \
+-d limit=3 \
+```
 </div>
 <div label="GraphQL">
   ```javascript
@@ -1166,11 +1211,14 @@ bucket.getObjects({
 })
 ```
 </div>
-<div label="REST">
-  ```bash
-  GET $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/objects?read_key=${YOUR_BUCKET_READ_KEY}&query={"type": "products","metadata.options":{"$in":["Size"]}}
-  ```
-
+<div label="cURL">
+```bash
+curl ${BASE_URL}/buckets/${YOUR_BUCKET_SLUG}/objects \
+-d read_key=${YOUR_BUCKET_READ_KEY} \
+-d query={"type": "products","metadata.options":{"$in":["Size"]}} \
+-d props="slug,title,metadata.price,metadata.quantity,metadata.free_shipping" \
+-d limit=3 \
+```
 </div>
 <div label="GraphQL">
   ```javascript
@@ -1217,12 +1265,6 @@ The response will look like:
 Sometimes customers will want to see the products you have that don't meet certain requirements. Like, knowing which products don't have a `size` option might let customers know that they aren't looking at clothing.
 
 <Tabs>
-<div label="REST">
-  ```bash
-  GET $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/objects?read_key=${YOUR_BUCKET_READ_KEY}&query={"type": "products","metadata.options":{"$nin":["Size"]}}
-  ```
-
-</div>
 <div label="Node.js">
 ```javascript
 bucket.getObjects({
@@ -1235,6 +1277,14 @@ bucket.getObjects({
   props: "slug,title,metadata.price,metadata.quantity,metadata.free_shipping",
   limit: 3
 })
+```
+</div><div label="cURL">
+```bash
+curl ${BASE_URL}/buckets/${YOUR_BUCKET_SLUG}/objects \
+-d read_key=${YOUR_BUCKET_READ_KEY} \
+-d query={"type": "products","metadata.options":{"$nin":["Size"]}} \
+-d props="slug,title,metadata.price,metadata.quantity,metadata.free_shipping" \
+-d limit=3 \
 ```
 </div>
 <div label="GraphQL">
