@@ -6,7 +6,7 @@ There will be times when you need to retrieve data from Cosmic in more complex w
 
 To show off some of these advanced queries, we're going to use some data stored in Cosmic for an e-commerce platform and perform some useful queries on it.
 
-## Set up your Cosmic project
+## Getting Started
 
 You'll need to create a new Cosmic project in [your dashboard](https://app.cosmicjs.com/projects) by clicking the `Add New Project` button.
 
@@ -32,30 +32,42 @@ After the import finishes, you should see all of the `Products` in your bucket.
 
 That's all we need to start running queries! You could build an entire full-stack app around this data, but we're going to focus on the snippets for a number of queries that may come up.
 
-## Product queries
+## Basic Queries
 
 **Note:** The `$BASE_URL` we'll use throughout these examples is `https://api.cosmicjs.com/v2/`.
+
+If using Node.js, the following config is required:
+
+```javascript
+const Cosmic = require('cosmicjs')()
+const bucket = Cosmic.bucket({
+  slug: YOUR_BUCKET_SLUG,
+  read_key: YOUR_BUCKET_READ_KEY
+})
+```
 
 ### Get all of the products
 
 You may need to retrieve all of the products you have available in your store and you can use the following code snippets to do so. This retrieves all of the objects that are `products`.
 
 <Tabs>
-<div label="REST">
-  ```bash
-  GET ${BASE_URL}/buckets/${YOUR_BUCKET_SLUG}/objects?read_key=${YOUR_BUCKET_READ_KEY}&query={"type":"products"}
-  ```
-
+  <div label="Node.js">
+```javascript
+bucket.getObjects({
+  query: {
+    type: "products",
+  },
+  props: "slug,title,metadata.price"
+})
+```
 </div>
-<div label="Node.js">
-  ```javascript
-  bucket.getObjects({
-      query: {
-        type: "products",
-      },
-    })
+<div label="cURL">
+  ```bash
+  curl ${BASE_URL}/buckets/${YOUR_BUCKET_SLUG}/objects \
+  -d read_key=${YOUR_BUCKET_READ_KEY} \
+  -d query={"type":"products"} \
+  -d props="slug,title,metadata.price" \
   ```
-
 </div>
 <div label="GraphQL">
   ```javascript
@@ -67,6 +79,7 @@ You may need to retrieve all of the products you have available in your store an
         query: {
           type: "products",
         }
+        props: "slug,title,metadata.price"
       }
     ) {
       objects {
@@ -83,9 +96,8 @@ You may need to retrieve all of the products you have available in your store an
 </div>
 <div label="CLI">
   ```bash
-  cosmic get-objects --query '{"type":"products"}'
+  cosmic get-objects --query '{"type":"products"}' --props 'slug,title,metadata.price'
   ```
-  
 </div>
 </Tabs>
 
@@ -95,73 +107,17 @@ The response will look like:
 {
   "objects": [
     {
-      "id": "6283e06091f3660009da1950",
       "slug": "watch",
       "title": "Watch",
-      "content": "<p>You will always know what time it is.</p>",
-      "bucket": "6283b64c9f8e3f00094504c4",
-      "created_at": "2022-05-17T17:50:24.769Z",
-      "created_by": "621e8a8f5930f70009316105",
-      "modified_at": "2022-05-25T20:42:01.239Z",
-      "created": "2022-05-17T17:50:24.769Z",
-      "status": "published",
-      "thumbnail": "https://imgix.cosmicjs.com/c2f987e0-dc6a-11ec-bb19-d9085ce408df-age-barros-rBPOfVqROzY-unsplash.jpg",
-      "published_at": "2022-05-25T20:42:01.239Z",
-      "modified_by": "621e8a8f5930f70009316105",
-      "publish_at": null,
-      "unpublish_at": null,
-      "type": "products",
       "metadata": {
-        "category": {
-          "key": "electronics",
-          "value": "Electronics"
-        },
-        "image": {
-          "url": null,
-          "imgix_url": null
-        },
-        "price": 259.99,
-        "quantity": 63,
-        "sku": "00115699",
-        "details": {
-          "brand": "Samsung"
-        },
-        "options": ["Expedited Shipping"],
-        "free_shipping": true
+        "price": 259.99
       }
     },
     {
-      "id": "6283e0235882c30009b49e5f",
       "slug": "battery-charger",
       "title": "Battery Charger",
-      "content": "<p>If your phone is dead, you need this brick.</p>",
-      "bucket": "6283b64c9f8e3f00094504c4",
-      "created_at": "2022-05-17T17:49:23.855Z",
-      "created_by": "621e8a8f5930f70009316105",
-      "modified_at": "2022-05-25T20:41:13.842Z",
-      "created": "2022-05-17T17:49:23.855Z",
-      "status": "published",
-      "thumbnail": "https://imgix.cosmicjs.com/99f67b80-d609-11ec-bb19-d9085ce408df-onur-binay--DY5znt0Whs-unsplash.jpg",
-      "published_at": "2022-05-25T20:41:13.842Z",
-      "modified_by": "621e8a8f5930f70009316105",
-      "publish_at": null,
-      "unpublish_at": null,
-      "type": "products",
       "metadata": {
-        "category": {
-          "key": "electronics",
-          "value": "Electronics"
-        },
-        "image": {
-          "url": "https://cdn.cosmicjs.com/99f67b80-d609-11ec-bb19-d9085ce408df-onur-binay--DY5znt0Whs-unsplash.jpg",
-          "imgix_url": "https://imgix.cosmicjs.com/99f67b80-d609-11ec-bb19-d9085ce408df-onur-binay--DY5znt0Whs-unsplash.jpg"
-        },
-        "price": 52.99,
-        "quantity": 17,
-        "sku": "",
-        "details": "",
-        "options": [],
-        "free_shipping": false
+        "price": 52.99
       }
     },
     ...
@@ -1245,7 +1201,7 @@ The response will look like:
 }
 ```
 
-**Metadata queries**
+## Metadata Queries
 
 The metadata values are the ones you defined for your product object in Cosmic. That means you can query based on these values as well. They just become slightly more advanced queries.
 
