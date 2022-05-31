@@ -65,42 +65,44 @@ bucket.getObjects({
 ```
 </div>
 <div label="cURL">
-  ```bash
-  curl ${BASE_URL}/buckets/${YOUR_BUCKET_SLUG}/objects \
-  -d read_key=${YOUR_BUCKET_READ_KEY} \
-  -d query={"type":"products"} \
-  -d props="slug,title,metadata.price,metadata.quantity,metadata.free_shipping" \
-  -d limit=3 \
-  ```
+```bash
+curl ${BASE_URL}/buckets/${YOUR_BUCKET_SLUG}/objects \
+-d read_key=${YOUR_BUCKET_READ_KEY} \
+-d query={"type":"products"} \
+-d props="slug,title,metadata.price,metadata.quantity,metadata.free_shipping" \
+-d limit=3 \
+```
 </div>
 <div label="GraphQL">
-  ```javascript
-  query ($bucket_slug: String!, $read_key: String, $query: JSON) {
-    getObjects(
-      bucket_slug: $bucket_slug
-      read_key: $read_key
-      input: {
-        query: {
-          type: "products",
-        }
-        props: "slug,title,metadata.price,metadata.quantity,metadata.free_shipping"
-        limit: 3
+```javascript
+query ($bucket_slug: String!, $read_key: String, $query: JSON) {
+  getObjects(
+    bucket_slug: $bucket_slug
+    read_key: $read_key
+    input: {
+      query: {
+        type: "products",
       }
-    ) {
-      objects {
-        id
-        title
-        slug
-        metadata
-      }
-      total
+      props: "slug,title,metadata.price,metadata.quantity,metadata.free_shipping"
+      limit: 3
     }
+  ) {
+    objects {
+      id
+      title
+      slug
+      metadata
+    }
+    total
   }
-  ```
+}
+```
 </div>
 <div label="CLI">
 ```bash
-cosmic get-objects --query '{"type":"products"}' --props 'slug,title,metadata.price,metadata.quantity,metadata.free_shipping' --limit '3'
+cosmic get-objects --query '{"type":"products"}' \
+  --props 'slug,title,metadata.price,metadata.quantity,metadata.free_shipping' \
+  --limit '3'
 ```
 </div>
 </Tabs>
@@ -154,43 +156,44 @@ bucket.getObjects({
 ```
 </div>
 <div label="cURL">
-  ```bash
-  curl ${BASE_URL}/buckets/${YOUR_BUCKET_SLUG}/objects \
-  -d read_key=${YOUR_BUCKET_READ_KEY} \
-  -d query={"title":"Cupboard"} \
-  -d props="slug,title,metadata.price,metadata.quantity,metadata.free_shipping" \
-  -d limit=3 \
-  ```
+```bash
+curl ${BASE_URL}/buckets/${YOUR_BUCKET_SLUG}/objects \
+-d read_key=${YOUR_BUCKET_READ_KEY} \
+-d query={"title":"Cupboard"} \
+-d props="slug,title,metadata.price,metadata.quantity,metadata.free_shipping" \
+-d limit=3 \
+```
 </div>
 <div label="GraphQL">
-  ```javascript
-  query ($bucket_slug: String!, $read_key: String, $query: JSON) {
-    getObjects(
-      bucket_slug: $bucket_slug
-      read_key: $read_key
-      input: {
-        query: {
-          title: "Cupboard",
-        }
-        props: "slug,title,metadata.price,metadata.quantity,metadata.free_shipping"
-        limit: 3
+```javascript
+query ($bucket_slug: String!, $read_key: String, $query: JSON) {
+  getObjects(
+    bucket_slug: $bucket_slug
+    read_key: $read_key
+    input: {
+      query: {
+        title: "Cupboard",
       }
-    ) {
-      objects {
-        id
-        title
-        slug
-        metadata
-      }
-      total
+      props: "slug,title,metadata.price,metadata.quantity,metadata.free_shipping"
+      limit: 3
     }
+  ) {
+    objects {
+      id
+      title
+      slug
+      metadata
+    }
+    total
   }
+}
 ```
-
 </div>
 <div label="CLI">
 ```bash
-cosmic get-objects --query '{"title":"Cupboard"}' --props 'slug,title,metadata.price,metadata.quantity,metadata.free_shipping' --limit '3'
+cosmic get-objects --query '{"title":"Cupboard"}' \
+  --props 'slug,title,metadata.price,metadata.quantity,metadata.free_shipping' \
+  --limit '3'
 ```
 </div>
 </Tabs>
@@ -238,32 +241,35 @@ curl ${BASE_URL}/buckets/${YOUR_BUCKET_SLUG}/objects \
 ```
 </div>
 <div label="GraphQL">
-  ```javascript
-  query ($bucket_slug: String!, $read_key: String, $query: JSON) {
-    getObjects(
-      bucket_slug: $bucket_slug
-      read_key: $read_key
-      input: {
-        query: {
-          id: "6283bc5a0c164700097679ff",
-        }
+```javascript
+query ($bucket_slug: String!, $read_key: String, $query: JSON) {
+  getObjects(
+    bucket_slug: $bucket_slug
+    read_key: $read_key
+    input: {
+      query: {
+        id: "6283bc5a0c164700097679ff",
       }
-    ) {
-      objects {
-        id
-        title
-        slug
-        metadata
-      }
-      total
+      props: "slug,title,metadata.price,metadata.quantity,metadata.free_shipping"
+      limit: 3
     }
+  ) {
+    objects {
+      id
+      title
+      slug
+      metadata
+    }
+    total
   }
-  ```
-
+}
+```
 </div>
 <div label="CLI">
 ```bash
-cosmic get-objects --query '{"id":"6283bc5a0c164700097679ff"}' --props 'slug,title,metadata.price,metadata.quantity,metadata.free_shipping' --limit '3'
+cosmic get-objects --query '{"id":"6283bc5a0c164700097679ff"}' \
+  --props 'slug,title,metadata.price,metadata.quantity,metadata.free_shipping' \
+  --limit '3'
 ```
 </div>
 </Tabs>
@@ -300,32 +306,35 @@ curl ${BASE_URL}/buckets/${YOUR_BUCKET_SLUG}/objects \
 ```
 </div>
 <div label="GraphQL">
-  ```javascript
-  query ($bucket_slug: String!, $read_key: String, $query: JSON) {
-    getObjects(
-      bucket_slug: $bucket_slug
-      read_key: $read_key
-      input: {
-        query: {
-          id: ["6283c5a330b2e10009e43610","6283e0235882c30009b49e5f"],
-        }
+```javascript
+query ($bucket_slug: String!, $read_key: String, $query: JSON) {
+  getObjects(
+    bucket_slug: $bucket_slug
+    read_key: $read_key
+    input: {
+      query: {
+        id: ["6283c5a330b2e10009e43610","6283e0235882c30009b49e5f"],
       }
-    ) {
-      objects {
-        id
-        title
-        slug
-        metadata
-      }
-      total
+      props: "slug,title,metadata.price,metadata.quantity,metadata.free_shipping"
+      limit: 3
     }
+  ) {
+    objects {
+      id
+      title
+      slug
+      metadata
+    }
+    total
   }
-  ```
-
+}
+```
 </div>
 <div label="CLI">
 ```bash
-cosmic get-objects --query '{"id":["6283c5a330b2e10009e43610","6283e0235882c30009b49e5f"]}' --props 'slug,title,metadata.price,metadata.quantity,metadata.free_shipping' --limit '3'
+cosmic get-objects --query '{"id":["6283c5a330b2e10009e43610","6283e0235882c30009b49e5f"]}' \
+  --props 'slug,title,metadata.price,metadata.quantity,metadata.free_shipping' \
+  --limit '3'
 ```
 </div>
 </Tabs>
@@ -364,34 +373,37 @@ curl ${BASE_URL}/buckets/${YOUR_BUCKET_SLUG}/objects \
 ```
 </div>
 <div label="GraphQL">
-  ```javascript
-  query ($bucket_slug: String!, $read_key: String, $query: JSON) {
-    getObjects(
-      bucket_slug: $bucket_slug
-      read_key: $read_key
-      input: {
-        query: {
-          id: {
-            "$ne":"6283df2391f3660009da194b"
-          },
-        }
+```javascript
+query ($bucket_slug: String!, $read_key: String, $query: JSON) {
+  getObjects(
+    bucket_slug: $bucket_slug
+    read_key: $read_key
+    input: {
+      query: {
+        id: {
+          "$ne":"6283df2391f3660009da194b"
+        },
       }
-    ) {
-      objects {
-        id
-        title
-        slug
-        metadata
-      }
-      total
+      props: "slug,title,metadata.price,metadata.quantity,metadata.free_shipping"
+      limit: 3
     }
+  ) {
+    objects {
+      id
+      title
+      slug
+      metadata
+    }
+    total
   }
-  ```
-
+}
+```
 </div>
 <div label="CLI">
 ```bash
-cosmic get-objects --query '{"id":{"$ne":"6283df2391f3660009da194b"}}' --props 'slug,title,metadata.price,metadata.quantity,metadata.free_shipping' --limit '3'
+cosmic get-objects --query '{"id":{"$ne":"6283df2391f3660009da194b"}}' \
+  --props 'slug,title,metadata.price,metadata.quantity,metadata.free_shipping' \
+  --limit '3'
 ```
 </div>
 </Tabs>
@@ -432,34 +444,37 @@ curl ${BASE_URL}/buckets/${YOUR_BUCKET_SLUG}/objects \
 ```
 </div>
 <div label="GraphQL">
-  ```javascript
-  query ($bucket_slug: String!, $read_key: String, $query: JSON) {
-    getObjects(
-      bucket_slug: $bucket_slug
-      read_key: $read_key
-      input: {
-        query: {
-          id: {
-            "$nin":["6283dd60803a1a0009112e32","6283de686605090009c58739", "6283dddc6605090009c58736"]
-          },
-        }
+```javascript
+query ($bucket_slug: String!, $read_key: String, $query: JSON) {
+  getObjects(
+    bucket_slug: $bucket_slug
+    read_key: $read_key
+    input: {
+      query: {
+        id: {
+          "$nin":["6283dd60803a1a0009112e32","6283de686605090009c58739", "6283dddc6605090009c58736"]
+        },
       }
-    ) {
-      objects {
-        id
-        title
-        slug
-        metadata
-      }
-      total
+      props: "slug,title,metadata.price,metadata.quantity,metadata.free_shipping"
+      limit: 3
     }
+  ) {
+    objects {
+      id
+      title
+      slug
+      metadata
+    }
+    total
   }
-  ```
-
+}
+```
 </div>
 <div label="CLI">
 ```bash
-cosmic get-objects --query '{"id":{"$nin":["6283dd60803a1a0009112e32","6283de686605090009c58739", "6283dddc6605090009c58736"]}}' --props 'slug,title,metadata.price,metadata.quantity,metadata.free_shipping' --limit '3'
+cosmic get-objects --query '{"id":{"$nin":["6283dd60803a1a0009112e32","6283de686605090009c58739", "6283dddc6605090009c58736"]}}' \
+  --props 'slug,title,metadata.price,metadata.quantity,metadata.free_shipping' \
+  --limit '3'
 ```
 </div>
 </Tabs>
@@ -496,32 +511,35 @@ curl ${BASE_URL}/buckets/${YOUR_BUCKET_SLUG}/objects \
 ```
 </div>
 <div label="GraphQL">
-  ```javascript
-  query ($bucket_slug: String!, $read_key: String, $query: JSON) {
-    getObjects(
-      bucket_slug: $bucket_slug
-      read_key: $read_key
-      input: {
-        query: {
-          slug:"hot-pot",
-        }
+```javascript
+query ($bucket_slug: String!, $read_key: String, $query: JSON) {
+  getObjects(
+    bucket_slug: $bucket_slug
+    read_key: $read_key
+    input: {
+      query: {
+        slug:"hot-pot",
       }
-    ) {
-      objects {
-        id
-        title
-        slug
-        metadata
-      }
-      total
+      props: "slug,title,metadata.price,metadata.quantity,metadata.free_shipping"
+      limit: 3
     }
+  ) {
+    objects {
+      id
+      title
+      slug
+      metadata
+    }
+    total
   }
-  ```
-
+}
+```
 </div>
 <div label="CLI">
 ```bash
-cosmic get-objects --query '{"slug":"hot-pot"}' --props 'slug,title,metadata.price,metadata.quantity,metadata.free_shipping' --limit '3'
+cosmic get-objects --query '{"slug":"hot-pot"}' \
+  --props 'slug,title,metadata.price,metadata.quantity,metadata.free_shipping' \
+  --limit '3'
 ```
 </div>
 </Tabs>
@@ -558,32 +576,35 @@ curl ${BASE_URL}/buckets/${YOUR_BUCKET_SLUG}/objects \
 ```
 </div>
 <div label="GraphQL">
-  ```javascript
-  query ($bucket_slug: String!, $read_key: String, $query: JSON) {
-    getObjects(
-      bucket_slug: $bucket_slug
-      read_key: $read_key
-      input: {
-        query: {
-          "$or": [{"slug":"pasta"},{"slug":"drill"}]
-        }
+```javascript
+query ($bucket_slug: String!, $read_key: String, $query: JSON) {
+  getObjects(
+    bucket_slug: $bucket_slug
+    read_key: $read_key
+    input: {
+      query: {
+        "$or": [{"slug":"pasta"},{"slug":"drill"}]
       }
-    ) {
-      objects {
-        id
-        title
-        slug
-        metadata
-      }
-      total
+      props: "slug,title,metadata.price,metadata.quantity,metadata.free_shipping"
+      limit: 3
     }
+  ) {
+    objects {
+      id
+      title
+      slug
+      metadata
+    }
+    total
   }
-  ```
-
+}
+```
 </div>
 <div label="CLI">
 ```bash
-cosmic get-objects --query '{"$or":[{"slug":"pasta"},{"slug":"drill"}]}' --props 'slug,title,metadata.price,metadata.quantity,metadata.free_shipping' --limit '3'
+cosmic get-objects --query '{"$or":[{"slug":"pasta"},{"slug":"drill"}]}' \
+  --props 'slug,title,metadata.price,metadata.quantity,metadata.free_shipping' \
+  --limit '3'
 ```
 </div>
 </Tabs>
@@ -625,35 +646,38 @@ curl ${BASE_URL}/buckets/${YOUR_BUCKET_SLUG}/objects \
 ```
 </div>
 <div label="GraphQL">
-  ```javascript
-  query ($bucket_slug: String!, $read_key: String, $query: JSON) {
-    getObjects(
-      bucket_slug: $bucket_slug
-      read_key: $read_key
-      input: {
-        query: {
-          content: {
-            "$regex": "is",
-            "$options": "i",
-          }
+```javascript
+query ($bucket_slug: String!, $read_key: String, $query: JSON) {
+  getObjects(
+    bucket_slug: $bucket_slug
+    read_key: $read_key
+    input: {
+      query: {
+        content: {
+          "$regex": "is",
+          "$options": "i",
         }
       }
-    ) {
-      objects {
-        id
-        title
-        slug
-        metadata
-      }
-      total
+      props: "slug,title,metadata.price,metadata.quantity,metadata.free_shipping"
+      limit: 3
     }
+  ) {
+    objects {
+      id
+      title
+      slug
+      metadata
+    }
+    total
   }
-  ```
-
+}
+```
 </div>
 <div label="CLI">
 ```bash
-cosmic get-objects --query '{"content":{"$regex":"is","$options":"i"}}' --props 'slug,title,metadata.price,metadata.quantity,metadata.free_shipping' --limit '3'
+cosmic get-objects --query '{"content":{"$regex":"is","$options":"i"}}' \
+  --props 'slug,title,metadata.price,metadata.quantity,metadata.free_shipping' \
+  --limit '3'
 ```
 </div>
 </Tabs>
@@ -695,33 +719,36 @@ curl ${BASE_URL}/buckets/${YOUR_BUCKET_SLUG}/objects \
 ```
 </div>
 <div label="GraphQL">
-  ```javascript
-  query ($bucket_slug: String!, $read_key: String, $query: JSON) {
-    getObjects(
-      bucket_slug: $bucket_slug
-      read_key: $read_key
-      input: {
-        query: {
-          "type":"products",
-          "metadata.price": 19.99
-        }
+```javascript
+query ($bucket_slug: String!, $read_key: String, $query: JSON) {
+  getObjects(
+    bucket_slug: $bucket_slug
+    read_key: $read_key
+    input: {
+      query: {
+        "type":"products",
+        "metadata.price": 19.99
       }
-    ) {
-      objects {
-        id
-        title
-        slug
-        metadata
-      }
-      total
+      props: "slug,title,metadata.price,metadata.quantity,metadata.free_shipping"
+      limit: 3
     }
+  ) {
+    objects {
+      id
+      title
+      slug
+      metadata
+    }
+    total
   }
-  ```
-
+}
+```
 </div>
 <div label="CLI">
 ```bash
-cosmic get-objects --query '{"type":"products","metadata.price":19.99}' --props 'slug,title,metadata.price,metadata.quantity,metadata.free_shipping' --limit '3'
+cosmic get-objects --query '{"type":"products","metadata.price":19.99}' \
+  --props 'slug,title,metadata.price,metadata.quantity,metadata.free_shipping' \
+  --limit '3'
 ```
 </div>
 </Tabs>
@@ -759,33 +786,36 @@ curl ${BASE_URL}/buckets/${YOUR_BUCKET_SLUG}/objects \
 ```
 </div>
 <div label="GraphQL">
-  ```javascript
-  query ($bucket_slug: String!, $read_key: String, $query: JSON) {
-    getObjects(
-      bucket_slug: $bucket_slug
-      read_key: $read_key
-      input: {
-        query: {
-          type: "products",
-          "$or":[{"metadata.category":"Electronics"},{"metadata.free_shipping":true}]
-        }
+```javascript
+query ($bucket_slug: String!, $read_key: String, $query: JSON) {
+  getObjects(
+    bucket_slug: $bucket_slug
+    read_key: $read_key
+    input: {
+      query: {
+        type: "products",
+        "$or":[{"metadata.category":"Electronics"},{"metadata.free_shipping":true}]
       }
-    ) {
-      objects {
-        id
-        title
-        slug
-        metadata
-      }
-      total
+      props: "slug,title,metadata.price,metadata.quantity,metadata.free_shipping"
+      limit: 3
     }
+  ) {
+    objects {
+      id
+      title
+      slug
+      metadata
+    }
+    total
   }
-  ```
-
+}
+```
 </div>
 <div label="CLI">
 ```bash
-cosmic get-objects --query '{type: "products","$or":[{"metadata.category":"Electronics"},{"metadata.free_shipping":true}]}' --props 'slug,title,metadata.price,metadata.quantity,metadata.free_shipping' --limit '3'
+cosmic get-objects --query '{type: "products","$or":[{"metadata.category":"Electronics"},{"metadata.free_shipping":true}]}' \
+  --props 'slug,title,metadata.price,metadata.quantity,metadata.free_shipping' \
+  --limit '3'
 ```
 </div>
 </Tabs>
@@ -823,33 +853,36 @@ curl ${BASE_URL}/buckets/${YOUR_BUCKET_SLUG}/objects \
 ```
 </div>
 <div label="GraphQL">
-  ```javascript
-  query ($bucket_slug: String!, $read_key: String, $query: JSON) {
-    getObjects(
-      bucket_slug: $bucket_slug
-      read_key: $read_key
-      input: {
-        query: {
-          type: "products",
-          "$and":[{"metadata.quantity":{"$lt":50}},{"metadata.price":{"$lt":79.99}}]
-        }
+```javascript
+query ($bucket_slug: String!, $read_key: String, $query: JSON) {
+  getObjects(
+    bucket_slug: $bucket_slug
+    read_key: $read_key
+    input: {
+      query: {
+        type: "products",
+        "$and":[{"metadata.quantity":{"$lt":50}},{"metadata.price":{"$lt":79.99}}]
       }
-    ) {
-      objects {
-        id
-        title
-        slug
-        metadata
-      }
-      total
+      props: "slug,title,metadata.price,metadata.quantity,metadata.free_shipping"
+      limit: 3
     }
+  ) {
+    objects {
+      id
+      title
+      slug
+      metadata
+    }
+    total
   }
-  ```
-
+}
+```
 </div>
 <div label="CLI">
 ```bash
-cosmic get-objects --query '{type: "products","$and":[{"metadata.quantity":{"$lt":50}},{"metadata.price":{"$lt":79.99}}]}' --props 'slug,title,metadata.price,metadata.quantity,metadata.free_shipping' --limit '3'
+cosmic get-objects --query '{type: "products","$and":[{"metadata.quantity":{"$lt":50}},{"metadata.price":{"$lt":79.99}}]}' \
+  --props 'slug,title,metadata.price,metadata.quantity,metadata.free_shipping' \
+  --limit '3'
 ```
 </div>
 </Tabs>
@@ -917,7 +950,9 @@ curl ${BASE_URL}/buckets/${YOUR_BUCKET_SLUG}/objects \
 </div>
 <div label="CLI">
 ```bash
-cosmic get-objects --query '{type: "products","metadata.price":{"$gte":100}}' --props 'slug,title,metadata.price,metadata.quantity,metadata.free_shipping' --limit '3'
+cosmic get-objects --query '{type: "products","metadata.price":{"$gte":100}}' \
+  --props 'slug,title,metadata.price,metadata.quantity,metadata.free_shipping' \
+  --limit '3'
 ```
 </div>
 </Tabs>
@@ -955,33 +990,36 @@ curl ${BASE_URL}/buckets/${YOUR_BUCKET_SLUG}/objects \
 ```
 </div>
 <div label="GraphQL">
-  ```javascript
-  query ($bucket_slug: String!, $read_key: String, $query: JSON) {
-    getObjects(
-      bucket_slug: $bucket_slug
-      read_key: $read_key
-      input: {
-        query: {
-          type: "products",
-          "metadata.category": "Food"
-        }
+```javascript
+query ($bucket_slug: String!, $read_key: String, $query: JSON) {
+  getObjects(
+    bucket_slug: $bucket_slug
+    read_key: $read_key
+    input: {
+      query: {
+        type: "products",
+        "metadata.category": "Food"
       }
-    ) {
-      objects {
-        id
-        title
-        slug
-        metadata
-      }
-      total
+      props: "slug,title,metadata.price,metadata.quantity,metadata.free_shipping"
+      limit: 3
     }
+  ) {
+    objects {
+      id
+      title
+      slug
+      metadata
+    }
+    total
   }
-  ```
-
+}
+```
 </div>
 <div label="CLI">
 ```bash
-cosmic get-objects --query '{type: "products","metadata.category": "Food"}' --props 'slug,title,metadata.price,metadata.quantity,metadata.free_shipping' --limit '3'
+cosmic get-objects --query '{type: "products","metadata.category": "Food"}' \
+  --props 'slug,title,metadata.price,metadata.quantity,metadata.free_shipping' \
+  --limit '3'
 ```
 </div>
 </Tabs>
@@ -1021,35 +1059,38 @@ curl ${BASE_URL}/buckets/${YOUR_BUCKET_SLUG}/objects \
 ```
 </div>
 <div label="GraphQL">
-  ```javascript
-  query ($bucket_slug: String!, $read_key: String, $query: JSON) {
-    getObjects(
-      bucket_slug: $bucket_slug
-      read_key: $read_key
-      input: {
-        query: {
-          type: "products",
-          "metadata.details":{
-            "brand":"Samsung"
-          }
+```javascript
+query ($bucket_slug: String!, $read_key: String, $query: JSON) {
+  getObjects(
+    bucket_slug: $bucket_slug
+    read_key: $read_key
+    input: {
+      query: {
+        type: "products",
+        "metadata.details":{
+          "brand":"Samsung"
         }
       }
-    ) {
-      objects {
-        id
-        title
-        slug
-        metadata
-      }
-      total
+      props: "slug,title,metadata.price,metadata.quantity,metadata.free_shipping"
+      limit: 3
     }
+  ) {
+    objects {
+      id
+      title
+      slug
+      metadata
+    }
+    total
   }
-  ```
-
+}
+```
 </div>
 <div label="CLI">
 ```bash
-cosmic get-objects --query '{type: "products","metadata.details":{"brand":"Samsung"}}' --props 'slug,title,metadata.price,metadata.quantity,metadata.free_shipping' --limit '3'
+cosmic get-objects --query '{type: "products","metadata.details":{"brand":"Samsung"}}' \
+  --props 'slug,title,metadata.price,metadata.quantity,metadata.free_shipping' \
+  --limit '3'
 ```
 </div>
 </Tabs>
@@ -1089,35 +1130,38 @@ curl ${BASE_URL}/buckets/${YOUR_BUCKET_SLUG}/objects \
 ```
 </div>
 <div label="GraphQL">
-  ```javascript
-  query ($bucket_slug: String!, $read_key: String, $query: JSON) {
-    getObjects(
-      bucket_slug: $bucket_slug
-      read_key: $read_key
-      input: {
-        query: {
-          type: "products",
-          "metadata.category": {
-            "$ne": "Electronics"
-          }
+```javascript
+query ($bucket_slug: String!, $read_key: String, $query: JSON) {
+  getObjects(
+    bucket_slug: $bucket_slug
+    read_key: $read_key
+    input: {
+      query: {
+        type: "products",
+        "metadata.category": {
+          "$ne": "Electronics"
         }
       }
-    ) {
-      objects {
-        id
-        title
-        slug
-        metadata
-      }
-      total
+      props: "slug,title,metadata.price,metadata.quantity,metadata.free_shipping"
+      limit: 3
     }
+  ) {
+    objects {
+      id
+      title
+      slug
+      metadata
+    }
+    total
   }
-  ```
-
+}
+```
 </div>
 <div label="CLI">
 ```bash
-cosmic get-objects --query '{type: "products","metadata.category":{"$ne":"Electronics"}}' --props 'slug,title,metadata.price,metadata.quantity,metadata.free_shipping' --limit '3'
+cosmic get-objects --query '{type: "products","metadata.category":{"$ne":"Electronics"}}' \
+  --props 'slug,title,metadata.price,metadata.quantity,metadata.free_shipping' \
+  --limit '3'
 ```  
 </div>
 </Tabs>
@@ -1155,33 +1199,36 @@ curl ${BASE_URL}/buckets/${YOUR_BUCKET_SLUG}/objects \
 ```
 </div>
 <div label="GraphQL">
-  ```javascript
-  query ($bucket_slug: String!, $read_key: String, $query: JSON) {
-    getObjects(
-      bucket_slug: $bucket_slug
-      read_key: $read_key
-      input: {
-        query: {
-          type: "products",
-          "metadata.options":["color","expedited"]
-        }
+```javascript
+query ($bucket_slug: String!, $read_key: String, $query: JSON) {
+  getObjects(
+    bucket_slug: $bucket_slug
+    read_key: $read_key
+    input: {
+      query: {
+        type: "products",
+        "metadata.options":["color","expedited"]
       }
-    ) {
-      objects {
-        id
-        title
-        slug
-        metadata
-      }
-      total
+      props: "slug,title,metadata.price,metadata.quantity,metadata.free_shipping"
+      limit: 3
     }
+  ) {
+    objects {
+      id
+      title
+      slug
+      metadata
+    }
+    total
   }
-  ```
-
+}
+```
 </div>
 <div label="CLI">
 ```bash
-cosmic get-objects --query '{type: "products","metadata.options":["color","expedited"]}' --props 'slug,title,metadata.price,metadata.quantity,metadata.free_shipping' --limit '3'
+cosmic get-objects --query '{type: "products","metadata.options":["color","expedited"]}' \
+  --props 'slug,title,metadata.price,metadata.quantity,metadata.free_shipping' \
+  --limit '3'
 ```
 </div>
 </Tabs>
@@ -1221,35 +1268,38 @@ curl ${BASE_URL}/buckets/${YOUR_BUCKET_SLUG}/objects \
 ```
 </div>
 <div label="GraphQL">
-  ```javascript
-  query ($bucket_slug: String!, $read_key: String, $query: JSON) {
-    getObjects(
-      bucket_slug: $bucket_slug
-      read_key: $read_key
-      input: {
-        query: {
-          type: "products",
-          "metadata.options": {
-            "$in":["Size"]
-          }
+```javascript
+query ($bucket_slug: String!, $read_key: String, $query: JSON) {
+  getObjects(
+    bucket_slug: $bucket_slug
+    read_key: $read_key
+    input: {
+      query: {
+        type: "products",
+        "metadata.options": {
+          "$in":["Size"]
         }
       }
-    ) {
-      objects {
-        id
-        title
-        slug
-        metadata
-      }
-      total
+      props: "slug,title,metadata.price,metadata.quantity,metadata.free_shipping"
+      limit: 3
     }
+  ) {
+    objects {
+      id
+      title
+      slug
+      metadata
+    }
+    total
   }
-  ```
-
+}
+```
 </div>
 <div label="CLI">
 ```bash
-cosmic get-objects --query '{type: "products","metadata.options":{"$in":["Size"]}}' --props 'slug,title,metadata.price,metadata.quantity,metadata.free_shipping' --limit '3'
+cosmic get-objects --query '{type: "products","metadata.options":{"$in":["Size"]}}' \
+  --props 'slug,title,metadata.price,metadata.quantity,metadata.free_shipping' \
+  --limit '3'
 ```
 </div>
 </Tabs>
@@ -1288,35 +1338,38 @@ curl ${BASE_URL}/buckets/${YOUR_BUCKET_SLUG}/objects \
 ```
 </div>
 <div label="GraphQL">
-  ```javascript
-  query ($bucket_slug: String!, $read_key: String, $query: JSON) {
-    getObjects(
-      bucket_slug: $bucket_slug
-      read_key: $read_key
-      input: {
-        query: {
-          type: "products",
-          "metadata.options": {
-            "$nin":["Size"]
-          }
+```javascript
+query ($bucket_slug: String!, $read_key: String, $query: JSON) {
+  getObjects(
+    bucket_slug: $bucket_slug
+    read_key: $read_key
+    input: {
+      query: {
+        type: "products",
+        "metadata.options": {
+          "$nin":["Size"]
         }
       }
-    ) {
-      objects {
-        id
-        title
-        slug
-        metadata
-      }
-      total
+      props: "slug,title,metadata.price,metadata.quantity,metadata.free_shipping"
+      limit: 3
     }
+  ) {
+    objects {
+      id
+      title
+      slug
+      metadata
+    }
+    total
   }
-  ```
-
+}
+```
 </div>
 <div label="CLI">
 ```bash
-cosmic get-objects --query '{type: "products","metadata.options":{"$nin":["Size"]}}' --props 'slug,title,metadata.price,metadata.quantity,metadata.free_shipping' --limit '3'
+cosmic get-objects --query '{type: "products","metadata.options":{"$nin":["Size"]}}' \
+  --props 'slug,title,metadata.price,metadata.quantity,metadata.free_shipping' \
+  --limit '3'
 ```
 </div>
 </Tabs>
