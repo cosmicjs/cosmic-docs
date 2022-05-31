@@ -1,5 +1,5 @@
-import Callout from 'nextra-theme-docs/callout'
-import Tabs from '../../components/tabs'
+import Callout from "nextra-theme-docs/callout";
+import Tabs from "../../components/tabs";
 
 # Buckets
 
@@ -13,7 +13,7 @@ The following endpoints allow you to get, add, edit and delete buckets in your a
   <br />
   You can get your authentication token in your user account settings located in
   <i>
-    [Account Settings {'>'}
+    [Account Settings {">"}
     Authentication](https://app.cosmicjs.com/account/authentication)
   </i>. You can also get your token using the [API](/api-reference/authentication#get-your-token)
   with your `email` and `password`.
@@ -60,10 +60,10 @@ Cosmic.getBuckets()
 **Example Request**
 
 ```javascript
-const Cosmic = require('cosmicjs')({
-  token: 'your-token-from-auth-request'
-})
-const data = await Cosmic.getBuckets()
+const Cosmic = require("cosmicjs")({
+  token: "your-token-from-auth-request",
+});
+const data = await Cosmic.getBuckets();
 ```
 
 </div>
@@ -147,10 +147,10 @@ Cosmic.getBucket()
 **Example Request**
 
 ```javascript
-const Cosmic = require('cosmicjs')({
-  token: 'your-token-from-auth-request'
-})
-const data = await Cosmic.getBucket({ slug: 'company-website' })
+const Cosmic = require("cosmicjs")({
+  token: "your-token-from-auth-request",
+});
+const data = await Cosmic.getBucket({ slug: "company-website" });
 ```
 
 </div>
@@ -251,13 +251,13 @@ Cosmic.addBucket()
 **Example Request**
 
 ```javascript
-const Cosmic = require('cosmicjs')({
-  token: 'your-token-from-auth-request' // required
-})
+const Cosmic = require("cosmicjs")({
+  token: "your-token-from-auth-request", // required
+});
 const data = await Cosmic.addBucket({
-  title: 'My New Bucket',
-  slug: 'my-new-bucket' // must be unique across all Buckets in system
-})
+  title: "My New Bucket",
+  slug: "my-new-bucket", // must be unique across all Buckets in system
+});
 ```
 
 </div>
@@ -400,12 +400,12 @@ Cosmic.deleteBucket()
 **Example Request**
 
 ```javascript
-const Cosmic = require('cosmicjs')({
-  token: 'your-token-from-auth-request' // required
-})
+const Cosmic = require("cosmicjs")({
+  token: "your-token-from-auth-request", // required
+});
 const data = await Cosmic.deleteBucket({
-  slug: 'YOUR_BUCKET_SLUG'
-})
+  slug: "YOUR_BUCKET_SLUG",
+});
 ```
 
 </div>

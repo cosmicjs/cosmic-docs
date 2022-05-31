@@ -1,7 +1,7 @@
-import Link from 'next/link'
-import Theme, { Logo } from '../theme.config.js'
-import DocSearch from '../components/docsearch'
-import Head from 'next/head'
+import Link from "next/link";
+import Theme, { Logo } from "../theme.config.js";
+import DocSearch from "../components/docsearch";
+import Head from "next/head";
 
 export default function Custom404() {
   return (
@@ -48,5 +48,5 @@ export default function Custom404() {
         </div>
       </div>
     </>
-  )
+  );
 }

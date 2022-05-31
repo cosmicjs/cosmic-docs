@@ -14,7 +14,7 @@ const Rest = (
       strokeLinejoin="round"
     />
   </svg>
-)
+);
 const Node = (
   <svg
     width="28"
@@ -29,7 +29,7 @@ const Node = (
       strokeWidth="3"
     />
   </svg>
-)
+);
 const GraphQL = (
   <svg
     width="28"
@@ -45,7 +45,7 @@ const GraphQL = (
       fill="currentColor"
     />
   </svg>
-)
+);
 const CLI = (
   <svg
     width="32"
@@ -69,5 +69,5 @@ const CLI = (
       strokeLinejoin="round"
     />
   </svg>
-)
-export { Rest, Node, GraphQL, CLI }
+);
+export { Rest, Node, GraphQL, CLI };

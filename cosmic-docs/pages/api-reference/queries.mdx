@@ -1,5 +1,5 @@
-import Callout from 'nextra-theme-docs/callout'
-import Tabs from '../../components/tabs'
+import Callout from "nextra-theme-docs/callout";
+import Tabs from "../../components/tabs";
 
 # Queries
 
@@ -93,18 +93,18 @@ Use the following selectors to build your queries.
 <div label="Node.js">
 
 ```javascript
-const Cosmic = require('cosmicjs')() // empty init
+const Cosmic = require("cosmicjs")(); // empty init
 const bucket = Cosmic.bucket({
-  slug: 'YOUR_BUCKET_SLUG',
-  read_key: 'YOUR_BUCKET_READ_KEY'
-})
+  slug: "YOUR_BUCKET_SLUG",
+  read_key: "YOUR_BUCKET_READ_KEY",
+});
 const query = {
-  type: 'products'
-}
+  type: "products",
+};
 const data = await bucket.getObjects({
   query,
-  limit: 10
-})
+  limit: 10,
+});
 ```
 
 </div>
@@ -120,7 +120,7 @@ curl https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/objects \
 <div label="GraphQL">
 
 ```javascript
-getObjects(bucket_slug, (input: query))
+getObjects(bucket_slug, (input: query));
 ```
 
 Some queries will require a separate variable. Add this to the Query Variables area in the GraphQL Playground below:
@@ -158,18 +158,18 @@ cosmic get-objects --query '{"type":"products"}'
 <div label="Node.js">
 
 ```javascript
-const Cosmic = require('cosmicjs')() // empty init
+const Cosmic = require("cosmicjs")(); // empty init
 const bucket = Cosmic.bucket({
-  slug: 'YOUR_BUCKET_SLUG',
-  read_key: 'YOUR_BUCKET_READ_KEY'
-})
+  slug: "YOUR_BUCKET_SLUG",
+  read_key: "YOUR_BUCKET_READ_KEY",
+});
 const query = {
-  type: 'products',
-  locale: 'es'
-}
+  type: "products",
+  locale: "es",
+};
 const data = await bucket.getObjects({
-  query
-})
+  query,
+});
 ```
 
 </div>
@@ -185,7 +185,7 @@ curl https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/objects \
 <div label="GraphQL">
 
 ```javascript
-getObjects(bucket_slug, (input: query))
+getObjects(bucket_slug, (input: query));
 ```
 
 Some queries will require a separate variable. Add this to the Query Variables area in the GraphQL Playground below:
@@ -224,19 +224,19 @@ cosmic get-objects --query '{"type":"products","locale":"es"}'
 <div label="Node.js">
 
 ```javascript
-const Cosmic = require('cosmicjs')() // empty init
+const Cosmic = require("cosmicjs")(); // empty init
 const bucket = Cosmic.bucket({
-  slug: 'YOUR_BUCKET_SLUG',
-  read_key: 'YOUR_BUCKET_READ_KEY'
-})
+  slug: "YOUR_BUCKET_SLUG",
+  read_key: "YOUR_BUCKET_READ_KEY",
+});
 const query = {
-  type: 'products',
-  slug: 'fender-stratocaster'
-}
+  type: "products",
+  slug: "fender-stratocaster",
+};
 const data = await bucket.getObjects({
   query,
-  limit: 1
-})
+  limit: 1,
+});
 ```
 
 </div>
@@ -252,7 +252,7 @@ curl https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/objects \
 <div label="GraphQL">
 
 ```javascript
-getObjects(bucket_slug, (input: query))
+getObjects(bucket_slug, (input: query));
 ```
 
 Some queries will require a separate variable. Add this to the Query Variables area in the GraphQL Playground below:
@@ -291,20 +291,20 @@ cosmic get-objects --query '{"type":"products","slug":"fender-stratocaster"}'
 <div label="Node.js">
 
 ```javascript
-const Cosmic = require('cosmicjs')() // empty init
+const Cosmic = require("cosmicjs")(); // empty init
 const bucket = Cosmic.bucket({
-  slug: 'YOUR_BUCKET_SLUG',
-  read_key: 'YOUR_BUCKET_READ_KEY'
-})
+  slug: "YOUR_BUCKET_SLUG",
+  read_key: "YOUR_BUCKET_READ_KEY",
+});
 const query = {
-  type: 'products',
-  slug: 'fender-stratocaster',
-  locale: 'es'
-}
+  type: "products",
+  slug: "fender-stratocaster",
+  locale: "es",
+};
 const data = await bucket.getObjects({
   query,
-  limit: 1
-})
+  limit: 1,
+});
 ```
 
 </div>
@@ -320,7 +320,7 @@ curl https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/objects \
 <div label="GraphQL">
 
 ```javascript
-getObjects(bucket_slug, (input: query))
+getObjects(bucket_slug, (input: query));
 ```
 
 Some queries will require a separate variable. Add this to the Query Variables area in the GraphQL Playground below:
@@ -360,18 +360,18 @@ cosmic get-objects --query '{"type":"products","slug":"fender-stratocaster","loc
 <div label="Node.js">
 
 ```javascript
-const Cosmic = require('cosmicjs')() // empty init
+const Cosmic = require("cosmicjs")(); // empty init
 const bucket = Cosmic.bucket({
-  slug: 'YOUR_BUCKET_SLUG',
-  read_key: 'YOUR_BUCKET_READ_KEY'
-})
+  slug: "YOUR_BUCKET_SLUG",
+  read_key: "YOUR_BUCKET_READ_KEY",
+});
 const query = {
-  type: 'products',
-  id: ['product-id-1', 'product-id-2']
-}
+  type: "products",
+  id: ["product-id-1", "product-id-2"],
+};
 const data = await bucket.getObjects({
-  query
-})
+  query,
+});
 ```
 
 </div>
@@ -387,7 +387,7 @@ curl https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/objects \
 <div label="GraphQL">
 
 ```javascript
-getObjects(bucket_slug, (input: query))
+getObjects(bucket_slug, (input: query));
 ```
 
 Some queries will require a separate variable. Add this to the Query Variables area in the GraphQL Playground below:
@@ -428,18 +428,18 @@ Uses the `$ne` query selector.
 <div label="Node.js">
 
 ```javascript
-const Cosmic = require('cosmicjs')() // empty init
+const Cosmic = require("cosmicjs")(); // empty init
 const bucket = Cosmic.bucket({
-  slug: 'YOUR_BUCKET_SLUG',
-  read_key: 'YOUR_BUCKET_READ_KEY'
-})
+  slug: "YOUR_BUCKET_SLUG",
+  read_key: "YOUR_BUCKET_READ_KEY",
+});
 const query = {
-  type: 'products',
-  id: { $ne: 'product-id-1' }
-}
+  type: "products",
+  id: { $ne: "product-id-1" },
+};
 const data = await bucket.getObjects({
-  query
-})
+  query,
+});
 ```
 
 </div>
@@ -455,7 +455,7 @@ curl https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/objects \
 <div label="GraphQL">
 
 ```javascript
-getObjects(bucket_slug, (input: query))
+getObjects(bucket_slug, (input: query));
 ```
 
 Some queries will require a separate variable. Add this to the Query Variables area in the GraphQL Playground below:
@@ -496,21 +496,21 @@ Uses the `$regex` evaluation parameter.
 <div label="Node.js">
 
 ```javascript
-const Cosmic = require('cosmicjs')() // empty init
+const Cosmic = require("cosmicjs")(); // empty init
 const bucket = Cosmic.bucket({
-  slug: 'YOUR_BUCKET_SLUG',
-  read_key: 'YOUR_BUCKET_READ_KEY'
-})
+  slug: "YOUR_BUCKET_SLUG",
+  read_key: "YOUR_BUCKET_READ_KEY",
+});
 const query = {
-  type: 'products',
+  type: "products",
   title: {
-    $regex: 'Fender',
-    $options: 'i'
-  }
-}
+    $regex: "Fender",
+    $options: "i",
+  },
+};
 const data = await bucket.getObjects({
-  query
-})
+  query,
+});
 ```
 
 </div>
@@ -526,7 +526,7 @@ curl https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/objects \
 <div label="GraphQL">
 
 ```javascript
-getObjects(bucket_slug, (input: query))
+getObjects(bucket_slug, (input: query));
 ```
 
 Some queries will require a separate variable. Add this to the Query Variables area in the GraphQL Playground below:
@@ -570,21 +570,21 @@ Uses the `$regex` evaluation parameter.
 <div label="Node.js">
 
 ```javascript
-const Cosmic = require('cosmicjs')() // empty init
+const Cosmic = require("cosmicjs")(); // empty init
 const bucket = Cosmic.bucket({
-  slug: 'YOUR_BUCKET_SLUG',
-  read_key: 'YOUR_BUCKET_READ_KEY'
-})
+  slug: "YOUR_BUCKET_SLUG",
+  read_key: "YOUR_BUCKET_READ_KEY",
+});
 const query = {
-  type: 'products',
+  type: "products",
   content: {
-    $regex: 'Find me',
-    $options: 'i'
-  }
-}
+    $regex: "Find me",
+    $options: "i",
+  },
+};
 const data = await bucket.getObjects({
-  query
-})
+  query,
+});
 ```
 
 </div>
@@ -600,7 +600,7 @@ curl https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/objects \
 <div label="GraphQL">
 
 ```javascript
-getObjects(bucket_slug, (input: query))
+getObjects(bucket_slug, (input: query));
 ```
 
 Some queries will require a separate variable. Add this to the Query Variables area in the GraphQL Playground below:
@@ -646,18 +646,18 @@ The following examples will use the `metadata` key to query for metadata propert
 <div label="Node.js">
 
 ```javascript
-const Cosmic = require('cosmicjs')() // empty init
+const Cosmic = require("cosmicjs")(); // empty init
 const bucket = Cosmic.bucket({
-  slug: 'YOUR_BUCKET_SLUG',
-  read_key: 'YOUR_BUCKET_READ_KEY'
-})
+  slug: "YOUR_BUCKET_SLUG",
+  read_key: "YOUR_BUCKET_READ_KEY",
+});
 const query = {
-  type: 'products',
-  'metadata.brand': 'Fender'
-}
+  type: "products",
+  "metadata.brand": "Fender",
+};
 const data = await bucket.getObjects({
-  query
-})
+  query,
+});
 ```
 
 </div>
@@ -673,7 +673,7 @@ curl https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/objects \
 <div label="GraphQL">
 
 ```javascript
-getObjects(bucket_slug, (input: query))
+getObjects(bucket_slug, (input: query));
 ```
 
 Some queries will require a separate variable. Add this to the Query Variables area in the GraphQL Playground below:
@@ -712,18 +712,18 @@ cosmic get-objects --query '{"type":"products","metadata.brand":"Fender"}'
 <div label="Node.js">
 
 ```javascript
-const Cosmic = require('cosmicjs')() // empty init
+const Cosmic = require("cosmicjs")(); // empty init
 const bucket = Cosmic.bucket({
-  slug: 'YOUR_BUCKET_SLUG',
-  read_key: 'YOUR_BUCKET_READ_KEY'
-})
+  slug: "YOUR_BUCKET_SLUG",
+  read_key: "YOUR_BUCKET_READ_KEY",
+});
 const query = {
-  type: 'products',
-  'metadata.brand': ['Fender', 'Gibson']
-}
+  type: "products",
+  "metadata.brand": ["Fender", "Gibson"],
+};
 const data = await bucket.getObjects({
-  query
-})
+  query,
+});
 ```
 
 </div>
@@ -739,7 +739,7 @@ curl https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/objects \
 <div label="GraphQL">
 
 ```javascript
-getObjects(bucket_slug, (input: query))
+getObjects(bucket_slug, (input: query));
 ```
 
 Some queries will require a separate variable. Add this to the Query Variables area in the GraphQL Playground below:
@@ -780,18 +780,18 @@ Uses the `$lte` query parameter.
 <div label="Node.js">
 
 ```javascript
-const Cosmic = require('cosmicjs')() // empty init
+const Cosmic = require("cosmicjs")(); // empty init
 const bucket = Cosmic.bucket({
-  slug: 'YOUR_BUCKET_SLUG',
-  read_key: 'YOUR_BUCKET_READ_KEY'
-})
+  slug: "YOUR_BUCKET_SLUG",
+  read_key: "YOUR_BUCKET_READ_KEY",
+});
 const query = {
-  type: 'products',
-  'metadata.price': { $lte: 1000 }
-}
+  type: "products",
+  "metadata.price": { $lte: 1000 },
+};
 const data = await bucket.getObjects({
-  query
-})
+  query,
+});
 ```
 
 </div>
@@ -807,7 +807,7 @@ curl https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/objects \
 <div label="GraphQL">
 
 ```javascript
-getObjects(bucket_slug, (input: query))
+getObjects(bucket_slug, (input: query));
 ```
 
 Some queries will require a separate variable. Add this to the Query Variables area in the GraphQL Playground below:
@@ -848,18 +848,18 @@ The Object `id` is used to get products that have this Single Object Metafield.
 <div label="Node.js">
 
 ```javascript
-const Cosmic = require('cosmicjs')() // empty init
+const Cosmic = require("cosmicjs")(); // empty init
 const bucket = Cosmic.bucket({
-  slug: 'YOUR_BUCKET_SLUG',
-  read_key: 'YOUR_BUCKET_READ_KEY'
-})
+  slug: "YOUR_BUCKET_SLUG",
+  read_key: "YOUR_BUCKET_READ_KEY",
+});
 const query = {
-  type: 'products',
-  'metadata.category': 'category-object-id'
-}
+  type: "products",
+  "metadata.category": "category-object-id",
+};
 const data = await bucket.getObjects({
-  query
-})
+  query,
+});
 ```
 
 </div>
@@ -875,7 +875,7 @@ curl https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/objects \
 <div label="GraphQL">
 
 ```javascript
-getObjects(bucket_slug, (input: query))
+getObjects(bucket_slug, (input: query));
 ```
 
 Some queries will require a separate variable. Add this to the Query Variables area in the GraphQL Playground below:
@@ -916,20 +916,20 @@ The Object `id` is used to get products that have this Multiple Object Metafield
 <div label="Node.js">
 
 ```javascript
-const Cosmic = require('cosmicjs')() // empty init
+const Cosmic = require("cosmicjs")(); // empty init
 const bucket = Cosmic.bucket({
-  slug: 'YOUR_BUCKET_SLUG',
-  read_key: 'YOUR_BUCKET_READ_KEY'
-})
+  slug: "YOUR_BUCKET_SLUG",
+  read_key: "YOUR_BUCKET_READ_KEY",
+});
 const query = {
-  type: 'products',
-  'metadata.categories': {
-    $in: ['category-object-id', 'another-category-object-id']
-  }
-}
+  type: "products",
+  "metadata.categories": {
+    $in: ["category-object-id", "another-category-object-id"],
+  },
+};
 const data = await bucket.getObjects({
-  query
-})
+  query,
+});
 ```
 
 </div>
@@ -945,7 +945,7 @@ curl https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/objects \
 <div label="GraphQL">
 
 ```javascript
-getObjects(bucket_slug, (input: query))
+getObjects(bucket_slug, (input: query));
 ```
 
 Some queries will require a separate variable. Add this to the Query Variables area in the GraphQL Playground below:
@@ -988,20 +988,20 @@ The Object `id` is used to get products that have this Multiple Object Metafield
 <div label="Node.js">
 
 ```javascript
-const Cosmic = require('cosmicjs')() // empty init
+const Cosmic = require("cosmicjs")(); // empty init
 const bucket = Cosmic.bucket({
-  slug: 'YOUR_BUCKET_SLUG',
-  read_key: 'YOUR_BUCKET_READ_KEY'
-})
+  slug: "YOUR_BUCKET_SLUG",
+  read_key: "YOUR_BUCKET_READ_KEY",
+});
 const query = {
-  type: 'products',
-  'metadata.categories': {
-    $nin: ['category-object-id', 'another-category-object-id']
-  }
-}
+  type: "products",
+  "metadata.categories": {
+    $nin: ["category-object-id", "another-category-object-id"],
+  },
+};
 const data = await bucket.getObjects({
-  query
-})
+  query,
+});
 ```
 
 </div>
@@ -1017,7 +1017,7 @@ curl https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/objects \
 <div label="GraphQL">
 
 ```javascript
-getObjects(bucket_slug, (input: query))
+getObjects(bucket_slug, (input: query));
 ```
 
 Some queries will require a separate variable. Add this to the Query Variables area in the GraphQL Playground below:

@@ -1,4 +1,6 @@
 {
-  "basic": "Basic",
-	"advanced": "Advanced"
+  "basic-queries": "Basic Queries",
+  "advanced-queries": "Advanced Queries",
+	"add-object": "Add Object",
+	"add-media": "Add Media"
 }

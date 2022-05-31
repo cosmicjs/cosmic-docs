@@ -1,7 +1,7 @@
-import Callout from 'nextra-theme-docs/callout'
-import Tabs from '../../components/tabs'
+import Callout from "nextra-theme-docs/callout";
+import Tabs from "../../components/tabs";
 
-# Basic
+# Basic Queries
 
 The following code examples feature content from the [Simple React Blog](https://www.cosmicjs.com/apps/simple-react-blog) app template. You can run the code examples as is or install the template to your account then switch the values indicated with `YOUR_BUCKET_SLUG` and `YOUR_BUCKET_READ_KEY` to your Bucket access keys. You can find these values located in <i>Your Bucket > Settings > API Access</i> after logging in to your <a href="https://app.cosmicjs.com">Cosmic dashboard</a>.
 
@@ -69,7 +69,7 @@ curl https://api.cosmicjs.com/v2/buckets/simple-react-blog/objects \
   <iframe
     src="https://cosmic-graphql-playground.netlify.app/?endpoint=https%3A%2F%2Fgraphql.cosmicjs.com%2Fv3&query=%7B%0A%20%20getObjects%28%0A%20%20%20%20bucket_slug%3A%20%22simple-react-blog%22%0A%20%20%20%20input%3A%20%7B%0A%20%20%20%20%20%20query%3A%20%7B%0A%20%20%20%20%20%20%20%20type%3A%20%22posts%22%0A%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20props%3A%20%22slug%2Ctitle%2Cmetadata.hero.imgix_url%2Cmetadata.author.title%22%0A%20%20%20%20%7D%0A%20%20%29%20%7B%0A%20%20%20%20%20objects%20%7B%0A%20%20%20%20%20%20slug%0A%20%20%20%20%20%20title%0A%20%20%20%20%20%20metadata%0A%20%20%20%20%7D%0A%20%20%20%20total%0A%20%20%7D%0A%7D"
     frameBorder="0"
-    style={{ width: '100%', height: '470px' }}
+    style={{ width: "100%", height: "470px" }}
   ></iframe>
 </div>
 
@@ -176,7 +176,7 @@ curl https://api.cosmicjs.com/v2/buckets/simple-react-blog/objects \
   <iframe
     src="https://cosmic-graphql-playground.netlify.app/?endpoint=https%3A%2F%2Fgraphql.cosmicjs.com%2Fv3&query=%7B%0A%20%20getObjects%28%0A%20%20%20%20bucket_slug%3A%20%22simple-react-blog%22%0A%20%20%20%20input%3A%20%7B%0A%20%20%20%20%20%20query%3A%20%7B%0A%20%20%20%20%20%20%09slug%3A%20%22a-wonderful-blog-post-about-earth%22%0A%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20props%3A%20%22slug%2Ctitle%2Cmetadata.hero.imgix_url%2Cmetadata.author.title%22%0A%20%20%20%20%09limit%3A%201%0A%20%20%20%20%7D%0A%20%20%29%20%7B%0A%20%20%20%20%20objects%20%7B%0A%20%20%20%20%20%20title%0A%20%20%20%20%20%20slug%0A%20%20%20%20%20%20metadata%0A%20%20%20%20%7D%0A%20%20%20%20total%0A%20%20%7D%0A%7D"
     frameBorder="0"
-    style={{ width: '100%', height: '470px' }}
+    style={{ width: "100%", height: "470px" }}
   ></iframe>
 </div>
 

@@ -475,17 +475,17 @@ bucket.editObjectMetafield()
 **Example Request**
 
 ```javascript
-const Cosmic = require('cosmicjs')() // empty init
+const Cosmic = require("cosmicjs")(); // empty init
 const bucket = Cosmic.bucket({
-  slug: 'YOUR_BUCKET_SLUG',
-  write_key: 'YOUR_BUCKET_WRITE_KEY'
-})
+  slug: "YOUR_BUCKET_SLUG",
+  write_key: "YOUR_BUCKET_WRITE_KEY",
+});
 const params = {
-  id: 'object-id',
-  key: 'phone_number',
-  value: 9876543210
-}
-const data = await bucket.editObjectMetafield(params)
+  id: "object-id",
+  key: "phone_number",
+  value: 9876543210,
+};
+const data = await bucket.editObjectMetafield(params);
 ```
 
 </div>

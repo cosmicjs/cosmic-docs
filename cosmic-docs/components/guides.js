@@ -1,4 +1,4 @@
-import styles from './guides.module.css'
+import styles from "./guides.module.css";
 
 const guides = () => (
   <div>
@@ -218,6 +218,6 @@ const guides = () => (
       </div>
     </div>
   </div>
-)
+);
 
-export default guides
+export default guides;

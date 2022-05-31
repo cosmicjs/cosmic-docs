@@ -28,11 +28,11 @@ Find your Bucket slug and API read key in <i>Your Bucket > Settings > API Access
 
 ```javascript
 // src/app/app.component.ts
-import { Component, OnInit } from '@angular/core'
-import Cosmic from 'cosmicjs'
+import { Component, OnInit } from "@angular/core";
+import Cosmic from "cosmicjs";
 
 @Component({
-  selector: 'app-root',
+  selector: "app-root",
   template: `
     <div id="app">
       <h1>Cosmic Angular App</h1>
@@ -44,37 +44,37 @@ import Cosmic from 'cosmicjs'
         </li>
       </ul>
     </div>
-  `
+  `,
 })
 export class AppComponent implements OnInit {
-  title = 'cosmic-angular-app'
-  bucket = null
-  loading = false
-  posts = []
+  title = "cosmic-angular-app";
+  bucket = null;
+  loading = false;
+  posts = [];
 
   constructor() {
     // Set these values, found in Bucket > Settings after logging in at https://app.cosmicjs.com/login
     this.bucket = Cosmic().bucket({
-      slug: 'YOUR_BUCKET_SLUG',
-      read_key: 'YOUR_BUCKET_READ_KEY'
-    })
+      slug: "YOUR_BUCKET_SLUG",
+      read_key: "YOUR_BUCKET_READ_KEY",
+    });
   }
 
   async ngOnInit() {
-    this.loading = true
+    this.loading = true;
 
     await this.bucket
       .getObjects({
         query: {
-          type: 'posts'
+          type: "posts",
         },
-        props: 'slug,title,content,metadata' // Limit the API response data by props
+        props: "slug,title,content,metadata", // Limit the API response data by props
       })
-      .then(response => {
-        this.posts = response.objects
-      })
+      .then((response) => {
+        this.posts = response.objects;
+      });
 
-    this.loading = false
+    this.loading = false;
   }
 }
 ```

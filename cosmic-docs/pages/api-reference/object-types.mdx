@@ -1,5 +1,5 @@
-import Callout from 'nextra-theme-docs/callout'
-import Tabs from '../../components/tabs'
+import Callout from "nextra-theme-docs/callout";
+import Tabs from "../../components/tabs";
 
 # Object Types
 
@@ -14,7 +14,7 @@ The following endpoints enable you to create, read, update, and delete Object Ty
   **Get your keys**
   <br />
   Your Bucket `slug`,`read_key`, and `write_key` will be required to perform the
-  following requests. These can be found in{' '}
+  following requests. These can be found in{" "}
   <i>Your Bucket > Settings > API Access</i> in your [Bucket Dashboard
   ](https://app.cosmicjs.com/login).
 </Callout>
@@ -71,12 +71,12 @@ bucket.getObjectTypes()
 **Example Request**
 
 ```javascript
-const Cosmic = require('cosmicjs')() // empty init
+const Cosmic = require("cosmicjs")(); // empty init
 const bucket = Cosmic.bucket({
-  slug: 'YOUR_BUCKET_SLUG',
-  read_key: 'YOUR_BUCKET_READ_KEY'
-})
-const data = await bucket.getObjectTypes()
+  slug: "YOUR_BUCKET_SLUG",
+  read_key: "YOUR_BUCKET_READ_KEY",
+});
+const data = await bucket.getObjectTypes();
 ```
 
 </div>
@@ -243,33 +243,33 @@ bucket.addObjectType()
 **Example Request**
 
 ```javascript
-const Cosmic = require('cosmicjs')() // empty init
+const Cosmic = require("cosmicjs")(); // empty init
 const bucket = Cosmic.bucket({
-  slug: 'YOUR_BUCKET_SLUG',
-  write_key: 'YOUR_BUCKET_WRITE_KEY'
-})
+  slug: "YOUR_BUCKET_SLUG",
+  write_key: "YOUR_BUCKET_WRITE_KEY",
+});
 const params = {
-  title: 'Pages',
-  singular: 'Page',
-  slug: 'pages',
-  emoji: '📄',
+  title: "Pages",
+  singular: "Page",
+  slug: "pages",
+  emoji: "📄",
   singleton: false,
   metafields: [
     {
-      type: 'text',
-      title: 'Headline',
-      key: 'headline',
-      required: true
+      type: "text",
+      title: "Headline",
+      key: "headline",
+      required: true,
     },
     {
-      type: 'file',
-      title: 'Hero',
-      key: 'hero',
-      required: true
-    }
-  ]
-}
-const data = await bucket.addObjectType(params)
+      type: "file",
+      title: "Hero",
+      key: "hero",
+      required: true,
+    },
+  ],
+};
+const data = await bucket.addObjectType(params);
 ```
 
 </div>
@@ -363,15 +363,15 @@ bucket.editObjectType()
 **Example Request**
 
 ```javascript
-const Cosmic = require('cosmicjs')() // empty init
+const Cosmic = require("cosmicjs")(); // empty init
 const bucket = Cosmic.bucket({
-  slug: 'YOUR_BUCKET_SLUG',
-  write_key: 'YOUR_BUCKET_WRITE_KEY'
-})
+  slug: "YOUR_BUCKET_SLUG",
+  write_key: "YOUR_BUCKET_WRITE_KEY",
+});
 const data = await bucket.editObjectType({
-  slug: 'posts',
-  title: 'New Posts Title'
-})
+  slug: "posts",
+  title: "New Posts Title",
+});
 ```
 
 </div>
@@ -476,14 +476,14 @@ bucket.deleteObjectType()
 **Example Request**
 
 ```javascript
-const Cosmic = require('cosmicjs')() // empty init
+const Cosmic = require("cosmicjs")(); // empty init
 const bucket = Cosmic.bucket({
-  slug: 'YOUR_BUCKET_SLUG',
-  write_key: 'YOUR_BUCKET_WRITE_KEY'
-})
+  slug: "YOUR_BUCKET_SLUG",
+  write_key: "YOUR_BUCKET_WRITE_KEY",
+});
 const data = await bucket.deleteObjectType({
-  slug: 'posts'
-})
+  slug: "posts",
+});
 ```
 
 </div>

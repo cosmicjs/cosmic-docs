@@ -1,4 +1,4 @@
-import styles from './features.module.css'
+import styles from "./features.module.css";
 
 const features = () => (
   <div>
@@ -104,6 +104,6 @@ const features = () => (
       </div>
     </div>
   </div>
-)
+);
 
-export default features
+export default features;
