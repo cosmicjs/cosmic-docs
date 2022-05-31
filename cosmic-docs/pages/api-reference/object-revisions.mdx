@@ -3,15 +3,24 @@ import Tabs from '../../components/tabs'
 
 # Object Revisions
 
-The following endpoints allow you to get Revision of your Object in your Bucket.
+The following endpoints enable you to create and read Object revisions in your Bucket. (Updating and deleting not possible.)
 
-<Callout emoji="✅">
-  **Quick Tip**
+<Callout emoji="🔑">
+  **Get your keys**
   <br />
-  Your `read` and `write` keys will be required to perform the following
-  requests. These can be found in <i>Your Bucket > Settings > API Access</i> in
-  your [Bucket Dashboard ](https://app.cosmicjs.com/login).
+  Your Bucket `slug`,`read_key`, and `write_key` will be required to perform the
+  following requests. These can be found in{' '}
+  <i>Your Bucket > Settings > API Access</i> in your [Bucket Dashboard
+  ](https://app.cosmicjs.com/login).
 </Callout>
+
+### Endpoints
+
+```bash
+GET /v2/buckets/${YOUR_BUCKET_SLUG}/objects/:object_id/revisions
+GET /v2/buckets/${YOUR_BUCKET_SLUG}/objects/:object_id/revisions/:revision_id
+POST /v2/buckets/${YOUR_BUCKET_SLUG}/objects/:object_id/revisions
+```
 
 ## Get Object Revisions
 
@@ -28,16 +37,15 @@ Get Object Revisions of Object with `id` in your Bucket.
 | skip            |          | Number | 0       | The number of Objects to skip                                                                                                                                |
 | pretty          |          |  Enum  | false   | true, Makes the response more reader-friendly                                                                                                                |
 
+**Definition**
+
+```bash
+GET /v2/buckets/${YOUR_BUCKET_SLUG}/objects/:id/revisions
+```
+
 **Methods**
 
 <Tabs>
-<div label="REST">
-```bash
-GET $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/objects/${object_id}/revisions?read_key=${YOUR_BUCKET_READ_KEY}
-```
-
-</div>
-
 <div label="Node.js">
 ```javascript
 bucket.getObjectRevisions()
@@ -46,18 +54,26 @@ bucket.getObjectRevisions()
 **Example Request**
 
 ```javascript
-const Cosmic = require('cosmicjs')
-const api = Cosmic()
-const bucket = api.bucket({
-  slug: 'your-bucket-slug',
-  read_key: 'your-read-key-found-in-bucket-settings'
+const Cosmic = require('cosmicjs')() // empty init
+const bucket = Cosmic.bucket({
+  slug: 'YOUR_BUCKET_SLUG',
+  read_key: 'YOUR_BUCKET_READ_KEY'
 })
 
-bucket.getObjectRevisions({
+const data = await bucket.getObjectRevisions({
   id: '5ff75368c2dfa81a91695cec',
   props: 'slug,title,created_at',
   limit: 10
 })
+```
+
+</div>
+
+<div label="cURL">
+```bash
+curl https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/objects/:id/revisions \
+	-d read_key=${YOUR_BUCKET_READ_KEY} \
+	-G
 ```
 
 </div>
@@ -132,10 +148,12 @@ Returns a single Revision by `id` from your Object.
 | props           |          | String |         | Declare which properties to return in comma-separated string. Reference full Object for all available properties. Example: `?props=id,title,metadata.author` |
 | pretty          |          |  Enum  | false   | true, Makes the response more reader-friendly                                                                                                                |
 
-**Definition**
+**cURL**
 
 ```bash
-GET $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/objects/${object_id}/revisions/${revision_id}?read_key=${YOUR_BUCKET_READ_KEY}
+curl https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/objects/:object_id/revisions/:revision_id \
+	-d read_key=${YOUR_BUCKET_READ_KEY} \
+	-G
 ```
 
 **Example Response**
@@ -166,71 +184,30 @@ Add a new Revision to your Object.
 <Callout emoji="⚠">
   **Required**
   <br />
-  `write_key` must be passed as `Authorization Bearer` in the header of the
-  request.
+  Your Bucket `write_key` must be passed as `Authorization Bearer` in the header
+  of the request. This can be found in
+  <i>Your Bucket > Settings > API Access</i> in your [Admin Dashboard](https://app.cosmicjs.com/login).
 </Callout>
 
-| Parameter              | Required |       Type       | Description                                                                                       |
-| :--------------------- | :------: | :--------------: | :------------------------------------------------------------------------------------------------ |
-| title                  | required |      String      | Your Object title                                                                                 |
-| slug                   |          |      String      | Unique identifier for your Object                                                                 |
-| content                |          |      String      | Add Content to your Object                                                                        |
-| status                 |          |       Enum       | draft, published, defaults to published                                                           |
-| metafields             |          | Array of Objects | Add Metafields to your Object. See [Metafields Model](/api-reference/getting-started/metafields). |
-| created_by             |          |      String      | Author User Id                                                                                    |
-| publish_at             |          |      Number      | UNIX millisecond timestamp. Publish automatically at a later time.                                |
-| options.slug_field     |          |     Boolean      | Set to false to hide the slug field                                                               |
-| options.content_editor |          |     Boolean      | Set to false to hide the content editor                                                           |
-| locale                 |          |      String      | Add localization to the Object                                                                    |
-| thumbnail              |          |      String      | Media `name`. Media must be available in Bucket. See [Media](/api-reference/media).               |
-| trigger_webhook        |          |     Boolean      | Triggers corresponding Object action Webhook ([See Webhooks](/dashboard/webhooks)).               |
-| pretty                 |          |       Enum       | true, Makes the response more reader-friendly                                                     |
+| Parameter              | Required |        Type         | Description                                                                         |
+| :--------------------- | :------: | :-----------------: | :---------------------------------------------------------------------------------- |
+| title                  | required |       String        | Your Object title                                                                   |
+| slug                   |          |       String        | Unique identifier for your Object                                                   |
+| content                |          |       String        | Add Content to your Object                                                          |
+| status                 |          |        Enum         | draft, published, defaults to published                                             |
+| metafields             |          | Array of Metafields | Add Metafields to your Object. See [Metafields Model](/api-reference/metafields).   |
+| created_by             |          |       String        | Author User Id                                                                      |
+| publish_at             |          |       Number        | UNIX millisecond timestamp. Publish automatically at a later time.                  |
+| options.slug_field     |          |       Boolean       | Set to false to hide the slug field                                                 |
+| options.content_editor |          |       Boolean       | Set to false to hide the content editor                                             |
+| locale                 |          |       String        | Add localization to the Object                                                      |
+| thumbnail              |          |       String        | Media `name`. Media must be available in Bucket. See [Media](/api-reference/media). |
+| trigger_webhook        |          |       Boolean       | Triggers corresponding Object action Webhook ([See Webhooks](/dashboard/webhooks)). |
+| pretty                 |          |        Enum         | true, Makes the response more reader-friendly                                       |
 
 **Methods**
 
 <Tabs>
-<div label="REST">
-```bash
-POST $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/objects/${object_id}/revisions
-```
-**Header**
-
-```json
-{
-  "Authorization": "Bearer YOUR_BUCKET_WRITE_KEY"
-}
-```
-
-**Example Body (JSON)**
-
-```json
-{
-  "title": "New Title of the Post",
-  "slug": "new-title-of-the-post"
-}
-```
-
-**Example Response**
-
-```json
-{
-  "revision": {
-    "id": "5ff75368c2dfa81a91695cec",
-    "slug": "title-of-the-post",
-    "title": "Title of the Post",
-    "content": "",
-    "metafields": [],
-    "bucket": "5f7357124b331d76c08de989",
-    "created_at": "2021-01-07T18:31:04.005Z",
-    "modified_at": "2021-01-07T18:31:04.005Z",
-    "status": "published",
-    "published_at": "2021-01-07T18:31:04.005Z",
-    "type": "posts"
-  }
-}
-```
-
-</div>
 
 <div label="Node.js">
 ```javascript
@@ -243,24 +220,25 @@ bucket.addObjectRevision()
 const Cosmic = require('cosmicjs')
 const api = Cosmic()
 const bucket = api.bucket({
-  slug: 'bucket-slug',
-  write_key: 'your-write-key-found-in-bucket-settings'
+  slug: 'YOUR_BUCKET_SLUG',
+  read_key: 'YOUR_BUCKET_READ_KEY'
 })
 const params = {
   id: '5ff75368c2dfa81a91695cec',
   title: 'New Title of the Post',
   slug: 'new-title-of-the-post'
 }
-bucket
-  .addObjectRevision(params)
-  .then(data => {
-    console.log(data)
-  })
-  .catch(err => {
-    console.log(err)
-  })
+const data = await bucket.addObjectRevision(params)
 ```
 
+</div>
+<div label="cURL">
+```bash
+curl https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/objects/:id/revisions \
+	-d '{"title":"New Title of the Post","slug":"new-title-of-the-post"}' \
+	-H 'Content-Type: application/json' \
+	-H "Authorization: Bearer <YOUR_BUCKET_WRITE_KEY>"
+```
 </div>
 
 <div label="GraphQL">
@@ -304,3 +282,23 @@ cosmic add-object-revision --id object-id --title "New Title of the Post" --slug
 ```
 </div>
 </Tabs>
+
+**Example Response**
+
+```json
+{
+  "revision": {
+    "id": "5ff75368c2dfa81a91695cec",
+    "slug": "new-title-of-the-post",
+    "title": "New Title of the Post",
+    "content": "",
+    "metafields": [],
+    "bucket": "5f7357124b331d76c08de989",
+    "created_at": "2021-01-07T18:31:04.005Z",
+    "modified_at": "2021-01-07T18:31:04.005Z",
+    "status": "published",
+    "published_at": "2021-01-07T18:31:04.005Z",
+    "type": "posts"
+  }
+}
+```

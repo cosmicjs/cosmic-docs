@@ -3,24 +3,67 @@ import Tabs from '../../components/tabs'
 
 # Objects
 
-The following endpoints allow you to get, add, edit and delete Objects in your Bucket. See [API Introduction](/api-reference/getting-started/introduction) for getting started information.
+The following endpoints enable you to create, read, update, and delete Objects in your Bucket. See [API Introduction](/api-reference/introduction) for getting started information.
 
-<Callout emoji="✅">
-  **Quick Tip**
+<Callout emoji="🔑">
+  **Get your keys**
   <br />
-  Your `read` and `write` keys will be required to perform the following
-  requests. These can be found in <i>Your Bucket > Settings > API Access</i> in
-  your [Bucket Dashboard ](https://app.cosmicjs.com/login).
+  Your Bucket `slug`,`read_key`, and `write_key` will be required to perform the
+  following requests. These can be found in{' '}
+  <i>Your Bucket > Settings > API Access</i> in your [Bucket Dashboard
+  ](https://app.cosmicjs.com/login).
 </Callout>
+
+### Endpoints
+
+```bash
+GET /v2/buckets/${YOUR_BUCKET_SLUG}/objects
+POST /v2/buckets/${YOUR_BUCKET_SLUG}/objects
+GET /v2/buckets/${YOUR_BUCKET_SLUG}/objects/:id
+PATCH /v2/buckets/${YOUR_BUCKET_SLUG}/objects/:id
+DELETE /v2/buckets/${YOUR_BUCKET_SLUG}/objects/:id
+GET /v2/buckets/${YOUR_BUCKET_SLUG}/merge-requests/:id/objects
+```
+
+## Data Model
+
+| Attribute              |        Type         |                                        Notes                                        |
+| :--------------------- | :-----------------: | :---------------------------------------------------------------------------------: |
+| id                     |       String        |                            Unique identifier for Object                             |
+| slug                   |       String        |           Can have multiple Objects with same slug and different locales.           |
+| type                   |       String        |                                  Object Type slug                                   |
+| title                  |       String        |                                    Object title                                     |
+| content                |       String        |                                    HTML Content                                     |
+| status                 |        Enum         |                       draft, published, defaults to published                       |
+| metafields             | Array of Metafields |                 See [Metafields Model](/api-reference/metafields).                  |
+| metadata               |       Object        |                             Rendered Metafield values.                              |
+| created_by             |       String        |                                   Author User Id                                    |
+| created_at             |       String        |                                    Date created                                     |
+| published_at           |       String        |                                 Date last published                                 |
+| modified_at            |       String        |                                 Date last modified                                  |
+| modified_by            |       String        |                                   Author User Id                                    |
+| publish_at             |       Number        |         UNIX millisecond timestamp. Publish automatically at a later time.          |
+| options.slug_field     |       Boolean       |                         Set to false to hide the slug field                         |
+| options.content_editor |       Boolean       |                       Set to false to hide the content editor                       |
+| locale                 |        Enum         |         See [Localization](/api-reference/localization) for locale options.         |
+| thumbnail              |       String        | Media `name`. Media must be available in Bucket. See [Media](/api-reference/media). |
 
 ## Get Objects
 
-Get Objects in your Bucket.
+Returns Objects in your Bucket.
+
+**Definition**
+
+```bash
+GET /v2/buckets/${YOUR_BUCKET_SLUG}/objects
+```
+
+**Parameters**
 
 | Parameter       | Required |  Type  | Default   | Description                                                                                                                                                                                                             |
 | :-------------- | :------: | :----: | :-------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | read_key        | required | String |           | Required to read data from your Bucket                                                                                                                                                                                  |
-| query           |          |  JSON  |           | A JSON string to perform Object search and filtering. See [Queries section](/api-reference/queries) for more detail.                                                                                                    |
+| query           |          |  JSON  |           | A JSON string to perform Object search and filtering. See [Queries section](/api-reference/queries) for more detail. Must be URL encoded for REST requests.                                                             |
 | props           |          | String |           | Declare which properties to return in comma-separated string. Remove to see full Object and get a list of all available properties. Can include nested metadata. Example: `id,title,metadata.author.metadata.image.url` |
 | status          |          |  Enum  | published | Set to `any` for latest draft or published Object                                                                                                                                                                       |
 | sort            |          |  Enum  | order     | `created_at`, `-created_at`, `modified_at`, `-modified_at`, `random`, `order`                                                                                                                                           |
@@ -34,16 +77,70 @@ Get Objects in your Bucket.
 **Methods**
 
 <Tabs>
-<div label="REST">
+<div label="Node.js">
 ```javascript
-const query = {
-  type: "posts",
-};
+bucket.getObjects()
 ```
-**Endpoint**
+**Example Request**
+
+```javascript
+const Cosmic = require('cosmicjs')() // empty init
+const bucket = Cosmic.bucket({
+  slug: 'YOUR_BUCKET_SLUG',
+  read_key: 'YOUR_BUCKET_READ_KEY'
+})
+const data = await bucket.getObjects({
+  query: {
+    type: 'posts'
+  },
+  limit: 1
+})
+```
+
+</div>
+<div label="cURL">
 ```bash
-GET $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/objects?read_key=${YOUR_BUCKET_READ_KEY}&query=${query}&limit=1
+curl https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/objects \
+	-d read_key=${YOUR_BUCKET_READ_KEY} \
+	--data-urlencode query='{"type": "posts"}' \
+	-d limit=1 \
+	-G
 ```
+</div>
+
+<div label="GraphQL">
+```javascript
+getObjects(bucket_slug, read_key, input)
+```
+
+**Variables**
+
+Add this with your variable values to "Query Variables".
+
+```
+{
+  "bucket_slug": "YOUR_BUCKET_SLUG",
+  "read_key": "YOUR_BUCKET_READ_KEY",
+  "query": {
+    "type": "posts"
+  }
+}
+```
+
+<a href="https://cosmic-graphql-playground.netlify.app/?endpoint=https%3A%2F%2Fgraphql.cosmicjs.com%2Fv3&query=%20query%20%28%24bucket_slug%3A%20String%21%2C%20%24read_key%3A%20String%2C%20%24query%3A%20JSON%29%20%7B%0A%20%20getObjects%28%0A%20%20%20%20bucket_slug%3A%20%24bucket_slug%0A%20%20%20%20read_key%3A%20%24read_key%0A%20%20%20%20input%3A%20%7B%0A%20%20%20%20%20%20%20query%3A%20%24query%0A%20%20%20%20%7D%0A%20%20%29%20%7B%0A%20%20%20%20%20objects%20%7B%0A%20%20%20%20%20%20id%0A%20%20%20%20%20%20title%0A%20%20%20%20%20%20slug%0A%20%20%20%20%7D%0A%20%20%20%20total%0A%20%20%7D%0A%7D">Full screen</a>
+<iframe src="https://cosmic-graphql-playground.netlify.app/?endpoint=https%3A%2F%2Fgraphql.cosmicjs.com%2Fv3&query=%20query%20%28%24bucket_slug%3A%20String%21%2C%20%24read_key%3A%20String%2C%20%24query%3A%20JSON%29%20%7B%0A%20%20getObjects%28%0A%20%20%20%20bucket_slug%3A%20%24bucket_slug%0A%20%20%20%20read_key%3A%20%24read_key%0A%20%20%20%20input%3A%20%7B%0A%20%20%20%20%20%20%20query%3A%20%24query%0A%20%20%20%20%7D%0A%20%20%29%20%7B%0A%20%20%20%20%20objects%20%7B%0A%20%20%20%20%20%20id%0A%20%20%20%20%20%20title%0A%20%20%20%20%20%20slug%0A%20%20%20%20%7D%0A%20%20%20%20total%0A%20%20%7D%0A%7D" frameBorder="0" style={{ width: '100%', height: '470px'}}></iframe>
+</div>
+
+<div label="CLI">
+```bash
+cosmic get-objects
+```
+**Example Request**
+```bash
+cosmic get-objects --limit 1 --query '{"type":"posts"}'
+```
+</div>
+</Tabs>
 
 **Example Full Response**
 
@@ -117,65 +214,6 @@ GET $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/objects?read_key=${YOUR_BUCKET_READ_KE
 }
 ```
 
-</div>
-<div label="Node.js">
-```javascript
-bucket.getObjects()
-```
-**Example Request**
-```javascript
-const Cosmic = require('cosmicjs');
-const api = Cosmic();
-const bucket = api.bucket({
-  slug: "bucket-slug",
-  read_key: "your-read-key-found-in-bucket-settings",
-});
-bucket.getObjects({
-  query: {
-    type: "posts"
-  },
-  limit: 10
-});
-```
-</div>
-
-<div label="GraphQL">
-```javascript
-getObjects(bucket_slug, read_key, input)
-```
-
-**Variables**
-
-Add this with your variable values to "Query Variables".
-
-```
-{
-  bucket_slug: "YOUR_BUCKET_SLUG",
-  read_key: "YOUR_BUCKET_READ_KEY",
-  input: {
-    query: {
-      type: "posts"
-    },
-    props: "slug,title,metadata.hero.url"
-  }
-}
-```
-
-<a href="https://cosmic-graphql-playground.netlify.app/?endpoint=https%3A%2F%2Fgraphql.cosmicjs.com%2Fv3&query=%20query%20%28%24bucket_slug%3A%20String%21%2C%20%24read_key%3A%20String%2C%20%24query%3A%20JSON%29%20%7B%0A%20%20getObjects%28%0A%20%20%20%20bucket_slug%3A%20%24bucket_slug%0A%20%20%20%20read_key%3A%20%24read_key%0A%20%20%20%20input%3A%20%7B%0A%20%20%20%20%20%20%20query%3A%20%24query%0A%20%20%20%20%7D%0A%20%20%29%20%7B%0A%20%20%20%20%20objects%20%7B%0A%20%20%20%20%20%20id%0A%20%20%20%20%20%20title%0A%20%20%20%20%20%20slug%0A%20%20%20%20%7D%0A%20%20%20%20total%0A%20%20%7D%0A%7D">Full screen</a>
-<iframe src="https://cosmic-graphql-playground.netlify.app/?endpoint=https%3A%2F%2Fgraphql.cosmicjs.com%2Fv3&query=%20query%20%28%24bucket_slug%3A%20String%21%2C%20%24read_key%3A%20String%2C%20%24query%3A%20JSON%29%20%7B%0A%20%20getObjects%28%0A%20%20%20%20bucket_slug%3A%20%24bucket_slug%0A%20%20%20%20read_key%3A%20%24read_key%0A%20%20%20%20input%3A%20%7B%0A%20%20%20%20%20%20%20query%3A%20%24query%0A%20%20%20%20%7D%0A%20%20%29%20%7B%0A%20%20%20%20%20objects%20%7B%0A%20%20%20%20%20%20id%0A%20%20%20%20%20%20title%0A%20%20%20%20%20%20slug%0A%20%20%20%20%7D%0A%20%20%20%20total%0A%20%20%7D%0A%7D" frameBorder="0" style={{ width: '100%', height: '470px'}}></iframe>
-</div>
-
-<div label="CLI">
-```bash
-cosmic get-objects
-```
-**Example Request**
-```bash
-cosmic get-objects --limit 10 --query '{"type":"posts"}'
-```
-</div>
-</Tabs>
-
 ### Using Props
 
 <Callout emoji="💡">
@@ -186,25 +224,79 @@ cosmic get-objects --limit 10 --query '{"type":"posts"}'
   infinite recursion.
 </Callout>
 
-**Example Request with Props**
+**Methods**
 
 <Tabs>
-<div label="REST">
+<div label="Node.js">
 ```javascript
-const query = {
-  type: "posts",
-};
-const props = `
-  title,
-  content,
-  metadata.parent.title,
-  metadata.parent.metadata.category.metadata.description
-`;
+bucket.getObjects()
 ```
-**Endpoint**
+**Example Request**
+
+```javascript
+const Cosmic = require('cosmicjs')() // empty init
+const bucket = Cosmic.bucket({
+  slug: 'YOUR_BUCKET_SLUG',
+  read_key: 'YOUR_BUCKET_READ_KEY'
+})
+const props = [
+  'title',
+  'content',
+  'metadata.parent.title',
+  'metadata.parent.metadata.category.metadata.description'
+]
+const data = await bucket.getObjects({
+  query: {
+    type: 'posts'
+  },
+  props: props.toString(),
+  limit: 1
+})
+```
+
+</div>
+<div label="cURL">
 ```bash
-GET $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/objects?read_key=${YOUR_BUCKET_READ_KEY}&query=${query}&props=${props}&limit=1
+curl https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/objects \
+	-d read_key=${YOUR_BUCKET_READ_KEY} \
+	--data-urlencode query='{"type":"posts"}' \
+	-d props="title,content,metadata.parent.title,metadata.parent.metadata.category.metadata.description" \
+	-d limit=1 \
+	-G
 ```
+</div>
+<div label="GraphQL">
+```javascript
+getObjects(bucket_slug, read_key, input)
+```
+
+**Variables**
+
+```
+{
+  "bucket_slug": "YOUR_BUCKET_SLUG",
+  "read_key": "YOUR_BUCKET_READ_KEY",
+  "query": {
+    "type": "posts"
+  }
+}
+```
+
+<a href="https://cosmic-graphql-playground.netlify.app/?endpoint=https%3A%2F%2Fgraphql.cosmicjs.com%2Fv3&query=%20query%20%28%24bucket_slug%3A%20String%21%2C%20%24read_key%3A%20String%2C%20%24query%3A%20JSON%29%20%7B%0A%20%20getObjects%28%0A%20%20%20%20bucket_slug%3A%20%24bucket_slug%0A%20%20%20%20read_key%3A%20%24read_key%0A%20%20%20%20input%3A%20%7B%0A%20%20%20%20%20%20%20query%3A%20%24query%0A%20%20%20%20%20%20%20props%3A%20%22slug%2Ctitle%2Cmetadata.hero.url%22%0A%20%20%20%20%7D%0A%20%20%29%20%7B%0A%20%20%20%20%20objects%20%7B%0A%20%20%20%20%20%20id%0A%20%20%20%20%20%20title%0A%20%20%20%20%20%20slug%0A%20%20%20%20%7D%0A%20%20%20%20total%0A%20%20%7D%0A%7D">Full screen</a>
+<iframe src="https://cosmic-graphql-playground.netlify.app/?endpoint=https%3A%2F%2Fgraphql.cosmicjs.com%2Fv3&query=%20query%20%28%24bucket_slug%3A%20String%21%2C%20%24read_key%3A%20String%2C%20%24query%3A%20JSON%29%20%7B%0A%20%20getObjects%28%0A%20%20%20%20bucket_slug%3A%20%24bucket_slug%0A%20%20%20%20read_key%3A%20%24read_key%0A%20%20%20%20input%3A%20%7B%0A%20%20%20%20%20%20%20query%3A%20%24query%0A%20%20%20%20%20%20%20props%3A%20%22slug%2Ctitle%2Cmetadata.hero.url%22%0A%20%20%20%20%7D%0A%20%20%29%20%7B%0A%20%20%20%20%20objects%20%7B%0A%20%20%20%20%20%20id%0A%20%20%20%20%20%20title%0A%20%20%20%20%20%20slug%0A%20%20%20%20%7D%0A%20%20%20%20total%0A%20%20%7D%0A%7D" frameBorder="0" style={{ width: '100%', height: '470px'}}></iframe>
+</div>
+
+<div label="CLI">
+```bash
+cosmic get-objects
+```
+**Example Request**
+```bash
+cosmic get-objects --limit 1 --query '{"type":"posts"}' --props title,content,metadata.parent.title,metadata.parent.metadata.category.metadata.description
+```
+
+</div>
+</Tabs>
 
 **Example Response with Props**
 
@@ -233,77 +325,29 @@ GET $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/objects?read_key=${YOUR_BUCKET_READ_KE
 }
 ```
 
-</div>
-<div label="Node.js">
-```javascript
-bucket.getObjects()
-```
-**Example Request**
-```javascript
-const Cosmic= require('cosmicjs');
-const api = Cosmic();
-const bucket = api.bucket({
-  slug: "bucket-slug",
-  read_key: "your-read-key-found-in-bucket-settings",
-});
-const props = `
-  title,
-  content,
-  metadata.parent.title,
-  metadata.parent.metadata.category.metadata.description
-`;
-bucket.getObjects({
-  query: {
-    type: "posts"
-  },
-  props,
-  limit: 10,
-});
-```
-</div>
-<div label="GraphQL">
-```javascript
-getObjects(bucket_slug, read_key, input)
-```
-
-**Variables**
-
-```
-{
-  bucket_slug: "YOUR_BUCKET_SLUG",
-  read_key: "YOUR_BUCKET_READ_KEY",
-  input: {
-    query: {
-      type: "posts"
-    },
-    props: "slug,title,content,metadata"
-  }
-}
-```
-
-<a href="https://cosmic-graphql-playground.netlify.app/?endpoint=https%3A%2F%2Fgraphql.cosmicjs.com%2Fv3&query=%20query%20%28%24bucket_slug%3A%20String%21%2C%20%24read_key%3A%20String%2C%20%24query%3A%20JSON%29%20%7B%0A%20%20getObjects%28%0A%20%20%20%20bucket_slug%3A%20%24bucket_slug%0A%20%20%20%20read_key%3A%20%24read_key%0A%20%20%20%20input%3A%20%7B%0A%20%20%20%20%20%20%20query%3A%20%24query%0A%20%20%20%20%20%20%20props%3A%20%22slug%2Ctitle%2Cmetadata.hero.url%22%0A%20%20%20%20%7D%0A%20%20%29%20%7B%0A%20%20%20%20%20objects%20%7B%0A%20%20%20%20%20%20id%0A%20%20%20%20%20%20title%0A%20%20%20%20%20%20slug%0A%20%20%20%20%7D%0A%20%20%20%20total%0A%20%20%7D%0A%7D">Full screen</a>
-<iframe src="https://cosmic-graphql-playground.netlify.app/?endpoint=https%3A%2F%2Fgraphql.cosmicjs.com%2Fv3&query=%20query%20%28%24bucket_slug%3A%20String%21%2C%20%24read_key%3A%20String%2C%20%24query%3A%20JSON%29%20%7B%0A%20%20getObjects%28%0A%20%20%20%20bucket_slug%3A%20%24bucket_slug%0A%20%20%20%20read_key%3A%20%24read_key%0A%20%20%20%20input%3A%20%7B%0A%20%20%20%20%20%20%20query%3A%20%24query%0A%20%20%20%20%20%20%20props%3A%20%22slug%2Ctitle%2Cmetadata.hero.url%22%0A%20%20%20%20%7D%0A%20%20%29%20%7B%0A%20%20%20%20%20objects%20%7B%0A%20%20%20%20%20%20id%0A%20%20%20%20%20%20title%0A%20%20%20%20%20%20slug%0A%20%20%20%20%7D%0A%20%20%20%20total%0A%20%20%7D%0A%7D" frameBorder="0" style={{ width: '100%', height: '470px'}}></iframe>
-</div>
-
-<div label="CLI">
-```bash
-cosmic get-objects
-```
-**Example Request**
-```bash
-cosmic get-objects --limit 10 --query '{"type":"posts"}' --props title,content,metadata.parent.title,metadata.parent.metadata.category.metadata.description
-```
-
-</div>
-</Tabs>
+<Callout emoji="💡">
+  **Queries 101**
+  <br />
+  Learn more about how to create powerful Object queries in the [Queries and
+  Logic](/api-reference/queries) section of the docs.
+</Callout>
 
 ## Get Object
 
-Returns a single Object by `id` from your Bucket.
+Returns a single Object in your Bucket.
+
+**Definition**
+
+```bash
+GET /v2/buckets/${YOUR_BUCKET_SLUG}/objects/:id
+```
+
+**Parameters**
 
 | Parameter       | Required |  Type  | Default   | Description                                                                                                                                                                                                             |
 | :-------------- | :------: | :----: | :-------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | read_key        | required | String |           | Required to read data from your Bucket                                                                                                                                                                                  |
+| id              | required | String |           | Object id                                                                                                                                                                                                               |
 | props           |          | String |           | Declare which properties to return in comma-separated string. Remove to see full Object and get a list of all available properties. Can include nested metadata. Example: `id,title,metadata.author.metadata.image.url` |
 | status          |          |  Enum  | published | Set to `any` for latest draft or published Object                                                                                                                                                                       |
 | pretty          |          |  Enum  | false     | Set to `true` to make the response more reader-friendly                                                                                                                                                                 |
@@ -313,10 +357,70 @@ Returns a single Object by `id` from your Bucket.
 **Methods**
 
 <Tabs>
-  <div label="REST">
-```bash
-GET $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/objects/${object_id}?read_key=${YOUR_BUCKET_READ_KEY}
+
+<div label="Node.js">
+```javascript
+bucket.getObject()
 ```
+**Example Request**
+
+```javascript
+const Cosmic = require('cosmicjs')() // empty init
+const bucket = Cosmic.bucket({
+  slug: 'YOUR_BUCKET_SLUG',
+  read_key: 'YOUR_BUCKET_READ_KEY'
+})
+const data = await bucket.getObject({
+  id: '5e4d7eb92850c717ea93dba1'
+})
+```
+
+</div>
+<div label="cURL">
+```bash
+curl https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/objects/:id \
+	-d read_key=${YOUR_BUCKET_READ_KEY} \
+	-G
+```
+</div>
+
+<div label="GraphQL">
+```javascript
+getObject(bucket_slug, read_key, object_id)
+```
+**Variables**
+
+Add this with your variable values to "Query Variables".
+
+```
+{
+  "bucket_slug": "YOUR_BUCKET_SLUG",
+  "read_key": "YOUR_BUCKET_READ_KEY",
+  "object_id": "{{object_id}}"
+}
+```
+
+  <a href="https://cosmic-graphql-playground.netlify.app/?endpoint=https%3A%2F%2Fgraphql.cosmicjs.com%2Fv3&query=%20query%20%28%24bucket_slug%3A%20String%21%2C%20%24read_key%3A%20String%2C%20%24object_id%3A%20ID%21%29%20%7B%0A%20%20getObject%28%0A%20%20%20%20bucket_slug%3A%20%24bucket_slug%0A%20%20%20%20read_key%3A%20%24read_key%0A%20%20%20%20object_id%3A%20%24object_id%0A%20%20%29%20%7B%0A%20%20%20%20%20%20title%0A%20%20%7D%0A%7D">
+    Full screen
+  </a>
+  <iframe
+    src="https://cosmic-graphql-playground.netlify.app/?endpoint=https%3A%2F%2Fgraphql.cosmicjs.com%2Fv3&query=%20query%20%28%24bucket_slug%3A%20String%21%2C%20%24read_key%3A%20String%2C%20%24object_id%3A%20ID%21%29%20%7B%0A%20%20getObject%28%0A%20%20%20%20bucket_slug%3A%20%24bucket_slug%0A%20%20%20%20read_key%3A%20%24read_key%0A%20%20%20%20object_id%3A%20%24object_id%0A%20%20%29%20%7B%0A%20%20%20%20%20%20title%0A%20%20%7D%0A%7D"
+    frameBorder="0"
+    style={{ width: "100%", height: "470px" }}
+  ></iframe>
+</div>
+
+<div label="CLI">
+```bash
+cosmic get-object
+```
+**Example Request**
+```bash
+cosmic get-object --id 5ff75368c2dfa81a91695cec
+```
+
+</div>
+</Tabs>
 
 **Example Full Response**
 
@@ -386,64 +490,6 @@ GET $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/objects/${object_id}?read_key=${YOUR_B
 }
 ```
 
-</div>
-
-<div label="Node.js">
-```javascript
-bucket.getObject()
-```
-**Example Request**
-```javascript
-const Cosmic = require('cosmicjs');
-const api = Cosmic();
-const bucket = api.bucket({
-  slug: 'your-bucket-slug',
-  read_key: 'your-read-key-found-in-bucket-settings'
-});
-bucket.getObject({
-  id: '5e4d7eb92850c717ea93dba1'
-});
-```
-
-</div>
-
-<div label="GraphQL">
-```javascript
-getObject(bucket_slug, read_key, input)
-```
-**Variables**
-
-Add this with your variable values to "Query Variables".
-
-```
-{
-  bucket_slug: "YOUR_BUCKET_SLUG",
-  read_key: "YOUR_BUCKET_READ_KEY"
-}
-```
-
-  <a href="https://cosmic-graphql-playground.netlify.app/?endpoint=https%3A%2F%2Fgraphql.cosmicjs.com%2Fv3&query=%20query%20%28%24bucket_slug%3A%20String%21%2C%20%24read_key%3A%20String%29%20%7B%0A%20%20getObject%28%0A%20%20%20%20bucket_slug%3A%20%24bucket_slug%0A%20%20%20%20read_key%3A%20%24read_key%0A%20%20%20%20object_id%3A%20%2260105b2ed026d40008d745e5%22%0A%20%20%29%20%7B%0A%20%20%20%20%20%20title%0A%20%20%7D%0A%7D">
-    Full screen
-  </a>
-  <iframe
-    src="https://cosmic-graphql-playground.netlify.app/?endpoint=https%3A%2F%2Fgraphql.cosmicjs.com%2Fv3&query=%20query%20%28%24bucket_slug%3A%20String%21%2C%20%24read_key%3A%20String%29%20%7B%0A%20%20getObject%28%0A%20%20%20%20bucket_slug%3A%20%24bucket_slug%0A%20%20%20%20read_key%3A%20%24read_key%0A%20%20%20%20object_id%3A%20%2260105b2ed026d40008d745e5%22%0A%20%20%29%20%7B%0A%20%20%20%20%20%20title%0A%20%20%7D%0A%7D"
-    frameBorder="0"
-    style={{ width: "100%", height: "470px" }}
-  ></iframe>
-</div>
-
-<div label="CLI">
-```bash
-cosmic get-object
-```
-**Example Request**
-```bash
-cosmic get-object --id 5ff75368c2dfa81a91695cec
-```
-
-</div>
-</Tabs>
-
 ### Using Props
 
 <Callout emoji="💡">
@@ -454,22 +500,84 @@ cosmic get-object --id 5ff75368c2dfa81a91695cec
   infinite recursion.
 </Callout>
 
-**Example Request with Props**
+**Methods**
 
 <Tabs>
-<div label="REST">
+<div label="Node.js">
 ```javascript
-const props = `
-  title,
-  metadata.description,
-  metadata.parent.title,
-  metadata.parent.metadata.category.title
-`;
+bucket.getObject()
+```
+**Example Request**
+
+```javascript
+const Cosmic = require('cosmicjs')() // empty init
+const bucket = Cosmic.bucket({
+  slug: 'YOUR_BUCKET_SLUG',
+  read_key: 'YOUR_BUCKET_READ_KEY'
+})
+const props = [
+  'title',
+  'content',
+  'metadata.parent.title',
+  'metadata.parent.metadata.category.title'
+]
+const data = await bucket.getObject({
+  id: '5e4d7eb92850c717ea93dba1',
+  props: props.toString()
+})
 ```
 
+</div>
+<div label="cURL">
+
 ```bash
-GET $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/objects/${object_id}?read_key=${YOUR_BUCKET_READ_KEY}&props=${props}
+curl https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/objects/:id \
+	-d read_key=${YOUR_BUCKET_READ_KEY} \
+	-d props="title,metadata.description,metadata.parent.title,metadata.parent.metadata.category.title" \
+	-G
 ```
+
+</div>
+
+<div label="GraphQL">
+**Note:**  Using props with the GraphQL API may optimize server response time.
+
+```javascript
+getObject(bucket_slug, read_key, input)
+```
+
+**Variables**
+
+Add this with your variable values to "Query Variables".
+
+```
+{
+  "bucket_slug": "YOUR_BUCKET_SLUG",
+  "read_key": "YOUR_BUCKET_READ_KEY",
+  "object_id": "{{object_id}}"
+}
+```
+
+  <a href="https://cosmic-graphql-playground.netlify.app/?endpoint=https%3A%2F%2Fgraphql.cosmicjs.com%2Fv3&query=%20query%20%28%24bucket_slug%3A%20String%21%2C%20%24read_key%3A%20String%2C%20%24object_id%3A%20ID%21%29%20%7B%0A%20%20getObject%28%0A%20%20%20%20bucket_slug%3A%20%24bucket_slug%0A%20%20%20%20read_key%3A%20%24read_key%0A%20%20%20%20object_id%3A%20%24object_id%0A%20%20%20%20input%3A%20%7B%0A%20%20%20%20%20%20props%3A%20%22title%22%0A%20%20%20%20%7D%0A%20%20%29%20%7B%0A%20%20%20%20%20%20title%0A%20%20%7D%0A%7D">
+    Full screen
+  </a>
+  <iframe
+    src="https://cosmic-graphql-playground.netlify.app/?endpoint=https%3A%2F%2Fgraphql.cosmicjs.com%2Fv3&query=%20query%20%28%24bucket_slug%3A%20String%21%2C%20%24read_key%3A%20String%2C%20%24object_id%3A%20ID%21%29%20%7B%0A%20%20getObject%28%0A%20%20%20%20bucket_slug%3A%20%24bucket_slug%0A%20%20%20%20read_key%3A%20%24read_key%0A%20%20%20%20object_id%3A%20%24object_id%0A%20%20%20%20input%3A%20%7B%0A%20%20%20%20%20%20props%3A%20%22title%22%0A%20%20%20%20%7D%0A%20%20%29%20%7B%0A%20%20%20%20%20%20title%0A%20%20%7D%0A%7D"
+    frameBorder="0"
+    style={{ width: "100%", height: "470px" }}
+  ></iframe>
+</div>
+<div label="CLI">
+```bash
+cosmic get-object
+```
+**Example Request**
+```bash
+cosmic get-object --id 5ff75368c2dfa81a91695cec --props "title,content,metadata.parent.title,metadata.parent.metadata.category.metadata.description"
+```
+
+</div>
+</Tabs>
 
 **Example Response with Props**
 
@@ -492,39 +600,64 @@ GET $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/objects/${object_id}?read_key=${YOUR_B
 }
 ```
 
-</div>
+### Get Object by Slug
+
+<Callout emoji="✅">
+  **Note**
+  <br />
+  This method uses the Get Objects endpoint using
+  [queries](/api-reference/queries) and returns an array. This is because, with
+  localization, you can have multiple Objects that use the same slug, but have
+  different locales.
+</Callout>
+
+**Example Request**
+
+<Tabs>
 
 <div label="Node.js">
 ```javascript
-bucket.getObject()
+bucket.getObjects()
 ```
 **Example Request**
+
 ```javascript
-const Cosmic = require('cosmicjs');
-const api = Cosmic();
-const bucket = api.bucket({
-  slug: 'your-bucket-slug',
-  read_key: 'your-read-key-found-in-bucket-settings'
+const Cosmic = require('cosmicjs')() // empty init;
+const bucket = Cosmic.bucket({
+  slug: 'YOUR_BUCKET_SLUG',
+  read_key: 'YOUR_BUCKET_READ_KEY'
 })
-const props = `
-  title,
-  metadata.description,
-  metadata.parent.title,
-  metadata.parent.metadata.category.title
-`;
-bucket.getObject({
-  id: '5e4d7eb92850c717ea93dba1',
-  props
+const props = [
+  'title',
+  'content',
+  'metadata.parent.title',
+  'metadata.parent.metadata.category.title'
+]
+const data = await bucket.getObjects({
+  query: {
+    slug: 'object-slug'
+  },
+  props: props.toString()
 })
 ```
 
+</div>
+
+<div label="cURL">
+```bash
+curl https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/objects \
+	-d read_key=${YOUR_BUCKET_READ_KEY} \
+	--data-urlencode query='{"slug":"object-slug"}' \
+	-d props="slug,title,metadata.description,metadata.parent.title,metadata.parent.metadata.category.title" \
+	-G
+```
 </div>
 
 <div label="GraphQL">
 **Note:**  Using props with the GraphQL API may optimize server response time.
 
 ```javascript
-getObject(bucket_slug, read_key, input)
+getObjects(bucket_slug, read_key, input)
 ```
 
 **Variables**
@@ -533,57 +666,32 @@ Add this with your variable values to "Query Variables".
 
 ```
 {
-  bucket_slug: "YOUR_BUCKET_SLUG",
-  read_key: "YOUR_BUCKET_READ_KEY",
-  object_id: "{{object_id}}",
-  input: {
-    props: "slug,title,metadata"
-  }
+  "bucket_slug": "YOUR_BUCKET_SLUG",
+  "read_key": "YOUR_BUCKET_READ_KEY"
 }
 ```
 
-  <a href="https://cosmic-graphql-playground.netlify.app/?endpoint=https%3A%2F%2Fgraphql.cosmicjs.com%2Fv3&query=%20query%20%28%24bucket_slug%3A%20String%21%2C%20%24read_key%3A%20String%29%20%7B%0A%20%20getObject%28%0A%20%20%20%20bucket_slug%3A%20%24bucket_slug%0A%20%20%20%20read_key%3A%20%24read_key%0A%20%20%20%20object_id%3A%20%2260105b2ed026d40008d745e5%22%0A%20%20%20%20input%3A%20%7B%0A%20%20%20%20%20%20%20%20props%3A%20%22title%22%0A%20%20%20%20%7D%0A%20%20%29%20%7B%0A%20%20%20%20%20%20title%0A%20%20%7D%0A%7D">
+  <a href="https://cosmic-graphql-playground.netlify.app/?endpoint=https%3A%2F%2Fgraphql.cosmicjs.com%2Fv3&query=%20query%20%28%24bucket_slug%3A%20String%21%2C%20%24read_key%3A%20String%29%20%7B%0A%20%20getObjects%28%0A%20%20%20%20bucket_slug%3A%20%24bucket_slug%0A%20%20%20%20read_key%3A%20%24read_key%0A%20%20%20%20input%3A%20%7B%0A%20%20%20%20%20%20query%3A%20%7B%0A%20%20%20%20%20%20%20%20slug%3A%20%22object-slug%22%0A%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20props%3A%20%22title%22%0A%20%20%20%20%7D%0A%20%20%29%20%7B%0A%20%20%20%20%20%20objects%20%7B%0A%20%20%20%20%20%20%20%20title%0A%20%20%20%20%20%20%7D%0A%20%20%7D%0A%7D">
     Full screen
   </a>
   <iframe
-    src="https://cosmic-graphql-playground.netlify.app/?endpoint=https%3A%2F%2Fgraphql.cosmicjs.com%2Fv3&query=%20query%20%28%24bucket_slug%3A%20String%21%2C%20%24read_key%3A%20String%29%20%7B%0A%20%20getObject%28%0A%20%20%20%20bucket_slug%3A%20%24bucket_slug%0A%20%20%20%20read_key%3A%20%24read_key%0A%20%20%20%20object_id%3A%20%2260105b2ed026d40008d745e5%22%0A%20%20%20%20input%3A%20%7B%0A%20%20%20%20%20%20%20%20props%3A%20%22title%22%0A%20%20%20%20%7D%0A%20%20%29%20%7B%0A%20%20%20%20%20%20title%0A%20%20%7D%0A%7D"
+    src="https://cosmic-graphql-playground.netlify.app/?endpoint=https%3A%2F%2Fgraphql.cosmicjs.com%2Fv3&query=%20query%20%28%24bucket_slug%3A%20String%21%2C%20%24read_key%3A%20String%29%20%7B%0A%20%20getObjects%28%0A%20%20%20%20bucket_slug%3A%20%24bucket_slug%0A%20%20%20%20read_key%3A%20%24read_key%0A%20%20%20%20input%3A%20%7B%0A%20%20%20%20%20%20query%3A%20%7B%0A%20%20%20%20%20%20%20%20slug%3A%20%22object-slug%22%0A%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20props%3A%20%22title%22%0A%20%20%20%20%7D%0A%20%20%29%20%7B%0A%20%20%20%20%20%20objects%20%7B%0A%20%20%20%20%20%20%20%20title%0A%20%20%20%20%20%20%7D%0A%20%20%7D%0A%7D"
     frameBorder="0"
     style={{ width: "100%", height: "470px" }}
   ></iframe>
 </div>
 <div label="CLI">
 ```bash
-cosmic get-object
+cosmic get-objects
 ```
 **Example Request**
 ```bash
-cosmic get-object --id 5ff75368c2dfa81a91695cec --props "title,content,metadata.parent.title,metadata.parent.metadata.category.metadata.description"
+cosmic get-objects --query {"slug":"object-slug"} --props "title,content,metadata.parent.title,metadata.parent.metadata.category.metadata.description"
 ```
 
 </div>
+
 </Tabs>
-
-### Get Object by Slug
-
-Note: this method uses the Get Objects endpoint using [queries](/api-reference/queries) and returns an array. This is because, with localization, you can have multiple Objects that use the same slug, but have different locales.
-
-**Example Request**
-
-<Tabs>
-<div label="REST">
-```javascript
-const props = `
-  slug,
-  title,
-  metadata.description,
-  metadata.parent.title,
-  metadata.parent.metadata.category.title
-`;
-```
-
-```bash
-GET $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/objects/?read_key=${YOUR_BUCKET_READ_KEY}&query={"slug":"object-slug"}&props=${props}
-```
 
 **Example Response with Props**
 
@@ -609,150 +717,46 @@ GET $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/objects/?read_key=${YOUR_BUCKET_READ_K
 }
 ```
 
-</div>
-
-<div label="Node.js">
-```javascript
-bucket.getObjects()
-```
-**Example Request**
-```javascript
-const Cosmic = require('cosmicjs');
-const api = Cosmic();
-const bucket = api.bucket({
-  slug: 'your-bucket-slug',
-  read_key: 'your-read-key-found-in-bucket-settings'
-})
-const props = `
-  title,
-  metadata.description,
-  metadata.parent.title,
-  metadata.parent.metadata.category.title
-`;
-bucket.getObjects({
-  query: {
-    slug: 'object-slug'
-  },
-  props
-})
-```
-
-</div>
-
-<div label="GraphQL">
-**Note:**  Using props with the GraphQL API may optimize server response time.
-
-```javascript
-getObjects(bucket_slug, read_key, input)
-```
-
-**Variables**
-
-Add this with your variable values to "Query Variables".
-
-```
-{
-  "bucket_slug": "YOUR_BUCKET_SLUG",
-  "read_key": "YOUR_BUCKET_READ_KEY"
-}
-```
-
-  <a href="https://cosmic-graphql-playground.netlify.app/?endpoint=https%3A%2F%2Fgraphql.cosmicjs.com%2Fv3&query=%20query%20%28%24bucket_slug%3A%20String%21%2C%20%24read_key%3A%20String%29%20%7B%0A%20%20getObjects%28%0A%20%20%20%20bucket_slug%3A%20%24bucket_slug%0A%20%20%20%20read_key%3A%20%24read_key%0A%20%20%20%20input%3A%20%7B%0A%20%20%20%20%20%20query%3A%20%7B%0A%20%20%20%20%20%20%20%20slug%3A%20%22test-schedule%22%0A%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20props%3A%20%22title%22%0A%20%20%20%20%7D%0A%20%20%29%20%7B%0A%20%20%20%20%20%20objects%20%7B%0A%20%20%20%20%20%20%20%20title%0A%20%20%20%20%20%20%7D%0A%20%20%7D%0A%7D">
-    Full screen
-  </a>
-  <iframe
-    src="https://cosmic-graphql-playground.netlify.app/?endpoint=https%3A%2F%2Fgraphql.cosmicjs.com%2Fv3&query=%20query%20%28%24bucket_slug%3A%20String%21%2C%20%24read_key%3A%20String%29%20%7B%0A%20%20getObjects%28%0A%20%20%20%20bucket_slug%3A%20%24bucket_slug%0A%20%20%20%20read_key%3A%20%24read_key%0A%20%20%20%20input%3A%20%7B%0A%20%20%20%20%20%20query%3A%20%7B%0A%20%20%20%20%20%20%20%20slug%3A%20%22test-schedule%22%0A%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20props%3A%20%22title%22%0A%20%20%20%20%7D%0A%20%20%29%20%7B%0A%20%20%20%20%20%20objects%20%7B%0A%20%20%20%20%20%20%20%20title%0A%20%20%20%20%20%20%7D%0A%20%20%7D%0A%7D"
-    frameBorder="0"
-    style={{ width: "100%", height: "470px" }}
-  ></iframe>
-</div>
-<div label="CLI">
-```bash
-cosmic get-objects
-```
-**Example Request**
-```bash
-cosmic get-objects --query {"slug":"object-slug"} --props "title,content,metadata.parent.title,metadata.parent.metadata.category.metadata.description"
-```
-
-</div>
-
-</Tabs>
-
 ## Add Object
 
-Add a new Object to your Bucket.
+Creates a new Object in your Bucket.
+
+**Definition**
+
+```bash
+POST /v2/buckets/${YOUR_BUCKET_SLUG}/objects
+```
 
 <Callout emoji="⚠">
   **Required**
   <br />
-  `write_key` must be passed as `Authorization Bearer` in the header of the
-  request.
+  Your Bucket `write_key` must be passed as `Authorization Bearer` in the header
+  of the request. This can be found in
+  <i>Your Bucket > Settings > API Access</i> in your [Admin Dashboard](https://app.cosmicjs.com/login).
 </Callout>
 
-| Parameter              | Required |       Type       | Description                                                                                       |
-| :--------------------- | :------: | :--------------: | :------------------------------------------------------------------------------------------------ |
-| type                   | required |      String      | Add Object to Object Type                                                                         |
-| title                  | required |      String      | Your Object title                                                                                 |
-| slug                   |          |      String      | Unique identifier for your Object                                                                 |
-| content                |          |      String      | Add Content to your Object                                                                        |
-| status                 |          |       Enum       | draft, published, defaults to published                                                           |
-| metafields             |          | Array of Objects | Add Metafields to your Object. See [Metafields Model](/api-reference/getting-started/metafields). |
-| created_by             |          |      String      | Author User Id                                                                                    |
-| publish_at             |          |      Number      | UNIX millisecond timestamp. Publish automatically at a later time.                                |
-| options.slug_field     |          |     Boolean      | Set to false to hide the slug field                                                               |
-| options.content_editor |          |     Boolean      | Set to false to hide the content editor                                                           |
-| locale                 |          |      String      | Add localization to the Object                                                                    |
-| thumbnail              |          |      String      | Media `name`. Media must be available in Bucket. See [Media](/api-reference/media).               |
-| trigger_webhook        |          |     Boolean      | Triggers corresponding Object action Webhook ([See Webhooks](/dashboard/webhooks)).               |
-| pretty                 |          |       Enum       | true, Makes the response more reader-friendly                                                     |
+**Parameters**
+
+| Parameter              | Required |        Type         | Description                                                                                          |
+| :--------------------- | :------: | :-----------------: | :--------------------------------------------------------------------------------------------------- |
+| type                   | required |       String        | Add Object to Object Type                                                                            |
+| title                  | required |       String        | Your Object title                                                                                    |
+| slug                   |          |       String        | Unique identifier for your Object                                                                    |
+| content                |          |       String        | Add Content to your Object                                                                           |
+| status                 |          |        Enum         | draft, published, defaults to published                                                              |
+| metafields             |          | Array of Metafields | Add Metafields to your Object. See [Metafields Model](/api-reference/metafields).                    |
+| created_by             |          |       String        | Author User Id                                                                                       |
+| publish_at             |          |       Number        | UNIX millisecond timestamp. Publish automatically at a later time.                                   |
+| options.slug_field     |          |       Boolean       | Set to false to hide the slug field                                                                  |
+| options.content_editor |          |       Boolean       | Set to false to hide the content editor                                                              |
+| locale                 |          |        Enum         | Adds localization to the Object. See [Localization](/api-reference/localization) for locale options. |
+| thumbnail              |          |       String        | Media `name`. Media must be available in Bucket. See [Media](/api-reference/media).                  |
+| trigger_webhook        |          |       Boolean       | Triggers corresponding Object action Webhook ([See Webhooks](/dashboard/webhooks)).                  |
+| pretty                 |          |        Enum         | true, Makes the response more reader-friendly                                                        |
 
 **Methods**
 
 <Tabs>
-<div label="REST">
-```bash
-POST $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/objects
-```
-**Header**
-
-```json
-{
-  "Authorization": "Bearer YOUR_BUCKET_WRITE_KEY"
-}
-```
-
-**Example Body (JSON)**
-
-```json
-{
-  "title": "Title of the Post",
-  "type": "posts"
-}
-```
-
-**Example Response**
-
-```json
-{
-  "object": {
-    "id": "5ff75368c2dfa81a91695cec",
-    "slug": "title-of-the-post",
-    "title": "Title of the Post",
-    "content": "",
-    "metafields": [],
-    "bucket": "5f7357124b331d76c08de989",
-    "created_at": "2021-01-07T18:31:04.005Z",
-    "modified_at": "2021-01-07T18:31:04.005Z",
-    "status": "published",
-    "published_at": "2021-01-07T18:31:04.005Z",
-    "type": "posts"
-  }
-}
-```
-
-</div>
-
 <div label="Node.js">
 ```javascript
 bucket.addObject()
@@ -761,11 +765,10 @@ bucket.addObject()
 **Example Request**
 
 ```javascript
-const Cosmic = require('cosmicjs')
-const api = Cosmic()
-const bucket = api.bucket({
-  slug: 'bucket-slug',
-  write_key: 'your-write-key-found-in-bucket-settings'
+const Cosmic = require('cosmicjs')() // empty init
+const bucket = Cosmic.bucket({
+  slug: 'YOUR_BUCKET_SLUG',
+  write_key: 'YOUR_BUCKET_WRITE_KEY'
 })
 const params = {
   title: 'Cosmic Example',
@@ -789,16 +792,17 @@ const params = {
     slug_field: false
   }
 }
-bucket
-  .addObject(params)
-  .then(data => {
-    console.log(data)
-  })
-  .catch(err => {
-    console.log(err)
-  })
+const data = await bucket.addObject(params)
 ```
 
+</div>
+<div label="cURL">
+```bash
+curl https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/objects \
+	-d '{"title":"Title of the Post","type":"posts"}' \
+	-H 'Content-Type: application/json' \
+	-H "Authorization: Bearer <YOUR_BUCKET_WRITE_KEY>"
+```
 </div>
 
 <div label="GraphQL">
@@ -843,57 +847,6 @@ cosmic add-object --type planets --title Venus --metafields '[{"title": "Radius"
 </div>
 </Tabs>
 
-## Edit Object
-
-Edit an existing Object by `id` in your Bucket.
-
-<Callout emoji="⚠">
-  **Required**
-  <br />
-  `write_key` must be passed as `Authorization Bearer` in the header of the
-  request.
-</Callout>
-
-| Parameter              |       Type       | Description                                                                                       |
-| :--------------------- | :--------------: | :------------------------------------------------------------------------------------------------ |
-| title                  |      String      | Your Object title                                                                                 |
-| slug                   |      String      | Unique identifier for your Object                                                                 |
-| content                |      String      | Add Content to your Object                                                                        |
-| status                 |       Enum       | draft, published, defaults to published                                                           |
-| metafields             | Array of Objects | Add Metafields to your Object. See [Metafields Model](/api-reference/getting-started/metafields). |
-| publish_at             |      Number      | UNIX millisecond timestamp. Publish automatically at a later time.                                |
-| options.slug_field     |     Boolean      | Set to false to hide the slug field                                                               |
-| options.content_editor |     Boolean      | Set to false to hide the content editor                                                           |
-| locale                 |      String      | Add localization to the Object                                                                    |
-| thumbnail              |      String      | Media `name`. Media must be available in Bucket. See [Media](/api-reference/media).               |
-| trigger_webhook        |     Boolean      | Triggers corresponding Object action Webhook ([See Webhooks](/dashboard/webhooks)).               |
-| pretty                 |       Enum       | true, Makes the response more reader-friendly                                                     |
-
-_**Note:** At least one of the Parameters is required to process the request._
-
-**Methods**
-
-<Tabs>
-<div label="REST">
-```bash
-PATCH $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/objects/${object_id}
-```
-**Header**
-
-```json
-{
-  "Authorization": "Bearer YOUR_BUCKET_WRITE_KEY"
-}
-```
-
-**Example Body (JSON)**
-
-```json
-{
-  "title": "This is the updated Title"
-}
-```
-
 **Example Response**
 
 ```json
@@ -901,12 +854,12 @@ PATCH $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/objects/${object_id}
   "object": {
     "id": "5ff75368c2dfa81a91695cec",
     "slug": "title-of-the-post",
-    "title": "This is the updated Title",
+    "title": "Title of the Post",
     "content": "",
     "metafields": [],
     "bucket": "5f7357124b331d76c08de989",
     "created_at": "2021-01-07T18:31:04.005Z",
-    "modified_at": "2021-01-07T18:38:12.124Z",
+    "modified_at": "2021-01-07T18:31:04.005Z",
     "status": "published",
     "published_at": "2021-01-07T18:31:04.005Z",
     "type": "posts"
@@ -914,9 +867,47 @@ PATCH $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/objects/${object_id}
 }
 ```
 
-</div>
+## Edit Object
 
-<div label="Node.js">
+Edits an Object in your Bucket.
+
+**Definition**
+
+```bash
+PATCH /v2/buckets/${YOUR_BUCKET_SLUG}/objects/:id
+```
+
+<Callout emoji="⚠">
+  **Required**
+  <br />
+  Your Bucket `write_key` must be passed as `Authorization Bearer` in the header
+  of the request. This can be found in
+  <i>Your Bucket > Settings > API Access</i> in your [Admin Dashboard](https://app.cosmicjs.com/login).
+</Callout>
+
+**Parameters**
+
+| Parameter              |        Type         | Description                                                                         |
+| :--------------------- | :-----------------: | :---------------------------------------------------------------------------------- |
+| title                  |       String        | Your Object title                                                                   |
+| slug                   |       String        | Unique identifier for your Object                                                   |
+| content                |       String        | Add Content to your Object                                                          |
+| status                 |        Enum         | draft, published, defaults to published                                             |
+| metafields             | Array of Metafields | Add Metafields to your Object. See [Metafields Model](/api-reference/metafields).   |
+| publish_at             |       Number        | UNIX millisecond timestamp. Publish automatically at a later time.                  |
+| options.slug_field     |       Boolean       | Set to false to hide the slug field                                                 |
+| options.content_editor |       Boolean       | Set to false to hide the content editor                                             |
+| locale                 |       String        | Add localization to the Object                                                      |
+| thumbnail              |       String        | Media `name`. Media must be available in Bucket. See [Media](/api-reference/media). |
+| trigger_webhook        |       Boolean       | Triggers corresponding Object action Webhook ([See Webhooks](/dashboard/webhooks)). |
+| pretty                 |        Enum         | true, Makes the response more reader-friendly                                       |
+
+_**Note:** At least one of the Parameters is required to process the request._
+
+**Methods**
+
+<Tabs>
+	<div label="Node.js">
 ```javascript
 bucket.editObject()
 ```
@@ -924,25 +915,26 @@ bucket.editObject()
 **Example Request**
 
 ```javascript
-const Cosmic = require('cosmicjs')
-const api = Cosmic()
-const bucket = api.bucket({
-  slug: 'bucket-slug',
-  write_key: 'your-write-key-found-in-bucket-settings'
+const Cosmic = require('cosmicjs')() // empty init
+const bucket = Cosmic.bucket({
+  slug: 'YOUR_BUCKET_SLUG',
+  write_key: 'YOUR_BUCKET_WRITE_KEY'
 })
-bucket
-  .editObject({
-    id: '5ff75368c2dfa81a91695cec',
-    title: 'New Title Edit'
-  })
-  .then(data => {
-    console.log(data)
-  })
-  .catch(err => {
-    console.log(err)
-  })
+const data = await bucket.editObject({
+  id: '5ff75368c2dfa81a91695cec',
+  title: 'New Title Edit'
+})
 ```
 
+</div>
+<div label="cURL">
+```bash
+curl https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/objects/:id \
+	-d '{"title":"New Title Edit"}' \
+	-H 'Content-Type: application/json' \
+	-H "Authorization: Bearer <YOUR_BUCKET_WRITE_KEY>" \
+	-X PATCH
+```
 </div>
 
 <div label="GraphQL">
@@ -982,50 +974,58 @@ cosmic edit-object
 ```
 **Example Request**
 ```bash
-cosmic edit-object --id 5ff75368c2dfa81a91695cec --title 'This is the updated Title'
+cosmic edit-object --id 5ff75368c2dfa81a91695cec --title 'New Title Edit'
 ```
 </div>
 </Tabs>
 
+**Example Response**
+
+```json
+{
+  "object": {
+    "id": "5ff75368c2dfa81a91695cec",
+    "slug": "title-of-the-post",
+    "title": "New Title Edit",
+    "content": "",
+    "metafields": [],
+    "bucket": "5f7357124b331d76c08de989",
+    "created_at": "2021-01-07T18:31:04.005Z",
+    "modified_at": "2021-01-07T18:38:12.124Z",
+    "status": "published",
+    "published_at": "2021-01-07T18:31:04.005Z",
+    "type": "posts"
+  }
+}
+```
+
 ## Delete Object
 
-Delete an existing Object by `id` from your Bucket.
+Deletes an Object in your Bucket. This cannot be undone.
+
+**Definition**
+
+```bash
+DELETE /v2/buckets/${YOUR_BUCKET_SLUG}/objects/:id
+```
 
 <Callout emoji="⚠">
   **Required**
   <br />
-  `write_key` must be passed as `Authorization Bearer` in the header of the
-  request.
+  Your Bucket `write_key` must be passed as `Authorization Bearer` in the header
+  of the request. This can be found in
+  <i>Your Bucket > Settings > API Access</i> in your [Admin Dashboard](https://app.cosmicjs.com/login).
 </Callout>
 
-| Query Parameter |  Type   | Description                                                                         |
+**Parameters**
+
+| Parameter       |  Type   | Description                                                                         |
 | :-------------- | :-----: | :---------------------------------------------------------------------------------- |
 | trigger_webhook | Boolean | Triggers corresponding Object action Webhook ([See Webhooks](/dashboard/webhooks)). |
 
 **Methods**
 
 <Tabs>
-<div label="REST">
-```bash
-DELETE $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/objects/${object_id}?trigger_webhook=true
-```
-**Header**
-
-```json
-{
-  "Authorization": "Bearer YOUR_BUCKET_WRITE_KEY"
-}
-```
-
-**Example Response**
-
-```json
-{
-  "message": "Object with id '${object_id}' deleted successfully from bucket."
-}
-```
-
-</div>
 
 <div label="Node.js">
 ```javascript
@@ -1035,24 +1035,24 @@ bucket.deleteObject()
 **Example Request**
 
 ```javascript
-const Cosmic = require('cosmicjs')
-const api = Cosmic()
-const bucket = api.bucket({
-  slug: 'bucket-slug',
-  write_key: 'your-write-key-found-in-bucket-settings'
+const Cosmic = require('cosmicjs')() // empty init
+const bucket = Cosmic.bucket({
+  slug: 'YOUR_BUCKET_SLUG',
+  write_key: 'YOUR_BUCKET_WRITE_KEY'
 })
-bucket
-  .deleteObject({
-    id: '5ff75368c2dfa81a91695cec'
-  })
-  .then(data => {
-    console.log(data)
-  })
-  .catch(err => {
-    console.log(err)
-  })
+const data = await bucket.deleteObject({
+  id: '5ff75368c2dfa81a91695cec'
+})
 ```
 
+</div>
+
+<div label="cURL">
+```bash
+curl https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/objects/:id \
+	-H "Authorization: Bearer <YOUR_BUCKET_WRITE_KEY>" \
+	-X DELETE
+```
 </div>
 
 <div label="GraphQL">
@@ -1096,59 +1096,59 @@ cosmic delete-object --id 5ff75368c2dfa81a91695cec
 </div>
 </Tabs>
 
-## Get Merge Request Objects
-
-Get Objects in included in a Merge Request. See [Objects](#get-objects) for available params.
-
-**Methods**
-
-<Tabs>
-<div label="REST">
-```javascript
-const query = {
-  slug: "new-post-in-merge-request",
-  locale: "en"
-};
-```
-**Endpoint**
-```bash
-GET $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/merge-requests/${merge_request_id}/objects?query=${query}&props=title,slug
-```
-
 **Example Response**
 
 ```json
 {
-  "objects": [
-    {
-      "slug": "new-post-in-merge-request",
-      "title": "new Post in Merge Request"
-    }
-  ]
+  "message": "Object with id ':id' deleted successfully from bucket."
 }
 ```
 
-</div>
+## Get Merge Request Objects
+
+Returns Objects included in a Merge Request. See [Objects](#get-objects) for available params.
+
+**Definition**
+
+```bash
+GET /v2/buckets/${YOUR_BUCKET_SLUG}/merge-requests/:id/objects
+```
+
+**Methods**
+
+<Tabs>
 <div label="Node.js">
 ```javascript
 bucket.getMergeRequestObjects()
 ```
 **Example Request**
+
 ```javascript
-const Cosmic = require('cosmicjs');
-const api = Cosmic();
-const bucket = api.bucket({
-  slug: "bucket-slug",
-  read_key: "your-read-key-found-in-bucket-settings"
-});
+const Cosmic = require('cosmicjs')() // empty init
+const bucket = Cosmic.bucket({
+  slug: 'YOUR_BUCKET_SLUG',
+  read_key: 'YOUR_BUCKET_READ_KEY'
+})
 const query = {
-  slug: "new-post-in-merge-request",
-  locale: "en"
-};
-bucket.getMergeRequestObjects({
-  id: "merge-request-id",
-  query
-});
+  slug: 'new-post-in-merge-request',
+  locale: 'en'
+}
+const data = await bucket.getMergeRequestObjects({
+  id: 'merge-request-id',
+  query,
+  props: 'slug,title'
+})
+```
+
+</div>
+<div label="cURL">
+```bash
+curl https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/merge-requests/:id/objects \
+	-d read_key=${YOUR_BUCKET_READ_KEY} \
+	--data-urlencode query='{"slug": "new-post-in-merge-request","locale":"en"}' \
+	-d props="slug,title" \
+	-d limit=1 \
+	-G
 ```
 </div>
 
@@ -1165,16 +1165,15 @@ Add this with your variable values to "Query Variables".
 {
   "bucket_slug": "YOUR_BUCKET_SLUG",
   "read_key": "YOUR_BUCKET_READ_KEY",
-  "merge_request_id": "merge-request-id",
+  "merge_request_id": "{{merge_request_id}}",
   "query": {
-    "slug": "new-post-in-merge-request",
-    "locale": "en"
+    "slug": "new-post-in-merge-request"
   }
 }
 ```
 
-<a href="https://cosmic-graphql-playground.netlify.app/?endpoint=https%3A%2F%2Fgraphql.cosmicjs.com%2Fv3&query=%20query%20%28%24bucket_slug%3A%20String%21%2C%20%24read_key%3A%20String%2C%20%24merge_request_id%3A%20ID%21%29%20%7B%0A%20%20getMergeRequestObjects%28%0A%20%20%20%20bucket_slug%3A%20%24bucket_slug%0A%20%20%20%20read_key%3A%20%24read_key%0A%20%20%20%20merge_request_id%3A%20%24merge_request_id%0A%20%20%29%20%7B%0A%20%20%20%20%20objects%20%7B%0A%20%20%20%20%20%20id%0A%20%20%20%20%20%20title%0A%20%20%20%20%20%20slug%0A%20%20%20%20%7D%0A%20%20%20%20total%0A%20%20%7D%0A%7D">Full screen</a>
-<iframe src="https://cosmic-graphql-playground.netlify.app/?endpoint=https%3A%2F%2Fgraphql.cosmicjs.com%2Fv3&query=%20query%20%28%24bucket_slug%3A%20String%21%2C%20%24read_key%3A%20String%2C%20%24merge_request_id%3A%20ID%21%29%20%7B%0A%20%20getMergeRequestObjects%28%0A%20%20%20%20bucket_slug%3A%20%24bucket_slug%0A%20%20%20%20read_key%3A%20%24read_key%0A%20%20%20%20merge_request_id%3A%20%24merge_request_id%0A%20%20%29%20%7B%0A%20%20%20%20%20objects%20%7B%0A%20%20%20%20%20%20id%0A%20%20%20%20%20%20title%0A%20%20%20%20%20%20slug%0A%20%20%20%20%7D%0A%20%20%20%20total%0A%20%20%7D%0A%7D" frameBorder="0" style={{ width: '100%', height: '470px'}}></iframe>
+<a href="https://cosmic-graphql-playground.netlify.app/?endpoint=https%3A%2F%2Fgraphql.cosmicjs.com%2Fv3&query=%20query%20%28%24bucket_slug%3A%20String%21%2C%20%24read_key%3A%20String%2C%20%24merge_request_id%3A%20ID%21%2C%20%24query%3A%20String%29%20%7B%0A%20%20getMergeRequestObjects%28%0A%20%20%20%20bucket_slug%3A%20%24bucket_slug%0A%20%20%20%20read_key%3A%20%24read_key%0A%20%20%20%20merge_request_id%3A%20%24merge_request_id%0A%20%20%20%20input%3A%20%7B%0A%20%20%20%20%20%20query%3A%20%24query%0A%20%20%20%20%7D%0A%20%20%29%20%7B%0A%20%20%20%20%20objects%20%7B%0A%20%20%20%20%20%20id%0A%20%20%20%20%20%20title%0A%20%20%20%20%20%20slug%0A%20%20%20%20%7D%0A%20%20%20%20total%0A%20%20%7D%0A%7D">Full screen</a>
+<iframe src="https://cosmic-graphql-playground.netlify.app/?endpoint=https%3A%2F%2Fgraphql.cosmicjs.com%2Fv3&query=%20query%20%28%24bucket_slug%3A%20String%21%2C%20%24read_key%3A%20String%2C%20%24merge_request_id%3A%20ID%21%2C%20%24query%3A%20String%29%20%7B%0A%20%20getMergeRequestObjects%28%0A%20%20%20%20bucket_slug%3A%20%24bucket_slug%0A%20%20%20%20read_key%3A%20%24read_key%0A%20%20%20%20merge_request_id%3A%20%24merge_request_id%0A%20%20%20%20input%3A%20%7B%0A%20%20%20%20%20%20query%3A%20%24query%0A%20%20%20%20%7D%0A%20%20%29%20%7B%0A%20%20%20%20%20objects%20%7B%0A%20%20%20%20%20%20id%0A%20%20%20%20%20%20title%0A%20%20%20%20%20%20slug%0A%20%20%20%20%7D%0A%20%20%20%20total%0A%20%20%7D%0A%7D" frameBorder="0" style={{ width: '100%', height: '470px'}}></iframe>
 </div>
 
 <div label="CLI">
@@ -1183,7 +1182,20 @@ cosmic get-merge-request-objects
 ```
 **Example Request**
 ```bash
-cosmic get-merge-request-objects --id merge-request-id --query '{"slug":"new-post-in-merge-request","locale":"en"}'
+cosmic get-merge-request-objects --id merge-request-id --query '{"slug":"new-post-in-merge-request","locale":"en"}' ---props "slug,title"
 ```
 </div>
 </Tabs>
+
+**Example Response**
+
+```json
+{
+  "objects": [
+    {
+      "slug": "new-post-in-merge-request",
+      "title": "New Post in Merge Request"
+    }
+  ]
+}
+```

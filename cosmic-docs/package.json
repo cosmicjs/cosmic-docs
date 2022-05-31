@@ -7,6 +7,7 @@
   "scripts": {
     "dev": "next",
     "build": "next build",
+    "postbuild": "next-sitemap",
     "start": "next start",
     "vercel-build": "yarn workspace nextra-theme-docs run build && yarn build"
   },
@@ -19,10 +20,12 @@
     "prismjs": "^1.22.0",
     "react": "17",
     "react-dom": "17",
-    "react-tabs": "^3.2.1"
+    "react-tabs": "^3.2.1",
+    "react-use-intercom": "^1.5.2"
   },
   "devDependencies": {
     "autoprefixer": "^10.2.5",
+    "next-sitemap": "^2.5.26",
     "postcss": "^8.2.8",
     "tailwindcss": "^2.0.4"
   }

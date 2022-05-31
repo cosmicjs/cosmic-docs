@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://docs.cosmicjs.com
+
+# Sitemaps
+Sitemap: https://docs.cosmicjs.com/sitemap.xml

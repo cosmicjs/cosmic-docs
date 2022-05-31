@@ -2,7 +2,18 @@
 
 Metafields are powerful components that can be added to Objects and Object Types. Metafields added to Object Types will be default for all new Objects in the type.
 
-## Model
+### Endpoints
+
+```bash
+GET /v2/buckets/${YOUR_BUCKET_SLUG}/objects/:id/metafields
+GET /v2/buckets/${YOUR_BUCKET_SLUG}/objects/:id/metafields/:key
+POST /v2/buckets/${YOUR_BUCKET_SLUG}/objects/:id/metafields
+PATCH /v2/buckets/${YOUR_BUCKET_SLUG}/objects/:id/metafields/:key
+DELETE /v2/buckets/${YOUR_BUCKET_SLUG}/objects/:id/metafields/:key
+
+```
+
+## Data Model
 
 | Parameter       |                         Required                         |       Type       | Description                                                                                                                                                                                      |
 | :-------------- | :------------------------------------------------------: | :--------------: | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -222,7 +233,7 @@ Metafields are powerful components that can be added to Objects and Object Types
 
 You can use optional validation parameters to make sure editors using the Web Dashboard enter the correct values.
 
-Reference the [Metafield model](/api-reference/getting-started/metafields) to learn more.
+Reference the [Metafield model](/api-reference/metafields) to learn more.
 
 | Parameter     | Required | Type   | Description                                          |
 | ------------- | -------- | ------ | ---------------------------------------------------- |
@@ -281,17 +292,288 @@ Reference the [Metafield model](/api-reference/getting-started/metafields) to le
 }
 ```
 
-## Connect Objects
+The following endpoints allow you to create, read, update, and delete Metafields in your Object. (Currently REST API only.)
 
-You can connect Objects to create "one to many" and "many to many" relationships between Objects using Single and Multiple Object Metafields.
+<Callout emoji="🔑">
+  **Get your keys**
+  <br />
+  Your `read` and `write` keys will be required to perform the following
+  requests. These can be found in <i>Your Bucket > Settings > API Access</i> in
+  your [Bucket Dashboard ](https://app.cosmicjs.com/login).
+</Callout>
+
+## Get Metafields
+
+Returns Metafields in an Object.
 
 **Definition**
 
 ```bash
-POST $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/objects
+GET /v2/buckets/${YOUR_BUCKET_SLUG}/objects/:id/metafields
 ```
 
+| Parameter | Required |  Type  | Description                                   |
+| :-------- | :------: | :----: | :-------------------------------------------- |
+| read_key  | required | String | Restrict read access to your Bucket           |
+| pretty    |          |  Enum  | true, Makes the response more reader-friendly |
+
+**cURL**
+
+```bash
+curl https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/objects/:id/metafields \
+	-d read_key=${YOUR_BUCKET_READ_KEY} \
+	-G
+```
+
+**Example Response**
+
+```json
+{
+  "metafields": [
+    {
+      "type": "number",
+      "title": "Phone Number",
+      "key": "phone_number",
+      "id": "Hvix3sGVi0",
+      "value": ""
+    },
+    {
+      "type": "radio-buttons",
+      "title": "This or That",
+      "key": "this_or_that",
+      "id": "QCEI7BnfuO",
+      "value": "",
+      "options": [
+        {
+          "value": "This"
+        },
+        {
+          "value": "That"
+        }
+      ]
+    }
+  ],
+  "total": 2
+}
+```
+
+## Get Metafield
+
+Returns a single Metafield from an Object.
+
+**Definition**
+
+```bash
+GET /v2/buckets/${YOUR_BUCKET_SLUG}/objects/:id/metafields/:key
+```
+
+**Parameters**
+
+| Parameter | Required |  Type  | Description                                   |
+| :-------- | :------: | :----: | :-------------------------------------------- |
+| read_key  | required | String | Restrict read access to your Bucket           |
+| pretty    |          |  Enum  | true, Makes the response more reader-friendly |
+
+**cURL**
+
+```bash
+curl https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/objects/:id/metafields/:key \
+	-d read_key=${YOUR_BUCKET_READ_KEY} \
+	-G
+```
+
+**Example Response**
+
+```json
+{
+  "metafield": {
+    "type": "radio-buttons",
+    "title": "This or That",
+    "key": "this_or_that",
+    "id": "QCEI7BnfuO",
+    "value": "",
+    "options": [
+      {
+        "value": "This"
+      },
+      {
+        "value": "That"
+      }
+    ]
+  }
+}
+```
+
+## Add Metafield
+
+Creates a new Metafield on an Object.
+
+**Definition**
+
+```bash
+POST /v2/buckets/${YOUR_BUCKET_SLUG}/objects/:id/metafields
+```
+
+**Parameters**
+
+See [Metafields Model](/api-reference/metafields) for available parameters.
+
+<Callout emoji="⚠">
+  **Required**
+  <br />
+  Your Bucket `write_key` must be passed as `Authorization Bearer` in the header
+  of the request. This can be found in
+  <i>Your Bucket > Settings > API Access</i> in your [Admin Dashboard](https://app.cosmicjs.com/login).
+</Callout>
+
+**cURL**
+
+```bash
+curl https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/objects/:id/metafields \
+	-d '{"type":"number","key":"phone_number","title":"Phone Number","value":123456789}' \
+	-H 'Content-Type: application/json' \
+	-H "Authorization: Bearer <YOUR_BUCKET_WRITE_KEY>"
+```
+
+**Example Response**
+
+```json
+{
+  "message": "metafield with key: 'phone_number' added successfully in object with id:':id"
+}
+```
+
+## Edit Metafield
+
+Edits a Metafield on an Object.
+
+**Definition**
+
+```bash
+PATCH /v2/buckets/${YOUR_BUCKET_SLUG}/objects/:id/metafields/:key
+```
+
+<Callout emoji="⚠">
+  **Required**
+  <br />
+  Your Bucket `write_key` must be passed as `Authorization Bearer` in the header
+  of the request. This can be found in
+  <i>Your Bucket > Settings > API Access</i> in your [Admin Dashboard](https://app.cosmicjs.com/login).
+</Callout>
+
+Take a look at [Metafield Model](/api-reference/metafields) for reference to be passed in the body.
+
+_**Note:** At least one of the Parameters is required to process the request._
+
+**Methods**
+
+<Tabs>
+	<div label="Node.js">
+```javascript
+bucket.editObjectMetafield()
+```
 **Example Request**
+
+```javascript
+const Cosmic = require('cosmicjs')() // empty init
+const bucket = Cosmic.bucket({
+  slug: 'YOUR_BUCKET_SLUG',
+  write_key: 'YOUR_BUCKET_WRITE_KEY'
+})
+const params = {
+  id: 'object-id',
+  key: 'phone_number',
+  value: 9876543210
+}
+const data = await bucket.editObjectMetafield(params)
+```
+
+</div>
+<div label="cURL">
+```bash
+curl https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/objects/:id/metafields/:key \
+	-d '{"value":9876543210}' \
+	-H 'Content-Type: application/json' \
+	-H "Authorization: Bearer <YOUR_BUCKET_WRITE_KEY>"
+	-X PATCH
+```
+</div>
+</Tabs>
+
+**Example Response**
+
+```json
+{
+  "metafield": {
+    "type": "number",
+    "title": "Phone number",
+    "key": "phone_number",
+    "value": 9876543210
+  }
+}
+```
+
+### Delete Object Metafield
+
+Deletes a Metafield from an Object.
+
+<Callout emoji="⚠">
+  **Required**
+  <br />
+  Your Bucket `write_key` must be passed as `Authorization Bearer` in the header
+  of the request. This can be found in
+  <i>Your Bucket > Settings > API Access</i> in your [Admin Dashboard](https://app.cosmicjs.com/login).
+</Callout>
+
+**Definition**
+
+```bash
+DELETE /v2/buckets/${YOUR_BUCKET_SLUG}/objects/:id/metafields/:key
+```
+
+**cURL**
+
+```bash
+curl https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/objects/:id/metafields/:key \
+	-H "Authorization: Bearer <YOUR_BUCKET_WRITE_KEY>" \
+	-X DELETE
+```
+
+**Example Response**
+
+```json
+{
+  "message": "metafield with key: ':key' deleted successfully from object with id:':id"
+}
+```
+
+## Object Metafields
+
+You can connect Objects to create "one to many" and "many to many" relationships between Objects using Single and Multiple Object Metafields.
+
+**Parameters**
+
+| Parameter   | Required |  Type  | Description                                                                                                     |
+| :---------- | :------: | :----: | :-------------------------------------------------------------------------------------------------------------- |
+| type        | required |  Enum  | object, objects                                                                                                 |
+| title       | required | String | Your Metafield title                                                                                            |
+| key         | required | String | Unique identifier for your Metafield                                                                            |
+| object_type | required | String | Object Type slug                                                                                                |
+| value       |          | String | For single Object this is the `id` property. For multiple Objects it is comma-separated ids (order maintained). |
+
+#### Single Objects
+
+For a Single Object Metafield, add the Object ID (`id`) to the value to connect the Object. The full Object will be returned on the Metadata response in the `object` property.
+
+#### Multiple Objects
+
+For Multiple Object Type Metafields, you can add the Object IDs as comma-separated values. The full Objects will be returned on the Metadata response in the `objects` property.
+
+#### Example
+
+Note that the `Author` is a single `object` Metafield with a single id in the `value`. The `Categories` Metafield is a Multiple `objects` Metafield with comma-separated Object IDs.
+
+**Request Body**
 
 ```json
 {
@@ -323,18 +605,55 @@ POST $BASE_URL/buckets/${YOUR_BUCKET_SLUG}/objects
 }
 ```
 
-### Single Objects
+**cURL**
 
-For a Single Object Metafield, add the Object ID (`id`) to the value to connect the Object. The full Object will be returned on the Metadata response in the `object` property.
+```bash
+curl https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/objects \
+	-d ${REQUEST_BODY} \
+	-H 'Content-Type: application/json' \
+	-H "Authorization: Bearer <YOUR_BUCKET_WRITE_KEY>"
+```
 
-### Multiple Objects
+## Media Metafields
 
-For Multiple Object type Metafields, you can add the Object IDs as comma-separated values. The full Objects will be returned on the Metadata response in the `objects` property.
+You can add media to your Object by using the Media Metafield. The full Media object including `url` and `imgix_url` will be provided in the `metadata` property when querying the Object.
 
-| Parameter   | Required |  Type  | Description                                                                                  |
-| :---------- | :------: | :----: | :------------------------------------------------------------------------------------------- |
-| type        | required |  Enum  | object, objects                                                                              |
-| title       | required | String | Your Metafield title                                                                         |
-| key         | required | String | Unique identifier for your Metafield                                                         |
-| object_type | required | String | Object Type slug                                                                             |
-| value       |          | String | For single Object this is the `id` property. For multiple Objects it is comma-separated ids. |
+**Parameters**
+
+| Parameter | Required |  Type  | Description                                      |
+| :-------- | :------: | :----: | :----------------------------------------------- |
+| type      | required | String | file                                             |
+| title     | required | String | Your Metafield title                             |
+| key       | required | String | Unique identifier for your Metafield             |
+| value     |          | String | The `name` property of the media in your Bucket. |
+
+#### Example
+
+**Request Body**
+
+```json
+{
+  "title": "Blog Post Example with Media",
+  "type": "blog-posts",
+  "content": "This is some amazing blog content...",
+  "metafields": [
+    {
+      "title": "Hero",
+      "key": "hero",
+      "type": "file",
+      "value": "my-amazing-hero-image.jpg"
+    }
+  ]
+}
+```
+
+**cURL**
+
+```bash
+curl https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/objects \
+	-d ${REQUEST_BODY} \
+	-H 'Content-Type: application/json' \
+	-H "Authorization: Bearer <YOUR_BUCKET_WRITE_KEY>"
+```
+
+- Note that the Metafield value is the media name.

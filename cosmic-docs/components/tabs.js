@@ -9,7 +9,7 @@ const tabs = props => {
             const label = child.props.label
             let icon
             if (label === 'REST') icon = Rest
-            if (label === 'cURL') icon = Rest
+						if (label === 'cURL') icon = Rest
             if (label === 'Node.js') icon = Node
             if (label === 'GraphQL') icon = GraphQL
             if (label === 'CLI') icon = CLI
