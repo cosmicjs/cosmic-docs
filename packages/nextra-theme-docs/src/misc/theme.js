@@ -61,9 +61,12 @@ const CopyButton = ({ content, children }) => {
 
   return (
     <CopyToClipboard text={content} onCopy={onCopyContent}>
-      <div className="relative inline-block cursor-pointer">
-        {copied && <div className="copied_hint">Copied!</div>}
-        {children}
+      <div className="relative inline-block cursor-pointer bg-gray-200 dark:bg-gray-800 left-2 w-4">
+        {copied && <div class="copied">Copied ✅</div>}
+        {
+          !copied &&
+          children
+        }
       </div>
     </CopyToClipboard>
   )

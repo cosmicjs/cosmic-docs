@@ -584,10 +584,12 @@ video {
 .dark .search-slash {
   background: #090d20;
 }
-.copied_hint {
+.copied {
   position: absolute;
-  top: -2px;
-  right: 30px;
+  top: -26px;
+  right: -10px;
+  padding: 10px;
+  @apply text-gray-900 text-sm bg-gray-200 dark:bg-gray-800;
 }
 
 .algolia-autocomplete pre {
