@@ -146,7 +146,7 @@ export default {
         rel="noopener"
         className="inline-flex items-center no-underline text-current font-semibold"
       >
-        <div className="float-left mr-3">Powered by</div>
+        <div className="float-left pr-3">Powered by</div>
         <div className="float-left">
           <Logo />
         </div>
