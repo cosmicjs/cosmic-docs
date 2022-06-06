@@ -38,7 +38,7 @@ const app = async () => {
       type: 'products',
       'metadata.category':'Electronics'
     },
-    props: 'slug,title,metadata.category'
+    props: 'slug,title,metadata.category' // declare your response properties
   })
   const products = data.objects
   console.log(JSON.stringify(products, null, 2))
@@ -168,7 +168,7 @@ const app = async () => {
       type: 'products',
       'metadata.stores':'6296803e6c21c20e4add83ae' // Store Object id
     },
-    props: 'slug,title,metadata.stores.title',
+    props: 'slug,title,metadata.stores.title', // declare your response properties
     limit: 3
   })
   const products = data.objects
@@ -308,7 +308,7 @@ const app = async () => {
         $in: ['Clothing','Food']
       }
     },
-    props: 'slug,title,metadata.category',
+    props: 'slug,title,metadata.category', // declare your response properties
     limit: 3
   })
   const products = data.objects
@@ -438,7 +438,7 @@ const app = async () => {
         $lte: 10.00
       }
     },
-    props: 'slug,title,metadata.price'
+    props: 'slug,title,metadata.price' // declare your response properties
   })
   const products = data.objects
   console.log(JSON.stringify(products, null, 2))
@@ -557,7 +557,7 @@ const app = async () => {
         }
       ]
     },
-    props: 'slug,title,metadata.category,metadata.price'
+    props: 'slug,title,metadata.category,metadata.price' // declare your response properties
   })
   const products = data.objects
   console.log(JSON.stringify(products, null, 2))
@@ -696,7 +696,7 @@ const app = async () => {
       }
     },
     limit: 3,
-    props: 'slug,title,metadata.category,metadata.price'
+    props: 'slug,title,metadata.category,metadata.price' // declare your response properties
   })
   const products = data.objects
   console.log(JSON.stringify(products, null, 2))

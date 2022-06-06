@@ -40,7 +40,7 @@ const app = async () => {
     query: {
       type: 'posts'
     },
-    props: 'slug,title,metadata.hero.imgix_url,metadata.author.title'
+    props: 'slug,title,metadata.hero.imgix_url,metadata.author.title' // declare your response properties
   })
   const posts = data.objects
   console.log(JSON.stringify(posts, null, 2))
@@ -148,7 +148,7 @@ const app = async () => {
     query: {
       slug: 'a-wonderful-blog-post-about-earth'
     },
-    props: 'slug,title,metadata.hero.imgix_url,metadata.author.title'
+    props: 'slug,title,metadata.hero.imgix_url,metadata.author.title' // declare your response properties
   })
   const post = data.objects[0]
   console.log(JSON.stringify(post, null, 2))
