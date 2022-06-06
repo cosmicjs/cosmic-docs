@@ -68,7 +68,7 @@ const features = () => (
             d="M13 10V3L4 14h7v7l9-11h-7z"
           ></path>
         </svg>
-        <h4>Lightning fast</h4>
+        <h4>Fast setup</h4>
       </div>
       <div className={styles.feature}>
         <svg
