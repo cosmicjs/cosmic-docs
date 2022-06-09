@@ -148,7 +148,7 @@ const app = async () => {
     query: {
       slug: 'a-wonderful-blog-post-about-earth'
     },
-    props: 'slug,title,metadata.hero.imgix_url,metadata.author.title' // declare your response properties
+    props: 'slug,title,content,metadata.hero.imgix_url,metadata.author.title' // declare your response properties
   })
   const post = data.objects[0]
   console.log(JSON.stringify(post, null, 2))
@@ -174,11 +174,11 @@ curl https://api.cosmicjs.com/v2/buckets/simple-react-blog/objects \
 </div>
 
 <div label="GraphQL">
-  <a href="https://cosmic-graphql-playground.netlify.app/?endpoint=https%3A%2F%2Fgraphql.cosmicjs.com%2Fv3&query=%7B%0A%20%20getObjects%28%0A%20%20%20%20bucket_slug%3A%20%22simple-react-blog%22%0A%20%20%20%20read_key%3A%20%22bucket-read-key%22%0A%20%20%20%20input%3A%20%7B%0A%20%20%20%20%20%20query%3A%20%7B%0A%20%20%20%20%20%20%09slug%3A%20%22a-wonderful-blog-post-about-earth%22%0A%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20props%3A%20%22slug%2Ctitle%2Cmetadata.hero.imgix_url%2Cmetadata.author.title%22%0A%20%20%20%20%09limit%3A%201%0A%20%20%20%20%7D%0A%20%20%29%20%7B%0A%20%20%20%20%20objects%20%7B%0A%20%20%20%20%20%20title%0A%20%20%20%20%20%20slug%0A%20%20%20%20%20%20metadata%0A%20%20%20%20%7D%0A%20%20%20%20total%0A%20%20%7D%0A%7D">
+  <a href="https://cosmic-graphql-playground.netlify.app/?endpoint=https%3A%2F%2Fgraphql.cosmicjs.com%2Fv3&query=%7B%0A%20%20getObjects%28%0A%20%20%20%20bucket_slug%3A%20%22simple-react-blog%22%0A%20%20%20%20read_key%3A%20%22bucket-read-key%22%0A%20%20%20%20input%3A%20%7B%0A%20%20%20%20%20%20query%3A%20%7B%0A%20%20%20%20%20%20%09slug%3A%20%22a-wonderful-blog-post-about-earth%22%0A%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20props%3A%20%22slug%2Ctitle%2Ccontent%2Cmetadata.hero.imgix_url%2Cmetadata.author.title%22%0A%20%20%20%20%09limit%3A%201%0A%20%20%20%20%7D%0A%20%20%29%20%7B%0A%20%20%20%20%20objects%20%7B%0A%20%20%20%20%20%20title%0A%20%20%20%20%20%20slug%0A%20%20%20%20%20%20content%0A%20%20%20%20%20%20metadata%0A%20%20%20%20%7D%0A%20%20%20%20total%0A%20%20%7D%0A%7D">
     Full screen
   </a>
   <iframe
-    src="https://cosmic-graphql-playground.netlify.app/?endpoint=https%3A%2F%2Fgraphql.cosmicjs.com%2Fv3&query=%7B%0A%20%20getObjects%28%0A%20%20%20%20bucket_slug%3A%20%22simple-react-blog%22%0A%20%20%20%20read_key%3A%20%22bucket-read-key%22%0A%20%20%20%20input%3A%20%7B%0A%20%20%20%20%20%20query%3A%20%7B%0A%20%20%20%20%20%20%09slug%3A%20%22a-wonderful-blog-post-about-earth%22%0A%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20props%3A%20%22slug%2Ctitle%2Cmetadata.hero.imgix_url%2Cmetadata.author.title%22%0A%20%20%20%20%09limit%3A%201%0A%20%20%20%20%7D%0A%20%20%29%20%7B%0A%20%20%20%20%20objects%20%7B%0A%20%20%20%20%20%20title%0A%20%20%20%20%20%20slug%0A%20%20%20%20%20%20metadata%0A%20%20%20%20%7D%0A%20%20%20%20total%0A%20%20%7D%0A%7D"
+    src="https://cosmic-graphql-playground.netlify.app/?endpoint=https%3A%2F%2Fgraphql.cosmicjs.com%2Fv3&query=%7B%0A%20%20getObjects%28%0A%20%20%20%20bucket_slug%3A%20%22simple-react-blog%22%0A%20%20%20%20read_key%3A%20%22bucket-read-key%22%0A%20%20%20%20input%3A%20%7B%0A%20%20%20%20%20%20query%3A%20%7B%0A%20%20%20%20%20%20%09slug%3A%20%22a-wonderful-blog-post-about-earth%22%0A%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20props%3A%20%22slug%2Ctitle%2Ccontent%2Cmetadata.hero.imgix_url%2Cmetadata.author.title%22%0A%20%20%20%20%09limit%3A%201%0A%20%20%20%20%7D%0A%20%20%29%20%7B%0A%20%20%20%20%20objects%20%7B%0A%20%20%20%20%20%20title%0A%20%20%20%20%20%20slug%0A%20%20%20%20%20%20content%0A%20%20%20%20%20%20metadata%0A%20%20%20%20%7D%0A%20%20%20%20total%0A%20%20%7D%0A%7D"
     frameBorder="0"
     style={{ width: "100%", height: "470px" }}
   ></iframe>
@@ -205,6 +205,7 @@ cosmic get-objects --limit 1 --query '{"slug":"a-wonderful-blog-post-about-earth
 {
   "slug": "a-wonderful-blog-post-about-earth",
   "title": "A Wonderful Blog Post About Earth",
+  "content": "<p>When I orbited the Earth in a spaceship, I saw for the first time how beautiful our planet is. Mankind, let us preserve and increase this beauty, and not destroy it!</p><p>Space, the final frontier. These are the voyages of the Starship Enterprise. Its five-year mission: to explore strange new worlds, to seek out new life and new civilizations, to boldly go where no man has gone before.</p><p>If you could see the earth illuminated when you were in a place as dark as night, it would look to you more splendid than the moon.</p><p>To be the first to enter the cosmos, to engage, single-handed, in an unprecedented duel with nature&mdash;could one dream of anything more?</p><p>We choose to go to the moon in this decade and do the other things, not because they are easy, but because they are hard, because that goal will serve to organize and measure the best of our energies and skills, because that challenge is one that we are willing to accept, one we are unwilling to postpone, and one which we intend to win.</p><p>NASA is not about the &lsquo;Adventure of Human Space Exploration&rsquo;&hellip;We won&rsquo;t be doing it just to get out there in space &ndash; we&rsquo;ll be doing it because the things we learn out there will be making life better for a lot of people who won&rsquo;t be able to go.</p><p>Problems look mighty small from 150 miles up.</p><p>That&#39;s one small step for [a] man, one giant leap for mankind.</p><p>Where ignorance lurks, so too do the frontiers of discovery and imagination.</p><p>Dinosaurs are extinct today because they lacked opposable thumbs and the brainpower to build a space program.</p>",
   "metadata": {
     "hero": {
       "imgix_url": "https://imgix.cosmicjs.com/56363630-af74-11e7-b864-313f959a776e-react-blog.jpg"
