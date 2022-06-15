@@ -3,23 +3,28 @@ import Tabs from "../../components/tabs";
 
 # Users
 
-The following endpoints enable you to create, read, update, and delete users in your Bucket.
+The following endpoints enable you to get Cosmic user info as well as create, read, update, and delete users in your Bucket.
 
 <Callout emoji="🔑">
-  **Get your keys**
+  **Get your token**
   <br />
   Your authentication `token` will be required to perform the following
   requests.
   <br />
-  You can get your authentication token in your user account settings located in
-  <i>
-    [Account Settings {">"}
-    Authentication](https://app.cosmicjs.com/account/authentication)
-  </i>. You can also get your token using the [API](/api-reference/authentication#get-your-token)
-  with your `email` and `password`.
+  You can get your token using the [authentication
+  method](/api-reference/authentication#get-your-token) with your `email` and
+  `password`.
 </Callout>
 
 ### Endpoints
+
+Get Cosmic user information.
+
+```bash
+GET /v2/user
+```
+
+Perform actions on users in a Bucket.
 
 ```bash
 GET /v2/buckets/${YOUR_BUCKET_SLUG}/users
@@ -47,9 +52,61 @@ DELETE /v2/buckets/${YOUR_BUCKET_SLUG}/users/:id
 | company    | String |     User company name      |
 | location   | String |       User location        |
 
-## Get Users
+## Get Cosmic User
 
-Gets all users in your Bucket.
+Gets user info from access token. See [authentication section](/api-reference/authentication) to get access token using `email` and `password`.
+
+<Callout emoji="⚠">
+  **Required**
+  <br />
+  `token` must be passed as `Authorization Bearer` in the header of the request.
+</Callout>
+
+**Definition**
+
+```bash
+GET /v2/user
+```
+
+**Methods**
+
+<Tabs>
+
+<div label="cURL">
+```bash
+curl https://api.cosmicjs.com/v2/user \
+	-H "Authorization: Bearer <TOKEN>"
+```
+</div>
+
+<div label="Node.js">
+Coming soon!
+
+</div>
+
+<div label="GraphQL">
+Coming soon!
+</div>
+</Tabs>
+
+**Example Response**
+
+```json
+{
+  "user": {
+    "id": "5f46a1c25711926847cd6b5c",
+    "first_name": "Quasar",
+    "last_name": "Jones",
+    "email": "quasar@milkyway.com",
+    "username": "quasar",
+    "avatar_url": "https://imgix.cosmicjs.com/e07818a0-51f0-11eb-9dee-df51ce912356-starry.jpg"
+  }
+}
+```
+
+## Get Bucket Users
+
+Gets all users in a Bucket.
 
 <Callout emoji="⚠">
   **Required**
@@ -135,21 +192,23 @@ getUsers(bucket_slug)
       "linkedin": "",
       "github": "",
       "company": "",
-      "location": ""
+      "location": "",
+      "avatar_url": "https://imgix.cosmicjs.com/e07818a0-51f0-11eb-9dee-df51ce912356-starry.jpg"
     },
     {
       "id": "5f46a1c25711926847cd6b5c",
       "first_name": "Quasar",
       "last_name": "Jones",
       "email": "quasar@milkyway.com",
-      "username": "quasar"
+      "username": "quasar",
+      "avatar_url": "https://imgix.cosmicjs.com/e07818a0-51f0-11eb-9dee-df51ce912356-quasar.jpg"
     }
   ],
   "total": 2
 }
 ```
 
-## Get User
+## Get Bucket User
 
 Gets user by `id` in your bucket.
 
@@ -232,12 +291,13 @@ getUser(bucket_slug, user_id)
     "first_name": "Quasar",
     "last_name": "Jones",
     "email": "quasar@milkyway.com",
-    "username": "quasar"
+    "username": "quasar",
+    "avatar_url": "https://imgix.cosmicjs.com/e07818a0-51f0-11eb-9dee-df51ce912356-starry.jpg"
   }
 }
 ```
 
-## Add User
+## Add User to Bucket
 
 Add a user to your Bucket.
 
@@ -327,7 +387,7 @@ $ cosmic add-user --email test@user.com --first_name John --last_name Smith --ro
 }
 ```
 
-## Edit User
+## Edit User in Bucket
 
 Edit user in your Bucket.
 
@@ -369,7 +429,7 @@ curl https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/users/:id \
 }
 ```
 
-## Delete User
+## Remove Bucket User
 
 Remove user from your Bucket.
 
