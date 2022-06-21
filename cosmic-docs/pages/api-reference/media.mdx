@@ -385,9 +385,27 @@ cosmic add-media -f ./my-cat.png -t my-cat.png --folder cat-images
 
 ## Examples
 
+### Next.js
+
+The following example uses [Next.js](https://nextjs.org/) to create a route (`POST /api/file`) and [formidable](https://www.npmjs.com/package/formidable) to accept data from a form that will upload a file to your Bucket Media area. [View full page sandbox](https://codesandbox.io/s/nextjs-cosmic-upload-media-example-0pv5sp?file=/pages/api/file.js).
+
+<iframe
+  src="https://codesandbox.io/embed/nextjs-cosmic-upload-media-example-0pv5sp?fontsize=14&hidenavigation=1&module=%2Fpages%2Fapi%2Ffile.js&theme=dark&view=editor"
+  style={{
+    width: "100%",
+    height: "500px",
+    border: 0,
+    borderRadius: "4px",
+    overflow: "hidden",
+  }}
+  title="nextjs-cosmic-upload-media-example"
+  allow="accelerometer; ambient-light-sensor; camera; encrypted-media; geolocation; gyroscope; hid; microphone; midi; payment; usb; vr; xr-spatial-tracking"
+  sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"
+></iframe>
+
 ### Multer: Server-Side
 
-This application uses Express and Multer to create a route `POST http://localhost:5000/upload` that will upload a file to your Bucket Media area. This is an example from the article [Upload Media to Your Cosmic Bucket Using Multer](https://www.cosmicjs.com/articles/upload-media-to-your-cosmic-js-bucket-using-multer-jzoddl9p).
+The following example uses Express and Multer to create a route (`POST /upload`) that will upload a file to your Bucket Media area. This is an example from the article [Upload Media to Your Cosmic Bucket Using Multer](https://www.cosmicjs.com/articles/upload-media-to-your-cosmic-js-bucket-using-multer-jzoddl9p).
 
 ```javascript
 // index.js
