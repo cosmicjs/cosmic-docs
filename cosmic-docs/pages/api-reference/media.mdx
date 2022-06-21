@@ -414,9 +414,13 @@ const Cosmic = require("cosmicjs")(); // empty init
 const multer = require("multer");
 const express = require("express");
 var app = express();
+/* Add your Bucket API Access keys by going to Bucket > Settings > API Access 
+after logging in at https://app.cosmicjs.com/login
+*/
 const bucket = Cosmic.bucket({
   slug: "YOUR_BUCKET_SLUG",
   read_key: "YOUR_BUCKET_READ_KEY",
+  write_key: "YOUR_BUCKET_WRITE_KEY",
 });
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
