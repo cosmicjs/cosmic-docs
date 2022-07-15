@@ -31,11 +31,11 @@ If you do not have a Cosmic account with a Bucket already set up, you will need 
 
 ### Get started
 
-You can get started from scratch, or start with a [pre-built template](https://www.cosmicjs.com/apps). Follow the steps below to install and use Cosmic. The recommended way is to use the [Cosmic NPM module](https://www.npmjs.com/package/cosmicjs).
+You can get started from scratch, or start with a [pre-built template](https://www.cosmicjs.com/apps). Follow the steps below to install and use Cosmic with the recommended way using the [Cosmic NPM module](https://www.npmjs.com/package/cosmicjs).
 
 ### Install
 
-Install the Cosmic NPM module:
+Install the Cosmic NPM module.
 
 ```bash
 pnpm install cosmicjs
@@ -47,16 +47,16 @@ npm install cosmicjs
 
 ### Import
 
-Import Cosmic into your app:
+Import Cosmic into your app.
 
 ```js
 const Cosmic = require("cosmicjs");
 const api = Cosmic();
 ```
 
-### Set environment variables
+### Set API access keys
 
-In your [Cosmic admin dashboard](https://app.cosmicjs.com/login) go to *Your Bucket > Settings > API Access* and get your Bucket slug and read key then set the variables in your app to connect to your Bucket:
+In your [Cosmic admin dashboard](https://app.cosmicjs.com/login) go to *Your Bucket > Settings > API Access* and get your Bucket slug and read key then set the variables in your app to connect to your Bucket.
 
 ```js
 const bucket = api.bucket({
@@ -69,13 +69,13 @@ const bucket = api.bucket({
 
 Delivering content to your app is simple by using the `getObjects` method.
 
-**Get multiple Object**
+**Get multiple Objects**
 
 Uses `getObjects` method within a `query` param. Additional options noted below.
 
 ```js
 const params = {
-  query: { type: "products" },
+  query: { type: "products" }, // Object Type slug
   props: "title,slug,metadata", // response properties
   limit: 10, // number of Objects returned
 };
@@ -84,13 +84,13 @@ const data = await bucket.getObjects(params);
 
 **Get single Object by slug**
 
-Uses the `getObjects` method and query param.
+Uses the `getObjects` method and `query` param.
 
 ```js
 const params = {
   query: {
-    type: "pages",
-    slug: "home",
+    type: "pages", // Object Type slug
+    slug: "home", // Object slug
     locale: "en", // optional, if localization set on Objects
   },
   props: "title,slug,metadata",
@@ -101,8 +101,7 @@ const home = data[0]; // returns array
 
 ### More to discover
 
-This quick start guide covers the basic steps to get your Cosmic powered app up and running. For a more in-depth guide on getting Cosmic data into your app, you can view these [basic query examples](https://docs.cosmicjs.com/examples/basic-queries).
-
+This quick start guide covers the basic steps to get your Cosmic-powered app up and running. For a more in-depth guide on getting Cosmic data into your app, you can view these [basic query examples](/examples/basic-queries).
 
 ## Use Cases
 
