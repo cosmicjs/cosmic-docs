@@ -372,6 +372,7 @@ const props = [
 ];
 const data = await bucket.getObjects({
   query: {
+    type: "posts",
     slug: "object-slug",
   },
   props: props.toString(),
@@ -384,7 +385,7 @@ const data = await bucket.getObjects({
 ```bash
 curl https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/objects \
 	-d read_key=${YOUR_BUCKET_READ_KEY} \
-	--data-urlencode query='{"slug":"object-slug"}' \
+	--data-urlencode query='{"type":"posts","slug":"object-slug"}' \
 	-d props="slug,title,metadata.description,metadata.parent.title,metadata.parent.metadata.category.title" \
 	-G
 ```
@@ -423,7 +424,7 @@ cosmic get-objects
 ```
 **Example Request**
 ```bash
-cosmic get-objects --query {"slug":"object-slug"} --props "title,content,metadata.parent.title,metadata.parent.metadata.category.metadata.description"
+cosmic get-objects --query {"type":"posts","slug":"object-slug"} --props "title,content,metadata.parent.title,metadata.parent.metadata.category.metadata.description"
 ```
 
 </div>
