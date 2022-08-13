@@ -33,13 +33,10 @@ const bucket = api.bucket({
   read_key: '49TG2OEZMVML9fNvVObbFOEsjkFaCYpbVIP1kb8kYCY6RMWqBf' // YOUR_BUCKET_READ_KEY
 })
 const app = async () => {
-  const data = await bucket.getObjects({
-    query: {
-      type: 'products',
-      'metadata.category':'Electronics'
-    },
-    props: 'slug,title,metadata.category' // declare your response properties
-  })
+  const data = await bucket.objects.find({
+    type: 'products',
+    'metadata.category':'Electronics'
+  }).props('slug,title,metadata.category') // declare your response properties
   const products = data.objects
   console.log(JSON.stringify(products, null, 2))
 }
@@ -163,14 +160,11 @@ const bucket = api.bucket({
   read_key: '49TG2OEZMVML9fNvVObbFOEsjkFaCYpbVIP1kb8kYCY6RMWqBf' // YOUR_BUCKET_READ_KEY
 })
 const app = async () => {
-  const data = await bucket.getObjects({
-    query: {
-      type: 'products',
-      'metadata.stores':'6296803e6c21c20e4add83ae' // Store Object id
-    },
-    props: 'slug,title,metadata.stores.title', // declare your response properties
-    limit: 3
-  })
+  const data = await bucket.objects.find({
+    type: 'products',
+    'metadata.stores':'6296803e6c21c20e4add83ae' // Store Object id
+  }).props('slug,title,metadata.stores.title') // declare your response properties
+  .limit(3)
   const products = data.objects
   console.log(JSON.stringify(products, null, 2))
 }
@@ -301,16 +295,13 @@ const bucket = api.bucket({
   read_key: '49TG2OEZMVML9fNvVObbFOEsjkFaCYpbVIP1kb8kYCY6RMWqBf' // YOUR_BUCKET_READ_KEY
 })
 const app = async () => {
-  const data = await bucket.getObjects({
-    query: {
-      type: 'products',
-      'metadata.category': {
-        $in: ['Clothing','Food']
-      }
-    },
-    props: 'slug,title,metadata.category', // declare your response properties
-    limit: 3
+  const data = await bucket.objects.find({
+  type: 'products',
+  'metadata.category': {
+    $in: ['Clothing','Food']
   })
+  .props('slug,title,metadata.category') // declare your response properties
+  .limit(3)
   const products = data.objects
   console.log(JSON.stringify(products, null, 2))
 }
@@ -431,15 +422,13 @@ const bucket = api.bucket({
   read_key: '49TG2OEZMVML9fNvVObbFOEsjkFaCYpbVIP1kb8kYCY6RMWqBf' // YOUR_BUCKET_READ_KEY
 })
 const app = async () => {
-  const data = await bucket.getObjects({
-    query: {
-      type: 'products',
-      'metadata.price': {
-        $lte: 10.00
-      }
-    },
-    props: 'slug,title,metadata.price' // declare your response properties
+  const data = await bucket.objects.find({
+    type: 'products',
+    'metadata.price': {
+      $lte: 10.00
+    }
   })
+  .props('slug,title,metadata.price') // declare your response properties
   const products = data.objects
   console.log(JSON.stringify(products, null, 2))
 }
@@ -543,22 +532,20 @@ const bucket = api.bucket({
   read_key: '49TG2OEZMVML9fNvVObbFOEsjkFaCYpbVIP1kb8kYCY6RMWqBf' // YOUR_BUCKET_READ_KEY
 })
 const app = async () => {
-  const data = await bucket.getObjects({
-    query: {
-      type: 'products',
-      "$and": [
-        {
-          "metadata.category": "Food"
-        },
-        {
-          "metadata.price": {
-            "$lte": 49.99
-          }
+  const data = await bucket.objects.find({
+    type: 'products',
+    "$and": [
+      {
+        "metadata.category": "Food"
+      },
+      {
+        "metadata.price": {
+          "$lte": 49.99
         }
-      ]
-    },
-    props: 'slug,title,metadata.category,metadata.price' // declare your response properties
+      }
+    ]
   })
+  .props('slug,title,metadata.category,metadata.price') // declare your response properties
   const products = data.objects
   console.log(JSON.stringify(products, null, 2))
 }
@@ -688,16 +675,14 @@ const bucket = api.bucket({
   read_key: '49TG2OEZMVML9fNvVObbFOEsjkFaCYpbVIP1kb8kYCY6RMWqBf' // YOUR_BUCKET_READ_KEY
 })
 const app = async () => {
-  const data = await bucket.getObjects({
-    query: {
-      type: 'products',
-      "metadata.category": {
-        $ne: "Food"
-      }
-    },
-    limit: 3,
-    props: 'slug,title,metadata.category,metadata.price' // declare your response properties
+  const data = await bucket.objects.find({
+    type: 'products',
+    "metadata.category": {
+      $ne: "Food"
+    }
   })
+  .limit(3)
+  .props('slug,title,metadata.category,metadata.price') // declare your response properties
   const products = data.objects
   console.log(JSON.stringify(products, null, 2))
 }

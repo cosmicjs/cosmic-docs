@@ -80,7 +80,7 @@ GET /v2/buckets/${YOUR_BUCKET_SLUG}/objects
 <Tabs>
 <div label="Node.js">
 ```javascript
-bucket.getObjects()
+bucket.objects.find(query)
 ```
 **Example Request**
 
@@ -90,12 +90,11 @@ const bucket = Cosmic.bucket({
   slug: "YOUR_BUCKET_SLUG",
   read_key: "YOUR_BUCKET_READ_KEY",
 });
-const data = await bucket.getObjects({
-  query: {
+const data = await bucket.objects
+  .find({
     type: "posts",
-  },
-  limit: 1,
-});
+  })
+  .limit(1);
 ```
 
 </div>
@@ -230,7 +229,7 @@ cosmic get-objects --limit 1 --query '{"type":"posts"}'
 <Tabs>
 <div label="Node.js">
 ```javascript
-bucket.getObjects()
+bucket.objects.find(query)
 ```
 **Example Request**
 
@@ -246,13 +245,12 @@ const props = [
   "metadata.parent.title",
   "metadata.parent.metadata.category.metadata.description",
 ];
-const data = await bucket.getObjects({
-  query: {
+const data = await bucket.objects
+  .find({
     type: "posts",
-  },
-  props: props.toString(),
-  limit: 1,
-});
+  })
+  .props(props.toString())
+  .limit(1);
 ```
 
 </div>
@@ -354,12 +352,12 @@ Get a single Object in your Bucket. You can get the Object by its slug or ID.
 
 <div label="Node.js">
 ```javascript
-bucket.getObjects()
+bucket.objects.find(query)
 ```
 **Example Request**
 
 ```javascript
-const Cosmic = require("cosmicjs")(); // empty init;
+const Cosmic = require("cosmicjs")(); // empty init
 const bucket = Cosmic.bucket({
   slug: "YOUR_BUCKET_SLUG",
   read_key: "YOUR_BUCKET_READ_KEY",
@@ -370,13 +368,12 @@ const props = [
   "metadata.parent.title",
   "metadata.parent.metadata.category.title",
 ];
-const data = await bucket.getObjects({
-  query: {
+const data = await bucket.objects
+  .find({
     type: "posts",
     slug: "object-slug",
-  },
-  props: props.toString(),
-});
+  })
+  .props(props.toString());
 ```
 
 </div>
@@ -483,7 +480,7 @@ GET /v2/buckets/${YOUR_BUCKET_SLUG}/objects/:id
 
 <div label="Node.js">
 ```javascript
-bucket.getObject()
+bucket.objects.findOne()
 ```
 **Example Request**
 
@@ -493,7 +490,7 @@ const bucket = Cosmic.bucket({
   slug: "YOUR_BUCKET_SLUG",
   read_key: "YOUR_BUCKET_READ_KEY",
 });
-const data = await bucket.getObject({
+const data = await bucket.objects.findOne({
   id: "5e4d7eb92850c717ea93dba1",
 });
 ```
@@ -628,7 +625,7 @@ cosmic get-object --id 5ff75368c2dfa81a91695cec
 <Tabs>
 <div label="Node.js">
 ```javascript
-bucket.getObject()
+bucket.objects.findOne()
 ```
 **Example Request**
 
@@ -644,10 +641,11 @@ const props = [
   "metadata.parent.title",
   "metadata.parent.metadata.category.title",
 ];
-const data = await bucket.getObject({
-  id: "5e4d7eb92850c717ea93dba1",
-  props: props.toString(),
-});
+const data = await bucket.objects
+  .findOne({
+    id: "5e4d7eb92850c717ea93dba1",
+  })
+  .props(props.toString());
 ```
 
 </div>
@@ -765,7 +763,7 @@ POST /v2/buckets/${YOUR_BUCKET_SLUG}/objects
 <Tabs>
 <div label="Node.js">
 ```javascript
-bucket.addObject()
+bucket.objects.insertOne()
 ```
 
 **Example Request**
@@ -798,7 +796,7 @@ const params = {
     slug_field: false,
   },
 };
-const data = await bucket.addObject(params);
+const data = await bucket.objects.insertOne(params);
 ```
 
 </div>
@@ -915,7 +913,7 @@ _**Note:** At least one of the Parameters is required to process the request._
 <Tabs>
 	<div label="Node.js">
 ```javascript
-bucket.editObject()
+bucket.objects.updateOne(query, updates)
 ```
 
 **Example Request**
@@ -926,10 +924,16 @@ const bucket = Cosmic.bucket({
   slug: "YOUR_BUCKET_SLUG",
   write_key: "YOUR_BUCKET_WRITE_KEY",
 });
-const data = await bucket.editObject({
-  id: "5ff75368c2dfa81a91695cec",
-  title: "New Title Edit",
-});
+const data = await bucket.objects.updateOne(
+  {
+    id: "5ff75368c2dfa81a91695cec",
+  },
+  {
+    $set: {
+      title: "New Title Edit",
+    },
+  }
+);
 ```
 
 </div>
@@ -1035,7 +1039,7 @@ DELETE /v2/buckets/${YOUR_BUCKET_SLUG}/objects/:id
 
 <div label="Node.js">
 ```javascript
-bucket.deleteObject()
+bucket.objects.deleteOne()
 ```
 
 **Example Request**
@@ -1046,7 +1050,7 @@ const bucket = Cosmic.bucket({
   slug: "YOUR_BUCKET_SLUG",
   write_key: "YOUR_BUCKET_WRITE_KEY",
 });
-const data = await bucket.deleteObject({
+const data = await bucket.objects.deleteOne({
   id: "5ff75368c2dfa81a91695cec",
 });
 ```
