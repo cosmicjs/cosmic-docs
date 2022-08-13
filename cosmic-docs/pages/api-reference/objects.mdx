@@ -97,6 +97,16 @@ const data = await bucket.objects
   .limit(1);
 ```
 
+Note: use the chain method to add additional parameters. For example:
+
+```javascript
+bucket.objects
+  .find({ type: "posts" })
+  .limit(1)
+  .props("title")
+  .sort("-created_at");
+```
+
 </div>
 <div label="cURL">
 ```bash
@@ -480,7 +490,7 @@ GET /v2/buckets/${YOUR_BUCKET_SLUG}/objects/:id
 
 <div label="Node.js">
 ```javascript
-bucket.objects.findOne()
+bucket.objects.findOne(query)
 ```
 **Example Request**
 
@@ -625,7 +635,7 @@ cosmic get-object --id 5ff75368c2dfa81a91695cec
 <Tabs>
 <div label="Node.js">
 ```javascript
-bucket.objects.findOne()
+bucket.objects.findOne(query)
 ```
 **Example Request**
 
