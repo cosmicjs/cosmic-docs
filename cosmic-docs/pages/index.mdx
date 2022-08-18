@@ -93,8 +93,7 @@ const data = await bucket.objects
     slug: "home", // Object slug
     locale: "en", // optional, if localization set on Objects
   })
-  .props("title,slug,metadata") // response properties
-  .limit(1); // number of Objects to be returned
+  .props("title,slug,metadata"); // response properties
 ```
 
 ### More to discover
