@@ -36,12 +36,8 @@ const bucket = api.bucket({
   read_key: 'bucket-read-key' // YOUR_BUCKET_READ_KEY
 })
 const app = async () => {
-  const data = await bucket.getObjects({
-    query: {
-      type: 'posts'
-    },
-    props: 'slug,title,metadata.hero.imgix_url,metadata.author.title' // declare your response properties
-  })
+  const data = await bucket.objects.find({ type: 'posts' })
+  .props('slug,title,metadata.hero.imgix_url,metadata.author.title') // declare your response properties
   const posts = data.objects
   console.log(JSON.stringify(posts, null, 2))
 }
@@ -144,12 +140,11 @@ const bucket = api.bucket({
   read_key: 'bucket-read-key' // YOUR_READ_KEY
 })
 const app = async () => {
-  const data = await bucket.getObjects({
-    query: {
-      slug: 'a-wonderful-blog-post-about-earth'
-    },
-    props: 'slug,title,content,metadata.hero.imgix_url,metadata.author.title' // declare your response properties
+  const data = await bucket.objects.find({
+    type: 'posts',
+    slug: 'a-wonderful-blog-post-about-earth'
   })
+  .props('slug,title,content,metadata.hero.imgix_url,metadata.author.title') // declare your response properties
   const post = data.objects[0]
   console.log(JSON.stringify(post, null, 2))
 }

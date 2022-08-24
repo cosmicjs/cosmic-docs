@@ -58,12 +58,9 @@ export default {
     }
   },
   async asyncData () {
-    const data = await bucket.getObjects({
-      query: {
-        type: 'posts'
-      },
-      props: 'slug,title,content,metadata' // Limit the API response data by props
-    })
+    const data = await bucket.objects.find({
+      type: 'posts'
+    }).props('slug,title,content,metadata') // Limit the API response data by props
     const posts = await data.objects
     return {
       posts,

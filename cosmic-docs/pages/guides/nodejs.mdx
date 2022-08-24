@@ -33,12 +33,11 @@ const bucket = api.bucket({
   read_key: "YOUR_BUCKET_READ_KEY",
 });
 app.get("*", async (req, res) => {
-  const data = await bucket.getObjects({
-    query: {
+  const data = await bucket.objects
+    .find({
       type: "posts",
-    },
-    props: "slug,title,content,metadata", // Limit the API response data by props
-  });
+    })
+    .props("slug,title,content,metadata"); // Limit the API response data by props
   const posts = data.objects;
   let markup = ``;
   posts.map((post) => {

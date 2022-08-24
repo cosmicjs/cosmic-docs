@@ -63,17 +63,12 @@ export class AppComponent implements OnInit {
   async ngOnInit() {
     this.loading = true;
 
-    await this.bucket
-      .getObjects({
-        query: {
-          type: "posts",
-        },
-        props: "slug,title,content,metadata", // Limit the API response data by props
+    const response = await this.bucket.objects
+      .find({
+        type: "posts",
       })
-      .then((response) => {
-        this.posts = response.objects;
-      });
-
+      .props("slug,title,content,metadata"); // Limit the API response data by props
+    this.posts = response.objects;
     this.loading = false;
   }
 }

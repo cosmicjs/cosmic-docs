@@ -73,7 +73,7 @@ GET /v2/buckets/${YOUR_BUCKET_SLUG}/media
 
 <div label="Node.js">
 ```javascript
-Cosmic.getMedia()
+bucket.media.find(query)
 ```
 
 **Example Request**
@@ -84,12 +84,21 @@ const bucket = Cosmic.bucket({
   slug: "YOUR_BUCKET_SLUG",
   read_key: "YOUR_BUCKET_READ_KEY",
 });
-const data = await bucket.getMedia({
-  query: {
+const data = await bucket.media
+  .find({
     folder: "product-images", // Get media in folder
-  },
-  limit: 2,
-});
+  })
+  .limit(2);
+```
+
+Note: use the chain method to add additional parameters. For example:
+
+```javascript
+bucket.media
+  .find({ folder: "product-images" })
+  .limit(1)
+  .props("url")
+  .sort("size");
 ```
 
 </div>
@@ -190,7 +199,7 @@ GET /v2/buckets/${YOUR_BUCKET_SLUG}/media/:id
 
 <div label="Node.js">
 ```javascript
-Cosmic.getSingleMedia()
+bucket.media.findOne(query)
 ```
 
 **Example Request**
@@ -202,10 +211,11 @@ const bucket = Cosmic.bucket({
   read_key: "YOUR_BUCKET_READ_KEY",
 });
 
-const data = await bucket.getMedia({
-  id: "5f331eac9d52b17aee21d1b4",
-  props: "id,name,metadata,imgix_url", // get only what you need
-});
+const data = await bucket.media
+  .findOne({
+    id: "5f331eac9d52b17aee21d1b4",
+  })
+  .props("id,name,metadata,imgix_url"); // get only what you need
 ```
 
 </div>
@@ -307,7 +317,7 @@ POST https://upload.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/media
 
 <div label="Node.js">
 ```javascript
-Cosmic.addMedia()
+bucket.media.insertOne()
 ```
 
 **Example Request**
@@ -323,7 +333,7 @@ const media_object = req.files[0]; // Using Multer
 // OR:
 // const media_object = { originalname: filename, buffer: filedata } // Not using Multer
 
-const data = await bucket.addMedia({
+const data = await bucket.media.insertOne({
   media: media_object,
   folder: "your-folder-slug",
   metadata: {
@@ -438,7 +448,7 @@ app.post("/upload", upload.single("file"), async function (req, res) {
       originalname: req.file.originalname,
       buffer: fs.createReadStream(req.file.path),
     };
-    const response = await bucket.addMedia({ media: media_object });
+    const response = await bucket.media.insertOne({ media: media_object });
     return res.json(response);
   } catch (e) {
     console.log(e);
@@ -534,7 +544,7 @@ Delete an existing Media by `id` from your Bucket.
 
 <div label="Node.js">
 ```javascript
-Cosmic.deleteMedia()
+bucket.media.deleteOne()
 ```
 
 **Example Request**
@@ -545,7 +555,7 @@ const bucket = Cosmic.bucket({
   slug: "YOUR_BUCKET_SLUG",
   read_key: "YOUR_BUCKET_READ_KEY",
 });
-const data = await bucket.deleteMedia({
+const data = await bucket.media.deleteOne({
   id: "5a4b18e12fff7ec0e3c13c65",
 });
 ```

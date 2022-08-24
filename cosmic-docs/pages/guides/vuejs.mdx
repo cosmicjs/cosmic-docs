@@ -61,19 +61,15 @@ export default {
     this.fetchData()
   },
   methods: {
-    fetchData () {
+    async fetchData () {
       this.error = this.post = null
       this.loading = true
-      bucket.getObjects({
-        query: {
-          type: 'posts'
-        },
-        props: 'slug,title,content,metadata' // Limit the API response data by props
-      }).then(data => {
-        const posts = data.objects
-        this.loading = false
-        this.posts = posts
-      })
+      const data = await bucket.objects.find({
+        type: 'posts'
+      }).props('slug,title,content,metadata') // Limit the API response data by props
+      const posts = data.objects
+      this.loading = false
+      this.posts = posts
     }
   }
 }

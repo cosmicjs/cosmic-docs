@@ -10,7 +10,5 @@
   "graphql": "GraphQL",
   "go": "Go",
   "ruby-on-rails": "Ruby On Rails",
-  "java": "Java",
-  "net": ".Net",
-  "python": "Python"
+  "java": "Java"
 }
