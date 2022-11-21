@@ -70,6 +70,7 @@ GET /v2/buckets/${YOUR_BUCKET_SLUG}/objects
 | sort            |          |  Enum  | order     | `created_at`, `-created_at`, `modified_at`, `-modified_at`, `random`, `order`                                                                                                                                           |
 | limit           |          | Number | 1000      | The number of Objects to return                                                                                                                                                                                         |
 | skip            |          | Number | 0         | The number of Objects to skip                                                                                                                                                                                           |
+| depth           |          | Number |           | The depth of Object references using Object Relationship Metafields. Circular reference is prohibited.                                                                                                                  |
 | after           |          | String |           | Objects after specified Object Id (can only use one of `skip` or `after`)                                                                                                                                               |
 | pretty          |          |  Enum  | false     | Set to `true` to make the response more reader-friendly                                                                                                                                                                 |
 | show_metafields |          |  Enum  | false     | Set to `true` to show metafields                                                                                                                                                                                        |
@@ -334,6 +335,94 @@ cosmic get-objects --limit 1 --query '{"type":"posts"}' --props title,content,me
 }
 ```
 
+### Using Depth
+
+<Callout emoji="💡">
+  **Quick Tip**
+  <br />
+  Use `depth` to limit the Object Metafield reference data returned in the
+  metadata property.
+</Callout>
+
+**Methods**
+
+<Tabs>
+<div label="Node.js">
+```javascript
+bucket.objects.find(query)
+```
+**Example Request**
+
+```javascript
+const Cosmic = require("cosmicjs")(); // empty init
+const bucket = Cosmic.bucket({
+  slug: "YOUR_BUCKET_SLUG",
+  read_key: "YOUR_BUCKET_READ_KEY",
+});
+const data = await bucket.objects
+  .find({
+    type: "posts",
+  })
+  .props("title,content,metadata")
+  .limit(1)
+  .depth(1);
+```
+
+</div>
+<div label="cURL">
+```bash
+curl https://api.cosmicjs.com/v2/buckets/${YOUR_BUCKET_SLUG}/objects \
+	-d read_key=${YOUR_BUCKET_READ_KEY} \
+	--data-urlencode query='{"type":"posts"}' \
+ 	-d props="title,content,metadata" \
+	-d depth=1 \
+	-d limit=1 \
+	-G
+```
+</div>
+</Tabs>
+
+**Example Response with Depth**
+
+Depth set to `1` will return the nested data for the connected Objects on the first level and nothing more. In this case, the author data is returned, but not the favorite foods Objects.
+
+```json
+{
+  "objects": [
+    {
+      "title": "Using depth to limit the payload references",
+      "content": "<p>Use depth to limit the Object relationship references</p>",
+      "metadata": {
+        "author": {
+          "id": "637424d79e48068a8e004c3d",
+          "slug": "tony",
+          "title": "Tony",
+          "content": "",
+          "bucket": "63741869f5085b000889937e",
+          "created_at": "2022-11-15T23:19:34.716Z",
+          "modified_at": "2022-11-16T18:20:41.202Z",
+          "status": "published",
+          "thumbnail": "https://imgix.cosmicjs.com/bde84da0-653a-11ed-a307-d9b518ba824e-tux-cropped.jpg",
+          "published_at": "2022-11-16T18:20:41.202Z",
+          "modified_by": "637413416bd19f00082936eb",
+          "created_by": "637413416bd19f00082936eb",
+          "type": "people",
+          "metadata": {
+            "tagline": "LFG",
+            "favorite_foods": [
+              "637529e89b7c3a0008186af3",
+              "637529e89b7c3a0008186af4"
+            ]
+          }
+        }
+      }
+    }
+  ],
+  "total": 6,
+  "limit": 1
+}
+```
+
 <Callout emoji="💡">
   **Queries 101**
   <br />
@@ -480,6 +569,7 @@ GET /v2/buckets/${YOUR_BUCKET_SLUG}/objects/:id
 | id              | required | String |           | Object id                                                                                                                                                                                                               |
 | props           |          | String |           | Declare which properties to return in comma-separated string. Remove to see full Object and get a list of all available properties. Can include nested metadata. Example: `id,title,metadata.author.metadata.image.url` |
 | status          |          |  Enum  | published | Set to `any` for latest draft or published Object                                                                                                                                                                       |
+| depth           |          | Number |           | The depth of Object references using Object Relationship Metafields. Limit is at first reference of infinite recursion.                                                                                                 |
 | pretty          |          |  Enum  | false     | Set to `true` to make the response more reader-friendly                                                                                                                                                                 |
 | show_metafields |          |  Enum  | false     | Set to `true` to show metafields                                                                                                                                                                                        |
 | use_cache       |          |  Enum  | true      | Set to `false` for real-time updates. Increases latency of endpoint.                                                                                                                                                    |
