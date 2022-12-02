@@ -1,6 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react'
+import Link from 'next/link'
 
 export default function DocsToggle({ versions }) {
+  console.log(versions[0].url)
   const [open, setOpen] = useState(false)
   const handleOpen = () => {
     setOpen(!open)
@@ -52,21 +54,21 @@ export default function DocsToggle({ versions }) {
       </button>
       {open ? (
         <div className="absolute w-32 top-8 left-0 border bg-white dark:bg-gray-900 rounded py-2 text-xs md:text-sm">
-          <a
-            href={versions[0].title}
-            className="block no-underline hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-900 dark:text-white w-full px-2 py-1"
-          >
-            Latest &#40;{versions[0].title}&#41;
-          </a>
+          <Link href={versions[0].url}>
+            <a className="block no-underline hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-900 dark:text-white w-full px-2 py-1">
+              Latest &#40;{versions[0].title}&#41;
+            </a>
+          </Link>
 
           {versions.slice(1).map(docVersion => (
-            <a
-              href={docVersion.url}
-              className="block no-underline hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-900 dark:text-white w-full px-2 py-1"
-              key={docVersion.title}
-            >
-              {docVersion.title}
-            </a>
+            <Link href={docVersion.url}>
+              <a
+                className="block no-underline hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-900 dark:text-white w-full px-2 py-1"
+                key={docVersion.title}
+              >
+                {docVersion.title}
+              </a>
+            </Link>
           ))}
         </div>
       ) : null}
