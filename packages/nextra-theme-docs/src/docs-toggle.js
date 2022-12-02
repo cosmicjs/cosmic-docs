@@ -25,11 +25,11 @@ export default function DocsToggle({ versions }) {
   return (
     <div
       ref={wrapperRef}
-      className="relative whitespace-nowrap md:text-sm font-semibold"
+      className="relative whitespace-nowrap md:text-sm font-semibold mr-1"
       id="docs-toggle"
     >
       <button
-        className="flex items-center focus:outline-none bg-gray-200 rounded  px-2 py-1 hover:bg-gray-300 font-semibold dark:bg-gray-900 text-xs md:text-sm"
+        className="docs-toggle flex items-center focus:outline-none bg-gray-200 rounded hover:bg-gray-300 font-semibold dark:bg-gray-900 text-sm focus:ring"
         onClick={handleOpen}
       >
         {versions[0].title}
@@ -52,7 +52,7 @@ export default function DocsToggle({ versions }) {
         </span>
       </button>
       {open ? (
-        <div className="absolute w-32 top-8 left-0 border bg-white dark:bg-gray-900 rounded py-2 text-xs md:text-sm">
+        <div className="absolute w-32 top-11 left-0 border bg-white dark:bg-gray-900 rounded py-2 text-sm">
           <Link href={versions[0].url}>
             <a className="block no-underline hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-900 dark:text-white w-full px-2 py-1">
               Latest &#40;{versions[0].title}&#41;

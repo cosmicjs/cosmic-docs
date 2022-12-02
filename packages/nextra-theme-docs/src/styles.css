@@ -593,5 +593,10 @@ video {
 }
 
 .algolia-autocomplete pre {
-	display: none;
+  display: none;
+}
+/* Docs toggle */
+.docs-toggle {
+  padding: 9px 8px;
+  @apply border border-white dark:border-gray-900;
 }
