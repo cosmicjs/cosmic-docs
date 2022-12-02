@@ -600,3 +600,6 @@ video {
   padding: 9px 8px;
   @apply border border-white dark:border-gray-900;
 }
+.docs-toggle:focus-visible {
+  @apply ring;
+}

@@ -29,7 +29,7 @@ export default function DocsToggle({ versions }) {
       id="docs-toggle"
     >
       <button
-        className="docs-toggle flex items-center focus:outline-none bg-gray-200 rounded hover:bg-gray-300 font-semibold dark:bg-gray-900 text-sm focus:ring"
+        className="docs-toggle flex items-center focus:outline-none bg-gray-200 rounded hover:bg-gray-300 font-semibold dark:bg-gray-900 text-sm"
         onClick={handleOpen}
       >
         {versions[0].title}
