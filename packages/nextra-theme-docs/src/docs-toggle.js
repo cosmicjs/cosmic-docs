@@ -2,7 +2,6 @@ import React, { useState, useRef, useEffect } from 'react'
 import Link from 'next/link'
 
 export default function DocsToggle({ versions }) {
-  console.log(versions[0].url)
   const [open, setOpen] = useState(false)
   const handleOpen = () => {
     setOpen(!open)
