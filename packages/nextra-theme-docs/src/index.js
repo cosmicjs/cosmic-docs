@@ -23,6 +23,7 @@ import StorkSearch from './stork-search'
 import GitHubIcon from './github-icon'
 import ThemeSwitch from './theme-switch'
 import LocaleSwitch from './locale-switch'
+import DocsToggle from './docs-toggle'
 import Footer from './footer'
 import renderComponent from './utils/render-component'
 
@@ -309,7 +310,6 @@ const Layout = ({ filename, config: _config, pageMap, meta, children }) => {
               </a>
             </Link>
           </div>
-
           {config.customSearch ||
             (config.search ? (
               config.UNSTABLE_stork ? (
@@ -319,7 +319,9 @@ const Layout = ({ filename, config: _config, pageMap, meta, children }) => {
               )
             ) : null)}
 
-          <div className="mr-2" />
+          {config.docsToggle ? (
+            <DocsToggle versions={config.docVersions} />
+          ) : null}
 
           {config.darkMode ? <ThemeSwitch /> : null}
 

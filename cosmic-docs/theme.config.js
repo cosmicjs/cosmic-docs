@@ -153,4 +153,9 @@ export default {
       </a>
     </div>
   ),
+  docsToggle: true,
+  docVersions: [
+    { title: "v2", url: "https://docs.cosmicjs.com/" },
+    { title: "v1", url: "https://docs-v1.cosmicjs.com/" },
+  ],
 };
