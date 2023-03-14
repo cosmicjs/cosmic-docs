@@ -17,11 +17,11 @@ gatsby new cosmic-gatsby-app
 
 ### 2. Install the Cosmic source plugin for Gatsby
 
-Install the [Cosmic source plugin for Gatsby](https://www.npmjs.com/package/gatsby-source-cosmicjs).
+Install the [Cosmic source plugin for Gatsby](https://www.npmjs.com/package/@cosmicjs/gatsby-source-cosmic).
 
 ```bash
 cd cosmic-gatsby-app
-yarn add gatsby-source-cosmicjs
+yarn add @cosmicjs/gatsby-source-cosmic
 ```
 
 ### 3. Add the following code into your `gatsby-config.js` file in the plugins section.
@@ -29,75 +29,26 @@ yarn add gatsby-source-cosmicjs
 Find your Bucket slug and API read key in <i>Bucket Settings > API Access</i> after [logging in](https://app.cosmicjs.com).
 
 ```javascript
-// In your gatsby-config.js
-plugins: [
-  {
-    resolve: `gatsby-source-cosmicjs`,
-    options: {
-      bucketSlug: `YOUR_BUCKET_SLUG`, // Get this value in Bucket > Settings
-      objectTypes: [`posts`], // Note it will result in GraphQL queries (allCosmicjsPosts, cosmicjsPosts)
-      // If you have enabled read_key to fetch data (optional).
-      apiAccess: {
-        read_key: `YOUR_BUCKET_READ_KEY`, // Get this value in Bucket > Settings
+// gatsby-config.js
+module.exports = {
+  plugins: [
+    {
+      resolve: `@cosmicjs/gatsby-source-cosmic`,
+      options: {
+        bucketSlug: process.env.COSMIC_BUCKET_SLUG,
+        readKey: process.env.COSMIC_READ_KEY,
+        limit: 2,
+        depth: 3,
+        objectTypes: ["posts", "authors"],
       },
-      localMedia: true, // Download media locally for gatsby image (optional)
     },
-  },
-];
-```
-
-### 4. Add the following code into your `gatsby-node.js` file
-
-```javascript
-const path = require(`path`);
-
-exports.createPages = async ({ graphql, actions }) => {
-  const { createPage } = actions;
-
-  // Get the single post layout file
-  const blogPost = path.resolve(`./src/templates/blog-post.js`);
-  // Query the GraphQL to get our posts
-  const result = await graphql(
-    `
-      {
-        allCosmicjsPosts(
-          sort: { fields: [created], order: DESC }
-          limit: 1000
-        ) {
-          edges {
-            node {
-              slug
-              title
-            }
-          }
-        }
-      }
-    `
-  );
-
-  if (result.errors) {
-    throw result.errors;
-  }
-
-  // Create blog posts pages.
-  const posts = result.data.allCosmicjsPosts.edges;
-
-  // For each post in posts create a separate page
-  posts.forEach((post, index) => {
-    createPage({
-      path: post.node.slug,
-      component: blogPost,
-      context: {
-        slug: post.node.slug,
-      },
-    });
-  });
+    `gatsby-plugin-image`,
+    `gatsby-plugin-sharp`,
+  ],
 };
 ```
 
 ### 5. Create `blog-post.js` in `src/templates/` directory and add following code
-
-This is the layout for a single blog post page which we used in `gatsby-node.js`
 
 ```javascript
 import React from "react";
