@@ -155,8 +155,8 @@ export default {
   ),
   docsToggle: true,
   docVersions: [
-    { title: "v3", label: "beta", url: "https://docs-v3.cosmicjs.com" },
-    { title: "v2", label: "", url: "https://docs.cosmicjs.com" },
+    { title: "v3", label: "latest", url: "https://cosmicjs.com/docs" },
+    { title: "v2", label: "", url: "https://docs-v2.cosmicjs.com" },
     { title: "v1", label: "", url: "https://docs-v1.cosmicjs.com" },
   ],
 };

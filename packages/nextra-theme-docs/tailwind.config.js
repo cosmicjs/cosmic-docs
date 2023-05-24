@@ -19,6 +19,7 @@ module.exports = {
       current: 'currentColor',
       black: '#000',
       white: '#fff',
+      'cosmic-blue': '#29abe2',
       gray: {
         100: '#f7fafc',
         200: '#edf2f7',

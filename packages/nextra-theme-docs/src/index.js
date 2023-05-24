@@ -302,8 +302,17 @@ const Layout = ({ filename, config: _config, pageMap, meta, children }) => {
           rtl: isRTL
         })}
       >
-        <nav className="flex items-center bg-white z-20 fixed top-0 left-0 right-0 h-16 border-b border-gray-200 px-6 dark:bg-dark dark:border-gray-900">
-          <div className="hidden md:block w-full flex items-center">
+        <a
+          href="https://cosmicjs.com/docs"
+          className={
+            'gap-2 px-5 py-3 text-center text-white text-sm sm:text-base bg-cosmic-blue no-underline'
+          }
+        >
+          Please note that the old version of our documentaion has been
+          deprecated. Click here to view the new version &rarr;
+        </a>
+        <nav className="flex items-center bg-white z-20 sticky top-0 left-0 right-0 h-16 border-b border-gray-200 px-6 dark:bg-dark dark:border-gray-900">
+          <div className="hidden md:flex w-full items-center">
             <Link href="/">
               <a className="no-underline text-current flex items-center hover:opacity-75">
                 {renderComponent(config.logo, { locale })}
