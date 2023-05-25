@@ -46,7 +46,7 @@ class MyDocument extends Document {
             property="og:image"
             content="https://cdn.cosmicjs.com/5c20a2d0-1891-11ec-80c4-d562efc15827-cosmic-docs.png"
           />
-          <meta name="robots" content="noindex">
+          <meta name="robots" content="noindex" />
         </Head>
         <body>
           <SkipNavLink />
