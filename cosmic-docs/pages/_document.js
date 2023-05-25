@@ -24,7 +24,7 @@ class MyDocument extends Document {
             content="Cosmic Headless CMS Docs - Content API and developer toolkit."
           />
           <meta property="og:type" content="website" />
-          <meta property="og:url" content="https://docs.cosmicjs.com" />
+          <meta property="og:url" content="https://docs-v2.cosmicjs.com" />
           <meta
             property="og:image"
             content="https://cdn.cosmicjs.com/5c20a2d0-1891-11ec-80c4-d562efc15827-cosmic-docs.png"
@@ -33,7 +33,7 @@ class MyDocument extends Document {
           <meta name="twitter:card" content="summary_large_image" />
           <meta name="twitter:site" content="@cosmicjs" />
           <meta name="twitter:title" content="Cosmic Docs" />
-          <meta name="twitter:url" content="https://docs.cosmicjs.com" />
+          <meta name="twitter:url" content="https://docs-v2.cosmicjs.com" />
           <meta
             name="twitter:description"
             content="Cosmic Headless CMS Docs - Content API and developer toolkit."
@@ -46,6 +46,7 @@ class MyDocument extends Document {
             property="og:image"
             content="https://cdn.cosmicjs.com/5c20a2d0-1891-11ec-80c4-d562efc15827-cosmic-docs.png"
           />
+          <meta name="robots" content="noindex">
         </Head>
         <body>
           <SkipNavLink />
