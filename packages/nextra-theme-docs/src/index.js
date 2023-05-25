@@ -308,8 +308,8 @@ const Layout = ({ filename, config: _config, pageMap, meta, children }) => {
             'gap-2 px-5 py-3 text-center text-sm sm:text-base bg-orange-50 text-orange-600 dark:bg-dark-orange-50 dark:text-dark-orange-600 no-underline'
           }
         >
-          Please note that the old version of our documentaion has been
-          deprecated. Click here to view the new version &rarr;
+          Please note that this version of our documentaion has been deprecated.
+          Click here to view the new version &rarr;
         </a>
         <nav className="flex items-center bg-white z-20 sticky top-0 left-0 right-0 h-16 border-b border-gray-200 px-6 dark:bg-dark dark:border-gray-900">
           <div className="hidden md:flex w-full items-center">
