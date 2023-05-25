@@ -303,7 +303,7 @@ const Layout = ({ filename, config: _config, pageMap, meta, children }) => {
         })}
       >
         <a
-          href="https://cosmicjs.com/docs"
+          href="https://www.cosmicjs.com/docs"
           className={
             'gap-2 px-5 py-3 text-center text-sm sm:text-base bg-orange-50 text-orange-600 dark:bg-dark-orange-50 dark:text-dark-orange-600 no-underline'
           }
