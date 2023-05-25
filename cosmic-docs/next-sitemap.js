@@ -1,4 +1,4 @@
 module.exports = {
-  siteUrl: "https://docs.cosmicjs.com",
+  siteUrl: "https://docs-v2.cosmicjs.com",
   generateRobotsTxt: false,
 };
