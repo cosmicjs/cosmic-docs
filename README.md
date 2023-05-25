@@ -1,6 +1,9 @@
-# Cosmic Docs
+# IMPORTANT
+This is the codebase for the Cosmic API v2. For the latest docs, go to https://www.cosmicjs.com/docs.
 
-This is the codebase for the [Cosmic docs](https://docs-v2.cosmicjs.com/).
+# Cosmic Docs API v2
+
+This is the codebase for the [Cosmic docs v2](https://docs-v2.cosmicjs.com/).
 
 ## Development
 
